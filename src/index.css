@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-hand: 'Caveat', cursive, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #FFFDFB;
+    color: #1E293B;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  .font-handwriting {
+    font-family: var(--font-hand);
+  }
+}
+
+/* Glassmorphism & Aesthetics */
+.glass-card {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 30px -10px rgba(225, 112, 140, 0.08), 0 20px 40px -15px rgba(0, 0, 0, 0.03);
+}
+
+.glass-card-warm {
+  background: rgba(255, 252, 248, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(254, 243, 199, 0.8);
+  box-shadow: 0 12px 36px -10px rgba(217, 119, 6, 0.08);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 230, 235, 0.9);
+}
+
+/* Floating Animations */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.04); }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.animate-float {
+  animation: floatGentle 4.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Polaroid Photo Styling */
+.polaroid-frame {
+  background: #ffffff;
+  padding: 12px 12px 38px 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.polaroid-frame:hover {
+  transform: translateY(-6px) scale(1.02) rotate(0deg) !important;
+  box-shadow: 0 20px 35px -10px rgba(244, 114, 182, 0.25);
+  z-index: 20;
+}
+
+/* Clean Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(226, 232, 240, 0.8);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(203, 213, 225, 1);
+}
+
+/* Scrapbook & Keepsake Aesthetics */
+.paper-parchment {
+  background-color: #fbf8f1;
+  background-image: radial-gradient(#eadbc8 0.75px, transparent 0.75px), radial-gradient(#eadbc8 0.75px, #fbf8f1 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.washi-tape {
+  background: rgba(244, 208, 111, 0.55);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  backdrop-filter: blur(2px);
+  clip-path: polygon(2% 0%, 98% 0%, 100% 50%, 98% 100%, 2% 100%, 0% 50%);
+}
+
+.washi-tape-pink {
+  background: rgba(251, 182, 206, 0.6);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  backdrop-filter: blur(2px);
+  clip-path: polygon(2% 0%, 98% 0%, 100% 50%, 98% 100%, 2% 100%, 0% 50%);
+}
+
+.washi-tape-blue {
+  background: rgba(186, 230, 253, 0.6);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  backdrop-filter: blur(2px);
+  clip-path: polygon(2% 0%, 98% 0%, 100% 50%, 98% 100%, 2% 100%, 0% 50%);
+}
+
+/* Wax Seal Styling */
+.wax-seal {
+  background: radial-gradient(circle at 35% 35%, #e11d48, #9f1239 65%, #881337 100%);
+  box-shadow: 
+    0 4px 12px rgba(159, 18, 57, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.wax-seal-gold {
+  background: radial-gradient(circle at 35% 35%, #fbbf24, #d97706 65%, #92400e 100%);
+  box-shadow: 
+    0 4px 12px rgba(217, 119, 6, 0.4),
+    inset 0 2px 4px rgba(255, 255, 255, 0.5),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.wax-seal-lavender {
+  background: radial-gradient(circle at 35% 35%, #c084fc, #9333ea 65%, #6b21a8 100%);
+  box-shadow: 
+    0 4px 12px rgba(147, 51, 234, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.35);
+}
+
+/* Candle flame animation */
+@keyframes flicker {
+  0%, 100% {
+    transform: scale(1) rotate(-1deg);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 6px rgba(251, 191, 36, 0.9));
+  }
+  25% {
+    transform: scale(1.08, 0.95) rotate(2deg);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 1));
+  }
+  50% {
+    transform: scale(0.96, 1.05) rotate(-2deg);
+    opacity: 0.9;
+    filter: drop-shadow(0 0 7px rgba(251, 191, 36, 0.8));
+  }
+  75% {
+    transform: scale(1.04, 1.02) rotate(1deg);
+    opacity: 0.98;
+    filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.95));
+  }
+}
+
+.animate-flame {
+  animation: flicker 1.2s ease-in-out infinite alternate;
+  transform-origin: bottom center;
+}
+
+/* Shimmer gradient for scratch card */
+@keyframes scratchGleam {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-scratch-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: scratchGleam 2.8s infinite;
+}

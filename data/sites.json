@@ -1,0 +1,187 @@
+[
+  {
+    "templateId": "blush-romance",
+    "recipientName": "Aditi Test",
+    "senderName": "Ayush",
+    "occasion": "Happy Birthday",
+    "subtitle": "Special day",
+    "photos": [],
+    "songId": "romantic-acoustic",
+    "letter": {
+      "title": "Dear Aditi",
+      "content": "You are amazing!"
+    },
+    "id": "site_1792337945935_ipmtw",
+    "slug": "aditi-test",
+    "template": "blush-romance",
+    "viewCount": 2,
+    "createdAt": "2026-10-18T15:39:05.936Z",
+    "updatedAt": "2026-10-18T15:39:05.936Z",
+    "lastViewedAt": "2026-10-18T15:39:22.745Z"
+  },
+  {
+    "id": "seed-blush-01",
+    "slug": "for-elena",
+    "title": "To My Dearest Elena 🌸",
+    "recipientName": "Elena Rostova",
+    "senderName": "Daniel",
+    "template": "blush-romance",
+    "templateId": "blush-romance",
+    "occasion": "2nd Anniversary",
+    "theme": "rose",
+    "accentColor": "#F43F5E",
+    "letter": "Elena, from the rainy afternoon we spent sharing an umbrella in Florence, I knew life with you was going to be extraordinary. Thank you for filling every single day with quiet laughter, warm matcha lattes, and gentle reassurance. Happy 2nd Anniversary, my sweetest heart.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Florence under the rain 🌧️"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+        "caption": "Our Sunday botanical garden walk 🌿"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80",
+        "caption": "Forever starts here 💍"
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Where did we have our very first date?",
+        "options": [
+          "Caffè Paszkowski",
+          "Piazza Michelangelo",
+          "Trattoria Mario"
+        ],
+        "correctAnswer": "Caffè Paszkowski"
+      },
+      {
+        "question": "Who fell asleep first during our first movie marathon?",
+        "options": [
+          "Daniel",
+          "Elena (100%)",
+          "Neither, we finished both films!"
+        ],
+        "correctAnswer": "Elena (100%)"
+      }
+    ],
+    "scratchSecret": "Pack your bags for Venice this weekend! ✈️💌",
+    "musicTrack": "romantic-acoustic",
+    "viewCount": 43,
+    "createdAt": "2026-10-17T03:25:45.093Z",
+    "lastViewedAt": "2026-10-18T15:25:53.674Z"
+  },
+  {
+    "id": "seed-gold-02",
+    "slug": "happy-25th-lucas",
+    "title": "Happy 25th Birthday, Lucas! 🎂",
+    "recipientName": "Lucas Vance",
+    "senderName": "Chloe & The Crew",
+    "template": "golden-birthday",
+    "templateId": "golden-birthday",
+    "occasion": "25th Birthday Milestone",
+    "theme": "amber",
+    "accentColor": "#D97706",
+    "letter": "Lucas! Quarter of a century looks dangerously sharp on you. From late-night gaming marathons to spontaneous mountain drives, you have been the absolute soul of our crew. May this year bring wild adventures and massive wins!",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80",
+        "caption": "Golden champagne birthday moments 🥂"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Camping under Tahoe stars ✨"
+      }
+    ],
+    "quiz": [
+      {
+        "question": "What is Lucas’s signature catchphrase?",
+        "options": [
+          "\"Trust the process\"",
+          "\"Let’s get tacos\"",
+          "\"Just one more game\""
+        ],
+        "correctAnswer": "\"Just one more game\""
+      }
+    ],
+    "scratchSecret": "Check under your car driver seat for the festival VIP passes! 🎸🎫",
+    "musicTrack": "upbeat-birthday",
+    "viewCount": 118,
+    "createdAt": "2026-10-17T21:25:45.094Z",
+    "lastViewedAt": "2026-10-18T15:20:45.094Z"
+  },
+  {
+    "id": "seed-polaroid-03",
+    "slug": "summer-with-maya",
+    "title": "Our Golden Summer Memories 📸",
+    "recipientName": "Maya Lin",
+    "senderName": "Sophia",
+    "template": "polaroid-scrapbook",
+    "templateId": "polaroid-scrapbook",
+    "occasion": "Friendship Scrapbook",
+    "theme": "yellow",
+    "accentColor": "#CA8A04",
+    "letter": "Maya, flipping through our camera roll from this past summer made me smile until my cheeks hurt. Thank you for being the most spontaneous, creative, and sunshine-filled best friend in the universe. Here is to 100 more road trips!",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80",
+        "caption": "Polaroid film roll #04 — Highway 1 🌊"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+        "caption": "Sunset bonfire with s’mores 🔥"
+      }
+    ],
+    "quiz": [
+      {
+        "question": "What ice cream flavor melted all over Maya’s shoes?",
+        "options": [
+          "Pistachio Gelato",
+          "Salted Caramel Cone",
+          "Strawberry Sorbet"
+        ],
+        "correctAnswer": "Pistachio Gelato"
+      }
+    ],
+    "scratchSecret": "Trip to Big Sur cabins is already reserved for next month! 🌲⛺",
+    "musicTrack": "lofi-nostalgia",
+    "viewCount": 65,
+    "createdAt": "2026-10-15T15:25:45.094Z",
+    "lastViewedAt": "2026-10-18T13:25:45.094Z"
+  },
+  {
+    "id": "seed-apology-04",
+    "slug": "heartfelt-hug-liam",
+    "title": "A Little Peace Offering for Liam 🥺",
+    "recipientName": "Liam Chen",
+    "senderName": "Aria",
+    "template": "heartfelt-apology",
+    "templateId": "heartfelt-apology",
+    "occasion": "Sweet Apology & Hug",
+    "theme": "violet",
+    "accentColor": "#8B5CF6",
+    "letter": "Liam, I am genuinely sorry for misunderstanding things the other night. You mean too much to me for silly pride to get in the way. I baked your favorite cinnamon rolls as a peace offering. Forgive me?",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        "caption": "Our peace truce cinnamon roll date ☕"
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Will you accept the warmest hug and cinnamon roll?",
+        "options": [
+          "Yes, definitely! ❤️",
+          "Only if extra frosting!",
+          "Thinking about it... (Yes)"
+        ],
+        "correctAnswer": "Yes, definitely! ❤️"
+      }
+    ],
+    "scratchSecret": "Unlimited boba tea on me for the rest of the semester! 🧋🤍",
+    "musicTrack": "soft-guitar",
+    "viewCount": 29,
+    "createdAt": "2026-10-18T07:25:45.094Z",
+    "lastViewedAt": "2026-10-18T14:40:45.094Z"
+  }
+]
