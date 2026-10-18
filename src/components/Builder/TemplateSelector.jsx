@@ -1,5 +1,6 @@
 import React from 'react';
 import { TEMPLATES } from '../../data/templates';
+import AppleEmoji from '../common/AppleEmoji';
 
 export default function TemplateSelector({ selectedId, onSelect }) {
   return (
@@ -28,8 +29,9 @@ export default function TemplateSelector({ selectedId, onSelect }) {
 
             {/* Name + Emoji */}
             <div className="px-4 py-3">
-              <h3 className="text-sm font-semibold text-slate-800">
-                {tmpl.emoji} {tmpl.name}
+              <h3 className="text-sm font-semibold text-slate-800 flex items-center gap-1.5">
+                <AppleEmoji emoji={tmpl.emoji} size={18} />
+                <span>{tmpl.name.replace(tmpl.emoji, '').trim()}</span>
               </h3>
             </div>
           </div>

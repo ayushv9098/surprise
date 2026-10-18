@@ -22,7 +22,8 @@ const ALLOWED_HOSTNAMES = new Set([
   'api.whatsapp.com',
   'www.w3.org',
   'localhost',
-  '127.0.0.1'
+  '127.0.0.1',
+  'emojicdn.elk.sh'
 ]);
 
 async function runE2ESuite() {

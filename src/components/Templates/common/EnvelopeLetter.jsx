@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Mail, Heart, Sparkles } from 'lucide-react';
+import { Mail, Heart } from 'lucide-react';
 import { soundEffects } from './SoundEffects';
+import { renderAppleText } from '../../common/AppleEmoji';
 
 export default function EnvelopeLetter({
   to = "My Sweetest",
@@ -94,8 +95,8 @@ export default function EnvelopeLetter({
                 <div className="relative mt-5 mb-2 flex items-center justify-center">
                   <div className={`w-16 h-16 sm:w-18 sm:h-18 rounded-full flex flex-col items-center justify-center cursor-pointer transition-transform duration-300 group-hover:scale-105 shadow-md ${sealClasses}`}>
                     <Heart className="w-5 h-5 fill-current opacity-90" />
-                    <span className="text-[10px] font-bold mt-0.5 opacity-90">
-                      {initials}
+                    <span className="text-[10px] font-bold mt-0.5 opacity-90 flex items-center justify-center">
+                      {renderAppleText(initials, 14)}
                     </span>
                   </div>
                 </div>
@@ -124,13 +125,13 @@ export default function EnvelopeLetter({
               {/* Letter Header */}
               <div className="mb-6 border-b border-amber-900/10 pb-4">
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-800">
-                  Dearest {to},
+                  Dearest {renderAppleText(to)},
                 </h3>
               </div>
 
               {/* Letter Body (Handwritten or Serif) */}
               <div className={`${fontClass} whitespace-pre-line my-6 text-slate-800/90 font-normal`}>
-                {letterBody}
+                {renderAppleText(letterBody)}
               </div>
 
               {/* Letter Sign-off */}

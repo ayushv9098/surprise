@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { Heart, Sparkles, Smile, CheckCircle2, Award } from 'lucide-react';
+import { Heart, Smile, CheckCircle2, Award } from 'lucide-react';
 import AmbientParticles from './common/AmbientParticles';
 import AudioPlayer from './common/AudioPlayer';
 import EnvelopeLetter from './common/EnvelopeLetter';
@@ -9,6 +9,7 @@ import CuteQuiz from './common/CuteQuiz';
 import ScratchCard from './common/ScratchCard';
 import TemplateFooter from './common/TemplateFooter';
 import { soundEffects } from './common/SoundEffects';
+import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 
 export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'My Favorite Person';
@@ -91,16 +92,17 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
 
       {/* Hero Section */}
       <section className="relative z-20 pt-16 sm:pt-24 pb-10 px-4 text-center max-w-3xl mx-auto">
-        <div className="text-xs font-medium text-purple-600 mb-3 tracking-wide">
-          A sincere note for you 🕊️
+        <div className="text-xs font-medium text-purple-600 mb-3 tracking-wide flex items-center justify-center gap-1.5">
+          <span>A sincere note for you</span>
+          <AppleEmoji emoji="🕊️" size={14} />
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-          {title}
+          {renderAppleText(title)}
         </h1>
 
         <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
-          {subtitle}
+          {renderAppleText(subtitle)}
         </p>
       </section>
 
@@ -126,8 +128,9 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
             <span>The Peace Question</span>
           </div>
 
-          <h3 className="font-semibold text-2xl sm:text-3xl font-bold text-slate-800">
-            Can We Make Up? 🥺
+          <h3 className="font-semibold text-2xl sm:text-3xl font-bold text-slate-800 flex items-center justify-center gap-2">
+            <span>Can We Make Up?</span>
+            <AppleEmoji emoji="🥺" size={28} />
           </h3>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">
             Life is too short and you are far too precious to be upset with each other.
@@ -141,7 +144,10 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
                 className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-sm sm:text-base font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white shadow-lg shadow-purple-300/60 hover:shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer z-10"
               >
                 <Heart className="w-5 h-5 fill-current animate-pulse" />
-                <span>I Forgive You 💕</span>
+                <span className="flex items-center gap-1.5">
+                  <span>I Forgive You</span>
+                  <AppleEmoji emoji="💕" size={18} />
+                </span>
               </button>
 
               {/* Playful Moving "No" Button */}
@@ -152,15 +158,15 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
                   transform: `translate(${noButtonPos.x}px, ${noButtonPos.y}px)`,
                   transition: 'all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)',
                 }}
-                className="px-5 py-3 rounded-full text-xs sm:text-sm font-semibold bg-white border border-purple-200 text-purple-800 shadow-sm hover:shadow-md cursor-pointer select-none transition-all"
+                className="px-5 py-3 rounded-full text-xs sm:text-sm font-semibold bg-white border border-purple-200 text-purple-800 shadow-sm hover:shadow-md cursor-pointer select-none transition-all flex items-center justify-center gap-1.5"
               >
-                {playfulNoTexts[noCount % playfulNoTexts.length]}
+                {renderAppleText(playfulNoTexts[noCount % playfulNoTexts.length], 16)}
               </button>
             </div>
           ) : (
             /* Forgiveness Celebration State */
-            <div className="mt-6 p-6 rounded-2xl bg-gradient-to-b from-white to-purple-50 border border-purple-200 shadow-inner animate-in zoom-in-95 duration-400">
-              <span className="text-5xl inline-block animate-bounce mb-2">💖</span>
+            <div className="mt-6 p-6 rounded-2xl bg-gradient-to-b from-white to-purple-50 border border-purple-200 shadow-inner animate-in zoom-in-95 duration-400 flex flex-col items-center">
+              <AppleEmoji emoji="💖" size={48} className="animate-bounce mb-2" />
               <h4 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
                 Thank You For Forgiving Me!
               </h4>
@@ -231,7 +237,10 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-purple-600 hover:bg-purple-700 text-white shadow-md shadow-purple-300 transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <Award className="w-4 h-4" />
-                <span>Affix Peace Stamp 📜</span>
+                <span className="flex items-center gap-1.5">
+                  <span>Affix Peace Stamp</span>
+                  <AppleEmoji emoji="📜" size={14} />
+                </span>
               </button>
             ) : (
               <div className="w-24 h-24 rounded-full border-4 border-purple-600/70 p-2 flex flex-col items-center justify-center text-purple-700 font-bold rotate-[-12deg] bg-purple-50/70 shadow-sm animate-in zoom-in-75 duration-300">

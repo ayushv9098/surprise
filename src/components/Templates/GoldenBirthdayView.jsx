@@ -9,6 +9,7 @@ import CuteQuiz from './common/CuteQuiz';
 import ScratchCard from './common/ScratchCard';
 import TemplateFooter from './common/TemplateFooter';
 import { soundEffects } from './common/SoundEffects';
+import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 
 export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'Birthday Star';
@@ -92,18 +93,19 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
 
       {/* Hero Section */}
       <section className="relative z-20 pt-16 sm:pt-24 pb-10 px-4 text-center max-w-3xl mx-auto">
-        <div className="text-xs font-medium text-amber-600 mb-3 tracking-wide">
-          A Golden Birthday Celebration 🎂
+        <div className="text-xs font-medium text-amber-600 mb-3 tracking-wide flex items-center justify-center gap-1.5">
+          <span>A Golden Birthday Celebration</span>
+          <AppleEmoji emoji="🎂" size={14} />
         </div>
 
         {/* Big Celebratory Headline */}
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-          {title}
+          {renderAppleText(title)}
         </h1>
 
         {/* Subtitle */}
         <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
-          {subtitle}
+          {renderAppleText(subtitle)}
         </p>
 
         {/* Confetti Cannon Button */}
@@ -113,7 +115,10 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white shadow-md transition-all active:scale-95 cursor-pointer"
           >
             <PartyPopper className="w-4 h-4" />
-            <span>Pop Confetti! 🎊</span>
+            <span className="flex items-center gap-1.5">
+              <span>Pop Confetti!</span>
+              <AppleEmoji emoji="🎊" size={16} />
+            </span>
           </button>
         </div>
       </section>
@@ -144,8 +149,8 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
                   {!candlesBlown ? (
                     <div className="w-4 h-6 bg-gradient-to-t from-orange-500 via-amber-400 to-yellow-200 rounded-full animate-flame shadow-md shadow-amber-400" />
                   ) : (
-                    <span className="text-xs text-slate-400 animate-in fade-in duration-300">
-                      💨
+                    <span className="text-xs text-slate-400 animate-in fade-in duration-300 flex items-center justify-center">
+                      <AppleEmoji emoji="💨" size={16} />
                     </span>
                   )}
                   {/* Candle Stick */}
@@ -164,11 +169,11 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
               </div>
               {/* Bottom Layer */}
               <div className="w-60 sm:w-72 h-14 rounded-b-2xl bg-gradient-to-b from-[#FFF2D6] to-[#FCE6BD] border-t-2 border-amber-300/50 shadow-lg flex items-center justify-around px-4">
-                <span className="text-lg">🍓</span>
-                <span className="text-lg">✨</span>
-                <span className="text-lg">🎂</span>
-                <span className="text-lg">✨</span>
-                <span className="text-lg">🍓</span>
+                <span className="text-lg inline-flex items-center"><AppleEmoji emoji="🍓" size={20} /></span>
+                <span className="text-lg inline-flex items-center"><AppleEmoji emoji="✨" size={20} /></span>
+                <span className="text-lg inline-flex items-center"><AppleEmoji emoji="🎂" size={20} /></span>
+                <span className="text-lg inline-flex items-center"><AppleEmoji emoji="✨" size={20} /></span>
+                <span className="text-lg inline-flex items-center"><AppleEmoji emoji="🍓" size={20} /></span>
               </div>
               {/* Cake Stand Plate */}
               <div className="w-72 sm:w-84 h-3 bg-gradient-to-r from-amber-200 via-white to-amber-200 rounded-full shadow-md mt-1" />
@@ -182,13 +187,19 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-md shadow-amber-300 transition-all hover:scale-105 active:scale-95 cursor-pointer"
             >
               <Flame className="w-4 h-4 text-yellow-200 animate-pulse" />
-              <span>Blow Out Candles! 🎂</span>
+              <span className="flex items-center gap-1.5">
+                <span>Blow Out Candles!</span>
+                <AppleEmoji emoji="🎂" size={16} />
+              </span>
             </button>
           ) : (
             <div className="animate-in zoom-in-95 duration-400 flex flex-col items-center">
               <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold shadow-xs mb-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-                <span>Wish Released Into The Universe! 🌟</span>
+                <span className="flex items-center gap-1">
+                  <span>Wish Released Into The Universe!</span>
+                  <AppleEmoji emoji="🌟" size={14} />
+                </span>
               </div>
               <p className="font-handwriting text-2xl text-amber-800 mt-1">
                 "May every single candle carry your happiest dreams into reality!"
@@ -244,14 +255,17 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
 
               <span className="mt-4 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-amber-500 text-white text-xs font-semibold shadow-md group-hover:bg-amber-600 transition-colors">
                 <Gift className="w-3.5 h-3.5" />
-                <span>Tap Box to Unwrap! 🎁</span>
+                <span className="flex items-center gap-1.5">
+                  <span>Tap Box to Unwrap!</span>
+                  <AppleEmoji emoji="🎁" size={14} />
+                </span>
               </span>
             </div>
           ) : (
             /* Opened Gift items */
             <div className="my-8 animate-in zoom-in-95 duration-500 space-y-3 text-left">
               <div className="p-4 rounded-2xl bg-white/90 border border-amber-200/80 shadow-sm flex items-center gap-3">
-                <span className="text-3xl">🎫</span>
+                <span className="text-3xl shrink-0 inline-flex items-center"><AppleEmoji emoji="🎫" size={32} /></span>
                 <div>
                   <h4 className="font-semibold font-bold text-slate-800 text-sm sm:text-base">VIP Birthday Pass</h4>
                   <p className="text-xs text-slate-500">Zero rules, zero chores, you call all the shots today!</p>
@@ -259,7 +273,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
               </div>
 
               <div className="p-4 rounded-2xl bg-white/90 border border-amber-200/80 shadow-sm flex items-center gap-3">
-                <span className="text-3xl">🥂</span>
+                <span className="text-3xl shrink-0 inline-flex items-center"><AppleEmoji emoji="🥂" size={32} /></span>
                 <div>
                   <h4 className="font-semibold font-bold text-slate-800 text-sm sm:text-base">Celebration Dinner on Me</h4>
                   <p className="text-xs text-slate-500">Pick any restaurant or treat and consider it booked!</p>
@@ -267,7 +281,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
               </div>
 
               <div className="p-4 rounded-2xl bg-white/90 border border-amber-200/80 shadow-sm flex items-center gap-3">
-                <span className="text-3xl">✨</span>
+                <span className="text-3xl shrink-0 inline-flex items-center"><AppleEmoji emoji="✨" size={32} /></span>
                 <div>
                   <h4 className="font-semibold font-bold text-slate-800 text-sm sm:text-base">Year-Long Wish Guarantee</h4>
                   <p className="text-xs text-slate-500">Whenever you need cheering up, I'm just one call away.</p>

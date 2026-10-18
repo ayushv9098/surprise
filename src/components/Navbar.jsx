@@ -1,4 +1,5 @@
 import React from 'react';
+import AppleEmoji from './common/AppleEmoji';
 
 export default function Navbar({ currentView, onNavigate }) {
   return (
@@ -10,7 +11,7 @@ export default function Navbar({ currentView, onNavigate }) {
           className="flex items-center gap-1.5 text-left cursor-pointer"
         >
           <span className="font-bold text-lg text-gray-900">WishCraft</span>
-          <span className="text-base">✨</span>
+          <AppleEmoji emoji="✨" size={18} />
         </button>
 
         {/* Actions */}

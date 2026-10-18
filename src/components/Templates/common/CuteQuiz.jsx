@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { HelpCircle, Sparkles, RotateCcw, Heart } from 'lucide-react';
+import { Sparkles, RotateCcw } from 'lucide-react';
 import { soundEffects } from './SoundEffects';
+import AppleEmoji, { renderAppleText } from '../../common/AppleEmoji';
 
 export default function CuteQuiz({
   quiz = null,
@@ -96,21 +97,24 @@ export default function CuteQuiz({
         
         {/* Decorative corner icon */}
         <div className="text-center mb-6">
-          <div className="text-xs font-medium text-rose-600 mb-2">
-            Interactive Quiz ✨
+          <div className="text-xs font-medium text-rose-600 mb-2 flex items-center justify-center gap-1.5">
+            <span>Interactive Quiz</span>
+            <AppleEmoji emoji="✨" size={14} />
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-            {quizTitle}
+            {renderAppleText(quizTitle)}
           </h3>
           <p className="text-sm font-medium text-slate-600 mt-2 max-w-md mx-auto">
-            {question}
+            {renderAppleText(question)}
           </p>
         </div>
 
         {/* Victory Celebration State */}
         {isAnswered && isCorrect ? (
           <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-rose-100 shadow-sm animate-in zoom-in-95 duration-400">
-            <div className="text-3xl mb-2">🍫</div>
+            <div className="text-3xl mb-2 flex items-center justify-center">
+              <AppleEmoji emoji="🍫" size={40} />
+            </div>
 
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500 text-white text-xs font-semibold mb-2">
               <Sparkles className="w-3.5 h-3.5" />
@@ -122,7 +126,7 @@ export default function CuteQuiz({
             </h4>
 
             <p className="font-handwriting text-2xl text-rose-600 max-w-sm mt-2 leading-relaxed">
-              "{reward}"
+              "{renderAppleText(reward)}"
             </p>
 
             <button
@@ -158,16 +162,17 @@ export default function CuteQuiz({
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span className="text-sm sm:text-base font-medium">
-                      {opt}
+                      {renderAppleText(opt)}
                     </span>
                   </div>
 
                   {isShaking ? (
-                    <span className="text-xs font-semibold text-rose-500 ml-2 whitespace-nowrap animate-pulse">
-                      Try again! 🥺
+                    <span className="text-xs font-semibold text-rose-500 ml-2 whitespace-nowrap animate-pulse flex items-center gap-1">
+                      <span>Try again!</span>
+                      <AppleEmoji emoji="🥺" size={14} />
                     </span>
                   ) : (
-                    <Heart className="w-4 h-4 text-slate-300 group-hover:text-rose-400 transition-colors shrink-0" />
+                    <AppleEmoji emoji="💖" size={16} className="opacity-40 group-hover:opacity-100 transition-opacity shrink-0" />
                   )}
                 </button>
               );

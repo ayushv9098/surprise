@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import confetti from 'canvas-confetti';
-import { Gift, Wand2, CheckCircle2 } from 'lucide-react';
+import { Wand2, CheckCircle2 } from 'lucide-react';
 import { soundEffects } from './SoundEffects';
+import AppleEmoji, { renderAppleText } from '../../common/AppleEmoji';
 
 export default function ScratchCard({
   scratchCard = null,
@@ -65,16 +66,9 @@ export default function ScratchCard({
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, width, height);
 
-    // Decorative Sparkle text on foil
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.font = 'bold 15px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('✨ Scratch with finger or mouse ✨', width / 2, height / 2 - 8);
-
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-    ctx.font = '12px sans-serif';
-    ctx.fillText('Secret Keepsake Inside', width / 2, height / 2 + 14);
+    // Foil base styling
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+    ctx.fillRect(10, 10, width - 20, height - 20);
   }, [theme]);
 
   useEffect(() => {
@@ -201,11 +195,11 @@ export default function ScratchCard({
         {/* Header */}
         <div className="mb-4">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-xs font-semibold text-amber-700 mb-2">
-            <Gift className="w-3.5 h-3.5" />
+            <AppleEmoji emoji="🎁" size={14} />
             <span>Scratch to Reveal</span>
           </div>
           <h3 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
-            {resolvedTitle}
+            {renderAppleText(resolvedTitle)}
           </h3>
           <p className="text-xs text-slate-500 mt-1">
             Scratch the foil layer below to unlock your special voucher
@@ -219,16 +213,16 @@ export default function ScratchCard({
         >
           {/* Secret Hidden Layer (Underneath) */}
           <div className="absolute inset-0 p-5 flex flex-col items-center justify-center text-center bg-gradient-to-tr from-rose-50 via-pink-50 to-amber-50 z-0">
-            <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 mb-2 shadow-xs">
-              <Gift className="w-5 h-5 animate-bounce" />
+            <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center mb-2 shadow-xs">
+              <AppleEmoji emoji="🎁" size={24} className="animate-bounce" />
             </div>
             
             <p className="font-handwriting text-2xl sm:text-3xl font-bold text-rose-600 leading-tight">
-              {resolvedMessage}
+              {renderAppleText(resolvedMessage)}
             </p>
 
             <p className="text-xs text-slate-500 mt-2 font-medium">
-              {resolvedSubtitle}
+              {renderAppleText(resolvedSubtitle)}
             </p>
 
             <div className="mt-3 inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-white/90 border border-rose-200 text-[11px] font-mono text-slate-600 shadow-xs">
@@ -249,6 +243,18 @@ export default function ScratchCard({
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             />
+          )}
+
+          {/* Sparkle instruction overlay on top of foil */}
+          {!isRevealed && scratchProgress === 0 && (
+            <div className="absolute inset-0 pointer-events-none z-15 flex flex-col items-center justify-center select-none text-white drop-shadow-sm">
+              <div className="flex items-center gap-1.5 font-bold text-sm sm:text-base text-white/95">
+                <AppleEmoji emoji="✨" size={16} />
+                <span>Scratch with finger or mouse</span>
+                <AppleEmoji emoji="✨" size={16} />
+              </div>
+              <span className="text-xs text-white/80 mt-1">Secret Keepsake Inside</span>
+            </div>
           )}
 
           {/* Shimmer sweep effect over foil before scratching */}

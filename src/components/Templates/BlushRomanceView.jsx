@@ -6,6 +6,7 @@ import PolaroidGallery from './common/PolaroidGallery';
 import CuteQuiz from './common/CuteQuiz';
 import ScratchCard from './common/ScratchCard';
 import TemplateFooter from './common/TemplateFooter';
+import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 
 export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'My Love';
@@ -36,18 +37,19 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
 
       {/* Hero Section */}
       <section className="relative z-20 pt-16 sm:pt-24 pb-12 px-4 text-center max-w-3xl mx-auto">
-        <div className="text-xs font-medium text-rose-500 mb-3 tracking-wide">
-          Made with love for you 🌸
+        <div className="text-xs font-medium text-rose-500 mb-3 tracking-wide flex items-center justify-center gap-1.5">
+          <span>Made with love for you</span>
+          <AppleEmoji emoji="🌸" size={14} />
         </div>
 
         {/* Headline */}
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
-          {title}
+          {renderAppleText(title)}
         </h1>
 
         {/* Subtitle */}
         <p className="mt-4 text-base sm:text-lg text-slate-500 max-w-xl mx-auto font-normal leading-relaxed">
-          {subtitle}
+          {renderAppleText(subtitle)}
         </p>
       </section>
 
@@ -60,7 +62,7 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
           letterBody={letterBody}
           sealType="rose"
           fontFamily="handwriting"
-          initials={recipientName ? recipientName[0].toUpperCase() : 'D'}
+          initials={siteData.letter?.sealEmoji || (recipientName ? recipientName[0].toUpperCase() : '🌸')}
           subtitle="Tap the wax seal to open your personal letter"
         />
       </section>
@@ -69,7 +71,7 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
       <section className="relative z-20 max-w-3xl mx-auto my-14 px-4">
         <div className="text-center mb-8">
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900">
-            Little Things I Adore About You
+            {renderAppleText("Little Things I Adore About You")}
           </h2>
           <p className="text-sm text-slate-500 mt-1">A few reasons why you are so special</p>
         </div>
@@ -81,15 +83,15 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
               className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm transition-all duration-200 hover:shadow-md"
             >
               <div className="flex items-start gap-3.5">
-                <span className="text-2xl select-none">
-                  {item.icon}
+                <span className="text-2xl select-none shrink-0 inline-flex items-center">
+                  <AppleEmoji emoji={item.icon} size={24} />
                 </span>
                 <div>
                   <h3 className="text-sm font-semibold text-slate-800">
-                    {item.title}
+                    {renderAppleText(item.title)}
                   </h3>
                   <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    {item.desc}
+                    {renderAppleText(item.desc)}
                   </p>
                 </div>
               </div>

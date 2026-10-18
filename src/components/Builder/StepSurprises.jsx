@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle2 } from 'lucide-react';
+import AppleEmoji from '../common/AppleEmoji';
 
 const WAX_SEALS = [
   { emoji: '💌', color: '#E11D48', label: 'Ruby Heart' },
@@ -151,7 +152,7 @@ export default function StepSurprises({ formData, onChange }) {
                         : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
                     }`}
                   >
-                    <span>{seal.emoji}</span>
+                    <AppleEmoji emoji={seal.emoji} size={16} />
                     <span>{seal.label}</span>
                   </button>
                 );

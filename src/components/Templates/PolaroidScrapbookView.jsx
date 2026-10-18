@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Heart, Pin, Calendar } from 'lucide-react';
+import { Heart, Pin, Calendar } from 'lucide-react';
 import AmbientParticles from './common/AmbientParticles';
 import AudioPlayer from './common/AudioPlayer';
 import EnvelopeLetter from './common/EnvelopeLetter';
@@ -7,6 +7,7 @@ import PolaroidGallery from './common/PolaroidGallery';
 import CuteQuiz from './common/CuteQuiz';
 import ScratchCard from './common/ScratchCard';
 import TemplateFooter from './common/TemplateFooter';
+import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 
 export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'My Favorite Adventurer';
@@ -74,16 +75,17 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
         <div className="w-32 h-6 washi-tape mx-auto -mb-3 rounded-xs opacity-80" />
 
         <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-amber-200/80">
-          <div className="text-xs font-medium text-amber-700 mb-2">
-            Memories & Keepsakes Journal 📸
+          <div className="text-xs font-medium text-amber-700 mb-2 flex items-center justify-center gap-1.5">
+            <span>Memories & Keepsakes Journal</span>
+            <AppleEmoji emoji="📸" size={14} />
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
-            {title}
+            {renderAppleText(title)}
           </h1>
 
           <p className="font-handwriting text-2xl sm:text-3xl text-amber-800/90 mt-3 max-w-xl mx-auto">
-            "{subtitle}"
+            "{renderAppleText(subtitle)}"
           </p>
 
           <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
@@ -114,8 +116,8 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
             <div key={idx} className="relative pl-6 sm:pl-10">
               
               {/* Timeline Pin Node */}
-              <div className="absolute -left-3.5 top-1.5 w-7 h-7 rounded-full bg-amber-100 border-2 border-amber-400 flex items-center justify-center text-amber-700 shadow-sm">
-                <Pin className="w-3.5 h-3.5" />
+              <div className="absolute -left-3.5 top-1.5 w-7 h-7 rounded-full bg-amber-100 border-2 border-amber-400 flex items-center justify-center shadow-sm">
+                <AppleEmoji emoji="📌" size={16} />
               </div>
 
               {/* Date stamp badge (mobile vs desktop) */}
@@ -172,7 +174,7 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
           letterBody={letterBody}
           sealType="rose"
           fontFamily="handwriting"
-          initials={recipientName ? recipientName[0].toUpperCase() : 'M'}
+          initials={siteData.letter?.sealEmoji || (recipientName ? recipientName[0].toUpperCase() : '📸')}
           subtitle="Folded scrapbook journal entry sealed with wax"
         />
       </section>
