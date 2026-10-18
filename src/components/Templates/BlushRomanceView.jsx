@@ -8,7 +8,7 @@ import ScratchCard from './common/ScratchCard';
 import TemplateFooter from './common/TemplateFooter';
 
 export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
-  const recipientName = siteData.recipientName || 'Devi';
+  const recipientName = siteData.recipientName || 'My Love';
   const senderName = siteData.senderName || 'Your Favorite Person';
   const title = siteData.title || siteData.occasion || `To My Favorite Person, ${recipientName}`;
   const subtitle = siteData.subtitle || "In a world of billions of people, my happiest place will always be right beside you.";

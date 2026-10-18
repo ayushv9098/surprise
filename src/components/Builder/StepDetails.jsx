@@ -34,7 +34,7 @@ export default function StepDetails({ formData, onChange }) {
               type="text"
               value={formData.recipientName || ''}
               onChange={(e) => onChange({ recipientName: e.target.value })}
-              placeholder="e.g. Aditi"
+              placeholder="e.g. Sarah"
               className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 placeholder-gray-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
             />
             <p className="text-xs text-gray-400">
@@ -51,7 +51,7 @@ export default function StepDetails({ formData, onChange }) {
               type="text"
               value={formData.senderName || ''}
               onChange={(e) => onChange({ senderName: e.target.value })}
-              placeholder="e.g. Rahul"
+              placeholder="e.g. Alex"
               className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 placeholder-gray-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
             />
             <p className="text-xs text-gray-400">

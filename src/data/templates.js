@@ -5,7 +5,7 @@ export const TEMPLATES = [
     tag: 'Romantic & Soft',
     emoji: '🌸',
     headline: 'For the one who holds your entire heart',
-    description: 'Devi aesthetic with soft pink rose glow, sealed secret love letter, and an adorable love quiz.',
+    description: 'Soft romantic rose glow, sealed secret love letter, and an adorable sweet quiz.',
     accentColor: '#F43F5E',
     themeClass: 'theme-blush',
     gradientBg: 'from-rose-50 via-pink-50 to-amber-50',

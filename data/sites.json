@@ -1,18 +1,18 @@
 [
   {
     "templateId": "blush-romance",
-    "recipientName": "Aditi Test",
-    "senderName": "Ayush",
-    "occasion": "Happy Birthday",
-    "subtitle": "Special day",
+    "recipientName": "Sarah Jenkins",
+    "senderName": "Alex",
+    "occasion": "Happy Anniversary ✨",
+    "subtitle": "To my favorite person",
     "photos": [],
     "songId": "romantic-acoustic",
     "letter": {
-      "title": "Dear Aditi",
-      "content": "You are amazing!"
+      "title": "Dear Sarah",
+      "content": "You make every day brighter and happier."
     },
     "id": "site_1792337945935_ipmtw",
-    "slug": "aditi-test",
+    "slug": "for-sarah",
     "template": "blush-romance",
     "viewCount": 2,
     "createdAt": "2026-10-18T15:39:05.936Z",
@@ -180,8 +180,8 @@
     ],
     "scratchSecret": "Unlimited boba tea on me for the rest of the semester! 🧋🤍",
     "musicTrack": "soft-guitar",
-    "viewCount": 29,
+    "viewCount": 49,
     "createdAt": "2026-10-18T07:25:45.094Z",
-    "lastViewedAt": "2026-10-18T14:40:45.094Z"
+    "lastViewedAt": "2026-10-18T17:46:16.729Z"
   }
 ]

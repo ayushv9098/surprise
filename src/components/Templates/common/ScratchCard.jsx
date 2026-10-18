@@ -5,16 +5,20 @@ import { soundEffects } from './SoundEffects';
 
 export default function ScratchCard({
   scratchCard = null,
+  scratchData = null,
   hiddenMessage = "",
+  defaultSecret = "",
   subtitle = "",
   title = "",
+  defaultTitle = "",
   theme = "rose", // 'rose', 'gold', 'lavender'
   voucherCode = ""
 }) {
-  const resolvedTitle = title || scratchCard?.title || "Mystery Keepsake Scratch Card";
-  const resolvedMessage = hiddenMessage || scratchCard?.hiddenSecret || scratchCard?.hiddenMessage || "Valid for: 1x Late-Night Drive + Favorite Dessert on Me! 🍨🚗";
-  const resolvedSubtitle = subtitle || scratchCard?.subtitle || "Redeemable anytime with zero expiration date ❤️";
-  const resolvedCode = voucherCode || scratchCard?.code || scratchCard?.voucherCode || "LOVE-FOREVER-2026";
+  const cardData = scratchCard || scratchData;
+  const resolvedTitle = title || defaultTitle || cardData?.title || "Mystery Keepsake Scratch Card";
+  const resolvedMessage = hiddenMessage || defaultSecret || cardData?.hiddenSecret || cardData?.hiddenMessage || "Valid for: 1x Late-Night Drive + Favorite Dessert on Me! 🍨🚗";
+  const resolvedSubtitle = subtitle || cardData?.subtitle || "Redeemable anytime with zero expiration date ❤️";
+  const resolvedCode = voucherCode || cardData?.code || cardData?.voucherCode || "LOVE-FOREVER-2026";
 
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
@@ -30,8 +34,8 @@ export default function ScratchCard({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const width = canvas.offsetWidth;
-    const height = canvas.offsetHeight;
+    const width = canvas.offsetWidth || containerRef.current?.offsetWidth || 400;
+    const height = canvas.offsetHeight || containerRef.current?.offsetHeight || 192;
     canvas.width = width;
     canvas.height = height;
 
@@ -75,7 +79,14 @@ export default function ScratchCard({
 
   useEffect(() => {
     initCanvas();
-  }, [initCanvas]);
+    const handleResize = () => {
+      if (!isRevealed) {
+        initCanvas();
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [initCanvas, isRevealed]);
 
   const revealEntireCard = useCallback(() => {
     if (isRevealed) return;

@@ -109,7 +109,7 @@ export default function TemplateViewer({
               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold transition-all hover:scale-105 active:scale-95 cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Editor</span>
+              <span className="hidden sm:inline">Back</span>
             </button>
           )}
 

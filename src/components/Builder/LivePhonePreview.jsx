@@ -18,8 +18,8 @@ export default function LivePhonePreview({ formData }) {
   const template = getTemplateById(formData.templateId || 'blush-romance');
   const song = getSongById(formData.songId || template.recommendedSongId);
 
-  const recipientName = formData.recipientName || 'Aditi';
-  const senderName = formData.senderName || 'Rahul';
+  const recipientName = formData.recipientName || 'Sarah';
+  const senderName = formData.senderName || 'Alex';
   const occasion = formData.occasion || template.defaultOccasion;
   const subtitle = formData.subtitle || template.headline;
   const photos = formData.photos && formData.photos.length > 0 ? formData.photos : [];

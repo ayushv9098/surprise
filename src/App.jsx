@@ -22,7 +22,7 @@ export default function App() {
   // Check URL on load for direct surprise links (?v=slug, ?d=compressed, ?view=admin, etc.)
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const slug = searchParams.get('v') || searchParams.get('id');
+    const slug = searchParams.get('v') || searchParams.get('id') || searchParams.get('slug');
     const compressedData = searchParams.get('d');
     const viewParam = searchParams.get('view');
     const previewTemplate = searchParams.get('preview');
@@ -66,6 +66,9 @@ export default function App() {
       setSelectedTemplateId(templateId);
     }
     setCurrentView(view);
+    if (view === 'home' && typeof window !== 'undefined' && window.location.search) {
+      window.history.pushState({}, '', window.location.pathname);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

@@ -25,8 +25,8 @@ export default function BuilderStudio({ initialTemplateId = 'blush-romance', onC
     const preset = getPresetForTemplate(initialTemplateId);
     return {
       templateId: initialTemplateId,
-      recipientName: preset.recipientName || 'Aditi',
-      senderName: preset.senderName || 'Rahul',
+      recipientName: preset.recipientName || 'Sarah',
+      senderName: preset.senderName || 'Alex',
       occasion: preset.occasion || 'Happy 2nd Anniversary My Love! 🌸',
       subtitle: preset.subtitle || '730 days of falling in love with your smile, over and over again.',
       photos: preset.photos || [],

@@ -27,8 +27,8 @@ export const SAMPLE_PHOTOS = [
 
 export const TEMPLATE_PRESETS = {
   'blush-romance': {
-    recipientName: 'Aditi',
-    senderName: 'Rahul',
+    recipientName: 'Sarah',
+    senderName: 'Alex',
     occasion: 'Happy 2nd Anniversary, My Love! 🌸',
     subtitle: '730 days of falling in love with your smile, over and over again.',
     photos: [
@@ -53,7 +53,7 @@ export const TEMPLATE_PRESETS = {
     ],
     letter: {
       title: 'A note sealed with my entire heart...',
-      content: `My dearest Aditi,\n\nFrom the moment you entered my life, ordinary Tuesdays became unforgettable adventures. Your kindness fills every corner of my heart, and your laugh is honestly my favorite song.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Anniversary my love — here is to a million more sunsets together.\n\nForever & always,\nRahul ❤️`,
+      content: `My dearest Sarah,\n\nFrom the moment you entered my life, ordinary Tuesdays became unforgettable adventures. Your kindness fills every corner of my heart, and your laugh is honestly my favorite song.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Anniversary my love — here is to a million more sunsets together.\n\nForever & always,\nAlex ❤️`,
       sealEmoji: '💌',
       waxColor: '#E11D48',
     },
@@ -67,8 +67,8 @@ export const TEMPLATE_PRESETS = {
         'All of the above & everything you are ❤️',
       ],
       correctIndex: 3,
-      rewardTitle: 'Cadbury Dairy Milk Silk Unlocked! 🍫✨',
-      rewardMessage: 'Show this secret screen to Rahul to claim your giant chocolate bar + warm bear hug tonight!',
+      rewardTitle: 'Sweet Treat Unlocked! 🍫✨',
+      rewardMessage: 'Show this secret screen to claim your favorite chocolate bar + warm bear hug tonight!',
     },
     scratchCard: {
       enabled: true,
