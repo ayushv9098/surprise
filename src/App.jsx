@@ -11,6 +11,7 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import { TEMPLATES } from './data/templates';
 import { getPresetForTemplate } from './data/samplePresets';
 import { loadSurprise } from './utils/storage';
+import { Agentation } from 'agentation';
 
 export default function App() {
   const [currentView, setCurrentView] = useState('home'); // 'home' | 'builder' | 'viewer' | 'admin'
@@ -98,12 +99,15 @@ export default function App() {
   // Full Screen Live Keepsake Viewer
   if (currentView === 'viewer' && siteData) {
     return (
-      <TemplateViewer
-        siteData={siteData}
-        isLiveView={true}
-        onBack={() => handleNavigate('home')}
-        onNavigate={handleNavigate}
-      />
+      <>
+        <TemplateViewer
+          siteData={siteData}
+          isLiveView={true}
+          onBack={() => handleNavigate('home')}
+          onNavigate={handleNavigate}
+        />
+        {import.meta.env.DEV && <Agentation />}
+      </>
     );
   }
 
@@ -275,6 +279,7 @@ export default function App() {
 
       <Footer />
       <Toast toast={toast} onClose={() => setToast(null)} />
+      {import.meta.env.DEV && <Agentation />}
     </div>
   );
 }
