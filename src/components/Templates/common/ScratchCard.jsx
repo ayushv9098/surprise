@@ -193,7 +193,7 @@ export default function ScratchCard({
             <Gift className="w-3.5 h-3.5" />
             <span>Scratch to Reveal</span>
           </div>
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-800">
+          <h3 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
             {resolvedTitle}
           </h3>
           <p className="text-xs text-slate-500 mt-1">

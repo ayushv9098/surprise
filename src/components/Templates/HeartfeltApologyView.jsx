@@ -90,20 +90,16 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
       />
 
       {/* Hero Section */}
-      <section className="relative z-20 pt-16 sm:pt-24 pb-10 px-4 text-center max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-purple-200/80 shadow-xs mb-5 animate-float">
-          <Heart className="w-3.5 h-3.5 text-purple-500 fill-purple-400" />
-          <span className="text-xs font-semibold tracking-wider uppercase text-purple-700">
-            A Sincere Note From The Heart
-          </span>
-          <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+      <section className="relative z-20 pt-16 sm:pt-24 pb-10 px-4 text-center max-w-3xl mx-auto">
+        <div className="text-xs font-medium text-purple-600 mb-3 tracking-wide">
+          A sincere note for you 🕊️
         </div>
 
-        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-800 leading-tight">
+        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
           {title}
         </h1>
 
-        <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
           {subtitle}
         </p>
       </section>
@@ -130,7 +126,7 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
             <span>The Peace Question</span>
           </div>
 
-          <h3 className="font-serif text-2xl sm:text-3xl font-bold text-slate-800">
+          <h3 className="font-semibold text-2xl sm:text-3xl font-bold text-slate-800">
             Can We Make Up? 🥺
           </h3>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">
@@ -165,7 +161,7 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
             /* Forgiveness Celebration State */
             <div className="mt-6 p-6 rounded-2xl bg-gradient-to-b from-white to-purple-50 border border-purple-200 shadow-inner animate-in zoom-in-95 duration-400">
               <span className="text-5xl inline-block animate-bounce mb-2">💖</span>
-              <h4 className="font-serif text-xl sm:text-2xl font-bold text-slate-800">
+              <h4 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
                 Thank You For Forgiving Me!
               </h4>
               <p className="font-handwriting text-2xl text-purple-700 mt-2">
@@ -189,7 +185,7 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
             <span className="text-[10px] uppercase tracking-widest font-bold text-purple-800/60 bg-purple-100 px-3 py-1 rounded-full border border-purple-200">
               OFFICIAL DIPLOMATIC ACCORD
             </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-slate-800 mt-3">
+            <h3 className="font-semibold text-2xl sm:text-3xl font-extrabold text-slate-800 mt-3">
               The Peace & Harmony Treaty
             </h3>
             <p className="text-xs text-slate-500 mt-1">
@@ -223,7 +219,7 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
           <div className="pt-4 border-t border-purple-900/10 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-center sm:text-left">
               <p className="text-[11px] uppercase tracking-wider text-purple-800/60 font-semibold">Treaty Status</p>
-              <p className="font-serif font-bold text-slate-800 text-base">
+              <p className="font-semibold font-bold text-slate-800 text-base">
                 {treatyStamped ? 'Formally Ratified & Enforced' : 'Awaiting Official Ratification'}
               </p>
             </div>

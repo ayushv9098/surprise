@@ -112,7 +112,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
           <div className="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-tr from-rose-500 via-pink-400 to-amber-300 flex items-center justify-center text-white shadow-lg shadow-rose-200 animate-float">
             <Sparkles className="w-7 h-7" />
           </div>
-          <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
+          <h3 className="font-semibold text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
             Your Surprise is Live! 🎉
           </h3>
           <p className="text-xs sm:text-sm text-slate-600 max-w-sm mx-auto">

@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Mail,
-  Sparkles,
-  HelpCircle,
-  Gift,
-  CheckCircle2,
-  Stamp,
-} from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 const WAX_SEALS = [
   { emoji: '💌', color: '#E11D48', label: 'Ruby Heart' },
@@ -68,91 +61,83 @@ export default function StepSurprises({ formData, onChange }) {
   return (
     <div className="space-y-6">
       {/* Header Info */}
-      <div className="border-b border-rose-100/80 pb-4">
-        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 text-rose-600 text-xs font-semibold uppercase tracking-wider mb-2">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Step 3: Interactive Surprises</span>
-        </div>
-        <h2 className="text-xl sm:text-2xl font-bold font-serif text-slate-800">
-          The Unboxing & Interactive Magic
+      <div className="border-b border-gray-100 pb-4">
+        <h2 className="text-lg font-semibold text-gray-900">
+          Letters & Surprises
         </h2>
-        <p className="text-xs sm:text-sm text-slate-500">
-          Add secret surprises that your recipient can tap, scratch, and unlock!
+        <p className="text-sm text-gray-500 mt-0.5">
+          Write a secret sealed letter, and add interactive surprises.
         </p>
       </div>
 
       {/* Surprises Sub-navigation Tabs */}
-      <div className="flex rounded-xl bg-rose-50/50 p-1 border border-rose-100">
+      <div className="flex border-b border-gray-200">
         <button
           type="button"
           onClick={() => setActiveTab('letter')}
-          className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+          className={`py-2 px-4 text-sm font-medium border-b-2 transition-all cursor-pointer ${
             activeTab === 'letter'
-              ? 'bg-white text-rose-600 shadow-xs'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'border-rose-500 text-rose-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
           }`}
         >
-          <Mail className="w-4 h-4 text-rose-500" />
-          <span>Wax-Sealed Letter</span>
+          Sealed Letter
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('quiz')}
-          className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+          className={`py-2 px-4 text-sm font-medium border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === 'quiz'
-              ? 'bg-white text-rose-600 shadow-xs'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'border-rose-500 text-rose-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
           }`}
         >
-          <HelpCircle className="w-4 h-4 text-pink-500" />
-          <span>Cute Love Quiz</span>
+          <span>Fun Quiz</span>
           {quiz.enabled && (
-            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
           )}
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('scratch')}
-          className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+          className={`py-2 px-4 text-sm font-medium border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === 'scratch'
-              ? 'bg-white text-rose-600 shadow-xs'
-              : 'text-slate-600 hover:text-slate-900'
+              ? 'border-rose-500 text-rose-600'
+              : 'border-transparent text-gray-500 hover:text-gray-700'
           }`}
         >
-          <Gift className="w-4 h-4 text-amber-500" />
           <span>Scratch Card</span>
           {scratchCard.enabled && (
-            <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
           )}
         </button>
       </div>
 
       {/* TAB 1: WAX SEALED LETTER */}
       {activeTab === 'letter' && (
-        <div className="space-y-5 animate-fadeIn">
+        <div className="space-y-5">
           {/* Letter Title */}
           <div className="space-y-1.5">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-              Letter Title
+            <label className="block text-xs font-medium text-gray-700">
+              Envelope Header
             </label>
             <input
               type="text"
               value={letter.title}
               onChange={(e) => updateLetter({ title: e.target.value })}
               placeholder="e.g. A note sealed with my entire heart..."
-              className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400 transition-all shadow-2xs"
+              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
             />
           </div>
 
           {/* Letter Wax Seal Stamp Selector */}
           <div className="space-y-2">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-              <Stamp className="w-4 h-4 text-rose-500" />
-              <span>Choose Wax Seal Stamp & Hue</span>
+            <label className="block text-xs font-medium text-gray-700">
+              Wax Seal Stamp
             </label>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-2">
               {WAX_SEALS.map((seal, idx) => {
                 const isSelected = letter.sealEmoji === seal.emoji;
                 return (
@@ -160,19 +145,14 @@ export default function StepSurprises({ formData, onChange }) {
                     type="button"
                     key={idx}
                     onClick={() => updateLetter({ sealEmoji: seal.emoji, waxColor: seal.color })}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all cursor-pointer ${
                       isSelected
-                        ? 'border-rose-500 bg-rose-50 shadow-xs scale-105'
-                        : 'border-slate-200 bg-white hover:border-slate-300'
+                        ? 'border-rose-500 bg-rose-50 text-rose-700'
+                        : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
                     }`}
                   >
-                    <div
-                      className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs shadow-xs"
-                      style={{ backgroundColor: seal.color }}
-                    >
-                      {seal.emoji}
-                    </div>
-                    <span className="text-xs font-medium text-slate-700">{seal.label}</span>
+                    <span>{seal.emoji}</span>
+                    <span>{seal.label}</span>
                   </button>
                 );
               })}
@@ -182,19 +162,19 @@ export default function StepSurprises({ formData, onChange }) {
           {/* Letter Body Textarea */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Your Heartfelt Words
+              <label className="block text-xs font-medium text-gray-700">
+                Letter Message
               </label>
-              <span className="text-[11px] text-slate-400">
-                They must tap the wax seal on screen to break it open!
+              <span className="text-xs text-gray-400">
+                They tap the wax seal to open
               </span>
             </div>
             <textarea
               rows={8}
               value={letter.content}
               onChange={(e) => updateLetter({ content: e.target.value })}
-              placeholder="Write your heartfelt note here... Pour your feelings, shared memories, or sweet promises into this letter."
-              className="w-full p-4 rounded-xl border border-rose-200 bg-rose-50/20 text-slate-800 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400 transition-all font-sans"
+              placeholder="Write your heartfelt note here... Pour your feelings, inside jokes, or sweet promises into this letter."
+              className="w-full p-4 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-sans resize-none"
             />
           </div>
         </div>
@@ -202,13 +182,13 @@ export default function StepSurprises({ formData, onChange }) {
 
       {/* TAB 2: CUTE QUIZ */}
       {activeTab === 'quiz' && (
-        <div className="space-y-5 animate-fadeIn">
+        <div className="space-y-5">
           {/* Enable Toggle */}
-          <div className="flex items-center justify-between p-3.5 rounded-xl border border-rose-100 bg-rose-50/30">
+          <div className="flex items-center justify-between p-3.5 rounded-xl border border-gray-200 bg-gray-50/50">
             <div>
-              <h4 className="text-sm font-bold text-slate-800">Include Cute Love Quiz</h4>
-              <p className="text-xs text-slate-500">
-                A playful question they must answer to unlock a sweet surprise reward!
+              <h4 className="text-sm font-medium text-gray-900">Include Sweet Quiz</h4>
+              <p className="text-xs text-gray-500">
+                A playful question they answer to unlock a treat.
               </p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
@@ -218,7 +198,7 @@ export default function StepSurprises({ formData, onChange }) {
                 onChange={(e) => updateQuiz({ enabled: e.target.checked })}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-500" />
+              <div className="w-10 h-5 bg-gray-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500" />
             </label>
           </div>
 
@@ -226,22 +206,22 @@ export default function StepSurprises({ formData, onChange }) {
             <div className="space-y-4 pt-1">
               {/* Question */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  The Question
+                <label className="block text-xs font-medium text-gray-700">
+                  Question
                 </label>
                 <input
                   type="text"
                   value={quiz.question}
                   onChange={(e) => updateQuiz({ question: e.target.value })}
                   placeholder="e.g. What is my favorite thing about you?"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400/30 focus:border-rose-400 transition-all shadow-2xs"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
                 />
               </div>
 
               {/* 4 Options */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Choices (Click checkmark to pick the winning answer)
+                <label className="block text-xs font-medium text-gray-700">
+                  Choices (Click checkmark to pick winning answer)
                 </label>
                 <div className="space-y-2">
                   {quiz.options.map((opt, idx) => {
@@ -251,28 +231,28 @@ export default function StepSurprises({ formData, onChange }) {
                         key={idx}
                         className={`flex items-center gap-2 p-2 rounded-xl border transition-all ${
                           isWinning
-                            ? 'border-emerald-400 bg-emerald-50/50'
-                            : 'border-slate-200 bg-white'
+                            ? 'border-emerald-400 bg-emerald-50/40'
+                            : 'border-gray-200 bg-white'
                         }`}
                       >
                         <button
                           type="button"
                           onClick={() => updateQuiz({ correctIndex: idx })}
                           title={isWinning ? 'Winning answer' : 'Set as winning answer'}
-                          className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
+                          className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
                             isWinning
-                              ? 'bg-emerald-500 text-white shadow-xs'
-                              : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
+                              ? 'bg-emerald-500 text-white'
+                              : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
                           }`}
                         >
-                          <CheckCircle2 className="w-4 h-4" />
+                          <CheckCircle2 className="w-3.5 h-3.5" />
                         </button>
                         <input
                           type="text"
                           value={opt}
                           onChange={(e) => updateQuizOption(idx, e.target.value)}
                           placeholder={`Option ${idx + 1}`}
-                          className="w-full text-xs text-slate-700 bg-transparent border-none focus:outline-none"
+                          className="w-full text-xs text-gray-800 bg-transparent focus:outline-hidden"
                         />
                       </div>
                     );
@@ -280,32 +260,28 @@ export default function StepSurprises({ formData, onChange }) {
                 </div>
               </div>
 
-              {/* Reward Popup Editor */}
-              <div className="p-4 rounded-xl border border-pink-200/80 bg-pink-50/30 space-y-3">
-                <h5 className="text-xs font-bold text-pink-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <Gift className="w-3.5 h-3.5 text-pink-500" />
-                  <span>Winning Reward Screen</span>
-                </h5>
+              {/* Reward */}
+              <div className="p-4 rounded-xl border border-gray-200 bg-gray-50/30 space-y-3">
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-semibold text-slate-600">Reward Title</label>
+                  <label className="text-xs font-medium text-gray-700">Reward Title</label>
                   <input
                     type="text"
                     value={quiz.rewardTitle}
                     onChange={(e) => updateQuiz({ rewardTitle: e.target.value })}
                     placeholder="e.g. Cadbury Dairy Milk Silk Unlocked! 🍫"
-                    className="w-full px-3 py-2 rounded-lg border border-pink-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-pink-400"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-200 bg-white text-xs text-gray-900 focus:outline-hidden focus:border-rose-400"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[11px] font-semibold text-slate-600">
-                    Reward Message / Claim Instructions
+                  <label className="text-xs font-medium text-gray-700">
+                    Reward Claim Message
                   </label>
                   <textarea
                     rows={2}
                     value={quiz.rewardMessage}
                     onChange={(e) => updateQuiz({ rewardMessage: e.target.value })}
-                    placeholder="e.g. Show this screen to Rahul to claim your giant chocolate bar + warm bear hug tonight!"
-                    className="w-full p-2.5 rounded-lg border border-pink-200 bg-white text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-pink-400 resize-none"
+                    placeholder="e.g. Show this screen to Rahul to claim your treat!"
+                    className="w-full p-2.5 rounded-lg border border-gray-200 bg-white text-xs text-gray-900 focus:outline-hidden focus:border-rose-400 resize-none"
                   />
                 </div>
               </div>
@@ -316,13 +292,13 @@ export default function StepSurprises({ formData, onChange }) {
 
       {/* TAB 3: SCRATCH CARD */}
       {activeTab === 'scratch' && (
-        <div className="space-y-5 animate-fadeIn">
+        <div className="space-y-5">
           {/* Enable Toggle */}
-          <div className="flex items-center justify-between p-3.5 rounded-xl border border-amber-100 bg-amber-50/30">
+          <div className="flex items-center justify-between p-3.5 rounded-xl border border-gray-200 bg-gray-50/50">
             <div>
-              <h4 className="text-sm font-bold text-slate-800">Include Mystery Scratch Card</h4>
-              <p className="text-xs text-slate-500">
-                A golden or sparkling card they can rub with their finger to reveal a secret promise!
+              <h4 className="text-sm font-medium text-gray-900">Include Mystery Scratch Card</h4>
+              <p className="text-xs text-gray-500">
+                A card they scratch on screen to reveal a secret coupon or promise.
               </p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
@@ -332,14 +308,14 @@ export default function StepSurprises({ formData, onChange }) {
                 onChange={(e) => updateScratch({ enabled: e.target.checked })}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500" />
+              <div className="w-10 h-5 bg-gray-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500" />
             </label>
           </div>
 
           {scratchCard.enabled && (
             <div className="space-y-4 pt-1">
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                <label className="block text-xs font-medium text-gray-700">
                   Card Cover Title
                 </label>
                 <input
@@ -347,25 +323,20 @@ export default function StepSurprises({ formData, onChange }) {
                   value={scratchCard.title}
                   onChange={(e) => updateScratch({ title: e.target.value })}
                   placeholder="e.g. Scratch to reveal my secret promise ✨"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all shadow-2xs"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Hidden Secret Message / Coupon
-                  </label>
-                  <span className="text-[11px] text-amber-600 font-medium">
-                    Hidden behind the scratch layer
-                  </span>
-                </div>
+                <label className="block text-xs font-medium text-gray-700">
+                  Hidden Secret Message
+                </label>
                 <textarea
-                  rows={4}
+                  rows={3}
                   value={scratchCard.hiddenSecret}
                   onChange={(e) => updateScratch({ hiddenSecret: e.target.value })}
-                  placeholder="e.g. Coupon for 1 spontaneous midnight ice-cream drive + unlimited forehead kisses whenever you want! Valid forever."
-                  className="w-full p-4 rounded-xl border border-amber-200 bg-amber-50/20 text-slate-800 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 transition-all"
+                  placeholder="e.g. Coupon for 1 spontaneous midnight ice-cream drive!"
+                  className="w-full p-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all resize-none"
                 />
               </div>
             </div>

@@ -41,7 +41,7 @@ export default function EnvelopeLetter({
 
   const fontClass = fontFamily === 'handwriting' 
     ? 'font-handwriting text-2xl sm:text-3xl leading-relaxed text-slate-800' 
-    : 'font-serif text-lg sm:text-xl leading-relaxed text-slate-800 italic';
+    : 'font-semibold text-lg sm:text-xl leading-relaxed text-slate-800 italic';
 
   return (
     <div className="w-full max-w-2xl mx-auto my-8 px-4">
@@ -80,10 +80,10 @@ export default function EnvelopeLetter({
 
               {/* Envelope Content Preview */}
               <div className="relative pt-20 sm:pt-24 pb-4 flex flex-col items-center text-center">
-                <span className="text-xs font-semibold tracking-widest uppercase text-amber-800/60 mb-1">
-                  Confidential & Sealed
+                <span className="text-xs font-medium text-amber-800/60 mb-1">
+                  Sealed for you
                 </span>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
                   For: {to}
                 </h3>
                 <p className="text-xs text-slate-500 mt-1 max-w-xs">
@@ -92,20 +92,16 @@ export default function EnvelopeLetter({
 
                 {/* Wax Seal Stamp (The Click Target) */}
                 <div className="relative mt-5 mb-2 flex items-center justify-center">
-                  <div className={`w-16 h-16 sm:w-18 sm:h-18 rounded-full flex flex-col items-center justify-center cursor-pointer transition-transform duration-300 group-hover:scale-110 shadow-lg ${sealClasses}`}>
-                    <Heart className="w-5 h-5 fill-current opacity-90 animate-pulse" />
-                    <span className="text-[10px] font-bold tracking-widest mt-0.5 opacity-90">
+                  <div className={`w-16 h-16 sm:w-18 sm:h-18 rounded-full flex flex-col items-center justify-center cursor-pointer transition-transform duration-300 group-hover:scale-105 shadow-md ${sealClasses}`}>
+                    <Heart className="w-5 h-5 fill-current opacity-90" />
+                    <span className="text-[10px] font-bold mt-0.5 opacity-90">
                       {initials}
                     </span>
                   </div>
-                  
-                  {/* Gentle pulsing ping ring */}
-                  <span className="absolute -inset-1 rounded-full bg-rose-400/20 animate-ping pointer-events-none" />
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 mt-3 rounded-full bg-white/80 border border-amber-200/60 text-xs font-medium text-amber-900/80 shadow-xs group-hover:bg-amber-50 transition-colors">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                  <span>Click seal to break & open letter</span>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 mt-3 rounded-full bg-white/90 border border-amber-200/60 text-xs font-medium text-amber-900 shadow-xs">
+                  <span>Tap seal to open</span>
                 </div>
               </div>
             </div>
@@ -113,30 +109,21 @@ export default function EnvelopeLetter({
         ) : (
           /* Envelope Opened & Letter Parchment Unfolded */
           <div className="relative w-full transition-all duration-700 ease-out transform animate-in fade-in zoom-in-95">
-            {/* Glowing background halo */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-rose-100/50 via-amber-50/50 to-pink-100/50 rounded-3xl blur-2xl pointer-events-none" />
-
             {/* Letter Parchment Paper */}
-            <div className="relative paper-parchment rounded-2xl p-6 sm:p-10 sm:py-12 shadow-2xl border border-amber-200/80 overflow-hidden">
+            <div className="relative paper-parchment rounded-2xl p-6 sm:p-10 sm:py-12 shadow-lg border border-amber-200/80 overflow-hidden">
               
               {/* Vintage postage stamp / decorative corner */}
               <div className="absolute top-4 right-4 sm:top-6 sm:right-6 flex flex-col items-end">
-                <div className="w-12 h-14 sm:w-14 sm:h-16 rounded border-2 border-dashed border-amber-700/40 p-1 flex flex-col items-center justify-center text-amber-800/80 rotate-2 bg-amber-50/60">
+                <div className="w-12 h-14 sm:w-14 sm:h-16 rounded border border-dashed border-amber-700/40 p-1 flex flex-col items-center justify-center text-amber-800/80 rotate-2 bg-amber-50/60">
                   <Heart className="w-4 h-4 fill-amber-700/50 text-amber-700" />
-                  <span className="text-[8px] font-bold tracking-widest uppercase mt-0.5">AIR MAIL</span>
-                  <span className="text-[8px] font-mono">{date}</span>
+                  <span className="text-[8px] font-bold mt-0.5">AIR MAIL</span>
+                  <span className="text-[8px]">{date}</span>
                 </div>
               </div>
 
-              {/* Washi Tape strip decoration at top */}
-              <div className="w-24 h-5 washi-tape mx-auto -mt-3 mb-6 rounded-xs opacity-75" />
-
               {/* Letter Header */}
               <div className="mb-6 border-b border-amber-900/10 pb-4">
-                <span className="text-xs uppercase tracking-widest font-semibold text-amber-800/60">
-                  Private Letter
-                </span>
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-slate-800 mt-1">
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-800">
                   Dearest {to},
                 </h3>
               </div>

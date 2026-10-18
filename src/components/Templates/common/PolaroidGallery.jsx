@@ -102,11 +102,7 @@ export default function PolaroidGallery({
     <section className="w-full max-w-5xl mx-auto my-12 px-4">
       {/* Section Header */}
       <div className="text-center mb-10">
-        <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-rose-50 border border-rose-200/60 text-xs font-semibold text-rose-600 mb-2">
-          <Camera className="w-3.5 h-3.5" />
-          <span>Keepsake Gallery</span>
-        </div>
-        <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
           {title}
         </h2>
         <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">

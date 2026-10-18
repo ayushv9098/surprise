@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import {
-  Sparkles,
   ArrowRight,
   ArrowLeft,
   Wand2,
-  Smartphone,
-  CheckCircle2,
 } from 'lucide-react';
 import TemplateSelector from './TemplateSelector';
 import StepDetails from './StepDetails';
@@ -108,90 +105,64 @@ export default function BuilderStudio({ initialTemplateId = 'blush-romance', onC
   };
 
   const steps = [
-    { number: 1, title: 'Details', subtitle: 'Who & Why' },
-    { number: 2, title: 'Media & Song', subtitle: 'Photos & Music' },
-    { number: 3, title: 'Surprises', subtitle: 'Letters & Games' },
+    { number: 1, label: 'Step 1' },
+    { number: 2, label: 'Step 2' },
+    { number: 3, label: 'Step 3' },
   ];
 
   return (
     <div className="min-h-screen bg-[#FFFDFB] text-slate-800 pb-28">
-      {/* Studio Top Control Strip */}
-      <div className="sticky top-16 z-30 bg-white/80 backdrop-blur-md border-b border-rose-100/70 shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-3">
-          {/* Step Progress Pills */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
+      {/* Studio Top Navigation */}
+      <div className="sticky top-16 z-30 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0 flex items-center justify-between">
+          {/* Step Tabs with bottom line indicator */}
+          <div className="flex items-center gap-0">
             {steps.map((s) => {
               const isActive = currentStep === s.number;
-              const isPast = currentStep > s.number;
               return (
                 <button
                   key={s.number}
                   type="button"
                   onClick={() => setCurrentStep(s.number)}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                  className={`relative px-5 py-3.5 text-sm font-medium transition-colors cursor-pointer ${
                     isActive
-                      ? 'bg-rose-500 text-white shadow-xs'
-                      : isPast
-                      ? 'bg-rose-100/80 text-rose-700 hover:bg-rose-200/80'
-                      : 'bg-slate-100 text-slate-500 hover:bg-slate-200/60'
+                      ? 'text-slate-900'
+                      : 'text-slate-400 hover:text-slate-600'
                   }`}
                 >
-                  <span
-                    className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                      isActive
-                        ? 'bg-white text-rose-600'
-                        : isPast
-                        ? 'bg-rose-500 text-white'
-                        : 'bg-slate-300 text-white'
-                    }`}
-                  >
-                    {isPast ? <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" /> : s.number}
-                  </span>
-                  <span className="hidden sm:inline">{s.title}</span>
+                  {s.label}
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-500 rounded-full" />
+                  )}
                 </button>
               );
             })}
           </div>
 
-          {/* Quick Demo Data Loader & Mobile View Switcher */}
-          <div className="flex items-center gap-2">
+          {/* Mobile View Toggle — simple text tabs */}
+          <div className="lg:hidden flex items-center gap-1">
             <button
               type="button"
-              onClick={handleApplySamplePreset}
-              title="Autofill with sweet romantic demo content"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 transition-all cursor-pointer shadow-2xs"
+              onClick={() => setActiveMobileView('editor')}
+              className={`px-3 py-2 text-xs font-medium transition-colors cursor-pointer ${
+                activeMobileView === 'editor'
+                  ? 'text-slate-900'
+                  : 'text-slate-400 hover:text-slate-600'
+              }`}
             >
-              <Wand2 className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
-              <span className="hidden md:inline">1-Click Aesthetic Sample</span>
-              <span className="md:hidden">Demo Fill</span>
+              Studio
             </button>
-
-            {/* Mobile View Toggle (Editor vs Preview) */}
-            <div className="lg:hidden flex items-center bg-slate-100 rounded-full p-0.5 border border-slate-200">
-              <button
-                type="button"
-                onClick={() => setActiveMobileView('editor')}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  activeMobileView === 'editor'
-                    ? 'bg-white text-rose-600 shadow-2xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Studio
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveMobileView('preview')}
-                className={`px-3 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer flex items-center gap-1 ${
-                  activeMobileView === 'preview'
-                    ? 'bg-white text-rose-600 shadow-2xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Smartphone className="w-3 h-3" />
-                <span>Preview</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setActiveMobileView('preview')}
+              className={`px-3 py-2 text-xs font-medium transition-colors cursor-pointer ${
+                activeMobileView === 'preview'
+                  ? 'text-slate-900'
+                  : 'text-slate-400 hover:text-slate-600'
+              }`}
+            >
+              Preview
+            </button>
           </div>
         </div>
       </div>
@@ -205,6 +176,18 @@ export default function BuilderStudio({ initialTemplateId = 'blush-romance', onC
               activeMobileView === 'preview' ? 'hidden lg:block' : 'block'
             }`}
           >
+            {/* Autofill demo link — small text inside form area */}
+            <div className="flex justify-end">
+              <button
+                type="button"
+                onClick={handleApplySamplePreset}
+                className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-rose-500 transition-colors cursor-pointer"
+              >
+                <Wand2 className="w-3 h-3" />
+                <span>Autofill with demo data</span>
+              </button>
+            </div>
+
             {/* Step 1 Content */}
             {currentStep === 1 && (
               <div className="space-y-8 animate-fadeIn">
@@ -216,7 +199,7 @@ export default function BuilderStudio({ initialTemplateId = 'blush-romance', onC
                 />
 
                 {/* Details Form Card */}
-                <div className="p-6 sm:p-8 rounded-3xl bg-white border border-rose-100/90 shadow-sm shadow-rose-100/30">
+                <div className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
                   <StepDetails formData={formData} onChange={handleUpdateFormData} />
                 </div>
               </div>
@@ -224,14 +207,14 @@ export default function BuilderStudio({ initialTemplateId = 'blush-romance', onC
 
             {/* Step 2 Content */}
             {currentStep === 2 && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-rose-100/90 shadow-sm shadow-rose-100/30 animate-fadeIn">
+              <div className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm animate-fadeIn">
                 <StepMedia formData={formData} onChange={handleUpdateFormData} />
               </div>
             )}
 
             {/* Step 3 Content */}
             {currentStep === 3 && (
-              <div className="p-6 sm:p-8 rounded-3xl bg-white border border-rose-100/90 shadow-sm shadow-rose-100/30 animate-fadeIn">
+              <div className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm animate-fadeIn">
                 <StepSurprises formData={formData} onChange={handleUpdateFormData} />
               </div>
             )}
@@ -243,7 +226,7 @@ export default function BuilderStudio({ initialTemplateId = 'blush-romance', onC
               activeMobileView === 'editor' ? 'hidden lg:block' : 'block'
             }`}
           >
-            <div className="p-4 sm:p-6 rounded-3xl bg-rose-50/40 border border-rose-100/80 shadow-inner flex flex-col items-center">
+            <div className="p-6 rounded-2xl bg-gray-50/60 border border-gray-100 flex flex-col items-center">
               <LivePhonePreview formData={formData} />
             </div>
           </div>
@@ -251,53 +234,40 @@ export default function BuilderStudio({ initialTemplateId = 'blush-romance', onC
       </div>
 
       {/* FIXED BOTTOM NAVIGATION BAR */}
-      <div className="fixed bottom-0 inset-x-0 z-40 bg-white/90 backdrop-blur-md border-t border-rose-100/80 shadow-lg shadow-rose-950/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* Back Button */}
+      <div className="fixed bottom-0 inset-x-0 z-40 bg-white/90 backdrop-blur-md border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          {/* Back — simple text link */}
           <button
             type="button"
             onClick={handlePrevStep}
             disabled={currentStep === 1}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors cursor-pointer ${
               currentStep === 1
-                ? 'opacity-40 cursor-not-allowed text-slate-400'
-                : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                ? 'opacity-0 pointer-events-none'
+                : 'text-slate-500 hover:text-slate-800'
             }`}
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
           </button>
 
-          {/* Step Helper Text */}
-          <div className="text-center hidden sm:block">
-            <span className="text-xs font-bold text-slate-800">
-              {currentStep === 1 && 'Step 1 of 3: Choose Style & Names'}
-              {currentStep === 2 && 'Step 2 of 3: Add Photos & Soundtrack'}
-              {currentStep === 3 && 'Step 3 of 3: Final Surprises & Wax Seal'}
-            </span>
-            <p className="text-[11px] text-slate-400">Takes less than 2 minutes</p>
-          </div>
-
-          {/* Next / Publish Button */}
+          {/* Next / Create & Share — solid button on right */}
           <button
             type="button"
             onClick={handleNextStep}
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-full text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 hover:from-rose-600 hover:to-pink-600 shadow-md shadow-rose-200/80 hover:shadow-lg hover:shadow-rose-300/80 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold text-white bg-rose-500 hover:bg-rose-600 shadow-sm hover:shadow-md active:scale-[0.98] transition-all cursor-pointer"
           >
             {isSubmitting ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Creating Magic...</span>
+                <span>Creating...</span>
               </>
             ) : currentStep === 3 ? (
-              <>
-                <Sparkles className="w-4 h-4 animate-pulse" />
-                <span>Publish & Get Share Link ✨</span>
-              </>
+              <span>Create & Share</span>
             ) : (
               <>
-                <span>Continue to Step {currentStep + 1}</span>
+                <span>Next Step</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

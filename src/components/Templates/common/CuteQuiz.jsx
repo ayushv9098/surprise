@@ -96,11 +96,10 @@ export default function CuteQuiz({
         
         {/* Decorative corner icon */}
         <div className="text-center mb-6">
-          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold mb-2 ${themeStyles.badge}`}>
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>Interactive Trivia</span>
+          <div className="text-xs font-medium text-rose-600 mb-2">
+            Interactive Quiz ✨
           </div>
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-800">
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
             {quizTitle}
           </h3>
           <p className="text-sm font-medium text-slate-600 mt-2 max-w-md mx-auto">
@@ -110,23 +109,16 @@ export default function CuteQuiz({
 
         {/* Victory Celebration State */}
         {isAnswered && isCorrect ? (
-          <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-gradient-to-b from-white/90 to-rose-50/80 border border-rose-200/70 shadow-inner animate-in zoom-in-95 duration-400">
-            {/* Glow badge */}
-            <div className="relative mb-3">
-              <span className="text-4xl animate-bounce inline-block">🍫</span>
-              <span className="absolute -top-1 -right-2 flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
-              </span>
-            </div>
+          <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-rose-100 shadow-sm animate-in zoom-in-95 duration-400">
+            <div className="text-3xl mb-2">🍫</div>
 
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-rose-500 via-pink-500 to-amber-400 text-white text-xs font-bold uppercase tracking-wider shadow-md shadow-rose-200/60 mb-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500 text-white text-xs font-semibold mb-2">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Treat Unlocked 🍫</span>
+              <span>Treat Unlocked</span>
             </div>
 
-            <h4 className="font-serif text-xl font-bold text-slate-800 mb-1">
-              Correct! You know us so well!
+            <h4 className="text-lg font-bold text-slate-900 mb-1">
+              Correct!
             </h4>
 
             <p className="font-handwriting text-2xl text-rose-600 max-w-sm mt-2 leading-relaxed">

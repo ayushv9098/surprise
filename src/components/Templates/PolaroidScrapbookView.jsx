@@ -73,13 +73,12 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
         {/* Washi tape header deco */}
         <div className="w-32 h-6 washi-tape mx-auto -mb-3 rounded-xs opacity-80" />
 
-        <div className="bg-white/85 backdrop-blur-md rounded-3xl p-6 sm:p-10 shadow-xl border border-amber-200/80">
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-xs font-semibold text-amber-800 mb-3">
-            <BookOpen className="w-3.5 h-3.5 text-amber-700" />
-            <span>Memories & Keepsakes Journal</span>
+        <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-amber-200/80">
+          <div className="text-xs font-medium text-amber-700 mb-2">
+            Memories & Keepsakes Journal 📸
           </div>
 
-          <h1 className="font-serif text-3xl sm:text-5xl font-extrabold text-slate-800 tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
             {title}
           </h1>
 
@@ -87,7 +86,7 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
             "{subtitle}"
           </p>
 
-          <div className="mt-4 flex items-center justify-center gap-4 text-xs font-mono text-slate-500">
+          <div className="mt-4 flex items-center justify-center gap-4 text-xs text-slate-500">
             <span className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5 text-amber-600" />
               {siteData.date || "Edition: Forever"}
@@ -104,10 +103,7 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
       {/* Memory Timeline Section (Vertical Scrapbook Thread) */}
       <section className="relative z-20 max-w-3xl mx-auto my-12 px-4">
         <div className="text-center mb-10">
-          <span className="text-xs font-bold uppercase tracking-widest text-amber-800/70">
-            Timeline of Cherished Moments
-          </span>
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-slate-800 mt-1">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
             Down Memory Lane
           </h2>
         </div>
@@ -153,7 +149,7 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
                     <span className="text-[10px] font-bold tracking-widest uppercase text-amber-700/70 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
                       {item.chapter}
                     </span>
-                    <h3 className="font-serif text-lg sm:text-xl font-bold text-slate-800 mt-1.5">
+                    <h3 className="font-semibold text-lg sm:text-xl font-bold text-slate-800 mt-1.5">
                       {item.title}
                     </h3>
                     <p className="font-handwriting text-xl sm:text-2xl text-slate-700 mt-2 leading-relaxed">

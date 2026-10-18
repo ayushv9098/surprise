@@ -17,12 +17,12 @@ export default function TemplateFooter({ onCreateClick }) {
           onClick={handleClick}
           className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 hover:bg-white backdrop-blur-md border border-rose-200/70 shadow-xs hover:shadow-md transition-all duration-300 text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 cursor-pointer"
         >
-          <Sparkles className="w-4 h-4 text-rose-500 group-hover:scale-110 transition-transform" />
-          <span>Made with <span className="font-serif font-bold text-rose-600">WishCraft</span> ✨ Create one for someone special for free</span>
+          <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+          <span>Made with <span className="font-bold text-rose-600">WishCraft</span> • Create yours free</span>
         </a>
 
-        <p className="text-[11px] text-slate-400 mt-3 flex items-center gap-1 font-medium">
-          Crafted with love <Heart className="w-3 h-3 text-rose-400 fill-rose-400 inline" /> & forever kept alive
+        <p className="text-[11px] text-slate-400 mt-2">
+          Made with care for real moments
         </p>
       </div>
     </footer>

@@ -109,7 +109,7 @@ export default function LivePhonePreview({ formData }) {
                 <span>{occasion}</span>
               </div>
 
-              <h1 className="font-serif text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h1 className="font-semibold text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 For {recipientName}
               </h1>
 
@@ -235,7 +235,7 @@ export default function LivePhonePreview({ formData }) {
                 <span className="inline-block text-[10px] font-bold text-rose-500 uppercase tracking-wider">
                   Secret Letter
                 </span>
-                <h4 className="font-serif font-bold text-sm text-slate-800">
+                <h4 className="font-semibold font-bold text-sm text-slate-800">
                   {letter.title || 'A note sealed for you'}
                 </h4>
 
@@ -279,7 +279,7 @@ export default function LivePhonePreview({ formData }) {
                   <span>The Love Quiz</span>
                 </div>
 
-                <p className="font-serif font-bold text-xs sm:text-sm text-slate-800">
+                <p className="font-semibold font-bold text-xs sm:text-sm text-slate-800">
                   {quiz.question}
                 </p>
 
@@ -349,7 +349,7 @@ export default function LivePhonePreview({ formData }) {
 
             {/* Footer Watermark in phone */}
             <div className="pt-4 pb-6 text-center space-y-1">
-              <span className="text-[10px] font-serif font-bold text-rose-500">
+              <span className="text-[10px] font-semibold font-bold text-rose-500">
                 WishCraft ✨ Keepsake
               </span>
               <p className="text-[9px] text-slate-400">

@@ -1,19 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  Lock,
-  KeyRound,
-  Sparkles,
-  Eye,
-  Heart,
-  Activity,
   Search,
-  RefreshCw,
-  Download,
-  PlusCircle,
-  AlertCircle,
   X,
   LogOut,
-  ArrowRight
+  AlertCircle,
 } from 'lucide-react';
 import SitesTable from './SitesTable';
 import SiteDetailModal from './SiteDetailModal';
@@ -46,7 +36,7 @@ export default function AdminDashboard({ onNavigate }) {
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState('all');
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy] = useState('newest');
 
   // Inspection Modal
   const [inspectSite, setInspectSite] = useState(null);
@@ -120,7 +110,7 @@ export default function AdminDashboard({ onNavigate }) {
       setPinInput('');
       showToast({ type: 'success', message: 'Admin panel unlocked successfully!' });
     } else {
-      setPinError('Incorrect PIN code. Hint: Use 1234');
+      setPinError('Incorrect PIN. Try 1234');
       setPinInput('');
     }
   };
@@ -156,7 +146,7 @@ export default function AdminDashboard({ onNavigate }) {
   // Handle JSON export download
   const handleExport = async () => {
     try {
-      showToast({ type: 'info', message: 'Preparing export download...' });
+      showToast({ type: 'info', message: 'Preparing export...' });
       const res = await fetch('/api/admin/export');
       if (!res.ok) throw new Error('Export request failed');
 
@@ -170,7 +160,7 @@ export default function AdminDashboard({ onNavigate }) {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      showToast({ type: 'success', message: 'Export downloaded successfully!' });
+      showToast({ type: 'success', message: 'Export downloaded!' });
     } catch (err) {
       console.error('Export error:', err);
       // Fallback: client-side JSON export
@@ -181,15 +171,15 @@ export default function AdminDashboard({ onNavigate }) {
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
-      showToast({ type: 'success', message: 'Downloaded local backup JSON' });
+      showToast({ type: 'success', message: 'Downloaded local backup' });
     }
   };
 
-  // Refresh handler with spin feedback
+  // Refresh handler
   const handleManualRefresh = () => {
     setRefreshing(true);
     fetchData(true).then(() => {
-      showToast({ type: 'success', message: 'Metrics and sites refreshed' });
+      showToast({ type: 'success', message: 'Data refreshed' });
     });
   };
 
@@ -209,75 +199,54 @@ export default function AdminDashboard({ onNavigate }) {
   // ----------------------------------------------------
   if (!isAuthenticated) {
     return (
-      <div className="min-h-[85vh] flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md bg-white rounded-3xl border border-slate-200/80 shadow-xl shadow-rose-100/30 p-8 sm:p-10 relative overflow-hidden">
-          
-          {/* Subtle decorative glow */}
-          <div className="absolute -top-12 -right-12 w-36 h-36 bg-rose-200/40 rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-12 -left-12 w-36 h-36 bg-amber-200/40 rounded-full blur-2xl pointer-events-none" />
-
-          <div className="relative text-center">
-            {/* Lock Icon */}
-            <div className="w-14 h-14 mx-auto mb-5 rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-700 flex items-center justify-center text-white shadow-md shadow-slate-300">
-              <Lock className="w-6 h-6" />
-            </div>
-
-            <h1 className="text-2xl font-serif font-bold text-slate-800">
-              WishCraft Admin Panel
+      <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-[#FAFAF8]">
+        <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+          <div className="text-center mb-6">
+            <h1 className="text-xl font-semibold text-slate-800">
+              Admin Dashboard
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1.5 mb-6">
-              Enter Owner Passcode to manage websites, inspect letters, and view real-time traffic.
+            <p className="text-sm text-slate-400 mt-1">
+              Enter your PIN to continue
             </p>
+          </div>
 
-            <form onSubmit={handleUnlock} className="space-y-4">
-              <div>
-                <label className="block text-left text-xs font-semibold text-slate-600 mb-1.5">
-                  Security Passcode
-                </label>
-                <div className="relative">
-                  <KeyRound className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="password"
-                    maxLength={8}
-                    autoFocus
-                    placeholder="Enter PIN (e.g. 1234)"
-                    value={pinInput}
-                    onChange={(e) => {
-                      setPinInput(e.target.value);
-                      if (pinError) setPinError('');
-                    }}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 text-sm font-mono tracking-widest text-slate-800 focus:outline-hidden focus:ring-2 focus:ring-rose-500 focus:border-rose-500 bg-slate-50/50"
-                  />
-                </div>
-                {pinError && (
-                  <p className="text-xs text-rose-500 font-medium text-left mt-1.5 flex items-center gap-1">
-                    <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-                    <span>{pinError}</span>
-                  </p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm bg-gradient-to-r from-slate-900 to-slate-800 text-white hover:from-slate-800 hover:to-slate-700 shadow-md shadow-slate-200 transition-all cursor-pointer"
-              >
-                <span>Unlock Control Center</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
-
-            <div className="mt-6 pt-5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-              <span>Demo PIN: <strong className="text-slate-600 font-mono">1234</strong></span>
-              {onNavigate && (
-                <button
-                  onClick={() => onNavigate('home')}
-                  className="text-rose-600 hover:underline cursor-pointer"
-                >
-                  Return to Studio
-                </button>
+          <form onSubmit={handleUnlock} className="space-y-4">
+            <div>
+              <input
+                type="password"
+                maxLength={8}
+                autoFocus
+                placeholder="Enter PIN"
+                value={pinInput}
+                onChange={(e) => {
+                  setPinInput(e.target.value);
+                  if (pinError) setPinError('');
+                }}
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-mono tracking-widest text-slate-800 text-center focus:outline-hidden focus:ring-2 focus:ring-rose-500/40 focus:border-rose-400 bg-gray-50/50"
+              />
+              {pinError && (
+                <p className="text-xs text-rose-500 mt-2 text-center">{pinError}</p>
               )}
             </div>
 
+            <button
+              type="submit"
+              className="w-full py-3 rounded-xl font-semibold text-sm bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              Unlock
+            </button>
+          </form>
+
+          <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-slate-400">
+            <span>Demo PIN: <strong className="text-slate-600 font-mono">1234</strong></span>
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate('home')}
+                className="text-rose-500 hover:underline cursor-pointer"
+              >
+                Back to Studio
+              </button>
+            )}
           </div>
         </div>
         <Toast toast={toast} onClose={clearToast} />
@@ -289,17 +258,17 @@ export default function AdminDashboard({ onNavigate }) {
   // AUTHENTICATED DASHBOARD SCREEN
   // ----------------------------------------------------
   return (
-    <div className="min-h-screen pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <div className="min-h-screen pb-20 bg-[#FAFAF8]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
 
         {/* Backend Warning banner if API is unreachable */}
         {apiError && (
-          <div className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200/80 flex items-start gap-3 text-xs text-amber-900 animate-in fade-in">
+          <div className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200/80 flex items-start gap-3 text-xs text-amber-900">
             <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
             <div className="flex-1">
               <span className="font-semibold block">{apiError}</span>
               <span className="text-amber-700">
-                You can run <code className="bg-amber-100 px-1.5 py-0.5 rounded font-mono">npm run server</code> to start the Express API on port 3001.
+                Run <code className="bg-amber-100 px-1.5 py-0.5 rounded font-mono">npm run server</code> to start the API.
               </span>
             </div>
             <button
@@ -311,135 +280,92 @@ export default function AdminDashboard({ onNavigate }) {
           </div>
         )}
 
-        {/* Header Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Live Control Center
-              </span>
-              <span className="text-xs text-slate-400 font-medium">Session Active</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 tracking-tight">
-              Surprise Management Panel
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              Monitor user-generated websites, live recipient view engagement, and full memory archives.
-            </p>
-          </div>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
+          <h1 className="text-2xl font-semibold text-slate-900">
+            Admin Dashboard
+          </h1>
 
-          <div className="flex items-center gap-2.5 self-stretch sm:self-auto">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleManualRefresh}
+              disabled={refreshing}
+              className="text-sm text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
+            >
+              {refreshing ? 'Refreshing...' : 'Refresh'}
+            </button>
+
+            <button
+              onClick={handleExport}
+              className="text-sm text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
+            >
+              Export
+            </button>
+
             {onNavigate && (
               <button
                 onClick={() => onNavigate('builder')}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-semibold bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-md shadow-rose-200 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+                className="px-4 py-2 rounded-full text-sm font-semibold bg-rose-500 text-white hover:bg-rose-600 transition-colors cursor-pointer shadow-sm"
               >
-                <PlusCircle className="w-4 h-4" />
-                <span>Create Surprise</span>
+                Create Surprise
               </button>
             )}
 
             <button
               onClick={handleLock}
               title="Lock Admin Session"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-full text-xs font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 transition-colors cursor-pointer shadow-xs"
+              className="p-2 rounded-full text-slate-400 hover:text-slate-600 hover:bg-gray-100 transition-colors cursor-pointer"
             >
-              <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Lock</span>
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
         </div>
 
-        {/* TOP STATS CARDS ROW (Apple-style) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
-          
-          {/* Card 1: Total Surprises */}
-          <div className="p-5 rounded-3xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Total Surprises
-              </span>
-              <div className="w-9 h-9 rounded-xl bg-rose-50 flex items-center justify-center text-rose-500">
-                <Sparkles className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold font-serif text-slate-900 mb-1">
+        {/* STATS CARDS — 4 simple number cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+
+          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
+            <div className="text-3xl font-semibold text-slate-900 mb-1">
               {metrics.totalSites || 0}
             </div>
-            <p className="text-[11px] text-slate-500">
-              Live websites crafted & published
-            </p>
+            <p className="text-sm text-gray-500">Total Surprises</p>
           </div>
 
-          {/* Card 2: Total Live Views */}
-          <div className="p-5 rounded-3xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Total Live Views
-              </span>
-              <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-500">
-                <Eye className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold font-serif text-slate-900 mb-1">
+          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
+            <div className="text-3xl font-semibold text-slate-900 mb-1">
               {metrics.totalViews || 0}
             </div>
-            <p className="text-[11px] text-slate-500">
-              Recipient surprise opens & reads
-            </p>
+            <p className="text-sm text-gray-500">Total Views</p>
           </div>
 
-          {/* Card 3: Most Popular Template */}
-          <div className="p-5 rounded-3xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Top Template
-              </span>
-              <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
-                <Heart className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="text-lg font-bold text-slate-900 truncate mb-1">
+          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
+            <div className="text-lg font-semibold text-slate-900 mb-1 truncate">
               {getTemplateDisplayName(metrics.mostPopularTemplate)}
             </div>
-            <p className="text-[11px] text-slate-500">
-              Highest selected style
-            </p>
+            <p className="text-sm text-gray-500">Top Template</p>
           </div>
 
-          {/* Card 4: Active Today */}
-          <div className="p-5 rounded-3xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                Active Today
-              </span>
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-                <Activity className="w-4 h-4" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold font-serif text-slate-900 mb-1">
+          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
+            <div className="text-3xl font-semibold text-slate-900 mb-1">
               {metrics.activeToday ?? (metrics.recentSites?.length || 0)}
             </div>
-            <p className="text-[11px] text-slate-500">
-              Surprises created or viewed today
-            </p>
+            <p className="text-sm text-gray-500">Active Today</p>
           </div>
 
         </div>
 
-        {/* TOOLBAR: Search, Filters, & Action Buttons */}
-        <div className="p-4 rounded-3xl bg-white border border-slate-200/80 shadow-xs mb-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
-          
+        {/* TOOLBAR: Search + Template filter only */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
+
           {/* Search Input */}
           <div className="relative flex-1 min-w-[200px]">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search by title, recipient, sender, slug..."
+              placeholder="Search by name, slug, recipient..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-8 py-2 rounded-xl text-xs bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 focus:border-rose-400"
+              className="w-full pl-10 pr-8 py-2.5 rounded-xl text-sm bg-white border border-gray-200 text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 focus:border-rose-400"
             />
             {searchQuery && (
               <button
@@ -451,55 +377,18 @@ export default function AdminDashboard({ onNavigate }) {
             )}
           </div>
 
-          {/* Filters & Actions Group */}
-          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-            {/* Template Dropdown */}
-            <select
-              value={selectedTemplate}
-              onChange={(e) => setSelectedTemplate(e.target.value)}
-              className="px-3 py-2 rounded-xl text-xs bg-slate-50 border border-slate-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
-            >
-              <option value="all">All Templates</option>
-              <option value="blush-romance">Blush Romance 🌸</option>
-              <option value="golden-birthday">Golden Birthday 🎂</option>
-              <option value="polaroid-scrapbook">Polaroid Scrapbook 📸</option>
-              <option value="heartfelt-apology">Heartfelt Hug 🥺</option>
-            </select>
-
-            {/* Sort Dropdown */}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-2 rounded-xl text-xs bg-slate-50 border border-slate-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
-            >
-              <option value="newest">Newest First</option>
-              <option value="views-desc">Most Viewed</option>
-              <option value="views-asc">Least Viewed</option>
-              <option value="oldest">Oldest First</option>
-              <option value="recipient">Recipient (A-Z)</option>
-            </select>
-
-            {/* Refresh Button */}
-            <button
-              onClick={handleManualRefresh}
-              disabled={refreshing}
-              title="Refresh sites list"
-              className="p-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer shrink-0"
-            >
-              <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin text-rose-500' : ''}`} />
-            </button>
-
-            {/* Export JSON Button */}
-            <button
-              onClick={handleExport}
-              title="Export all records as JSON file"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer shrink-0"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Export JSON</span>
-            </button>
-          </div>
-
+          {/* Template Dropdown */}
+          <select
+            value={selectedTemplate}
+            onChange={(e) => setSelectedTemplate(e.target.value)}
+            className="px-4 py-2.5 rounded-xl text-sm bg-white border border-gray-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
+          >
+            <option value="all">All Templates</option>
+            <option value="blush-romance">Blush Romance 🌸</option>
+            <option value="golden-birthday">Golden Birthday 🎂</option>
+            <option value="polaroid-scrapbook">Polaroid Scrapbook 📸</option>
+            <option value="heartfelt-apology">Heartfelt Hug 🥺</option>
+          </select>
         </div>
 
         {/* SITES TABLE */}

@@ -98,7 +98,7 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
                 {site.viewCount || 0} views
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-serif font-bold text-slate-800 truncate">
+            <h2 className="text-xl sm:text-2xl font-semibold font-bold text-slate-800 truncate">
               {site.title || `Surprise for ${site.recipientName}`}
             </h2>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -185,7 +185,7 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
           {/* Heartfelt Letter Content */}
           <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-50/40 via-white to-rose-50/30 border border-amber-100/80 shadow-xs">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5 font-serif">
+              <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5 font-semibold">
                 <Sparkles className="w-4 h-4 text-amber-500" />
                 <span>Secret Letter & Message</span>
               </h3>
@@ -193,7 +193,7 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
                 {site.letter ? `${site.letter.length} characters` : 'Empty'}
               </span>
             </div>
-            <div className="p-4 rounded-xl bg-white/90 border border-amber-100/50 text-slate-700 text-sm leading-relaxed whitespace-pre-wrap font-serif italic selection:bg-rose-100">
+            <div className="p-4 rounded-xl bg-white/90 border border-amber-100/50 text-slate-700 text-sm leading-relaxed whitespace-pre-wrap font-semibold italic selection:bg-rose-100">
               {site.letter || 'No letter text recorded.'}
             </div>
           </div>

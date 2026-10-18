@@ -91,23 +91,18 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
       />
 
       {/* Hero Section */}
-      <section className="relative z-20 pt-16 sm:pt-24 pb-10 px-4 text-center max-w-4xl mx-auto">
-        {/* Festive Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-amber-200/90 shadow-xs mb-5 animate-float">
-          <PartyPopper className="w-3.5 h-3.5 text-amber-500" />
-          <span className="text-xs font-semibold tracking-wider uppercase bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
-            A Golden Birthday Keepsake
-          </span>
-          <Sparkles className="w-3.5 h-3.5 text-yellow-500" />
+      <section className="relative z-20 pt-16 sm:pt-24 pb-10 px-4 text-center max-w-3xl mx-auto">
+        <div className="text-xs font-medium text-amber-600 mb-3 tracking-wide">
+          A Golden Birthday Celebration 🎂
         </div>
 
         {/* Big Celebratory Headline */}
-        <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-800 leading-tight">
+        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
           {title}
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
           {subtitle}
         </p>
 
@@ -115,10 +110,10 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
         <div className="mt-7 flex items-center justify-center gap-3">
           <button
             onClick={fireConfettiCannon}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 text-white shadow-lg shadow-amber-300/50 hover:shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-amber-500 hover:bg-amber-600 text-white shadow-md transition-all active:scale-95 cursor-pointer"
           >
-            <PartyPopper className="w-4 h-4 animate-bounce" />
-            <span>Pop Confetti Cannon! 🎊</span>
+            <PartyPopper className="w-4 h-4" />
+            <span>Pop Confetti! 🎊</span>
           </button>
         </div>
       </section>
@@ -131,7 +126,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
             <span>Interactive Cake Ritual</span>
           </div>
 
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-800">
+          <h3 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
             Make a Wish & Blow Out the Candles
           </h3>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-sm mx-auto">
@@ -218,7 +213,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
             <span>Surprise Package</span>
           </div>
 
-          <h3 className="font-serif text-xl sm:text-2xl font-bold text-slate-800">
+          <h3 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
             Open Your Birthday Gift Box
           </h3>
           <p className="text-xs text-slate-500 mt-1">
@@ -258,7 +253,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
               <div className="p-4 rounded-2xl bg-white/90 border border-amber-200/80 shadow-sm flex items-center gap-3">
                 <span className="text-3xl">🎫</span>
                 <div>
-                  <h4 className="font-serif font-bold text-slate-800 text-sm sm:text-base">VIP Birthday Pass</h4>
+                  <h4 className="font-semibold font-bold text-slate-800 text-sm sm:text-base">VIP Birthday Pass</h4>
                   <p className="text-xs text-slate-500">Zero rules, zero chores, you call all the shots today!</p>
                 </div>
               </div>
@@ -266,7 +261,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
               <div className="p-4 rounded-2xl bg-white/90 border border-amber-200/80 shadow-sm flex items-center gap-3">
                 <span className="text-3xl">🥂</span>
                 <div>
-                  <h4 className="font-serif font-bold text-slate-800 text-sm sm:text-base">Celebration Dinner on Me</h4>
+                  <h4 className="font-semibold font-bold text-slate-800 text-sm sm:text-base">Celebration Dinner on Me</h4>
                   <p className="text-xs text-slate-500">Pick any restaurant or treat and consider it booked!</p>
                 </div>
               </div>
@@ -274,7 +269,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
               <div className="p-4 rounded-2xl bg-white/90 border border-amber-200/80 shadow-sm flex items-center gap-3">
                 <span className="text-3xl">✨</span>
                 <div>
-                  <h4 className="font-serif font-bold text-slate-800 text-sm sm:text-base">Year-Long Wish Guarantee</h4>
+                  <h4 className="font-semibold font-bold text-slate-800 text-sm sm:text-base">Year-Long Wish Guarantee</h4>
                   <p className="text-xs text-slate-500">Whenever you need cheering up, I'm just one call away.</p>
                 </div>
               </div>
