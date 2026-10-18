@@ -19,7 +19,7 @@ export const SAMPLE_PHOTOS = [
   },
   {
     id: 'sample-4',
-    url: 'https://images.unsplash.com/photo-1535141192574-5d4897c13136?auto=format&fit=crop&w=700&q=80',
+    url: 'https://images.unsplash.com/photo-1558636508-e0db3814bd1d?auto=format&fit=crop&w=700&q=80',
     caption: 'That birthday cake celebration we laughed till 2 AM 🎂',
     tag: 'Pure Joy',
   },
