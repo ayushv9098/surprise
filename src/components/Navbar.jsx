@@ -8,7 +8,7 @@ export default function Navbar({ currentView, onNavigate }) {
         {/* Brand */}
         <button
           onClick={() => onNavigate('home')}
-          className="flex items-center gap-1.5 text-left cursor-pointer"
+          className="flex items-center gap-1.5 text-left cursor-pointer hover:opacity-80 active:scale-95 transition-all duration-150"
         >
           <span className="font-bold text-lg text-gray-900">WishCraft</span>
           <AppleEmoji emoji="✨" size={18} />
@@ -19,7 +19,7 @@ export default function Navbar({ currentView, onNavigate }) {
           {currentView !== 'builder' && (
             <button
               onClick={() => onNavigate('builder')}
-              className="px-4 py-2 rounded-xl text-sm font-medium bg-rose-500 text-white hover:bg-rose-600 transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl text-sm font-medium bg-rose-500 text-white hover:bg-rose-600 active:scale-95 transition-all duration-150 cursor-pointer shadow-sm hover:shadow"
             >
               Create Free
             </button>
@@ -28,7 +28,7 @@ export default function Navbar({ currentView, onNavigate }) {
           {currentView === 'builder' && (
             <button
               onClick={() => onNavigate('home')}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 active:scale-95 transition-all duration-150 cursor-pointer"
             >
               Templates
             </button>
@@ -36,7 +36,7 @@ export default function Navbar({ currentView, onNavigate }) {
 
           <button
             onClick={() => onNavigate('admin')}
-            className={`text-sm font-medium transition-colors cursor-pointer ${
+            className={`text-sm font-medium transition-all duration-150 active:scale-95 cursor-pointer ${
               currentView === 'admin'
                 ? 'text-gray-900'
                 : 'text-gray-400 hover:text-gray-700'

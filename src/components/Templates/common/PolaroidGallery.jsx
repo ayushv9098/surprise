@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, X, ZoomIn, Camera, Calendar, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn, Calendar, MapPin } from 'lucide-react';
 import { soundEffects } from './SoundEffects';
 
 // Curated aesthetic fallback photography

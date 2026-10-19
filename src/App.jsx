@@ -8,6 +8,7 @@ import Toast from './components/Toast';
 import { BuilderStudio } from './components/Builder';
 import { TemplateViewer } from './components/Templates';
 import AdminDashboard from './components/Admin/AdminDashboard';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import { TEMPLATES } from './data/templates';
 import { getPresetForTemplate } from './data/samplePresets';
 import { loadSurprise } from './utils/storage';
@@ -67,7 +68,7 @@ export default function App() {
       setSelectedTemplateId(templateId);
     }
     setCurrentView(view);
-    if (view === 'home' && typeof window !== 'undefined' && window.location.search) {
+    if ((view === 'home' || view === 'builder' || view === 'admin') && typeof window !== 'undefined' && window.location.search) {
       window.history.pushState({}, '', window.location.pathname);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -100,12 +101,14 @@ export default function App() {
   if (currentView === 'viewer' && siteData) {
     return (
       <>
-        <TemplateViewer
-          siteData={siteData}
-          isLiveView={true}
-          onBack={() => handleNavigate('home')}
-          onNavigate={handleNavigate}
-        />
+        <ErrorBoundary onReset={() => handleNavigate('home')}>
+          <TemplateViewer
+            siteData={siteData}
+            isLiveView={true}
+            onBack={() => handleNavigate('home')}
+            onNavigate={handleNavigate}
+          />
+        </ErrorBoundary>
         {import.meta.env.DEV && <Agentation />}
       </>
     );
@@ -119,22 +122,26 @@ export default function App() {
         {/* VIEW: ADMIN DASHBOARD */}
         {currentView === 'admin' && (
           <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <AdminDashboard onNavigate={handleNavigate} />
+            <ErrorBoundary onReset={() => handleNavigate('home')}>
+              <AdminDashboard onNavigate={handleNavigate} />
+            </ErrorBoundary>
           </div>
         )}
 
         {/* VIEW: BUILDER STUDIO */}
         {currentView === 'builder' && (
           <div className="py-6 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <BuilderStudio
-              initialTemplateId={selectedTemplateId}
-              onComplete={(result) => {
-                setToast({
-                  type: 'success',
-                  message: `Surprise for ${result.recipientName || 'your special person'} is ready!`
-                });
-              }}
-            />
+            <ErrorBoundary onReset={() => handleNavigate('home')}>
+              <BuilderStudio
+                initialTemplateId={selectedTemplateId}
+                onComplete={(result) => {
+                  setToast({
+                    type: 'success',
+                    message: `Surprise for ${result.recipientName || 'your special person'} is ready!`
+                  });
+                }}
+              />
+            </ErrorBoundary>
           </div>
         )}
 
@@ -155,14 +162,14 @@ export default function App() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   onClick={() => handleNavigate('builder')}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md"
                 >
                   Start Creating →
                 </button>
 
                 <button
                   onClick={() => handlePreviewPreset('blush-romance')}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 transition-colors cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 active:scale-[0.98] transition-all duration-150 cursor-pointer"
                 >
                   See Example
                 </button>
@@ -203,13 +210,13 @@ export default function App() {
                       <div className="flex items-center gap-3">
                         <button
                           onClick={() => handlePreviewPreset(tmpl.id)}
-                          className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors cursor-pointer"
+                          className="text-sm font-medium text-gray-600 hover:text-gray-900 active:scale-95 transition-all duration-150 cursor-pointer"
                         >
                           Preview
                         </button>
                         <button
                           onClick={() => handleNavigate('builder', tmpl.id)}
-                          className="px-4 py-1.5 rounded-lg text-sm font-medium bg-rose-500 text-white hover:bg-rose-600 transition-colors cursor-pointer"
+                          className="px-4 py-1.5 rounded-lg text-sm font-medium bg-rose-500 text-white hover:bg-rose-600 active:scale-95 transition-all duration-150 cursor-pointer shadow-sm hover:shadow"
                         >
                           Use this
                         </button>
@@ -267,7 +274,7 @@ export default function App() {
               <div className="mt-10 text-center">
                 <button
                   onClick={() => handleNavigate('builder')}
-                  className="px-6 py-3 rounded-xl text-sm font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] transition-colors cursor-pointer"
+                  className="px-6 py-3 rounded-xl text-sm font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md"
                 >
                   Start Creating →
                 </button>

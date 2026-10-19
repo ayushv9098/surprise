@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Heart } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export default function TemplateFooter({ onCreateClick, onNavigateCreate }) {
   const handleClick = (e) => {

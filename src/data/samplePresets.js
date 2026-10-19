@@ -155,7 +155,7 @@ export const TEMPLATE_PRESETS = {
     ],
     letter: {
       title: 'Memories penned down in ink...',
-      content: `Hey brother,\n\nLooking back at these old polaroids reminded me how lucky I am to have a best friend who never gave up on me. Through all the goofy ideas, late-night talks, and career milestones, you\'ve always had my back.\n\nHere\'s to staying the same crazy dreamers even when we\'re old and gray.\n\nCheers,\nSneha 📸`,
+      content: `Hey brother,\n\nLooking back at these old polaroids reminded me how lucky I am to have a best friend who never gave up on me. Through all the goofy ideas, late-night talks, and career milestones, you've always had my back.\n\nHere's to staying the same crazy dreamers even when we're old and gray.\n\nCheers,\nSneha 📸`,
       sealEmoji: '🎞️',
       waxColor: '#B45309',
     },

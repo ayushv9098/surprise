@@ -3,7 +3,10 @@ import {
   Music,
   Eye,
   RotateCcw,
+  HelpCircle,
+  Sparkles,
 } from 'lucide-react';
+import AppleEmoji from '../common/AppleEmoji';
 import { getTemplateById } from '../../data/templates';
 import { getSongById } from '../../data/songs';
 
@@ -104,8 +107,8 @@ export default function LivePhonePreview({ formData }) {
 
             {/* Hero Cover Card */}
             <div className="text-center space-y-2 pt-2">
-              <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/90 shadow-2xs border border-rose-100 text-[11px] font-bold text-rose-600">
-                <span>{template.emoji}</span>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 shadow-2xs border border-rose-100 text-[11px] font-bold text-rose-600">
+                <AppleEmoji emoji={template.emoji} size={14} />
                 <span>{occasion}</span>
               </div>
 
@@ -132,7 +135,7 @@ export default function LivePhonePreview({ formData }) {
                   onClick={() => setIsGiftUnboxed(!isGiftUnboxed)}
                   className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center text-3xl shadow-md cursor-pointer hover:scale-105 active:scale-95 transition-transform"
                 >
-                  {isGiftUnboxed ? '🎉' : '🎁'}
+                  <AppleEmoji emoji={isGiftUnboxed ? '🎉' : '🎁'} size={32} />
                 </div>
                 {isGiftUnboxed && (
                   <div className="p-2.5 rounded-xl bg-white shadow-xs border border-amber-200 text-xs text-amber-900 font-medium animate-scaleIn">
@@ -152,9 +155,9 @@ export default function LivePhonePreview({ formData }) {
                   <button
                     type="button"
                     onClick={() => setForgiveCount((c) => c + 1)}
-                    className="px-4 py-1.5 rounded-full bg-violet-600 text-white font-bold text-xs shadow-md hover:bg-violet-700 active:scale-95 cursor-pointer"
+                    className="px-4 py-1.5 rounded-full bg-violet-600 text-white font-bold text-xs shadow-md hover:bg-violet-700 active:scale-95 cursor-pointer inline-flex items-center gap-1.5"
                   >
-                    YES, Forgiven! 🫂
+                    YES, Forgiven! <AppleEmoji emoji="🫂" size={14} />
                   </button>
                   <button
                     type="button"
@@ -164,14 +167,14 @@ export default function LivePhonePreview({ formData }) {
                       transform: `translate(${runawayOffset.x}px, ${runawayOffset.y}px)`,
                       transition: 'transform 0.15s ease-out',
                     }}
-                    className="px-3 py-1.5 rounded-full bg-slate-200 text-slate-700 font-medium text-xs cursor-pointer select-none"
+                    className="px-3 py-1.5 rounded-full bg-slate-200 text-slate-700 font-medium text-xs cursor-pointer select-none inline-flex items-center gap-1.5"
                   >
-                    No 😤
+                    No <AppleEmoji emoji="😤" size={14} />
                   </button>
                 </div>
                 {forgiveCount > 0 && (
-                  <p className="text-[11px] text-violet-700 font-semibold animate-scaleIn">
-                    Yay! Warmest bear hug incoming from {senderName}! 💜
+                  <p className="text-[11px] text-violet-700 font-semibold animate-scaleIn inline-flex items-center justify-center gap-1">
+                    Yay! Warmest bear hug incoming from {senderName}! <AppleEmoji emoji="💜" size={14} />
                   </p>
                 )}
               </div>
@@ -309,8 +312,8 @@ export default function LivePhonePreview({ formData }) {
 
                 {selectedQuizOption !== null && (
                   <div className="p-3 rounded-xl bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200 text-xs space-y-1 animate-scaleIn">
-                    <div className="font-bold text-pink-700 flex items-center gap-1">
-                      <span>✨</span>
+                    <div className="font-bold text-pink-700 flex items-center gap-1.5">
+                      <AppleEmoji emoji="✨" size={14} />
                       <span>{quiz.rewardTitle || 'Reward Unlocked!'}</span>
                     </div>
                     <p className="text-[11px] text-slate-600 leading-relaxed">
@@ -334,7 +337,11 @@ export default function LivePhonePreview({ formData }) {
                     onClick={() => setIsScratchRevealed(true)}
                     className="p-5 rounded-xl bg-gradient-to-r from-amber-200 via-yellow-200 to-amber-300 border border-amber-300 text-amber-900 font-bold text-xs cursor-pointer hover:brightness-105 active:scale-95 transition-all shadow-inner select-none flex flex-col items-center gap-1.5"
                   >
-                    <span>✨ TAP OR RUB TO SCRATCH ✨</span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <AppleEmoji emoji="✨" size={12} />
+                      <span>TAP OR RUB TO SCRATCH</span>
+                      <AppleEmoji emoji="✨" size={12} />
+                    </span>
                     <span className="text-[10px] font-normal text-amber-800">
                       (Secret promise hidden below)
                     </span>
@@ -349,8 +356,8 @@ export default function LivePhonePreview({ formData }) {
 
             {/* Footer Watermark in phone */}
             <div className="pt-4 pb-6 text-center space-y-1">
-              <span className="text-[10px] font-semibold font-bold text-rose-500">
-                WishCraft ✨ Keepsake
+              <span className="text-[10px] font-semibold font-bold text-rose-500 inline-flex items-center justify-center gap-1">
+                WishCraft <AppleEmoji emoji="✨" size={12} /> Keepsake
               </span>
               <p className="text-[9px] text-slate-400">
                 Created with love in 2 mins

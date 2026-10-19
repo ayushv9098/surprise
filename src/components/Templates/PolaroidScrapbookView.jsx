@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Pin, Calendar } from 'lucide-react';
+import { Heart, Calendar } from 'lucide-react';
 import AmbientParticles from './common/AmbientParticles';
 import AudioPlayer from './common/AudioPlayer';
 import EnvelopeLetter from './common/EnvelopeLetter';

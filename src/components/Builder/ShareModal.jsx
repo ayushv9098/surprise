@@ -9,6 +9,7 @@ import {
   X,
   MessageCircle,
   ShieldCheck,
+  Share2,
 } from 'lucide-react';
 import {
   getWhatsAppShareUrl,
@@ -53,7 +54,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
             colors: ['#EC4899', '#8B5CF6', '#F43F5E'],
           });
         }, 250);
-      } catch (e) {
+      } catch {
         // Confetti optional
       }
 
@@ -83,12 +84,15 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
     window.open(shareUrl, '_blank');
   };
 
-  const handleNativeShare = () => {
-    triggerNativeShare({
+  const handleNativeShare = async () => {
+    const shared = await triggerNativeShare({
       title: `Surprise for ${recipientName} ✨`,
       text: `${senderName} created a personalized surprise keepsake just for you!`,
       url: shareUrl,
     });
+    if (!shared) {
+      handleCopy();
+    }
   };
 
   return (
@@ -161,31 +165,40 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
         </div>
 
         {/* Action Buttons Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {/* WhatsApp Share */}
           <button
             onClick={handleWhatsApp}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 shadow-md shadow-emerald-200/50 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 shadow-md shadow-emerald-200/50 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
           >
-            <MessageCircle className="w-4 h-4" />
+            <MessageCircle className="w-4 h-4 shrink-0" />
             <span>WhatsApp</span>
+          </button>
+
+          {/* Device Share */}
+          <button
+            onClick={handleNativeShare}
+            className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+          >
+            <Share2 className="w-4 h-4 text-purple-500 shrink-0" />
+            <span>Share</span>
           </button>
 
           {/* QR Code Button */}
           <button
             onClick={() => setShowQrModal(!showQrModal)}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
           >
-            <QrCode className="w-4 h-4 text-rose-500" />
-            <span>Show QR</span>
+            <QrCode className="w-4 h-4 text-rose-500 shrink-0" />
+            <span>QR Code</span>
           </button>
 
           {/* Test Live Preview In New Tab */}
           <button
             onClick={handleOpenLive}
-            className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-bold text-slate-700 bg-rose-50/70 hover:bg-rose-100 text-rose-700 border border-rose-200/60 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+            className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl text-xs font-bold bg-rose-50/70 hover:bg-rose-100 text-rose-700 border border-rose-200/60 shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
           >
-            <ExternalLink className="w-4 h-4 text-rose-500" />
+            <ExternalLink className="w-4 h-4 text-rose-500 shrink-0" />
             <span>Open Page</span>
           </button>
         </div>

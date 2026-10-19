@@ -6,7 +6,6 @@ import AppleEmoji, { renderAppleText } from '../../common/AppleEmoji';
 
 export default function CuteQuiz({
   quiz = null,
-  theme = "rose", // 'rose', 'gold', 'lavender'
   fallbackQuestion = "What is the single best thing about us?",
   fallbackOptions = [
     "Our uncontrollable midnight laughing fits",
@@ -62,32 +61,6 @@ export default function CuteQuiz({
     setIsAnswered(false);
     setIsCorrect(false);
     soundEffects.playPop();
-  };
-
-  const themeStyles = {
-    rose: {
-      badge: 'bg-rose-50 border-rose-200/80 text-rose-600',
-      activeBorder: 'border-rose-400 bg-rose-50/60 text-rose-900',
-      rewardGlow: 'from-rose-400 via-pink-400 to-amber-300',
-      btn: 'bg-gradient-to-r from-rose-500 to-pink-500 text-white',
-    },
-    gold: {
-      badge: 'bg-amber-50 border-amber-200/80 text-amber-700',
-      activeBorder: 'border-amber-400 bg-amber-50/60 text-amber-900',
-      rewardGlow: 'from-amber-400 via-yellow-300 to-orange-400',
-      btn: 'bg-gradient-to-r from-amber-500 to-orange-500 text-white',
-    },
-    lavender: {
-      badge: 'bg-purple-50 border-purple-200/80 text-purple-600',
-      activeBorder: 'border-purple-400 bg-purple-50/60 text-purple-900',
-      rewardGlow: 'from-purple-400 via-pink-300 to-indigo-400',
-      btn: 'bg-gradient-to-r from-purple-500 to-pink-500 text-white',
-    },
-  }[theme] || {
-    badge: 'bg-rose-50 border-rose-200/80 text-rose-600',
-    activeBorder: 'border-rose-400 bg-rose-50/60 text-rose-900',
-    rewardGlow: 'from-rose-400 via-pink-400 to-amber-300',
-    btn: 'bg-gradient-to-r from-rose-500 to-pink-500 text-white',
   };
 
   return (
