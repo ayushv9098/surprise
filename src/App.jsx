@@ -329,7 +329,7 @@ export default function App() {
             </section>
 
             {/* HOW IT WORKS */}
-            <section className="px-4 sm:px-6 max-w-4xl mx-auto">
+            <section className="px-4 sm:px-6 max-w-4xl mx-auto pb-16 sm:pb-24">
               <h2 className="font-semibold text-2xl text-[#1a1a1a] mb-8">
                 How it works
               </h2>
@@ -372,10 +372,10 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="mt-10 text-center">
+              <div className="mt-12 sm:mt-16 text-center">
                 <button
                   onClick={handleStartCreating}
-                  className="px-6 py-3 rounded-xl text-sm font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md"
+                  className="px-7 py-3.5 rounded-xl text-base font-semibold bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-md hover:shadow-lg inline-flex items-center gap-2"
                 >
                   Start Creating →
                 </button>

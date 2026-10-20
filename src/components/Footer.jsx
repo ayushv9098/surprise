@@ -25,8 +25,8 @@ export default function Footer() {
         </div>
 
         {/* Short, Reassuring Trust Statement */}
-        <p className="text-xs sm:text-sm text-slate-500 max-w-lg mx-auto leading-relaxed">
-          WishCraft crafts private, ad-free surprise websites for your favorite people. Your photos, heartfelt letters, and memories stay completely confidential and safe.
+        <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
+          Private & ad-free keepsakes. 100% confidential and safe.
         </p>
 
         {/* Copyright & Company Attribution */}
