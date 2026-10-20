@@ -386,7 +386,8 @@ export default function App() {
         )}
       </main>
 
-      <Footer />
+      {/* Footer strictly on home landing page only */}
+      {currentView === 'home' && <Footer />}
       <RecipientModal
         isOpen={Boolean(recipientModalCategory)}
         category={recipientModalCategory}
