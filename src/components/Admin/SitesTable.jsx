@@ -33,7 +33,7 @@ const BADGE_STYLES = {
   },
   'polaroid-scrapbook': {
     label: 'Polaroid Scrapbook 📸',
-    classes: 'bg-yellow-50 text-yellow-800 border-yellow-200'
+    classes: 'bg-rose-50 text-rose-700 border-rose-200'
   },
   'lavender-dream': {
     label: 'Lavender Dream 💜',

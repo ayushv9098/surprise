@@ -1,24 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap');
-      .font-handwriting { font-family: 'Caveat', cursive, sans-serif; }
+      @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap');
+      .font-cursive { font-family: 'Dancing Script', cursive, sans-serif; }
       .font-sans { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
     </style>
 
-    <!-- Adventure Emerald Sage Background -->
-    <linearGradient id="emeraldBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f0fdf4"/>
-      <stop offset="50%" stop-color="#e6f7f0"/>
-      <stop offset="100%" stop-color="#dcfce7"/>
+    <!-- Retro Sunset Ruby / Crimson Fire Background -->
+    <linearGradient id="rubyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#fff8f8"/>
+      <stop offset="70%" stop-color="#fff1f2"/>
+      <stop offset="100%" stop-color="#ffffff"/>
     </linearGradient>
+
+    <radialGradient id="rubyGlow" cx="50%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#e11d48" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
 
     <!-- Polaroid Shadows -->
     <filter id="scrapShadow" x="-15%" y="-15%" width="130%" height="135%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="1" dy="5" stdDeviation="6" flood-color="#064e3b" flood-opacity="0.16"/>
+      <feDropShadow dx="1" dy="5" stdDeviation="6" flood-color="#881337" flood-opacity="0.16"/>
     </filter>
     <filter id="polaroidPop" x="-20%" y="-20%" width="140%" height="145%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="2" dy="8" stdDeviation="8" flood-color="#064e3b" flood-opacity="0.22"/>
+      <feDropShadow dx="2" dy="8" stdDeviation="8" flood-color="#881337" flood-opacity="0.22"/>
     </filter>
 
     <!-- Washi Tape Textures -->
@@ -26,27 +32,26 @@
       <line x1="0" y1="0" x2="0" y2="6" stroke="#ffffff" stroke-width="1.8" opacity="0.4"/>
     </pattern>
 
-    <!-- Polaroid Photo Gradients -->
-    <!-- Sunset Silhouette for Roadtrip -->
+    <!-- Polaroid Photo Gradients (Fiery Sunset Crimson) -->
     <linearGradient id="sunsetGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#f97316"/>
-      <stop offset="45%" stop-color="#10b981"/>
-      <stop offset="100%" stop-color="#064e3b"/>
+      <stop offset="45%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#4c0519"/>
     </linearGradient>
 
-    <!-- Warm Friends Photo -->
     <linearGradient id="friendsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#d1fae5"/>
-      <stop offset="50%" stop-color="#34d399"/>
-      <stop offset="100%" stop-color="#047857"/>
+      <stop offset="0%" stop-color="#ffe4e6"/>
+      <stop offset="45%" stop-color="#fb7185"/>
+      <stop offset="100%" stop-color="#be123c"/>
     </linearGradient>
   </defs>
 
   <!-- Paper Base -->
-  <rect width="400" height="300" fill="url(#emeraldBg)"/>
+  <rect width="400" height="300" fill="url(#rubyBg)"/>
+  <rect width="400" height="300" fill="url(#rubyGlow)"/>
 
   <!-- Vintage Dot/Grid Texture Overlay -->
-  <g opacity="0.16" fill="#047857">
+  <g opacity="0.10" fill="#e11d48">
     <circle cx="20" cy="20" r="1"/><circle cx="60" cy="20" r="1"/><circle cx="100" cy="20" r="1"/><circle cx="140" cy="20" r="1"/><circle cx="180" cy="20" r="1"/><circle cx="220" cy="20" r="1"/><circle cx="260" cy="20" r="1"/><circle cx="300" cy="20" r="1"/><circle cx="340" cy="20" r="1"/><circle cx="380" cy="20" r="1"/>
     <circle cx="20" cy="60" r="1"/><circle cx="60" cy="60" r="1"/><circle cx="100" cy="60" r="1"/><circle cx="140" cy="60" r="1"/><circle cx="180" cy="60" r="1"/><circle cx="220" cy="60" r="1"/><circle cx="260" cy="60" r="1"/><circle cx="300" cy="60" r="1"/><circle cx="340" cy="60" r="1"/><circle cx="380" cy="60" r="1"/>
     <circle cx="20" cy="240" r="1"/><circle cx="60" cy="240" r="1"/><circle cx="100" cy="240" r="1"/><circle cx="140" cy="240" r="1"/><circle cx="180" cy="240" r="1"/><circle cx="220" cy="240" r="1"/><circle cx="260" cy="240" r="1"/><circle cx="300" cy="240" r="1"/><circle cx="340" cy="240" r="1"/><circle cx="380" cy="240" r="1"/>
@@ -55,29 +60,29 @@
 
   <!-- Ambient Scrapbook Stickers / Doodles -->
   <text x="24" y="55" font-size="16" opacity="0.9">⚡</text>
-  <text x="360" y="52" font-size="16" opacity="0.9">🌲</text>
-  <text x="355" y="270" font-size="17" opacity="0.85">💚</text>
+  <text x="360" y="52" font-size="16" opacity="0.9">🔥</text>
+  <text x="355" y="270" font-size="17" opacity="0.85">❤️</text>
   <text x="26" y="275" font-size="16" opacity="0.85">📸</text>
 
   <!-- Header Section: Scrapbook Binder Header with Washi Tape and Stitched Border -->
   <g transform="translate(48, 14)" filter="url(#scrapShadow)">
-    <rect width="304" height="66" rx="14" fill="#ffffff" stroke="#a7f3d0" stroke-width="1.2"/>
+    <rect width="304" height="66" rx="14" fill="#ffffff" stroke="#fecdd3" stroke-width="1.2"/>
     <!-- Stitched Inner Border -->
-    <rect x="5" y="5" width="294" height="56" rx="10" fill="none" stroke="#6ee7b7" stroke-width="1" stroke-dasharray="4 3"/>
+    <rect x="5" y="5" width="294" height="56" rx="10" fill="none" stroke="#f43f5e" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="4 3"/>
 
-    <!-- Top Washi Tape Strip (Mint Gold) -->
+    <!-- Top Washi Tape Strip (Sunset Rose) -->
     <g transform="translate(112, -7)">
-      <rect width="80" height="15" rx="2" fill="#6ee7b7" opacity="0.9"/>
+      <rect width="80" height="15" rx="2" fill="#fb7185" opacity="0.9"/>
       <rect width="80" height="15" rx="2" fill="url(#washiStripes)"/>
     </g>
 
-    <text x="152" y="24" class="font-sans" font-size="9" font-weight="700" fill="#047857" text-anchor="middle" letter-spacing="0.5">MEMORIES &amp; KEEPSAKES JOURNAL 📸</text>
-    <text x="152" y="47" class="font-handwriting" font-size="22" font-weight="700" fill="#064e3b" text-anchor="middle">Chapters of Brotherhood 📸⚡</text>
+    <text x="152" y="24" class="font-sans" font-size="9" font-weight="700" fill="#e11d48" text-anchor="middle" letter-spacing="0.5">VINTAGE CRIMSON &amp; MEMORIES 📸⚡</text>
+    <text x="152" y="49" class="font-cursive" font-size="24" font-weight="700" fill="#0f172a" text-anchor="middle">Chapters of Brotherhood 📸⚡</text>
   </g>
 
   <!-- Polaroid 2 (Underneath / Tilted +3.5 deg to Right) -->
   <g transform="translate(208, 92) rotate(4)" filter="url(#scrapShadow)">
-    <rect width="144" height="174" rx="4" fill="#ffffff" stroke="#d1fae5" stroke-width="1"/>
+    <rect width="144" height="174" rx="4" fill="#ffffff" stroke="#fecdd3" stroke-width="1"/>
     
     <!-- Photo Area -->
     <rect x="9" y="9" width="126" height="120" rx="2" fill="url(#sunsetGrad)"/>
@@ -86,23 +91,23 @@
     <!-- Sun -->
     <circle cx="72" cy="78" r="22" fill="#fde047" opacity="0.95"/>
     <!-- Mountain silhouettes -->
-    <polygon points="9,129 45,92 85,129" fill="#064e3b" opacity="0.85"/>
-    <polygon points="55,129 95,85 135,129" fill="#047857" opacity="0.8"/>
-    <polygon points="90,129 115,102 135,129" fill="#065f46" opacity="0.9"/>
+    <polygon points="9,129 45,92 85,129" fill="#4c0519" opacity="0.85"/>
+    <polygon points="55,129 95,85 135,129" fill="#881337" opacity="0.8"/>
+    <polygon points="90,129 115,102 135,129" fill="#be123c" opacity="0.9"/>
     
     <!-- Top Washi Tape -->
     <g transform="translate(85, -8) rotate(12)">
-      <rect width="52" height="16" rx="2" fill="#a7f3d0" opacity="0.9"/>
+      <rect width="52" height="16" rx="2" fill="#f43f5e" opacity="0.9"/>
       <rect width="52" height="16" rx="2" fill="url(#washiStripes)"/>
     </g>
 
     <!-- Polaroid Caption -->
-    <text x="72" y="152" class="font-handwriting" font-size="14.5" font-weight="700" fill="#064e3b" text-anchor="middle">Roadtrip Sunset 🚗🌅</text>
+    <text x="72" y="154" class="font-cursive" font-size="16" font-weight="700" fill="#0f172a" text-anchor="middle">Roadtrip Sunset 🚗🌅</text>
   </g>
 
   <!-- Polaroid 1 (Foreground / Tilted -4 deg to Left) -->
   <g transform="translate(46, 88) rotate(-4)" filter="url(#polaroidPop)">
-    <rect width="152" height="182" rx="4" fill="#ffffff" stroke="#d1fae5" stroke-width="1"/>
+    <rect width="152" height="182" rx="4" fill="#ffffff" stroke="#fecdd3" stroke-width="1"/>
 
     <!-- Photo Area -->
     <rect x="10" y="10" width="132" height="126" rx="2" fill="url(#friendsGrad)"/>
@@ -111,30 +116,30 @@
     <!-- Ambient photo warm glow -->
     <circle cx="66" cy="60" r="38" fill="#ffffff" opacity="0.35"/>
     <!-- Best Friend 1 -->
-    <circle cx="50" cy="52" r="15" fill="#064e3b"/>
-    <path d="M30 95 C 30 76, 42 70, 50 70 C 58 70, 70 76, 70 95 Z" fill="#047857"/>
+    <circle cx="50" cy="52" r="15" fill="#4c0519"/>
+    <path d="M30 95 C 30 76, 42 70, 50 70 C 58 70, 70 76, 70 95 Z" fill="#881337"/>
     <!-- Best Friend 2 (laughing together) -->
-    <circle cx="82" cy="54" r="14" fill="#065f46"/>
-    <path d="M64 95 C 64 78, 74 72, 82 72 C 90 72, 100 78, 100 95 Z" fill="#064e3b"/>
+    <circle cx="82" cy="54" r="14" fill="#881337"/>
+    <path d="M64 95 C 64 78, 74 72, 82 72 C 90 72, 100 78, 100 95 Z" fill="#4c0519"/>
     <!-- Laughing sparkles -->
     <text x="94" y="44" font-size="12">✨</text>
     <text x="32" y="46" font-size="12">⚡</text>
 
     <!-- Top Washi Tape -->
     <g transform="translate(18, -8) rotate(-8)">
-      <rect width="58" height="17" rx="2" fill="#fde047" opacity="0.9"/>
+      <rect width="58" height="17" rx="2" fill="#fbbf24" opacity="0.9"/>
       <rect width="58" height="17" rx="2" fill="url(#washiStripes)"/>
     </g>
 
-    <!-- Handwritten Caption -->
-    <text x="76" y="154" class="font-handwriting" font-size="15" font-weight="700" fill="#064e3b" text-anchor="middle">Brothers &amp; Besties 📸⚡</text>
-    <text x="76" y="170" class="font-sans" font-size="8" font-weight="600" fill="#047857" text-anchor="middle" letter-spacing="0.3">FOREVER &amp; ALWAYS</text>
+    <!-- Handwritten Caption in Dancing Script -->
+    <text x="76" y="154" class="font-cursive" font-size="17" font-weight="700" fill="#0f172a" text-anchor="middle">Brothers &amp; Besties 📸⚡</text>
+    <text x="76" y="170" class="font-sans" font-size="8" font-weight="600" fill="#e11d48" text-anchor="middle" letter-spacing="0.3">FOREVER &amp; ALWAYS</text>
   </g>
 
   <!-- Hand-drawn Arrow & Note -->
   <g transform="translate(202, 260)">
-    <path d="M-6 0 C 15 12, 45 10, 68 -2" fill="none" stroke="#047857" stroke-width="1.4" stroke-dasharray="3 2"/>
-    <path d="M68 -2 L 58 -5 M 68 -2 L 62 4" fill="none" stroke="#047857" stroke-width="1.4"/>
-    <text x="30" y="24" class="font-handwriting" font-size="15" font-weight="700" fill="#065f46" text-anchor="middle">Best Days of Our Lives 🌲⚡</text>
+    <path d="M-6 0 C 15 12, 45 10, 68 -2" fill="none" stroke="#e11d48" stroke-width="1.4" stroke-dasharray="3 2"/>
+    <path d="M68 -2 L 58 -5 M 68 -2 L 62 4" fill="none" stroke="#e11d48" stroke-width="1.4"/>
+    <text x="30" y="24" class="font-cursive" font-size="17" font-weight="700" fill="#be123c" text-anchor="middle">Best Days of Our Lives 🔥⚡</text>
   </g>
 </svg>

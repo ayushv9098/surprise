@@ -41,10 +41,10 @@ const TEMPLATE_CONFIG = {
     tag: 'Celebration & Joy'
   },
   'polaroid-scrapbook': {
-    name: 'Polaroid Scrapbook 📸',
-    color: 'bg-yellow-50 text-yellow-800 border-yellow-200',
-    accent: 'text-yellow-600',
-    tag: 'Vintage & Nostalgic'
+    name: 'Retro Polaroid 📸',
+    color: 'bg-rose-50 text-rose-700 border-rose-200',
+    accent: 'text-rose-600',
+    tag: 'Vintage Crimson & Memories'
   },
   'lavender-dream': {
     name: 'Lavender Dream 💜',

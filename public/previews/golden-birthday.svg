@@ -1,40 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
-      .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+      @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .font-cursive { font-family: 'Dancing Script', cursive, sans-serif; }
       .font-sans { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
     </style>
 
-    <!-- Warm Champagne Gold Background Gradient -->
+    <!-- Platinum Champagne Background Gradient (Crisp White + Delicate Champagne) -->
     <linearGradient id="goldBg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#fffdfa"/>
-      <stop offset="45%" stop-color="#fff8ec"/>
-      <stop offset="100%" stop-color="#fef3c7"/>
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#fffdf9"/>
+      <stop offset="70%" stop-color="#fff9ec"/>
+      <stop offset="100%" stop-color="#ffffff"/>
     </linearGradient>
 
-    <!-- Ambient Gold Radial Glows -->
+    <!-- Subtle Ambient Gold Glow -->
     <radialGradient id="sunGlow" cx="50%" cy="25%" r="60%">
-      <stop offset="0%" stop-color="#fde68a" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#fff8ec" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
     </radialGradient>
 
     <!-- Drop Shadows -->
     <filter id="goldCardShadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#b45309" flood-opacity="0.12"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#d97706" flood-opacity="0.12"/>
     </filter>
     <filter id="flameGlow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
       <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#f59e0b" flood-opacity="0.9"/>
     </filter>
     <filter id="amberBtnGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#d97706" flood-opacity="0.45"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#f59e0b" flood-opacity="0.35"/>
     </filter>
 
     <!-- Button & Cake Gradients -->
     <linearGradient id="amberBtn" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#f59e0b"/>
-      <stop offset="50%" stop-color="#eab308"/>
-      <stop offset="100%" stop-color="#d97706"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
     </linearGradient>
 
     <linearGradient id="cakeTop" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -43,7 +44,7 @@
     </linearGradient>
 
     <linearGradient id="cakeBottom" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="0%" stop-color="#ffffff"/>
       <stop offset="100%" stop-color="#fef3c7"/>
     </linearGradient>
 
@@ -85,17 +86,17 @@
 
   <!-- Header Badge: A Golden Birthday Celebration 🎂✨ -->
   <g transform="translate(100, 16)">
-    <rect width="200" height="24" rx="12" fill="#fef3c7" stroke="#fde68a" stroke-width="1"/>
+    <rect width="200" height="24" rx="12" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
     <text x="100" y="16.5" class="font-sans" font-size="10" font-weight="700" fill="#b45309" text-anchor="middle" letter-spacing="0.4">A Golden Birthday Celebration 🎂✨</text>
   </g>
 
   <!-- Main Luxury Showcase Card -->
   <g filter="url(#goldCardShadow)">
-    <rect x="44" y="48" width="312" height="200" rx="20" fill="#ffffff" fill-opacity="0.94" stroke="#fde68a" stroke-width="1.2"/>
+    <rect x="44" y="48" width="312" height="200" rx="20" fill="#ffffff" fill-opacity="0.96" stroke="#f59e0b" stroke-opacity="0.35" stroke-width="1.2"/>
 
-    <!-- Headline: Happy Birthday, Shining Star! -->
-    <text x="200" y="76" class="font-serif" font-size="20" font-weight="700" fill="#451a03" text-anchor="middle">Happy Birthday, Shining Star!</text>
-    <text x="200" y="93" class="font-sans" font-size="9.5" font-weight="500" fill="#b45309" text-anchor="middle" opacity="0.9">Blow the Candles to Make a Wish 🕯️</text>
+    <!-- Headline: Happy Birthday, Shining Star! in Dancing Script -->
+    <text x="200" y="78" class="font-cursive" font-size="24" font-weight="700" fill="#0f172a" text-anchor="middle">Happy Birthday, Shining Star! 🎂✨</text>
+    <text x="200" y="95" class="font-sans" font-size="9.5" font-weight="500" fill="#64748b" text-anchor="middle">May your year shine brighter than pure gold</text>
 
     <!-- Center Stage: 2-Tier Birthday Cake -->
     <g transform="translate(142, 104)">
@@ -122,7 +123,7 @@
       <!-- Cake Top Layer (Tier 1) -->
       <rect x="18" y="13" width="80" height="26" rx="6" fill="url(#cakeTop)" stroke="#fcd34d" stroke-width="1"/>
       <!-- Frosting scallops top tier -->
-      <path d="M 18 20 Q 28 26 38 20 Q 48 26 58 20 Q 68 26 78 20 Q 88 26 98 20 L 98 13 L 18 13 Z" fill="#ffffff" opacity="0.75"/>
+      <path d="M 18 20 Q 28 26 38 20 Q 48 26 58 20 Q 68 26 78 20 Q 88 26 98 20 L 98 13 L 18 13 Z" fill="#ffffff" opacity="0.85"/>
 
       <!-- Cake Bottom Layer (Tier 2) -->
       <rect x="6" y="38" width="104" height="30" rx="8" fill="url(#cakeBottom)" stroke="#fde68a" stroke-width="1.2"/>

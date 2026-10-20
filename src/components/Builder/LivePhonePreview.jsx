@@ -738,7 +738,7 @@ export default function LivePhonePreview({ formData = {} }) {
                   <div className="w-full flex flex-col items-center text-center space-y-1.5 py-1 max-w-[280px]">
                     <div className="flex items-center justify-center gap-1.5 mb-0.5">
                       <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
-                        Reasons Why You're Special
+                        Why You're Special
                       </h2>
                       <AppleEmoji emoji="💫" size={20} />
                     </div>
