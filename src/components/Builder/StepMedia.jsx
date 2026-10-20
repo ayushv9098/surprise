@@ -200,7 +200,7 @@ export default function StepMedia({ formData, onChange }) {
     try {
       const file = files[0];
       if (!file.type.startsWith('image/')) return;
-      const compressedDataUrl = await compressImageFile(file, 600, 600, 0.72);
+      const compressedDataUrl = await compressImageFile(file, 1400, 1400, 0.88);
 
       onChange({
         heroPhoto: compressedDataUrl,

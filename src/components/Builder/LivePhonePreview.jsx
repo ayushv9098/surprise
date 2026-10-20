@@ -650,15 +650,14 @@ export default function LivePhonePreview({ formData = {} }) {
 
                       <div className="relative my-1 mx-auto flex flex-col items-center justify-center">
                         <div className="polaroid-frame shadow-xl flex flex-col items-center justify-center mx-auto">
-                          <div className="relative w-[170px] sm:w-[185px] h-[215px] sm:h-[235px] mx-auto overflow-hidden rounded-[8px] bg-slate-100 shadow-inner">
+                          <div className="w-[180px] sm:w-[195px] h-[195px] sm:h-[210px] mx-auto overflow-hidden rounded-[10px] bg-slate-100 shadow-inner relative">
                             <img
                               src={heroPhotoUrl}
                               alt={recipientName}
-                              className="w-full h-full object-cover"
-                              style={{ objectPosition: 'center 12%' }}
+                              className="w-full h-full object-cover object-center transition-all duration-300"
                             />
                           </div>
-                          <p className={`mt-2 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1 max-w-[170px] sm:max-w-[185px] leading-relaxed mx-auto`}>
+                          <p className={`mt-2.5 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1 max-w-[180px] sm:max-w-[195px] leading-relaxed mx-auto`}>
                             <span>{renderAppleText(photoCaption, 12)}</span>
                           </p>
                         </div>

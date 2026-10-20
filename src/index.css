@@ -115,6 +115,14 @@
   box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.16), 0 6px 16px rgba(0, 0, 0, 0.06);
 }
 
+.polaroid-frame img,
+.polaroid-frame-tilted img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: high-quality;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 /* Clean Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;

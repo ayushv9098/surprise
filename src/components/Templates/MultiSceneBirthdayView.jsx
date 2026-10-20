@@ -573,13 +573,12 @@ export default function MultiSceneBirthdayView({
             </div>
 
             {/* Polaroid Frame */}
-            <div className="polaroid-frame my-2 w-full max-w-[260px] sm:max-w-[310px] mx-auto flex flex-col items-center justify-center">
-              <div className="relative w-full h-[280px] sm:h-[360px] mx-auto overflow-hidden rounded-[8px] bg-slate-100 shadow-inner">
+            <div className="polaroid-frame my-2 w-full max-w-[280px] sm:max-w-[320px] mx-auto flex flex-col items-center justify-center">
+              <div className="w-full max-w-[280px] sm:max-w-[320px] aspect-[4/5] max-h-[340px] sm:max-h-[380px] mx-auto overflow-hidden rounded-xl bg-slate-100 shadow-inner relative">
                 <img
                   src={photoUrl}
                   alt={recipientName}
-                  className="w-full h-full object-cover"
-                  style={{ objectPosition: 'center 12%' }}
+                  className="w-full h-full object-cover object-center transition-all duration-300"
                 />
               </div>
 
