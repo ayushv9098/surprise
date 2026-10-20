@@ -92,24 +92,24 @@ export const TEMPLATE_PRESETS = {
     specialReasons: [
       {
         icon: '🌟',
-        title: 'Brings Pure Energy',
-        desc: 'You light up every gathering the second you walk through the door.',
-      },
-      {
-        icon: '🏆',
-        title: 'True Champion',
-        desc: 'Always chasing your dreams fearlessly and inspiring everyone around you.',
-      },
-      {
-        icon: '💛',
         title: 'Golden Heart',
-        desc: 'The most generous, genuine, and reliable friend anyone could ever ask for.',
+        desc: 'Your radiant kindness and golden energy brightens every room you step into!',
+      },
+      {
+        icon: '🥂',
+        title: 'Endless Cheers',
+        desc: 'Every memory together feels like a grand celebration full of laughter and victory!',
+      },
+      {
+        icon: '⭐',
+        title: 'Pure Excellence',
+        desc: 'You inspire everyone with your dedication, talent, and unforgettable charisma!',
       },
     ],
     letter: {
-      title: 'A golden wish for your special day...',
-      content: `Dearest Rohan,\n\nYou bring so much sunshine, crazy laughter, and good energy wherever you go! On your special birthday, we just wanted to remind you how genuinely loved and celebrated you are.\n\nKeep dreaming big, eating all the cake without counting calories, and shining brighter than everyone else in the room.\n\nLove always,\nYour forever cheerleaders 🥳💛`,
-      signOff: 'Love always,\nAlex & the crew 💛',
+      title: 'A Little Note For You',
+      content: `Dear Rohan,\n\nOn your golden day, wishing you the richest blessings, boundless joy, and success that shines brighter than gold! 🎂✨\n\nThank you for bringing so much golden warmth and celebration into every moment we share. Here's to making this year your most unforgettable chapter yet! 🥂🌟`,
+      signOff: 'With love & cheers,\nAlex 🎂✨',
       sealEmoji: '⭐',
       waxColor: '#D97706',
     },
@@ -152,9 +152,9 @@ export const TEMPLATE_PRESETS = {
       },
     ],
     letter: {
-      title: 'Memories penned down in ink...',
-      content: `Hey brother,\n\nLooking back at our memories reminded me how lucky I am to have a best friend who never gave up on me. Through all the goofy ideas, late-night talks, and milestones, you've always had my back.\n\nHere's to staying the same crazy dreamers even when we're old and gray.\n\nCheers,\nAlex 📸`,
-      signOff: 'Brothers forever,\nAlex ⚡',
+      title: 'A Little Note For You',
+      content: `Dear Rohan,\n\nFlipping through memories with you is a reminder of how truly special true friendship is. 📸⚡\n\nThank you for all the late-night talks, epic adventures, and memories etched forever in heart. Wishing you the warmest and happiest birthday! 🤎☕`,
+      signOff: 'Always your friend,\nAlex 📸⚡',
       sealEmoji: '⚡',
       waxColor: '#78350F',
     },

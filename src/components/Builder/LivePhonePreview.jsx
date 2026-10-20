@@ -25,6 +25,7 @@ const AMBIENT_EMOJIS_CONFIG = [
 
 /**
  * 6 Unique aesthetic themes powering the phone simulator
+ * All themes share the unified 5-scene flow with their distinct fonts, colors, and styling!
  */
 const THEMES = {
   'royal-sapphire': {
@@ -41,10 +42,12 @@ const THEMES = {
     headingClass: 'text-blue-950',
     accentTextClass: 'text-blue-700',
     subtitleClass: 'text-slate-500',
-    btnPrimaryClass: 'btn-primary animate-pulse-glow',
-    btnActionClass: 'btn-primary',
-    btnMood1Class: 'btn-primary',
-    btnMood2Class: 'btn-secondary',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary animate-pulse-glow cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white btn-primary active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-indigo-900 bg-indigo-50/80 hover:bg-indigo-100 border border-indigo-200 active:scale-95 cursor-pointer',
     reasonCardClass: 'special-reason-card',
     iconBoxClass: 'bg-blue-50/90 border border-blue-100/80',
     waxColor: '#1D4ED8',
@@ -59,7 +62,6 @@ const THEMES = {
     letterHeaderClass: 'text-blue-900',
     letterSignOffClass: 'text-blue-800',
     confettiColors: ['#2563EB', '#60A5FA', '#F59E0B', '#FBBF24', '#38BDF8'],
-    isScrapbook: false,
     defaultReasons: [
       { icon: '💪', title: 'Lucky to Have You', desc: 'So grateful to have a brother like you in my corner every day!' },
       { icon: '⭐', title: 'Always There', desc: 'Always standing by my side with endless laughs and genuine support!' },
@@ -77,17 +79,19 @@ const THEMES = {
     fontFamily: 'font-serif',
     ambientEmojis: ['🎂', '✨', '🥂', '💛', '⭐', '🎉', '🌟', '💫'],
     primaryEmoji: '🎂',
-    containerBgClass: 'bg-gradient-to-b from-[#FFFDF9] via-[#FFF8EC] to-[#FEF3D6]',
-    envelopeCelebrationBg: 'bg-gradient-to-b from-amber-950 via-yellow-950 to-stone-950',
+    containerBgClass: 'bg-gradient-to-b from-amber-50/70 via-yellow-50/40 to-orange-50/50',
+    envelopeCelebrationBg: 'bg-gradient-to-b from-amber-950 via-slate-900 to-stone-950',
     cardClass: 'border border-amber-200/90 bg-white/95 shadow-xl shadow-amber-500/10 rounded-3xl p-5 sm:p-6 w-full text-center relative',
     subCardClass: 'border border-amber-200/90 bg-white/95 shadow-xl shadow-amber-500/10 rounded-3xl p-5 sm:p-6 w-full max-w-[260px] text-center',
     headingClass: 'text-amber-950',
     accentTextClass: 'text-amber-600',
-    subtitleClass: 'text-amber-900/70',
-    btnPrimaryClass: 'inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 shadow-md shadow-amber-500/30 active:scale-95 transition-all cursor-pointer',
-    btnActionClass: 'inline-flex items-center justify-center gap-1 px-5 py-1.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 shadow-md shadow-amber-500/30 active:scale-95 transition-all cursor-pointer',
-    btnMood1Class: 'text-white bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 shadow-amber-500/30',
-    btnMood2Class: 'text-amber-950 bg-gradient-to-r from-amber-100 via-amber-200 to-yellow-100 border border-amber-300/80 shadow-xs',
+    subtitleClass: 'text-amber-900/80',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-amber-900 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-900 bg-yellow-100/70 hover:bg-yellow-100 border border-yellow-200/80 shadow-xs active:scale-95 cursor-pointer',
     reasonCardClass: 'border border-amber-200/90 bg-white/95 shadow-xs rounded-2xl',
     iconBoxClass: 'bg-amber-50 border border-amber-200/80',
     waxColor: '#D97706',
@@ -101,8 +105,7 @@ const THEMES = {
     letterBorderBottom: 'border-amber-100',
     letterHeaderClass: 'text-amber-900',
     letterSignOffClass: 'text-amber-800',
-    confettiColors: ['#D97706', '#F59E0B', '#FBBF24', '#FDE68A', '#FEF3C7'],
-    isScrapbook: false,
+    confettiColors: ['#f59e0b', '#fbbf24', '#d97706', '#b45309', '#fef3c7', '#ffffff'],
     defaultReasons: [
       { icon: '🌟', title: 'Golden Heart', desc: 'Your radiant kindness and golden energy brightens every room you step into!' },
       { icon: '🥂', title: 'Endless Cheers', desc: 'Every memory together feels like a grand celebration full of laughter and victory!' },
@@ -120,18 +123,20 @@ const THEMES = {
     fontFamily: 'font-handwriting',
     ambientEmojis: ['📸', '⚡', '🎞️', '📜', '🤎', '⭐', '✨', '☕'],
     primaryEmoji: '📸',
-    containerBgClass: 'paper-parchment',
-    envelopeCelebrationBg: 'bg-gradient-to-b from-stone-900 via-amber-950 to-stone-950',
-    cardClass: 'border border-amber-800/15 bg-[#FFFDF9]/95 shadow-md rounded-2xl p-5 sm:p-6 w-full text-center relative',
-    subCardClass: 'border border-amber-800/15 bg-[#FFFDF9]/95 shadow-md rounded-2xl p-5 sm:p-6 w-full max-w-[260px] text-center relative',
+    containerBgClass: 'bg-gradient-to-b from-stone-100/80 via-amber-50/50 to-orange-50/30',
+    envelopeCelebrationBg: 'bg-gradient-to-b from-stone-950 via-amber-950 to-stone-900',
+    cardClass: 'border border-amber-800/20 bg-[#FFFDF9]/95 shadow-lg shadow-amber-900/5 rounded-3xl p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'border border-amber-800/20 bg-[#FFFDF9]/95 shadow-lg shadow-amber-900/5 rounded-3xl p-5 sm:p-6 w-full max-w-[260px] text-center',
     headingClass: 'text-stone-900',
     accentTextClass: 'text-amber-800',
-    subtitleClass: 'text-stone-600',
-    btnPrimaryClass: 'inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-amber-800 to-stone-800 shadow-md shadow-stone-800/20 active:scale-95 transition-all cursor-pointer',
-    btnActionClass: 'inline-flex items-center justify-center gap-1 px-5 py-1.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-amber-800 to-stone-800 shadow-md shadow-stone-800/20 active:scale-95 transition-all cursor-pointer',
-    btnMood1Class: 'text-white bg-gradient-to-r from-amber-800 to-stone-800 shadow-stone-800/20',
-    btnMood2Class: 'text-stone-900 bg-gradient-to-r from-stone-100 to-amber-100 border border-stone-300/80 shadow-xs',
-    reasonCardClass: 'border border-amber-800/15 bg-[#FFFDF9]/95 shadow-xs rounded-xl',
+    subtitleClass: 'text-stone-700',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-800 via-stone-800 to-amber-950 shadow-md shadow-stone-800/30 active:scale-95 cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-stone-900 bg-amber-100/70 hover:bg-amber-100 border border-amber-200/80 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-800 via-stone-800 to-amber-950 shadow-md shadow-stone-800/30 active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-800 via-stone-800 to-amber-950 shadow-stone-800/20 active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-stone-900 bg-amber-100/70 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-stone-800 bg-stone-100/90 hover:bg-stone-200/90 border border-stone-300/80 shadow-xs active:scale-95 cursor-pointer',
+    reasonCardClass: 'border border-amber-800/20 bg-[#FFFDF9]/95 shadow-xs rounded-2xl',
     iconBoxClass: 'bg-amber-50/80 border border-amber-200/60',
     waxColor: '#78350F',
     sealEmoji: '⚡',
@@ -144,8 +149,7 @@ const THEMES = {
     letterBorderBottom: 'border-amber-100',
     letterHeaderClass: 'text-stone-900',
     letterSignOffClass: 'text-amber-900',
-    confettiColors: ['#78350F', '#B45309', '#D97706', '#A16207', '#EAB308'],
-    isScrapbook: true,
+    confettiColors: ['#b45309', '#d97706', '#78350f', '#f59e0b', '#fef3c7', '#ffffff'],
     defaultReasons: [
       { icon: '🤝', title: 'Through Thick & Thin', desc: 'Always standing by my side with steadfast loyalty and endless support!' },
       { icon: '⚡', title: 'Unmatched Chemistry', desc: 'From crazy ideas to unstoppable laughter, our vibe is completely one of a kind!' },
@@ -170,10 +174,12 @@ const THEMES = {
     headingClass: 'text-rose-950',
     accentTextClass: 'text-rose-600',
     subtitleClass: 'text-slate-500',
-    btnPrimaryClass: 'btn-primary-rose animate-pulse-glow-rose',
-    btnActionClass: 'btn-primary-rose',
-    btnMood1Class: 'btn-primary-rose',
-    btnMood2Class: 'btn-secondary-rose',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-rose animate-pulse-glow-rose cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-rose-900 bg-rose-50 hover:bg-rose-100 border border-rose-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white btn-primary-rose active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-rose active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-pink-950 bg-pink-50/80 hover:bg-pink-100 border border-pink-200 active:scale-95 cursor-pointer',
     reasonCardClass: 'special-reason-card-girl',
     iconBoxClass: 'bg-rose-50/90 border border-rose-100/80',
     waxColor: '#E11D48',
@@ -188,7 +194,6 @@ const THEMES = {
     letterHeaderClass: 'text-rose-900',
     letterSignOffClass: 'text-rose-700',
     confettiColors: ['#F43F5E', '#FB7185', '#F59E0B', '#EC4899', '#A855F7'],
-    isScrapbook: false,
     defaultReasons: [
       { icon: '🌸', title: 'Pure Sunshine', desc: 'The effortless way you turn every ordinary moment into joy!' },
       { icon: '✨', title: 'Gentle Soul', desc: 'The quiet kindness and sparkling positivity you share with everyone!' },
@@ -213,10 +218,12 @@ const THEMES = {
     headingClass: 'text-orange-950',
     accentTextClass: 'text-orange-600',
     subtitleClass: 'text-orange-900/70',
-    btnPrimaryClass: 'inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
-    btnActionClass: 'inline-flex items-center justify-center gap-1 px-5 py-1.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
-    btnMood1Class: 'text-white bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-orange-500/30',
-    btnMood2Class: 'text-orange-950 bg-gradient-to-r from-orange-100 via-rose-100 to-amber-100 border border-orange-300/80 shadow-xs',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-orange-950 bg-orange-100/80 hover:bg-orange-100 border border-orange-200/80 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-orange-500/30 active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-950 bg-orange-100/80 hover:bg-orange-100 border border-orange-200/80 shadow-xs active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-900 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
     reasonCardClass: 'border border-orange-200/90 bg-white/95 shadow-xs rounded-2xl',
     iconBoxClass: 'bg-orange-50 border border-orange-200/80',
     waxColor: '#EA580C',
@@ -231,7 +238,6 @@ const THEMES = {
     letterHeaderClass: 'text-orange-900',
     letterSignOffClass: 'text-orange-800',
     confettiColors: ['#EA580C', '#F97316', '#FB923C', '#F43F5E', '#FDE047'],
-    isScrapbook: false,
     defaultReasons: [
       { icon: '🍑', title: 'Peach Perfection', desc: 'Your heartwarming smile brings sweetest joy and elegance to all of us!' },
       { icon: '✨', title: 'Sparkling Grace', desc: 'You have a gentle superpower to make everyone feel cherished and deeply valued!' },
@@ -256,10 +262,12 @@ const THEMES = {
     headingClass: 'text-purple-950',
     accentTextClass: 'text-purple-600',
     subtitleClass: 'text-purple-900/70',
-    btnPrimaryClass: 'inline-flex items-center justify-center gap-1.5 px-6 py-2.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
-    btnActionClass: 'inline-flex items-center justify-center gap-1 px-5 py-1.5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
-    btnMood1Class: 'text-white bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-purple-600/30',
-    btnMood2Class: 'text-purple-950 bg-gradient-to-r from-purple-100 via-violet-100 to-indigo-100 border border-purple-300/80 shadow-xs',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-purple-950 bg-purple-100/80 hover:bg-purple-100 border border-purple-300/80 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-purple-600/30 active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-950 bg-purple-100/80 hover:bg-purple-100 border border-purple-200/80 shadow-xs active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-900 bg-violet-100/80 hover:bg-violet-100 border border-violet-200/80 shadow-xs active:scale-95 cursor-pointer',
     reasonCardClass: 'border border-purple-200/90 bg-white/95 shadow-xs rounded-2xl',
     iconBoxClass: 'bg-purple-50 border border-purple-200/80',
     waxColor: '#7C3AED',
@@ -274,7 +282,6 @@ const THEMES = {
     letterHeaderClass: 'text-purple-900',
     letterSignOffClass: 'text-purple-800',
     confettiColors: ['#7C3AED', '#8B5CF6', '#A78BFA', '#C084FC', '#E879F9'],
-    isScrapbook: false,
     defaultReasons: [
       { icon: '💜', title: 'Magical Presence', desc: 'Your gentle spirit and soothing energy bring comfort and magic everywhere!' },
       { icon: '🦋', title: 'Fairy Elegance', desc: 'Like a butterfly dancing in the breeze, you inspire dreams and wonder!' },
@@ -301,12 +308,8 @@ const resolveTheme = (templateId, gender) => {
 };
 
 export default function LivePhonePreview({ formData = {} }) {
-  const [screen, setScreen] = useState(0); // 0: Cover/Landing, 1: Ritual/Photo, 2: Gift/Chapters/Mood, 3: Reasons/Photo, 4: Envelope/Letter
+  const [screen, setScreen] = useState(0); // 0: Cover/Landing, 1: Photo, 2: Mood/Feeling, 3: Reasons, 4: Envelope/Letter
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
-
-  // Template-Specific Interactive States
-  const [candlesBlown, setCandlesBlown] = useState(false);
-  const [giftOpened, setGiftOpened] = useState(false);
 
   // Scoped Confetti Canvas References
   const confettiCanvasRef = useRef(null);
@@ -330,16 +333,10 @@ export default function LivePhonePreview({ formData = {} }) {
   useEffect(() => {
     setScreen(0);
     setEnvelopeOpen(false);
-    setCandlesBlown(false);
-    setGiftOpened(false);
   }, [formData.templateId]);
 
   const template = getTemplateById(formData.templateId || 'royal-sapphire');
   const theme = resolveTheme(formData.templateId, formData.gender || template?.gender);
-
-  const isGolden = theme.id === 'golden-birthday';
-  const isScrapbook = theme.id === 'polaroid-scrapbook';
-  const isMultiScene = !isGolden && !isScrapbook;
 
   const isGirl = theme.gender === 'girl';
   const recipientName = formData.recipientName || (isGirl ? 'Sarah' : 'Rohan');
@@ -354,10 +351,7 @@ export default function LivePhonePreview({ formData = {} }) {
   let line1Text = '';
   let line2Text = '';
 
-  if (isScrapbook && !formData.occasion) {
-    line1Text = 'Chapters of Brotherhood';
-    line2Text = `${nameToDisplay}! 📸⚡`;
-  } else if (rawOccasion) {
+  if (rawOccasion) {
     if (rawOccasion.includes(',')) {
       const commaIdx = rawOccasion.indexOf(',');
       line1Text = rawOccasion.slice(0, commaIdx + 1).trim();
@@ -463,8 +457,6 @@ export default function LivePhonePreview({ formData = {} }) {
     triggerConfetti();
     setScreen(0);
     setEnvelopeOpen(false);
-    setCandlesBlown(false);
-    setGiftOpened(false);
   };
 
   const handlePrevScene = () => {
@@ -605,7 +597,7 @@ export default function LivePhonePreview({ formData = {} }) {
               </div>
 
               {/* ========================================================== */}
-              {/* INTERACTIVE MULTI-SCENE SCREEN BODY */}
+              {/* INTERACTIVE 5-SCENE SCREEN BODY */}
               {/* ========================================================== */}
               <div className="flex-1 overflow-y-auto px-3.5 py-2 flex flex-col justify-center items-center text-center custom-scrollbar relative z-20">
                 {/* -------------------------------------------------------- */}
@@ -613,704 +605,196 @@ export default function LivePhonePreview({ formData = {} }) {
                 {/* -------------------------------------------------------- */}
                 {screen === 0 && (
                   <div className="w-full flex items-center justify-center animate-fade-in-up px-1">
-                    {/* A) Golden Spark Cover */}
-                    {isGolden && (
-                      <div className="border border-amber-200/90 bg-white/95 shadow-xl shadow-amber-500/10 rounded-3xl p-5 sm:p-6 w-full text-center relative">
-                        {/* Floating Cake & Sparkles */}
-                        <div className="mb-2 inline-flex items-center justify-center gap-2 animate-bounce">
-                          <AppleEmoji emoji="🎂" size={32} />
-                          <AppleEmoji emoji="✨" size={24} />
-                          <AppleEmoji emoji="🥂" size={26} />
-                          <AppleEmoji emoji="💛" size={24} />
-                        </div>
-
-                        {/* Luxury Serif Headline */}
-                        <div className="text-[11px] font-semibold text-amber-700 tracking-wider uppercase mb-1.5 flex items-center justify-center gap-1 font-serif">
-                          <span>A Golden Birthday Celebration</span>
-                          <AppleEmoji emoji="🎂" size={13} />
-                          <AppleEmoji emoji="✨" size={13} />
-                        </div>
-
-                        <h1 className="font-serif text-2xl sm:text-3xl font-bold leading-tight text-amber-950">
-                          <span>Happy Birthday,</span>
-                          <span className="block mt-1 text-amber-600">
-                            {renderAppleText(recipientName, 22)}! 🎂✨
-                          </span>
-                        </h1>
-
-                        <p className="mt-3 text-xs sm:text-sm text-amber-900/75 leading-relaxed font-normal">
-                          {renderAppleText(formData.subtitle || template?.defaultSubtitle || "May your year shine brighter than pure gold.", 12)}
-                        </p>
-
-                        <div className="mt-5 flex justify-center">
-                          <button
-                            type="button"
-                            onClick={handleOpenLanding}
-                            className={theme.btnPrimaryClass}
-                          >
-                            <span>Start Celebration</span>
-                            <AppleEmoji emoji="✨" size={14} className="ml-1" />
-                          </button>
-                        </div>
+                    <div className={theme.cardClass}>
+                      <div className="mb-3 inline-block animate-bounce">
+                        <AppleEmoji emoji={theme.primaryEmoji} size={38} />
                       </div>
-                    )}
 
-                    {/* B) Retro Polaroid Scrapbook Journal Binder Cover */}
-                    {isScrapbook && (
-                      <div className="border border-amber-800/15 bg-[#FFFDF9]/95 shadow-md rounded-2xl p-5 sm:p-6 w-full text-center relative">
-                        <div className="w-20 h-4 washi-tape mx-auto -mt-6 mb-2 rounded-xs shadow-2xs rotate-1 select-none pointer-events-none" />
+                      <h1 className={`${theme.fontFamily} text-2xl sm:text-3xl font-bold leading-tight ${theme.headingClass}`}>
+                        <span>{renderAppleText(line1Text, 24)}</span>
+                        <span className={`block mt-1 ${theme.accentTextClass}`}>
+                          {renderAppleText(line2Text, 24)}
+                        </span>
+                      </h1>
 
-                        <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100/70 text-amber-900 text-[10px] font-semibold mb-2">
-                          <span>Memories & Keepsakes Journal</span>
-                          <AppleEmoji emoji="📸" size={12} />
-                        </div>
+                      <p className={`mt-3 text-xs sm:text-sm ${theme.subtitleClass} leading-relaxed font-normal`}>
+                        {renderAppleText(subtitle, 12)}
+                      </p>
 
-                        <div className="mb-2 inline-block animate-bounce">
-                          <AppleEmoji emoji="📸" size={36} />
-                        </div>
-
-                        <h1 className="font-handwriting text-2xl sm:text-3xl font-bold leading-tight text-stone-900">
-                          <span>{renderAppleText(line1Text, 24)}</span>
-                          <span className="block mt-1 text-amber-800">
-                            {renderAppleText(line2Text, 24)}
-                          </span>
-                        </h1>
-
-                        <p className="font-handwriting text-base sm:text-lg text-stone-700 mt-2.5 leading-snug">
-                          "{renderAppleText(formData.subtitle || template?.defaultSubtitle || "Taped forever into the scrapbook of our greatest memories.", 13)}"
-                        </p>
-
-                        <div className="mt-5 flex justify-center">
-                          <button
-                            type="button"
-                            onClick={handleOpenLanding}
-                            className={theme.btnPrimaryClass}
-                          >
-                            <span>Open Journal</span>
-                            <AppleEmoji emoji="📖" size={14} className="ml-1" />
-                          </button>
-                        </div>
+                      <div className="mt-5 flex justify-center">
+                        <button
+                          type="button"
+                          onClick={handleOpenLanding}
+                          className={`flex items-center justify-center gap-1.5 ${theme.btnPrimaryClass}`}
+                        >
+                          <span>Tap to Open</span>
+                          <AppleEmoji emoji="🎁" size={14} className="ml-1" />
+                        </button>
                       </div>
-                    )}
-
-                    {/* C) Multi-Scene (Royal Sapphire, Blush Blossom, Princess Peach, Lavender Dream) */}
-                    {isMultiScene && (
-                      <div className={theme.cardClass}>
-                        <div className="mb-3 inline-block animate-bounce">
-                          <AppleEmoji emoji={theme.primaryEmoji} size={38} />
-                        </div>
-
-                        <h1 className={`${theme.fontFamily} text-2xl sm:text-3xl font-bold leading-tight ${theme.headingClass}`}>
-                          <span>{renderAppleText(line1Text, 24)}</span>
-                          <span className={`block mt-1 ${theme.accentTextClass}`}>
-                            {renderAppleText(line2Text, 24)}
-                          </span>
-                        </h1>
-
-                        <p className={`mt-3 text-xs sm:text-sm ${theme.subtitleClass} leading-relaxed font-normal`}>
-                          {renderAppleText(subtitle, 12)}
-                        </p>
-
-                        <div className="mt-5 flex justify-center">
-                          <button
-                            type="button"
-                            onClick={handleOpenLanding}
-                            className={`py-2 px-5 rounded-xl text-xs font-bold cursor-pointer flex items-center justify-center gap-1.5 ${theme.btnPrimaryClass}`}
-                          >
-                            <span>Tap to Open</span>
-                            <AppleEmoji emoji="🎁" size={14} className="ml-1" />
-                          </button>
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
                 )}
 
                 {/* -------------------------------------------------------- */}
-                {/* SCENE 1 */}
+                {/* SCENE 1: STAR PHOTO CARD */}
                 {/* -------------------------------------------------------- */}
                 {screen === 1 && (
                   <div className="w-full flex flex-col items-center animate-fade-in-up py-1 max-w-[280px]">
-                    {/* A) Golden Spark: 2-Tier Birthday Cake with Burning Candles */}
-                    {isGolden && (
-                      <div className="w-full flex flex-col items-center">
-                        <div className="text-center mb-2">
-                          <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100/80 text-amber-800 text-[10px] font-semibold mb-1">
-                            <span>Make a Wish</span>
-                            <AppleEmoji emoji="🕯️" size={12} />
+                    <div className="w-full flex flex-col items-center">
+                      <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                        <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
+                          The Star of the Day
+                        </h2>
+                        <AppleEmoji emoji="🌟" size={18} />
+                      </div>
+
+                      <div className="relative my-1 mx-auto inline-block">
+                        <div className="polaroid-frame shadow-xl">
+                          <div className="relative w-[170px] sm:w-[185px] h-[215px] sm:h-[235px] overflow-hidden rounded-[3px] bg-slate-100 shadow-inner">
+                            <img
+                              src={heroPhotoUrl}
+                              alt={recipientName}
+                              className="w-full h-full object-cover"
+                              style={{ objectPosition: 'center 12%' }}
+                            />
                           </div>
-                          <h2 className="font-serif text-lg sm:text-xl font-bold text-amber-950 leading-tight">
-                            Blow the Candles to Make a Wish 🕯️
-                          </h2>
-                          <p className="text-[11px] text-amber-900/70 mt-0.5 font-serif">
-                            {candlesBlown ? "You Made a Birthday Wish! ✨" : "Close your eyes, make a wish & blow!"}
+                          <p className={`mt-2 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1`}>
+                            <span>{renderAppleText(photoCaption, 12)}</span>
                           </p>
                         </div>
-
-                        {/* 2-Tier Birthday Cake with 4 Glowing Candles */}
-                        <div className="relative my-3 flex flex-col items-center justify-center">
-                          {/* Candles Row */}
-                          <div className="flex items-end justify-center gap-3.5 mb-1 z-10">
-                            {[0, 1, 2, 3].map((candle) => (
-                              <div key={candle} className="flex flex-col items-center">
-                                {!candlesBlown ? (
-                                  <div className="w-3.5 h-5 bg-gradient-to-t from-orange-500 via-amber-400 to-yellow-200 rounded-full animate-flame shadow-md shadow-amber-400" />
-                                ) : (
-                                  <span className="text-xs text-slate-400 flex items-center justify-center h-5 animate-in fade-in duration-300">
-                                    <AppleEmoji emoji="💨" size={14} />
-                                  </span>
-                                )}
-                                <div className="w-2 h-6 bg-gradient-to-b from-amber-200 via-pink-200 to-amber-300 rounded-t-xs shadow-inner" />
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Cake Tiers */}
-                          <div className="relative flex flex-col items-center">
-                            {/* Top Layer */}
-                            <div className="w-36 h-9 rounded-t-xl bg-gradient-to-b from-amber-100 to-amber-200 border-t-2 border-amber-300/80 shadow-md flex items-center justify-center">
-                              <span className="text-[10px] font-bold text-amber-800 tracking-wider font-serif">
-                                ⭐ HAPPY BIRTHDAY ⭐
-                              </span>
-                            </div>
-                            {/* Bottom Layer */}
-                            <div className="w-48 h-10 rounded-b-xl bg-gradient-to-b from-[#FFF2D6] to-[#FCE6BD] border-t-2 border-amber-300/50 shadow-lg flex items-center justify-around px-3">
-                              <AppleEmoji emoji="🍓" size={14} />
-                              <AppleEmoji emoji="✨" size={14} />
-                              <AppleEmoji emoji="🎂" size={14} />
-                              <AppleEmoji emoji="✨" size={14} />
-                              <AppleEmoji emoji="🍓" size={14} />
-                            </div>
-                            {/* Cake Stand Plate */}
-                            <div className="w-56 h-2.5 bg-gradient-to-r from-amber-200 via-white to-amber-200 rounded-full shadow-md mt-1" />
-                          </div>
-                        </div>
-
-                        {/* Blow Candles Action / Status */}
-                        {!candlesBlown ? (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              triggerConfetti();
-                              setCandlesBlown(true);
-                            }}
-                            className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 shadow-md shadow-amber-500/30 active:scale-95 transition-all cursor-pointer"
-                          >
-                            <span>Blow Candles</span>
-                            <AppleEmoji emoji="🕯️" size={14} />
-                          </button>
-                        ) : (
-                          <div className="mt-2 flex flex-col items-center animate-pop-in">
-                            <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold shadow-2xs">
-                              <span>Wish Made!</span>
-                              <AppleEmoji emoji="✨" size={13} />
-                            </div>
-                            <p className="font-serif italic text-xs text-amber-900 mt-1">
-                              "You Made a Birthday Wish! ✨"
-                            </p>
-                          </div>
-                        )}
-
-                        {/* Navigation Buttons */}
-                        <div className="flex items-center justify-center gap-2.5 mt-3.5 w-full">
-                          <button
-                            type="button"
-                            onClick={() => setScreen(0)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              triggerConfetti();
-                              setScreen(2);
-                            }}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next: Open Gift</span>
-                            <AppleEmoji emoji="🎁" size={13} className="ml-1" />
-                            <span>→</span>
-                          </button>
-                        </div>
                       </div>
-                    )}
 
-                    {/* B) Retro Polaroid Scrapbook: Star Polaroid with Washi Tape */}
-                    {isScrapbook && (
-                      <div className="w-full flex flex-col items-center">
-                        <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                          <h2 className="font-handwriting text-2xl font-bold text-stone-900">
-                            The Star of the Day
-                          </h2>
-                          <AppleEmoji emoji="🌟" size={18} />
-                        </div>
-
-                        <div className="relative my-1 mx-auto inline-block">
-                          <div className="w-20 h-4 washi-tape mx-auto -mb-2 rounded-xs shadow-2xs rotate-1 relative z-10 select-none pointer-events-none" />
-                          <div className="polaroid-frame-tilted shadow-xl">
-                            <div className="relative w-[170px] sm:w-[185px] h-[200px] sm:h-[220px] overflow-hidden rounded-[3px] bg-stone-100 shadow-inner">
-                              <img
-                                src={heroPhotoUrl}
-                                alt={recipientName}
-                                className="w-full h-full object-cover"
-                                style={{ objectPosition: 'center 12%' }}
-                              />
-                            </div>
-                            <p className="mt-2 font-handwriting text-sm sm:text-base text-stone-800 text-center flex items-center justify-center gap-1">
-                              <span>{renderAppleText(photoCaption || "Brothers & Besties For Life! 📸⚡", 13)}</span>
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-center gap-2.5 mt-2 w-full">
-                          <button
-                            type="button"
-                            onClick={() => setScreen(0)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              triggerConfetti();
-                              setScreen(2);
-                            }}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next: Memory Chapters</span>
-                            <AppleEmoji emoji="🎞️" size={13} className="ml-1" />
-                            <span>→</span>
-                          </button>
-                        </div>
+                      <div className="flex items-center justify-center gap-2.5 mt-2 w-full">
+                        <button
+                          type="button"
+                          onClick={() => setScreen(0)}
+                          className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                        >
+                          ← Back
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleNextPhoto}
+                          className={`inline-flex items-center justify-center gap-1.5 ${theme.btnActionClass}`}
+                        >
+                          <span>Tap to Continue</span>
+                          <span>→</span>
+                        </button>
                       </div>
-                    )}
-
-                    {/* C) Multi-Scene: Star of the Day Polaroid */}
-                    {isMultiScene && (
-                      <div className="w-full flex flex-col items-center">
-                        <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                          <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
-                            The Star of the Day
-                          </h2>
-                          <AppleEmoji emoji="🌟" size={18} />
-                        </div>
-
-                        <div className="relative my-1 mx-auto inline-block">
-                          <div className="polaroid-frame shadow-xl">
-                            <div className="relative w-[170px] sm:w-[185px] h-[215px] sm:h-[235px] overflow-hidden rounded-[3px] bg-slate-100 shadow-inner">
-                              <img
-                                src={heroPhotoUrl}
-                                alt={recipientName}
-                                className="w-full h-full object-cover"
-                                style={{ objectPosition: 'center 12%' }}
-                              />
-                            </div>
-                            <p className={`mt-2 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1`}>
-                              <span>{renderAppleText(photoCaption, 12)}</span>
-                            </p>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-center gap-2.5 mt-2 w-full">
-                          <button
-                            type="button"
-                            onClick={() => setScreen(0)}
-                            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            type="button"
-                            onClick={handleNextPhoto}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next</span>
-                            <AppleEmoji emoji="✨" size={13} className="ml-1" />
-                          </button>
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
                 )}
 
                 {/* -------------------------------------------------------- */}
-                {/* SCENE 2 */}
+                {/* SCENE 2: FEELING / MOOD CHECK */}
                 {/* -------------------------------------------------------- */}
                 {screen === 2 && (
-                  <div className="w-full flex flex-col items-center animate-fade-in-up py-1 max-w-[280px]">
-                    {/* A) Golden Spark: Golden Gift Box Unboxing */}
-                    {isGolden && (
-                      <div className="w-full flex flex-col items-center">
-                        <div className="text-center mb-1">
-                          <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100/80 text-amber-800 text-[10px] font-semibold mb-1">
-                            <span>Surprise Package</span>
-                            <AppleEmoji emoji="🎁" size={12} />
-                          </div>
-                          <h2 className="font-serif text-lg sm:text-xl font-bold text-amber-950 leading-tight">
-                            A Special Gift For You 🎁
-                          </h2>
-                          <p className="text-[11px] text-amber-900/70 mt-0.5 font-serif">
-                            {giftOpened ? "Surprise unwrapped with love!" : "Tap the gift box below to unwrap"}
-                          </p>
-                        </div>
+                  <div className="w-full flex flex-col items-center text-center animate-pop-in">
+                    <div className={theme.subCardClass}>
+                      <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold leading-tight ${theme.headingClass}`}>
+                        How do you feel today?
+                      </h2>
+                      <p className={`mt-1.5 text-xs ${theme.subtitleClass}`}>
+                        Pick your vibe to unlock the next chapter ✨
+                      </p>
 
-                        {!giftOpened ? (
-                          <div
-                            onClick={() => {
-                              triggerConfetti();
-                              setGiftOpened(true);
-                            }}
-                            className="group my-3 cursor-pointer select-none flex flex-col items-center transition-transform hover:scale-105 active:scale-95"
-                          >
-                            <div className="relative w-28 h-28 flex items-center justify-center">
-                              <span className="absolute -inset-1 rounded-2xl bg-amber-300/50 blur-lg animate-pulse" />
-                              <div className="relative w-full h-full rounded-2xl bg-gradient-to-tr from-amber-400 via-yellow-400 to-amber-300 p-1 shadow-xl border-2 border-white/70 flex flex-col items-center justify-center">
-                                <div className="absolute inset-y-0 w-6 bg-rose-500/90 shadow-xs" />
-                                <div className="absolute inset-x-0 h-6 bg-rose-500/90 shadow-xs" />
-                                <div className="relative z-10 w-9 h-9 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-md border-2 border-rose-300">
-                                  <AppleEmoji emoji="✨" size={18} />
-                                </div>
-                              </div>
-                            </div>
-                            <span className="mt-3 inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-600 text-white text-xs font-bold shadow-md cursor-pointer">
-                              <span>Tap to Unbox</span>
-                              <AppleEmoji emoji="🎁" size={13} />
-                            </span>
-                          </div>
-                        ) : (
-                          <div className="my-3 p-4 bg-white/95 rounded-2xl border border-amber-300 shadow-md text-center max-w-[250px] animate-pop-in">
-                            <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-100 mb-2 shadow-2xs">
-                              <AppleEmoji emoji="💛" size={22} />
-                            </div>
-                            <h3 className="font-serif font-bold text-sm text-amber-950">
-                              Pure Gold Wishes!
-                            </h3>
-                            <p className="mt-1 font-serif text-xs text-amber-900 leading-relaxed font-semibold">
-                              "You are pure gold to everyone around you! 💛✨"
-                            </p>
-                          </div>
-                        )}
+                      <div className="mt-4 flex flex-col gap-2.5 w-full">
+                        <button
+                          type="button"
+                          onClick={handleChooseFeeling}
+                          className={`w-full flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
+                        >
+                          <span>Super Happy!</span>
+                          <AppleEmoji emoji="🥳" size={15} />
+                        </button>
 
-                        <div className="flex items-center justify-center gap-2.5 mt-2 w-full">
+                        <button
+                          type="button"
+                          onClick={handleChooseFeeling}
+                          className={`w-full flex items-center justify-center gap-2 ${theme.btnMood2Class}`}
+                        >
+                          <span>So Excited!</span>
+                          <AppleEmoji emoji="✨" size={15} />
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={handleChooseFeeling}
+                          className={`w-full flex items-center justify-center gap-2 ${theme.btnMood3Class}`}
+                        >
+                          <span>Blessed & Loved!</span>
+                          <AppleEmoji emoji="💖" size={15} />
+                        </button>
+
+                        <div className="mt-1">
                           <button
                             type="button"
                             onClick={() => setScreen(1)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                            className="inline-flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 w-full cursor-pointer"
                           >
                             ← Back
                           </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              triggerConfetti();
-                              setScreen(3);
-                            }}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next: Star Photo</span>
-                            <AppleEmoji emoji="🌟" size={13} className="ml-1" />
-                            <span>→</span>
-                          </button>
                         </div>
                       </div>
-                    )}
-
-                    {/* B) Retro Polaroid Scrapbook: Scrapbook Chapters Timeline */}
-                    {isScrapbook && (
-                      <div className="w-full flex flex-col items-center text-center space-y-2 py-1">
-                        <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                          <h2 className="font-handwriting text-2xl font-bold text-stone-900">
-                            Scrapbook Chapters
-                          </h2>
-                          <AppleEmoji emoji="📜" size={20} />
-                        </div>
-
-                        <div className="flex flex-col gap-2 w-full mt-1">
-                          {[
-                            {
-                              ch: 'Chapter 1',
-                              title: 'The Day We First Met ☕',
-                              note: 'Where our great journey first began',
-                              tape: 'washi-tape',
-                              rot: '-rotate-1',
-                            },
-                            {
-                              ch: 'Chapter 2',
-                              title: 'Late Night Talks & Big Dreams ⚡',
-                              note: 'Endless laughter, coffee and future plans',
-                              tape: 'washi-tape-pink',
-                              rot: 'rotate-1',
-                            },
-                            {
-                              ch: 'Chapter 3',
-                              title: 'To Every Adventure Ahead 🏔️',
-                              note: 'The best chapters are still unwritten!',
-                              tape: 'washi-tape-blue',
-                              rot: '-rotate-0.5',
-                            },
-                          ].map((item, idx) => (
-                            <div
-                              key={idx}
-                              className={`relative bg-[#FFFDF9] border border-amber-800/15 p-2.5 rounded-xl shadow-xs text-left ${item.rot} transition-transform hover:scale-[1.02]`}
-                            >
-                              <div className={`w-14 h-3 ${item.tape} mx-auto -mt-4 mb-1.5 rounded-xs opacity-85 select-none pointer-events-none`} />
-                              <div className="flex items-start gap-2">
-                                <div className="flex-1 min-w-0">
-                                  <span className="text-[9px] font-bold tracking-wider uppercase text-amber-800/70 bg-amber-100/60 px-1.5 py-0.2 rounded-xs">
-                                    {item.ch}
-                                  </span>
-                                  <h3 className="font-handwriting text-sm font-bold text-stone-900 mt-0.5 leading-snug">
-                                    {item.title}
-                                  </h3>
-                                  <p className="text-[10px] text-stone-600 mt-0.5 font-sans leading-tight">
-                                    {item.note}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="flex items-center justify-center gap-2.5 mt-2 w-full">
-                          <button
-                            type="button"
-                            onClick={() => setScreen(1)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              triggerConfetti();
-                              setScreen(3);
-                            }}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next: 3 Reasons</span>
-                            <AppleEmoji emoji="💫" size={13} className="ml-1" />
-                            <span>→</span>
-                          </button>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* C) Multi-Scene: Before we proceed (Mood Check) */}
-                    {isMultiScene && (
-                      <div className="w-full flex flex-col items-center text-center animate-pop-in">
-                        <div className={theme.subCardClass}>
-                          <h2 className={`${theme.fontFamily} text-2xl sm:text-3xl font-bold leading-tight ${theme.headingClass}`}>
-                            Before we proceed...
-                          </h2>
-                          <p className={`mt-2 text-xs ${theme.subtitleClass}`}>
-                            How are you feeling today?
-                          </p>
-
-                          <div className="mt-5 flex flex-col gap-2.5 w-full">
-                            <button
-                              type="button"
-                              onClick={handleChooseFeeling}
-                              className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold shadow-md active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
-                            >
-                              <span>Super Happy!</span>
-                              <AppleEmoji emoji="🥳" size={15} />
-                            </button>
-
-                            <button
-                              type="button"
-                              onClick={handleChooseFeeling}
-                              className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2 ${theme.btnMood2Class}`}
-                            >
-                              <span>So Excited!</span>
-                              <AppleEmoji emoji="✨" size={15} />
-                            </button>
-
-                            <div className="mt-1">
-                              <button
-                                type="button"
-                                onClick={() => setScreen(1)}
-                                className="inline-flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 w-full cursor-pointer"
-                              >
-                                ← Back
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                    </div>
                   </div>
                 )}
 
                 {/* -------------------------------------------------------- */}
-                {/* SCENE 3 */}
+                {/* SCENE 3: REASONS WHY YOU'RE SPECIAL */}
                 {/* -------------------------------------------------------- */}
                 {screen === 3 && (
-                  <div className="w-full flex flex-col items-center animate-fade-in-up space-y-1.5 py-1 max-w-[280px]">
-                    {/* A) Golden Spark: Star of the Day Polaroid */}
-                    {isGolden && (
-                      <div className="w-full flex flex-col items-center">
-                        <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                          <h2 className="font-serif text-xl sm:text-2xl font-bold text-amber-950">
-                            The Star of the Day
-                          </h2>
-                          <AppleEmoji emoji="🌟" size={18} />
-                        </div>
+                  <div className="w-full flex flex-col items-center text-center space-y-1.5 py-1 max-w-[280px]">
+                    <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                      <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
+                        Reasons Why You're Special
+                      </h2>
+                      <AppleEmoji emoji="💫" size={20} />
+                    </div>
 
-                        <div className="relative my-1 mx-auto inline-block">
-                          <div className="polaroid-frame shadow-xl border border-amber-300/80 bg-gradient-to-b from-amber-50/50 to-white">
-                            <div className="relative w-[170px] sm:w-[185px] h-[200px] sm:h-[220px] overflow-hidden rounded-[3px] bg-amber-50 shadow-inner">
-                              <img
-                                src={heroPhotoUrl}
-                                alt={recipientName}
-                                className="w-full h-full object-cover"
-                                style={{ objectPosition: 'center 12%' }}
-                              />
-                            </div>
-                            <p className="mt-2 font-serif text-xs sm:text-sm text-amber-900 text-center font-semibold flex items-center justify-center gap-1">
-                              <span>{renderAppleText(photoCaption || "Keep Shining Brighter Than Gold! 🎂✨", 12)}</span>
+                    <div className="mt-2 flex flex-col gap-2 w-full">
+                      {specialReasons.slice(0, 3).map((item, idx) => (
+                        <div
+                          key={idx}
+                          className={`${theme.reasonCardClass} p-2.5 rounded-xl flex items-center gap-2.5 text-left min-h-[64px] transition-all`}
+                        >
+                          <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-2xs ${theme.iconBoxClass}`}>
+                            <AppleEmoji emoji={item.icon || theme.primaryEmoji} size={18} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className={`font-bold text-xs truncate leading-tight ${theme.headingClass}`}>
+                              {renderAppleText(item.title, 13)}
+                            </h3>
+                            <p className="text-[11px] text-slate-600 mt-0.5 leading-snug line-clamp-2">
+                              {renderAppleText(item.desc || item.description, 11)}
                             </p>
                           </div>
                         </div>
+                      ))}
+                    </div>
 
-                        <div className="flex items-center justify-center gap-2.5 mt-2 w-full">
-                          <button
-                            type="button"
-                            onClick={() => setScreen(2)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              triggerConfetti();
-                              setScreen(4);
-                            }}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next: Secret Letter</span>
-                            <AppleEmoji emoji="💌" size={13} className="ml-1" />
-                            <span>→</span>
-                          </button>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* B) Retro Polaroid Scrapbook: 3 Special Reasons with Scrapbook Tape */}
-                    {isScrapbook && (
-                      <div className="w-full flex flex-col items-center text-center space-y-1.5 py-1">
-                        <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                          <h2 className="font-handwriting text-2xl font-bold text-stone-900">
-                            Why You're Special
-                          </h2>
-                          <AppleEmoji emoji="💫" size={20} />
-                        </div>
-
-                        <div className="flex flex-col gap-2 w-full mt-1">
-                          {specialReasons.slice(0, 3).map((item, idx) => (
-                            <div
-                              key={idx}
-                              className="relative bg-[#FFFDF9] border border-amber-800/15 p-2.5 rounded-xl shadow-xs text-left"
-                            >
-                              <div className={`w-12 h-2.5 ${idx % 2 === 0 ? 'washi-tape' : 'washi-tape-pink'} mx-auto -mt-3.5 mb-1 rounded-xs opacity-80 select-none pointer-events-none`} />
-                              <div className="flex items-center gap-2.5">
-                                <div className="w-8 h-8 rounded-lg bg-amber-50/80 border border-amber-200/60 flex items-center justify-center shrink-0">
-                                  <AppleEmoji emoji={item.icon || '⚡'} size={16} />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <h3 className="font-handwriting text-base font-bold text-stone-900 leading-tight">
-                                    {renderAppleText(item.title, 14)}
-                                  </h3>
-                                  <p className="text-[10px] text-stone-600 mt-0.5 leading-snug line-clamp-2 font-sans">
-                                    {renderAppleText(item.desc || item.description, 10)}
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="flex items-center justify-center gap-2.5 mt-2.5 w-full">
-                          <button
-                            type="button"
-                            onClick={() => setScreen(2)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              triggerConfetti();
-                              setScreen(4);
-                            }}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next: Secret Letter</span>
-                            <AppleEmoji emoji="💌" size={13} className="ml-1" />
-                            <span>→</span>
-                          </button>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* C) Multi-Scene: Why You're Special (3 Cards) */}
-                    {isMultiScene && (
-                      <div className="w-full flex flex-col items-center text-center space-y-1.5 py-1">
-                        <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                          <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
-                            Why You're Special
-                          </h2>
-                          <AppleEmoji emoji="💫" size={20} />
-                        </div>
-
-                        <div className="mt-2 flex flex-col gap-2 w-full">
-                          {specialReasons.slice(0, 3).map((item, idx) => (
-                            <div
-                              key={idx}
-                              className={`${theme.reasonCardClass} p-2.5 rounded-xl flex items-center gap-2.5 text-left min-h-[64px] transition-all`}
-                            >
-                              <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 shadow-2xs ${theme.iconBoxClass}`}>
-                                <AppleEmoji emoji={item.icon || theme.primaryEmoji} size={18} />
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className={`font-bold text-xs truncate leading-tight ${theme.headingClass}`}>
-                                  {renderAppleText(item.title, 13)}
-                                </h3>
-                                <p className="text-[11px] text-slate-600 mt-0.5 leading-snug line-clamp-2">
-                                  {renderAppleText(item.desc || item.description, 11)}
-                                </p>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="flex items-center justify-center gap-2.5 mt-2.5 w-full">
-                          <button
-                            type="button"
-                            onClick={() => setScreen(2)}
-                            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
-                          >
-                            ← Back
-                          </button>
-                          <button
-                            type="button"
-                            onClick={handleNextReasons}
-                            className={theme.btnActionClass}
-                          >
-                            <span>Next</span>
-                            <AppleEmoji emoji="✨" size={13} className="ml-1" />
-                          </button>
-                        </div>
-                      </div>
-                    )}
+                    <div className="flex items-center justify-center gap-2.5 mt-2.5 w-full">
+                      <button
+                        type="button"
+                        onClick={() => setScreen(2)}
+                        className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                      >
+                        ← Back
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleNextReasons}
+                        className={`inline-flex items-center justify-center gap-1.5 ${theme.btnActionClass}`}
+                      >
+                        <span>One Last Surprise</span>
+                        <span>→</span>
+                      </button>
+                    </div>
                   </div>
                 )}
 
                 {/* -------------------------------------------------------- */}
-                {/* SCENE 4: 3D ENVELOPE & SECRET LETTER */}
+                {/* SCENE 4: 3D WAX-SEALED ENVELOPE & SECRET LETTER */}
                 {/* -------------------------------------------------------- */}
                 {screen === 4 && (
                   <div className="w-full flex flex-col items-center text-center animate-fade-in-up py-1">
@@ -1328,7 +812,7 @@ export default function LivePhonePreview({ formData = {} }) {
                         <div
                           onClick={handleOpenEnvelope}
                           className="group relative cursor-pointer transform transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-                          title="Tap the envelope to open!"
+                          title="Tap the wax seal to open!"
                         >
                           <div
                             className={`relative w-[230px] sm:w-[245px] h-[155px] sm:h-[165px] rounded-2xl overflow-hidden shadow-2xl p-1 border-2 ${theme.envelopeGradient}`}
@@ -1339,35 +823,17 @@ export default function LivePhonePreview({ formData = {} }) {
                             {/* Peeking Letter Card Inside */}
                             <div className={`absolute top-3 left-4 right-4 h-[80px] bg-white rounded-t-xl shadow-md border-t-2 ${theme.envelopePeekingBorder} p-2 transform transition-transform duration-300 group-hover:-translate-y-2`}>
                               <div className={`flex items-center justify-center gap-1 font-bold text-xs ${theme.envelopePeekingText}`}>
-                                {isGolden && (
-                                  <>
-                                    <span>Golden Wishes!</span>
-                                    <AppleEmoji emoji="🎂" size={13} />
-                                    <AppleEmoji emoji="✨" size={13} />
-                                  </>
-                                )}
-                                {isScrapbook && (
-                                  <>
-                                    <span className="font-handwriting text-sm">Chapters of Memories</span>
-                                    <AppleEmoji emoji="📸" size={13} />
-                                    <AppleEmoji emoji="⚡" size={13} />
-                                  </>
-                                )}
-                                {isMultiScene && (
-                                  <>
-                                    <span>Happy Birthday!</span>
-                                    <AppleEmoji emoji="🎉" size={13} />
-                                    <AppleEmoji emoji={theme.primaryEmoji} size={13} />
-                                    <AppleEmoji emoji="✨" size={13} />
-                                  </>
-                                )}
+                                <span>Happy Birthday!</span>
+                                <AppleEmoji emoji="🎉" size={13} />
+                                <AppleEmoji emoji={theme.primaryEmoji} size={13} />
+                                <AppleEmoji emoji="✨" size={13} />
                               </div>
                               <div className="mt-1 text-center text-[10px] text-slate-400 font-sans">
-                                {isScrapbook ? 'A handwritten note for you...' : 'A special letter for you...'}
+                                A special letter for you...
                               </div>
                             </div>
 
-                            {/* SVG Realistic Folds matching reference */}
+                            {/* SVG Realistic Folds */}
                             <div className="absolute inset-0 pointer-events-none">
                               <svg viewBox="0 0 245 165" className="w-full h-full" preserveAspectRatio="none">
                                 <polygon points="0,0 0,165 122.5,90" fill={theme.envelopeFolds[0]} opacity="0.95" />
@@ -1376,7 +842,7 @@ export default function LivePhonePreview({ formData = {} }) {
                               </svg>
                             </div>
 
-                            {/* Center Medallion / Wax Stamp */}
+                            {/* Center Wax Seal */}
                             <div
                               className="absolute top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full border-2 border-white shadow-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                               style={{ backgroundColor: letterWaxColor }}
@@ -1388,7 +854,7 @@ export default function LivePhonePreview({ formData = {} }) {
 
                         {/* Bounce Prompt */}
                         <p className={`mt-3 ${theme.subtitleClass} text-xs font-medium animate-bounce flex items-center gap-1`}>
-                          <span>Tap the envelope to open!</span>
+                          <span>Tap the wax seal to open!</span>
                           <AppleEmoji emoji="💌" size={14} />
                         </p>
 
@@ -1411,44 +877,20 @@ export default function LivePhonePreview({ formData = {} }) {
                         <div
                           className={`relative w-full max-w-[275px] bg-white rounded-3xl p-4 sm:p-5 shadow-2xl border text-left ${theme.letterCardBorder}`}
                         >
-                          {isScrapbook && (
-                            <div className="w-16 h-3 washi-tape mx-auto -mt-6 mb-2 rounded-xs opacity-70 select-none pointer-events-none" />
-                          )}
-
                           {/* Header */}
                           <div className={`flex items-center justify-between border-b ${theme.letterBorderBottom} pb-2 mb-2.5`}>
                             <div
                               className={`flex items-center gap-1.5 font-bold text-xs sm:text-sm ${theme.letterHeaderClass}`}
                             >
-                              {isGolden && (
-                                <>
-                                  <span className="font-serif">Golden Wishes!</span>
-                                  <AppleEmoji emoji="🎂" size={14} />
-                                  <AppleEmoji emoji="✨" size={14} />
-                                </>
-                              )}
-                              {isScrapbook && (
-                                <>
-                                  <span className="font-handwriting text-base">Memories & Keepsakes</span>
-                                  <AppleEmoji emoji="📸" size={14} />
-                                  <AppleEmoji emoji="⚡" size={14} />
-                                </>
-                              )}
-                              {isMultiScene && (
-                                <>
-                                  <span>Happy Birthday!</span>
-                                  <AppleEmoji emoji="🎉" size={14} />
-                                  <AppleEmoji emoji={theme.primaryEmoji} size={14} />
-                                  <AppleEmoji emoji="✨" size={14} />
-                                </>
-                              )}
+                              <span className={theme.fontFamily}>{renderAppleText(letterTitle, 14)}</span>
+                              <AppleEmoji emoji="✨" size={13} />
                             </div>
-                            <AppleEmoji emoji={isScrapbook ? '☕' : isGolden ? '🥂' : '🎂'} size={18} />
+                            <AppleEmoji emoji={theme.primaryEmoji} size={18} />
                           </div>
 
                           {/* Letter Body */}
-                          <div className={`space-y-2 text-slate-700 text-xs leading-relaxed max-h-40 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line ${isScrapbook ? 'font-handwriting text-sm text-stone-800' : 'font-sans'}`}>
-                            {renderAppleText(letterBody, isScrapbook ? 13 : 11)}
+                          <div className="space-y-2 text-slate-700 text-xs leading-relaxed max-h-40 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
+                            {renderAppleText(letterBody, 11)}
                           </div>
 
                           {/* Signature styled in template's font */}
@@ -1465,21 +907,18 @@ export default function LivePhonePreview({ formData = {} }) {
                         <div className="flex items-center justify-center gap-2.5 mt-3.5">
                           <button
                             type="button"
-                            onClick={() => {
-                              setEnvelopeOpen(false);
-                              setScreen(3);
-                            }}
-                            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl text-white/90 hover:text-white border border-white/30 bg-white/15 backdrop-blur-sm text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                            onClick={() => setEnvelopeOpen(false)}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-white/90 hover:text-white border border-white/30 bg-white/15 backdrop-blur-sm text-xs font-semibold transition-all active:scale-95 cursor-pointer"
                           >
-                            ← Back
+                            <span>Close</span>
                           </button>
                           <button
                             type="button"
-                            onClick={() => setEnvelopeOpen(false)}
-                            className={theme.btnActionClass}
+                            onClick={handleResetScreen}
+                            className={`inline-flex items-center justify-center gap-1.5 ${theme.btnActionClass}`}
                           >
-                            <span>Close Envelope</span>
-                            <AppleEmoji emoji="💌" size={14} />
+                            <span>Celebrate Again</span>
+                            <span>🔁</span>
                           </button>
                         </div>
                       </div>

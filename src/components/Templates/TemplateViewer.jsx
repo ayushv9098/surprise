@@ -8,16 +8,14 @@ import {
   Check 
 } from 'lucide-react';
 import BlushRomanceView from './BlushRomanceView';
-import GoldenBirthdayView from './GoldenBirthdayView';
-import PolaroidScrapbookView from './PolaroidScrapbookView';
 import HeartfeltApologyView from './HeartfeltApologyView';
 import MultiSceneBirthdayView from './MultiSceneBirthdayView';
 import { soundEffects } from './common/SoundEffects';
 
 const TEMPLATES = [
   { id: 'royal-sapphire', label: 'Royal Sapphire', icon: '👑', component: MultiSceneBirthdayView },
-  { id: 'golden-birthday', label: 'Golden Spark', icon: '🎂', component: GoldenBirthdayView },
-  { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: PolaroidScrapbookView },
+  { id: 'golden-birthday', label: 'Golden Spark', icon: '🎂', component: MultiSceneBirthdayView },
+  { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: MultiSceneBirthdayView },
   { id: 'blush-rose', label: 'Blush Blossom', icon: '🌸', component: MultiSceneBirthdayView },
   { id: 'princess-peach', label: 'Princess Peach', icon: '✨', component: MultiSceneBirthdayView },
   { id: 'lavender-dream', label: 'Lavender Dream', icon: '💜', component: MultiSceneBirthdayView },
@@ -36,14 +34,14 @@ export default function TemplateViewer({
     const raw = (siteData.templateId || siteData.theme || siteData.type || '').toLowerCase();
     if (raw.includes('sapphire') || raw.includes('royal')) return 'royal-sapphire';
     if (raw.includes('multiscene') || raw.includes('multi-scene')) return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
+    if (raw.includes('gold') || raw === 'golden-birthday' || raw === 'golden') return 'golden-birthday';
+    if (raw.includes('polaroid') || raw.includes('scrapbook') || raw.includes('retro') || raw.includes('vintage')) return 'polaroid-scrapbook';
     if (raw.includes('rose') || raw.includes('blush-rose')) return 'blush-rose';
     if (raw.includes('peach')) return 'princess-peach';
     if (raw.includes('lavender')) return 'lavender-dream';
-    if (raw === 'golden-birthday' || raw === 'golden') return 'golden-birthday';
     if (raw.includes('birthday') || raw.includes('bday')) {
       return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
     }
-    if (raw.includes('scrapbook') || raw.includes('retro') || raw.includes('vintage')) return 'polaroid-scrapbook';
     if (raw.includes('apology') || raw.includes('sorry')) return 'heartfelt-apology';
     if (raw.includes('blush') || raw.includes('romance') || raw.includes('love')) return 'blush-romance';
     return null;
@@ -129,8 +127,8 @@ export default function TemplateViewer({
 
             {/* Quick Template Switcher (Visible in preview / demo mode) */}
             {showTemplateSwitcher && (
-              <div className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/85 backdrop-blur-md border border-slate-200/80 shadow-md overflow-x-auto max-w-md">
-                {TEMPLATES.slice(0, 6).map((t) => (
+              <div className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/85 backdrop-blur-md border border-slate-200/80 shadow-md overflow-x-auto max-w-md lg:max-w-xl">
+                {TEMPLATES.map((t) => (
                   <button
                     key={t.id}
                     onClick={() => {

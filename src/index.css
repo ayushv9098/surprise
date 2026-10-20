@@ -246,6 +246,32 @@
   inset: 0;
 }
 
+.bg-soft-aesthetic-gold {
+  background: linear-gradient(150deg, #fffbeb 0%, #fef3c7 35%, #fde68a 70%, #fffdf5 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-gold:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(251, 191, 36, 0.45), transparent 45%), radial-gradient(circle at 80% 25%, rgba(245, 158, 11, 0.4), transparent 50%), radial-gradient(circle at 50% 85%, rgba(254, 243, 199, 0.6), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-polaroid {
+  background: linear-gradient(150deg, #fefae0 0%, #faedcd 35%, #e9edc9 70%, #fdf6e2 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-polaroid:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(217, 119, 6, 0.25), transparent 45%), radial-gradient(circle at 80% 25%, rgba(180, 83, 9, 0.2), transparent 50%), radial-gradient(circle at 50% 85%, rgba(254, 243, 199, 0.5), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
 .bg-envelope-celebration {
   background: linear-gradient(150deg, #172554 0%, #1e3a8a 45%, #0f172a 100%);
   transition: background 0.7s;
@@ -302,6 +328,34 @@
   inset: 0;
 }
 
+.bg-envelope-celebration-gold {
+  background: linear-gradient(150deg, #451a03 0%, #78350f 45%, #1c0a00 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-gold:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.3), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-polaroid {
+  background: linear-gradient(150deg, #1c1917 0%, #292524 45%, #0c0a09 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-polaroid:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(217, 119, 6, 0.22), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
 /* Birthday Cards & Polaroids */
 .birthday-card {
   -webkit-backdrop-filter: blur(20px);
@@ -343,11 +397,33 @@
   box-shadow: 0 20px 45px -15px rgba(107, 33, 168, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
+.birthday-card-gold {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.93);
+  border: 1px solid rgba(253, 230, 138, 0.85);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(180, 83, 9, 0.14), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.birthday-card-polaroid {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(214, 211, 209, 0.85);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(68, 64, 60, 0.15), 0 4px 12px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
 @media (max-width: 640px) {
   .birthday-card,
   .birthday-card-girl,
   .birthday-card-peach,
-  .birthday-card-lavender {
+  .birthday-card-lavender,
+  .birthday-card-gold,
+  .birthday-card-polaroid {
     border-radius: 22px;
   }
 }
@@ -490,6 +566,29 @@
   transform: translateY(0) scale(0.98);
 }
 
+.btn-primary-polaroid {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #92400E 0%, #78350F 50%, #451A03 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(120, 53, 15, 0.35);
+}
+.btn-primary-polaroid:hover {
+  background: linear-gradient(135deg, #78350F 0%, #451A03 50%, #291002 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(120, 53, 15, 0.45);
+}
+.btn-primary-polaroid:active {
+  transform: translateY(0) scale(0.98);
+}
+
 .btn-secondary {
   color: #fff;
   cursor: pointer;
@@ -602,6 +701,29 @@
   box-shadow: 0 12px 26px -4px rgba(139, 92, 246, 0.4);
 }
 .btn-secondary-lavender:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-polaroid {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #B45309 0%, #92400E 50%, #78350F 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 8px 20px -4px rgba(146, 64, 14, 0.3);
+}
+.btn-secondary-polaroid:hover {
+  background: linear-gradient(135deg, #92400E 0%, #78350F 50%, #451A03 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 12px 26px -4px rgba(146, 64, 14, 0.4);
+}
+.btn-secondary-polaroid:active {
   transform: translateY(0) scale(0.98);
 }
 
@@ -721,6 +843,38 @@
   border-color: rgba(167, 139, 250, 0.9);
   transform: translateY(-2px) scale(1.01);
   box-shadow: 0 14px 28px -6px rgba(124, 58, 237, 0.16);
+}
+
+.special-reason-card-gold {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(253, 230, 138, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(217, 119, 6, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-gold:hover {
+  background: #ffffff;
+  border-color: rgba(245, 158, 11, 0.9);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(217, 119, 6, 0.16);
+}
+
+.special-reason-card-polaroid {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(231, 229, 228, 0.9);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(120, 53, 15, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-polaroid:hover {
+  background: #ffffff;
+  border-color: rgba(180, 83, 9, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(120, 53, 15, 0.16);
 }
 
 @keyframes pulseGlow {

@@ -7,24 +7,24 @@ import { getSongById } from '../../data/songs';
 
 // 18 Ambient floating Apple emoji configurations calibrated for each distinct theme
 const FLOATING_EMOJIS_DEF = [
-  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '💜', gold: '⭐', left: '4%', top: '8%', size: 24, dur: '7s', del: '0s' },
-  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', left: '10%', top: '45%', size: 26, dur: '8.5s', del: '1.2s' },
-  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
-  { boy: '🌹', girl: '🌹', peach: '🧡', lavender: '🌸', gold: '🎂', left: '8%', top: '78%', size: 24, dur: '7.5s', del: '2s' },
-  { boy: '💫', girl: '💫', peach: '💫', lavender: '💫', gold: '💫', left: '88%', top: '52%', size: 22, dur: '8s', del: '0.8s' },
-  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
-  { boy: '💙', girl: '💖', peach: '🌟', lavender: '💜', gold: '💛', left: '80%', top: '82%', size: 22, dur: '7s', del: '1s' },
-  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', left: '48%', top: '6%', size: 22, dur: '6.5s', del: '2.3s' },
-  { boy: '🔥', girl: '🎀', peach: '🍰', lavender: '🌙', gold: '🔥', left: '70%', top: '36%', size: 22, dur: '8s', del: '1.1s' },
-  { boy: '🏆', girl: '🍰', peach: '⭐', lavender: '🍰', gold: '🏆', left: '16%', top: '92%', size: 24, dur: '8.5s', del: '0.4s' },
-  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
-  { boy: '🎊', girl: '🧸', peach: '🎊', lavender: '🧸', gold: '🎊', left: '38%', top: '89%', size: 24, dur: '9s', del: '1.7s' },
-  { boy: '⚡', girl: '🍓', peach: '🧡', lavender: '🍓', gold: '⚡', left: '58%', top: '72%', size: 20, dur: '7.5s', del: '2.1s' },
-  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
-  { boy: '🧿', girl: '🌈', peach: '🌈', lavender: '🌈', gold: '🧿', left: '32%', top: '50%', size: 24, dur: '7s', del: '1.3s' },
-  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', left: '74%', top: '94%', size: 26, dur: '8s', del: '2.6s' },
-  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', left: '6%', top: '32%', size: 20, dur: '8.2s', del: '0.3s' },
-  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', left: '52%', top: '20%', size: 26, dur: '6.8s', del: '1.6s' },
+  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '💜', gold: '⭐', polaroid: '📸', left: '4%', top: '8%', size: 24, dur: '7s', del: '0s' },
+  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '⚡', left: '10%', top: '45%', size: 26, dur: '8.5s', del: '1.2s' },
+  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '🎞️', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
+  { boy: '🌹', girl: '🌹', peach: '🧡', lavender: '🌸', gold: '🎂', polaroid: '⭐', left: '8%', top: '78%', size: 24, dur: '7.5s', del: '2s' },
+  { boy: '💫', girl: '💫', peach: '💫', lavender: '💫', gold: '💫', polaroid: '✨', left: '88%', top: '52%', size: 22, dur: '8s', del: '0.8s' },
+  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', polaroid: '📜', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
+  { boy: '💙', girl: '💖', peach: '🌟', lavender: '💜', gold: '💛', polaroid: '💫', left: '80%', top: '82%', size: 22, dur: '7s', del: '1s' },
+  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '☕', left: '48%', top: '6%', size: 22, dur: '6.5s', del: '2.3s' },
+  { boy: '🔥', girl: '🎀', peach: '🍰', lavender: '🌙', gold: '🔥', polaroid: '📸', left: '70%', top: '36%', size: 22, dur: '8s', del: '1.1s' },
+  { boy: '🏆', girl: '🍰', peach: '⭐', lavender: '🍰', gold: '🏆', polaroid: '⚡', left: '16%', top: '92%', size: 24, dur: '8.5s', del: '0.4s' },
+  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', polaroid: '🎞️', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
+  { boy: '🎊', girl: '🧸', peach: '🎊', lavender: '🧸', gold: '🎊', polaroid: '⭐', left: '38%', top: '89%', size: 24, dur: '9s', del: '1.7s' },
+  { boy: '⚡', girl: '🍓', peach: '🧡', lavender: '🍓', gold: '⚡', polaroid: '✨', left: '58%', top: '72%', size: 20, dur: '7.5s', del: '2.1s' },
+  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', polaroid: '📜', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
+  { boy: '🧿', girl: '🌈', peach: '🌈', lavender: '🌈', gold: '🧿', polaroid: '💫', left: '32%', top: '50%', size: 24, dur: '7s', del: '1.3s' },
+  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '☕', left: '74%', top: '94%', size: 26, dur: '8s', del: '2.6s' },
+  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '📸', left: '6%', top: '32%', size: 20, dur: '8.2s', del: '0.3s' },
+  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '⚡', left: '52%', top: '20%', size: 26, dur: '6.8s', del: '1.6s' },
 ];
 
 const DEFAULT_BOY_REASONS = [
@@ -57,6 +57,12 @@ const DEFAULT_GOLD_REASONS = [
   { icon: '👑', title: 'Pure Excellence', desc: 'Celebrating the incredible person you are today and all the adventures ahead!' }
 ];
 
+const DEFAULT_POLAROID_REASONS = [
+  { icon: '📸', title: 'Unforgettable Memories', desc: 'Every adventure and laugh we share becomes an instant classic memory!' },
+  { icon: '⚡', title: 'Brothers & Besties', desc: 'Always bringing unmatched energy, loyalty, and honest brotherhood!' },
+  { icon: '👑', title: 'Truly One of a Kind', desc: 'No one has a spirit quite like yours. Grateful for our bond always!' }
+];
+
 export default function MultiSceneBirthdayView({ 
   siteData = {}, 
   onNavigateCreate: _onNavigateCreate,
@@ -82,6 +88,7 @@ export default function MultiSceneBirthdayView({
   // Retro Polaroid: Caveat handwriting (.font-handwriting)
   // Royal Sapphire, Blush Blossom, Lavender Dream: Dancing Script (.font-cursive)
   const fontFamilyClass = (isPeach || isGold) ? 'font-serif' : (isPolaroid ? 'font-handwriting' : 'font-cursive');
+  const handwritingClass = isPolaroid ? 'font-handwriting' : 'font-cursive';
 
   // Theme styling tokens mapping
   const themeTokens = (() => {
@@ -146,27 +153,55 @@ export default function MultiSceneBirthdayView({
         celebrationEmoji: '🎂',
         headingColorClass: 'text-amber-950',
         headingAccentClass: 'text-amber-600',
-        cardClass: 'birthday-card',
-        reasonCardClass: 'special-reason-card',
-        reasonIconBgClass: 'bg-amber-50/90 border border-amber-100/80',
+        cardClass: 'birthday-card-gold',
+        reasonCardClass: 'special-reason-card-gold',
+        reasonIconBgClass: 'bg-amber-50 border border-amber-200/80',
         reasonTitleClass: 'text-amber-950',
         primaryBtnClass: 'btn-primary-gold',
         secondaryBtnClass: 'btn-secondary-gold',
-        coverBtnGradient: 'bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#D97706] hover:to-[#92400E] shadow-amber-600/35 hover:shadow-amber-600/50 animate-pulse-glow-gold',
+        coverBtnGradient: 'bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#D97706] hover:to-[#92400E] shadow-amber-600/35',
         envelopeBgGradient: 'bg-gradient-to-br from-amber-500 via-yellow-600 to-amber-700 border-amber-300/40',
         envelopeShading: 'bg-amber-950/60',
         envelopeCardBorder: 'border-amber-200',
         envelopeCardTitle: 'text-amber-900',
         envelopeFolds: { fold1: '#b45309', fold2: '#d97706', fold3: '#f59e0b' },
         defaultWaxColor: '#D97706',
-        defaultSealEmoji: '🎂',
+        defaultSealEmoji: '⭐',
         openLetterBorder: 'border-amber-100/90',
         openLetterHeader: 'text-amber-900',
         signatureColorClass: 'text-amber-800',
-        bgContainerOpen: 'bg-envelope-celebration',
-        bgContainerClosed: 'bg-soft-aesthetic',
+        bgContainerOpen: 'bg-envelope-celebration-gold',
+        bgContainerClosed: 'bg-soft-aesthetic-gold',
         confettiColors: ['#f59e0b', '#fbbf24', '#d97706', '#b45309', '#fef3c7', '#ffffff'],
         defaultSignOffEmoji: '🎂⭐',
+      };
+    }
+    if (isPolaroid) {
+      return {
+        celebrationEmoji: '📸',
+        headingColorClass: 'text-stone-900',
+        headingAccentClass: 'text-amber-800',
+        cardClass: 'birthday-card-polaroid',
+        reasonCardClass: 'special-reason-card-polaroid',
+        reasonIconBgClass: 'bg-amber-100/60 border border-amber-200/80',
+        reasonTitleClass: 'text-stone-900',
+        primaryBtnClass: 'btn-primary-polaroid',
+        secondaryBtnClass: 'btn-secondary-polaroid',
+        coverBtnGradient: 'bg-gradient-to-r from-[#92400E] via-[#78350F] to-[#451A03] hover:from-[#78350F] hover:to-[#291002] shadow-amber-900/35',
+        envelopeBgGradient: 'bg-gradient-to-br from-amber-800 via-stone-800 to-amber-950 border-amber-500/40',
+        envelopeShading: 'bg-stone-950/60',
+        envelopeCardBorder: 'border-amber-200/80',
+        envelopeCardTitle: 'text-amber-950',
+        envelopeFolds: { fold1: '#451a03', fold2: '#78350f', fold3: '#92400e' },
+        defaultWaxColor: '#78350F',
+        defaultSealEmoji: '⚡',
+        openLetterBorder: 'border-amber-200/60',
+        openLetterHeader: 'text-amber-950',
+        signatureColorClass: 'text-amber-900',
+        bgContainerOpen: 'bg-envelope-celebration-polaroid',
+        bgContainerClosed: 'bg-soft-aesthetic-polaroid',
+        confettiColors: ['#b45309', '#d97706', '#78350f', '#f59e0b', '#fef3c7', '#ffffff'],
+        defaultSignOffEmoji: '📸⚡',
       };
     }
     if (isBlush) {
@@ -229,6 +264,7 @@ export default function MultiSceneBirthdayView({
 
   // Floating emoji selector based on active theme
   const getFloatingEmoji = (e) => {
+    if (isPolaroid) return e.polaroid || '📸';
     if (isPeach) return e.peach || e.girl;
     if (isLavender) return e.lavender || e.girl;
     if (isGold) return e.gold || '✨';
@@ -277,7 +313,9 @@ export default function MultiSceneBirthdayView({
                            ? "Dreamy, Radiant & Magical Always! 💜✨"
                            : (isGold
                              ? "Golden Spark & Boundless Joy! 🎂✨"
-                             : (isBlush ? "Stay Wonderful Always! 🌸✨" : "Keep Rocking Always! 👑🔥"))));
+                             : (isPolaroid
+                               ? "Brothers & Besties For Life! 📸⚡"
+                               : (isBlush ? "Stay Wonderful Always! 🌸✨" : "Keep Rocking Always! 👑🔥")))));
 
   const defaultReasons = isPeach 
     ? DEFAULT_PEACH_REASONS 
@@ -285,7 +323,9 @@ export default function MultiSceneBirthdayView({
       ? DEFAULT_LAVENDER_REASONS 
       : (isGold 
         ? DEFAULT_GOLD_REASONS 
-        : (isBlush ? DEFAULT_GIRL_REASONS : DEFAULT_BOY_REASONS)));
+        : (isPolaroid
+          ? DEFAULT_POLAROID_REASONS
+          : (isBlush ? DEFAULT_GIRL_REASONS : DEFAULT_BOY_REASONS))));
 
   const reasons = siteData.reasons || 
                   siteData.specialReasons || 
@@ -299,9 +339,11 @@ export default function MultiSceneBirthdayView({
       ? `Happy Birthday, ${recipientName}!\n\nYou possess such a dreamy spirit, creative wonder, and comforting kindness. Being in your presence feels like a breath of fresh lilac and pure calm.\n\nMay this year grant you your most cherished wishes, endless inspiration, and moments full of starlight and joy. Keep dreaming wonderfully! 💜✨`
       : (isGold
         ? `Happy Birthday, ${recipientName}!\n\nToday we celebrate a heart of pure gold. Your generosity, infectious laughter, and bright spirit illuminate the paths of everyone around you.\n\nMay your year ahead be crowned with grand triumphs, blissful memories, and radiant good health! 🎂✨`
-        : (isBlush
-          ? `Happy Birthday, ${recipientName}!\n\nYou bring so much elegance, warmth, and sparkling wonder wherever you go. Your kind soul touches everyone you meet, and you make ordinary days feel truly unforgettable.\n\nMay this year bring you all the sweetest dreams, vibrant laughter, and boundless happiness you deserve so deeply.`
-          : `Happy Birthday, ${recipientName}!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`)));
+        : (isPolaroid
+          ? `Happy Birthday, ${recipientName}!\n\nLooking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. You bring unmatched loyalty, real energy, and genuine warmth into every day.\n\nMay this year bring you all the grand achievements, unforgettable memories, and boundless happiness you deserve. Keep rocking, brother! 📸⚡`
+          : (isBlush
+            ? `Happy Birthday, ${recipientName}!\n\nYou bring so much elegance, warmth, and sparkling wonder wherever you go. Your kind soul touches everyone you meet, and you make ordinary days feel truly unforgettable.\n\nMay this year bring you all the sweetest dreams, vibrant laughter, and boundless happiness you deserve so deeply.`
+            : `Happy Birthday, ${recipientName}!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`))));
 
   const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || 
                      siteData.letterBody || 
@@ -543,7 +585,7 @@ export default function MultiSceneBirthdayView({
               </div>
 
               {/* Handwritten Polaroid Caption */}
-              <p className="mt-3 font-cursive text-xl sm:text-2xl text-slate-700 text-center flex items-center justify-center gap-1.5 px-2 break-words">
+              <p className={`mt-3 ${handwritingClass} text-xl sm:text-2xl text-slate-700 text-center flex items-center justify-center gap-1.5 px-2 break-words`}>
                 {renderAppleText(photoCaption, 20)}
               </p>
             </div>
@@ -788,7 +830,7 @@ export default function MultiSceneBirthdayView({
                     }
                     {/* Handwritten Signature */}
                     <div className="pt-3 border-t border-slate-100 text-right">
-                      <p className={`font-cursive text-xl sm:text-2xl ${themeTokens.signatureColorClass} font-bold flex items-center justify-end gap-1.5 whitespace-pre-line`}>
+                      <p className={`${handwritingClass} text-xl sm:text-2xl ${themeTokens.signatureColorClass} font-bold flex items-center justify-end gap-1.5 whitespace-pre-line`}>
                         <span>{renderAppleText(letterSignOff, 20)}</span>
                       </p>
                     </div>
