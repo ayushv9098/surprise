@@ -201,7 +201,7 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
                 <span>Sender (Created By)</span>
               </div>
               <p className="text-base font-bold text-slate-800">
-                {site.senderName || 'Anonymous WishCrafter'}
+                {site.senderName || 'Anonymous Creator'}
               </p>
             </div>
           </div>

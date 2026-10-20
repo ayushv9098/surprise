@@ -167,7 +167,7 @@ async function run() {
     console.log('\n[Phase 3] Verifying On-Screen "Back to WishCraft" Buttons');
     const backBtnCheck = await evaluate(`(() => {
       const btns = Array.from(document.querySelectorAll('button'));
-      const backButtons = btns.filter(b => b.innerText.includes('Back to WishCraft'));
+      const backButtons = btns.filter(b => b.innerText.includes('Back to Wishly') || b.innerText.includes('Back to WishCraft'));
       return {
         count: backButtons.length,
         texts: backButtons.map(b => b.innerText.trim())
@@ -184,7 +184,7 @@ async function run() {
     console.log('\n[Phase 4] Clicking On-Screen "Back to WishCraft" Button');
     const backClicked = await evaluate(`(() => {
       const btns = Array.from(document.querySelectorAll('button'));
-      const btn = btns.find(b => b.innerText.includes('Back to WishCraft'));
+      const btn = btns.find(b => b.innerText.includes('Back to Wishly') || b.innerText.includes('Back to WishCraft'));
       if (btn) {
         btn.click();
         return true;
@@ -249,7 +249,7 @@ async function run() {
 
     const directPreviewBackBtn = await evaluate(`(() => {
       const btns = Array.from(document.querySelectorAll('button'));
-      const btn = btns.find(b => b.innerText.includes('Back to WishCraft'));
+      const btn = btns.find(b => b.innerText.includes('Back to Wishly') || b.innerText.includes('Back to WishCraft'));
       return !!btn;
     })()`);
 
@@ -262,7 +262,7 @@ async function run() {
     // Click back from direct preview
     await evaluate(`(() => {
       const btns = Array.from(document.querySelectorAll('button'));
-      const btn = btns.find(b => b.innerText.includes('Back to WishCraft'));
+      const btn = btns.find(b => b.innerText.includes('Back to Wishly') || b.innerText.includes('Back to WishCraft'));
       if (btn) btn.click();
     })()`);
     await delay(800);

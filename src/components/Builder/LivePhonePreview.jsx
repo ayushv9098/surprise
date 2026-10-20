@@ -924,7 +924,7 @@ export default function LivePhonePreview({ formData = {} }) {
 
   // Address bar display URL
   const cleanName = (recipientName || 'someone').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-  const displayUrl = `for-${cleanName || 'someone'}.wishcraft.live`;
+  const displayUrl = `for-${cleanName || 'someone'}.wishly.live`;
 
   // Dynamic background styling matching the chosen template
   const isCelebrationBg = screen === 4 && envelopeOpen;

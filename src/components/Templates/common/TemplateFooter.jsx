@@ -19,7 +19,7 @@ export default function TemplateFooter({ onCreateClick, onNavigateCreate }) {
           className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/80 hover:bg-white backdrop-blur-md border border-rose-200/70 shadow-xs hover:shadow-md transition-all duration-300 text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 cursor-pointer"
         >
           <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-          <span>Made with <span className="font-bold text-rose-600">WishCraft</span> • Create yours free</span>
+          <span>Made with <span className="font-bold text-rose-600">Wishly</span> • Create yours free</span>
         </a>
 
         <p className="text-[11px] text-slate-400 mt-2">

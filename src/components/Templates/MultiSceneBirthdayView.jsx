@@ -953,7 +953,7 @@ export default function MultiSceneBirthdayView({
                   className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-950 border border-slate-200/90 shadow-sm text-xs sm:text-sm font-bold cursor-pointer transition-all active:scale-95 z-20"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Back to WishCraft</span>
+                  <span>Back to Wishly</span>
                 </button>
               )}
 

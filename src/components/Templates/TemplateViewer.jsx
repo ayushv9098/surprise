@@ -155,7 +155,7 @@ export default function TemplateViewer({
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-slate-800 hover:text-slate-950 backdrop-blur-md shadow-md border border-slate-200/90 text-xs sm:text-sm font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer pointer-events-auto"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span>Back to WishCraft</span>
+                <span>Back to Wishly</span>
               </button>
             )}
 

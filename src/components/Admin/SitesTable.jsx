@@ -287,7 +287,7 @@ export default function SitesTable({
           <span className="hidden sm:inline text-slate-300">•</span>
           <span className="hidden sm:flex items-center gap-1 text-slate-400">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>WishCraft Cloud Data</span>
+            <span>Wishly Cloud Data</span>
           </span>
         </div>
 
