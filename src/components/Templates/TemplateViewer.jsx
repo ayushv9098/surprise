@@ -7,20 +7,36 @@ import {
   Sparkles, 
   Check 
 } from 'lucide-react';
-import BlushRomanceView from './BlushRomanceView';
-import HeartfeltApologyView from './HeartfeltApologyView';
 import MultiSceneBirthdayView from './MultiSceneBirthdayView';
 import { soundEffects } from './common/SoundEffects';
 
 const TEMPLATES = [
+  // Birthday Templates
   { id: 'royal-sapphire', label: 'Royal Sapphire', icon: '👑', component: MultiSceneBirthdayView },
   { id: 'golden-birthday', label: 'Golden Spark', icon: '🎂', component: MultiSceneBirthdayView },
   { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: MultiSceneBirthdayView },
   { id: 'blush-rose', label: 'Blush Blossom', icon: '🌸', component: MultiSceneBirthdayView },
   { id: 'princess-peach', label: 'Princess Peach', icon: '✨', component: MultiSceneBirthdayView },
   { id: 'lavender-dream', label: 'Lavender Dream', icon: '💜', component: MultiSceneBirthdayView },
-  { id: 'blush-romance', label: 'Blush Romance', icon: '💖', component: BlushRomanceView },
-  { id: 'heartfelt-apology', label: 'Heartfelt Apology', icon: '🥺', component: HeartfeltApologyView },
+
+  // Romance & Anniversary Templates
+  { id: 'velvet-romance', label: 'Velvet Rose', icon: '❤️', component: MultiSceneBirthdayView },
+  { id: 'sunset-romance', label: 'Sunset Glow', icon: '🌅', component: MultiSceneBirthdayView },
+  { id: 'celestial-love', label: 'Celestial Indigo', icon: '🌌', component: MultiSceneBirthdayView },
+
+  // Memory Scrapbook Templates
+  { id: 'vintage-kodak', label: 'Vintage Kodak', icon: '📸', component: MultiSceneBirthdayView },
+  { id: 'neon-nostalgia', label: 'Electric Vibes', icon: '⚡', component: MultiSceneBirthdayView },
+  { id: 'cozy-memories', label: 'Cozy Sunset', icon: '☕', component: MultiSceneBirthdayView },
+
+  // Heartfelt Apology Templates
+  { id: 'gentle-peace', label: 'Olive Peace', icon: '🕊️', component: MultiSceneBirthdayView },
+  { id: 'sweet-forgive', label: 'Sweet Hugs', icon: '🥺', component: MultiSceneBirthdayView },
+  { id: 'fresh-start', label: 'Sunrise Renewal', icon: '🌤️', component: MultiSceneBirthdayView },
+
+  // Legacy Compatibility
+  { id: 'blush-romance', label: 'Blush Romance', icon: '💖', component: MultiSceneBirthdayView },
+  { id: 'heartfelt-apology', label: 'Heartfelt Apology', icon: '🥺', component: MultiSceneBirthdayView },
 ];
 
 export default function TemplateViewer({ 
@@ -32,19 +48,37 @@ export default function TemplateViewer({
 }) {
   const propTemplateId = (() => {
     const raw = (siteData.templateId || siteData.theme || siteData.type || '').toLowerCase();
+
+    // Specific new occasion templates
+    if (raw.includes('velvet')) return 'velvet-romance';
+    if (raw.includes('sunset')) return 'sunset-romance';
+    if (raw.includes('celestial')) return 'celestial-love';
+
+    if (raw.includes('kodak')) return 'vintage-kodak';
+    if (raw.includes('neon')) return 'neon-nostalgia';
+    if (raw.includes('cozy')) return 'cozy-memories';
+
+    if (raw.includes('peace') || raw.includes('olive')) return 'gentle-peace';
+    if (raw.includes('forgive') || raw.includes('sweet')) return 'sweet-forgive';
+    if (raw.includes('fresh') || raw.includes('sunrise') || raw.includes('renewal')) return 'fresh-start';
+
+    // Existing birthday templates
     if (raw.includes('sapphire') || raw.includes('royal')) return 'royal-sapphire';
     if (raw.includes('multiscene') || raw.includes('multi-scene')) return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
     if (raw.includes('gold') || raw === 'golden-birthday' || raw === 'golden') return 'golden-birthday';
-    if (raw.includes('polaroid') || raw.includes('scrapbook') || raw.includes('retro') || raw.includes('vintage')) return 'polaroid-scrapbook';
+    if (raw.includes('polaroid')) return 'polaroid-scrapbook';
     if (raw.includes('rose') || raw.includes('blush-rose')) return 'blush-rose';
     if (raw.includes('peach')) return 'princess-peach';
     if (raw.includes('lavender')) return 'lavender-dream';
+
+    // Occasion based / legacy fallbacks
+    if (raw.includes('apology') || raw.includes('sorry')) return 'gentle-peace';
+    if (raw.includes('romance') || raw.includes('love') || raw.includes('anniversary')) return 'velvet-romance';
+    if (raw.includes('scrapbook') || raw.includes('retro') || raw.includes('vintage')) return 'vintage-kodak';
     if (raw.includes('birthday') || raw.includes('bday')) {
       return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
     }
-    if (raw.includes('apology') || raw.includes('sorry')) return 'heartfelt-apology';
-    if (raw.includes('blush') || raw.includes('romance') || raw.includes('love')) return 'blush-romance';
-    return null;
+    return raw || null;
   })();
 
   const [selectedOverride, setSelectedOverride] = useState(null);

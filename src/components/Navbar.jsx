@@ -1,7 +1,8 @@
 import React from 'react';
+import { ShieldCheck } from 'lucide-react';
 import AppleEmoji from './common/AppleEmoji';
 
-export default function Navbar({ currentView, onNavigate }) {
+export default function Navbar({ onNavigate }) {
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-gray-200/60">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
@@ -14,16 +15,12 @@ export default function Navbar({ currentView, onNavigate }) {
           <AppleEmoji emoji="✨" size={18} />
         </button>
 
-        {/* Actions */}
+        {/* Actions / Trust Badge */}
         <div className="flex items-center gap-4">
-          {currentView !== 'builder' && currentView !== 'admin' && (
-            <button
-              onClick={() => onNavigate('builder')}
-              className="px-4 py-2 rounded-xl text-sm font-medium bg-rose-500 text-white hover:bg-rose-600 active:scale-95 transition-all duration-150 cursor-pointer shadow-sm hover:shadow"
-            >
-              Create Free
-            </button>
-          )}
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-emerald-800 text-xs font-semibold shadow-2xs select-none">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+            <span>100% Private & Verified</span>
+          </div>
         </div>
       </div>
     </header>

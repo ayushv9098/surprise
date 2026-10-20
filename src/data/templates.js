@@ -1,8 +1,11 @@
 export const TEMPLATES = [
-  // --- BOY BIRTHDAY TEMPLATES ---
+  // ==========================================
+  // --- BIRTHDAY TEMPLATES (BOY) ---
+  // ==========================================
   {
     id: 'royal-sapphire',
-    name: 'Royal Sapphire',
+    category: 'birthday',
+    name: 'Royal Sapphire 👑',
     gender: 'boy',
     tag: 'Royal Blue & Crown',
     emoji: '👑',
@@ -28,7 +31,8 @@ export const TEMPLATES = [
   },
   {
     id: 'golden-birthday',
-    name: 'Golden Spark',
+    category: 'birthday',
+    name: 'Golden Spark 🎂✨',
     gender: 'boy',
     tag: 'Champagne Gold & Spark',
     emoji: '🎂',
@@ -54,7 +58,8 @@ export const TEMPLATES = [
   },
   {
     id: 'polaroid-scrapbook',
-    name: 'Retro Polaroid 📸',
+    category: 'birthday',
+    name: 'Retro Polaroid 📸⚡',
     gender: 'boy',
     tag: 'Vintage Crimson & Memories',
     emoji: '📸',
@@ -79,10 +84,13 @@ export const TEMPLATES = [
     samplePhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
   },
 
-  // --- GIRL BIRTHDAY TEMPLATES ---
+  // ==========================================
+  // --- BIRTHDAY TEMPLATES (GIRL) ---
+  // ==========================================
   {
     id: 'blush-rose',
-    name: 'Blush Blossom',
+    category: 'birthday',
+    name: 'Blush Blossom 🌸',
     gender: 'girl',
     tag: 'Soft Romantic Rose & Petals',
     emoji: '🌸',
@@ -108,7 +116,8 @@ export const TEMPLATES = [
   },
   {
     id: 'princess-peach',
-    name: 'Princess Peach',
+    category: 'birthday',
+    name: 'Princess Peach ✨',
     gender: 'girl',
     tag: 'Warm Peach Glow & Starlight',
     emoji: '✨',
@@ -134,7 +143,8 @@ export const TEMPLATES = [
   },
   {
     id: 'lavender-dream',
-    name: 'Lavender Dream',
+    category: 'birthday',
+    name: 'Lavender Dream 💜',
     gender: 'girl',
     tag: 'Dreamy Lilac & Fairy Magic',
     emoji: '💜',
@@ -158,20 +168,302 @@ export const TEMPLATES = [
     recommendedSongId: 'indie-acoustic-soul',
     samplePhoto: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
   },
+
+  // ==========================================
+  // --- ROMANCE (LOVE & ANNIVERSARY) TEMPLATES ---
+  // ==========================================
+  {
+    id: 'velvet-romance',
+    category: 'romance',
+    name: 'Velvet Rose ❤️',
+    gender: 'boy',
+    tag: 'Velvet Crimson & Hearts',
+    emoji: '❤️',
+    headline: 'A romantic sanctuary for the love of your life',
+    description: 'Velvet rose petals, candlelit romance, heart wax sealed envelope, emotional love letter.',
+    fontFamily: 'font-cursive',
+    accentColor: '#E11D48',
+    themeClass: 'theme-velvet',
+    themeId: 'velvet-romance',
+    gradientBg: 'from-rose-950 via-rose-900 to-red-950',
+    primaryColor: 'rose',
+    previewImage: '/previews/velvet-romance.svg',
+    badges: ['Anniversary Pick', 'Timeless Romance'],
+    defaultOccasion: 'Happy Anniversary, My Love! ❤️',
+    defaultSubtitle: 'Every single second with you is my favorite memory.',
+    defaultCaption: 'Forever & Always With You! ❤️🌹',
+    ambientEmojis: ['❤️', '🌹', '✨', '💍', '💫', '💖', '🥂', '💌'],
+    waxColor: '#E11D48',
+    waxEmoji: '❤️',
+    features: ['Heart Wax Seal Envelope', 'Romantic Polaroid Memory', '3 Reasons Why I Adore You', 'Candlelit Rose Chimes'],
+    recommendedSongId: 'insta-acoustic-romance',
+    samplePhoto: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'sunset-romance',
+    category: 'romance',
+    name: 'Sunset Glow 🌅',
+    gender: 'girl',
+    tag: 'Warm Amber & Rose Gold',
+    emoji: '🌅',
+    headline: 'Golden hour moments and warm tender promises',
+    description: 'Warm amber glow, sunset radiance, golden memories, heart-sealed envelope.',
+    fontFamily: 'font-cursive',
+    accentColor: '#F59E0B',
+    themeClass: 'theme-sunset',
+    themeId: 'sunset-romance',
+    gradientBg: 'from-amber-50 via-orange-50 to-rose-50',
+    primaryColor: 'amber',
+    previewImage: '/previews/sunset-romance.svg',
+    badges: ['Golden Hour', 'Warm Tenderness'],
+    defaultOccasion: 'You Are My Golden Hour 🌅✨',
+    defaultSubtitle: 'From our very first hello to forever and beyond.',
+    defaultCaption: 'My Sun, My Moon & All My Stars! 🌅✨',
+    ambientEmojis: ['🌅', '✨', '🥂', '🧡', '⭐', '💛', '💫', '💖'],
+    waxColor: '#D97706',
+    waxEmoji: '✨',
+    features: ['Sunset Golden Glow', 'Golden Hour Memory Polaroid', '3 Tender Promises', 'Sparkling Keepsake Note'],
+    recommendedSongId: 'insta-acoustic-romance',
+    samplePhoto: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'celestial-love',
+    category: 'romance',
+    name: 'Celestial Indigo 🌌',
+    tag: 'Midnight Stars & Starlight',
+    emoji: '🌌',
+    headline: 'An eternal love written in constellations',
+    description: 'Midnight indigo, cosmic starlight, glowing galaxy chimes, sealed celestial letter.',
+    fontFamily: 'font-serif',
+    accentColor: '#4F46E5',
+    themeClass: 'theme-celestial',
+    themeId: 'celestial-love',
+    gradientBg: 'from-slate-950 via-indigo-950 to-blue-950',
+    primaryColor: 'indigo',
+    previewImage: '/previews/celestial-love.svg',
+    badges: ['Cosmic Romance', 'Written in Stars'],
+    defaultOccasion: 'Written in the Stars 🌌💫',
+    defaultSubtitle: 'In a world of eight billion, it was always only you.',
+    defaultCaption: 'Our Love Across the Cosmos! 🌌💫',
+    ambientEmojis: ['🌌', '💫', '🌙', '⭐', '✨', '💎', '🪐', '💙'],
+    waxColor: '#4F46E5',
+    waxEmoji: '🌙',
+    features: ['Midnight Starry Sky', 'Cosmic Polaroid Starlight', '3 Constellation Reasons', 'Silver Moon Wax Seal'],
+    recommendedSongId: 'indie-acoustic-soul',
+    samplePhoto: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
+  },
+
+  // ==========================================
+  // --- SCRAPBOOK (MEMORY SCRAPBOOK) TEMPLATES ---
+  // ==========================================
+  {
+    id: 'vintage-kodak',
+    category: 'scrapbook',
+    name: 'Vintage Kodak 📸',
+    tag: 'Retro Kodak & Film Strip',
+    emoji: '📸',
+    headline: 'Cherished memories preserved on vintage film',
+    description: '35mm retro aesthetic, warm film grain, polaroid memories, vintage wax envelope.',
+    fontFamily: 'font-cursive',
+    accentColor: '#D97706',
+    themeClass: 'theme-vintage',
+    themeId: 'vintage-kodak',
+    gradientBg: 'from-amber-50 via-stone-50 to-orange-50',
+    primaryColor: 'amber',
+    previewImage: '/previews/vintage-kodak.svg',
+    badges: ['35mm Film', 'Nostalgia Classic'],
+    defaultOccasion: 'Chapters of Our Timeless Journey 📸🎞️',
+    defaultSubtitle: 'Taped forever into the scrapbook of our greatest adventures.',
+    defaultCaption: 'Moments Captured For Eternity! 📸🎞️',
+    ambientEmojis: ['📸', '🎞️', '⚡', '⭐', '✨', '📜', '💫', '☕'],
+    waxColor: '#B45309',
+    waxEmoji: '⚡',
+    features: ['Retro Film Border', 'Polaroid Scrapbook Stack', '3 Unforgettable Adventures', 'Wax Sealed Time Capsule'],
+    recommendedSongId: 'bollywood-lofi-chill',
+    samplePhoto: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'neon-nostalgia',
+    category: 'scrapbook',
+    name: 'Electric Vibes ⚡',
+    tag: 'Electric Teal & Brotherhood',
+    emoji: '⚡',
+    headline: 'Wild adventures and unstoppable brotherhood',
+    description: 'Teal neon glow, electric vibes, skatepark nostalgia, energetic seal.',
+    fontFamily: 'font-cursive',
+    accentColor: '#0D9488',
+    themeClass: 'theme-neon',
+    themeId: 'neon-nostalgia',
+    gradientBg: 'from-slate-900 via-teal-950 to-slate-950',
+    primaryColor: 'teal',
+    previewImage: '/previews/neon-nostalgia.svg',
+    badges: ['Electric Energy', 'Best Buddies'],
+    defaultOccasion: 'Brothers & Partners in Crime ⚡🔥',
+    defaultSubtitle: 'To the crazy stories and legendary adventures we share.',
+    defaultCaption: 'Unstoppable Energy & Brotherhood! ⚡🤙',
+    ambientEmojis: ['⚡', '🤙', '🔥', '⭐', '✨', '🎒', '💫', '🛹'],
+    waxColor: '#0F766E',
+    waxEmoji: '🔥',
+    features: ['Electric Teal Glow', 'Roadtrip Polaroid', '3 Wild Reasons', 'Lightning Bolt Wax Seal'],
+    recommendedSongId: 'bollywood-lofi-chill',
+    samplePhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'cozy-memories',
+    category: 'scrapbook',
+    name: 'Cozy Sunset ☕',
+    tag: 'Warm Terracotta & Friends',
+    emoji: '☕',
+    headline: 'Warm coffee conversations and golden sunsets',
+    description: 'Warm terracotta tones, cozy café vibes, heartfelt scrapbook memories, sunflower wax seal.',
+    fontFamily: 'font-serif',
+    accentColor: '#C2410C',
+    themeClass: 'theme-cozy',
+    themeId: 'cozy-memories',
+    gradientBg: 'from-orange-50 via-amber-50 to-stone-50',
+    primaryColor: 'orange',
+    previewImage: '/previews/cozy-memories.svg',
+    badges: ['Warm Terracotta', 'Cozy Friendship'],
+    defaultOccasion: 'Grateful For Every Memory 🌻☕',
+    defaultSubtitle: 'Some friendships don\'t fade, they only turn into gold.',
+    defaultCaption: 'Laughter, Coffee & Timeless Talks! ☕🌻',
+    ambientEmojis: ['☕', '🌻', '🧡', '✨', '🍂', '💫', '🍯', '☀️'],
+    waxColor: '#C2410C',
+    waxEmoji: '🌻',
+    features: ['Warm Terracotta Palette', 'Cozy Café Polaroid', '3 Cherished Memory Chapters', 'Sunflower Wax Seal'],
+    recommendedSongId: 'indie-acoustic-soul',
+    samplePhoto: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80',
+  },
+
+  // ==========================================
+  // --- APOLOGY (HEARTFELT APOLOGY) TEMPLATES ---
+  // ==========================================
+  {
+    id: 'gentle-peace',
+    category: 'apology',
+    name: 'Olive Peace 🕊️',
+    tag: 'Gentle Olive & White Peace',
+    emoji: '🕊️',
+    headline: 'An honest peace offering from the bottom of my heart',
+    description: 'Gentle olive greens, white peace dove, heartfelt apologies, sincere wax letter.',
+    fontFamily: 'font-serif',
+    accentColor: '#15803D',
+    themeClass: 'theme-olive',
+    themeId: 'gentle-peace',
+    gradientBg: 'from-emerald-50 via-green-50 to-teal-50',
+    primaryColor: 'emerald',
+    previewImage: '/previews/gentle-peace.svg',
+    badges: ['Peace Offering', 'Gentle Reconciliation'],
+    defaultOccasion: 'Can We Make Up? Truly Sorry 🕊️🤍',
+    defaultSubtitle: 'I made a mistake, and your happiness means everything to me.',
+    defaultCaption: 'Our Bond Means Everything to Me! 🕊️🤍',
+    ambientEmojis: ['🕊️', '🤍', '🌿', '✨', '🌸', '💫', '🍃', '🕊️'],
+    waxColor: '#15803D',
+    waxEmoji: '🕊️',
+    features: ['Olive Branch Serenity', 'Shared Smile Polaroid', '3 Honest Promises to Make It Right', 'Dove Wax Seal Letter'],
+    recommendedSongId: 'indie-acoustic-soul',
+    samplePhoto: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'sweet-forgive',
+    category: 'apology',
+    name: 'Sweet Hugs 🥺',
+    tag: 'Pastel Lilac & Big Hugs',
+    emoji: '🥺',
+    headline: 'Infinite warm hugs and a genuine apology',
+    description: 'Pastel lilac, cute teddy bear hug vibes, warm sincerity, cute heart envelope.',
+    fontFamily: 'font-cursive',
+    accentColor: '#8B5CF6',
+    themeClass: 'theme-forgive',
+    themeId: 'sweet-forgive',
+    gradientBg: 'from-violet-50 via-purple-50 to-pink-50',
+    primaryColor: 'purple',
+    previewImage: '/previews/sweet-forgive.svg',
+    badges: ['Warm Hugs', 'Heartfelt Sincerity'],
+    defaultOccasion: 'Forgive Me Please? Infinite Hugs 🥺💜',
+    defaultSubtitle: 'I miss your smile so much. Please let me make things right.',
+    defaultCaption: 'Infinite Hugs & A Truly Sorry Heart! 🥺💜',
+    ambientEmojis: ['🥺', '💜', '🌸', '✨', '🧸', '💫', '💌', '🩹'],
+    waxColor: '#7C3AED',
+    waxEmoji: '💜',
+    features: ['Teddy Bear Hugs', 'Sweetest Memory Polaroid', '3 Reasons Why You Mean The World', 'Pastel Purple Wax Letter'],
+    recommendedSongId: 'indie-acoustic-soul',
+    samplePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'fresh-start',
+    category: 'apology',
+    name: 'Sunrise Renewal 🌤️',
+    tag: 'Warm Sunrise & Fresh Chapter',
+    emoji: '🌤️',
+    headline: 'Turning the page with fresh warmth and open arms',
+    description: 'Warm morning sunrise, gentle yellow tones, turning a new leaf, sunrise sealed envelope.',
+    fontFamily: 'font-cursive',
+    accentColor: '#D97706',
+    themeClass: 'theme-sunrise',
+    themeId: 'fresh-start',
+    gradientBg: 'from-amber-50 via-yellow-50 to-orange-50',
+    primaryColor: 'amber',
+    previewImage: '/previews/fresh-start.svg',
+    badges: ['A New Beginning', 'Fresh Chapter'],
+    defaultOccasion: 'A Fresh Chapter Together 🌤️💛',
+    defaultSubtitle: 'Nothing is worth losing the beautiful bond we have built.',
+    defaultCaption: 'Turning the Page with Warmth & Love! 🌤️💛',
+    ambientEmojis: ['🌤️', '💛', '☀️', '✨', '🌱', '💫', '🌼', '⭐'],
+    waxColor: '#D97706',
+    waxEmoji: '🌤️',
+    features: ['Morning Sunrise Radiance', 'New Leaf Memory Polaroid', '3 Hopes for Our Tomorrow', 'Sunrise Seal Letter'],
+    recommendedSongId: 'indie-acoustic-soul',
+    samplePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+  },
 ];
 
 /**
  * Backward compatibility aliases for legacy template IDs and theme IDs
  */
 export const TEMPLATE_ALIASES = {
+  // Legacy aliases
   'blush-romance': 'blush-rose',
-  'heartfelt-apology': 'lavender-dream',
+  'heartfelt-apology': 'gentle-peace',
   'royal': 'royal-sapphire',
   'gold': 'golden-birthday',
   'polaroid': 'polaroid-scrapbook',
   'blush': 'blush-rose',
   'peach': 'princess-peach',
   'lavender': 'lavender-dream',
+
+  // Birthday Aliases
+  'royal-sapphire': 'royal-sapphire',
+  'golden-birthday': 'golden-birthday',
+  'polaroid-scrapbook': 'polaroid-scrapbook',
+  'blush-rose': 'blush-rose',
+  'princess-peach': 'princess-peach',
+  'lavender-dream': 'lavender-dream',
+
+  // Romance Aliases
+  'velvet': 'velvet-romance',
+  'velvet-romance': 'velvet-romance',
+  'sunset': 'sunset-romance',
+  'sunset-romance': 'sunset-romance',
+  'celestial': 'celestial-love',
+  'celestial-love': 'celestial-love',
+
+  // Scrapbook Aliases
+  'vintage': 'vintage-kodak',
+  'vintage-kodak': 'vintage-kodak',
+  'neon': 'neon-nostalgia',
+  'neon-nostalgia': 'neon-nostalgia',
+  'cozy': 'cozy-memories',
+  'cozy-memories': 'cozy-memories',
+
+  // Apology Aliases
+  'gentle-peace': 'gentle-peace',
+  'olive': 'gentle-peace',
+  'peace': 'gentle-peace',
+  'sweet-forgive': 'sweet-forgive',
+  'forgive': 'sweet-forgive',
+  'fresh-start': 'fresh-start',
+  'sunrise': 'fresh-start',
 };
 
 /**
@@ -184,14 +476,36 @@ export const TEMPLATE_ALIASES = {
 export const getThemeConfig = (templateId) => {
   if (!templateId) return TEMPLATES[0];
   const targetId = TEMPLATE_ALIASES[templateId] || templateId;
-  return TEMPLATES.find((t) => t.id === targetId || t.themeId === targetId) || TEMPLATES[0];
+  return (
+    TEMPLATES.find((t) => t.id === targetId || t.themeId === targetId || t.id === templateId || t.themeId === templateId) ||
+    TEMPLATES[0]
+  );
 };
 
 export const getTemplateById = (id) => {
   return getThemeConfig(id);
 };
 
-export const getTemplatesByGender = (gender) => {
-  if (!gender) return TEMPLATES;
-  return TEMPLATES.filter((t) => t.gender === gender);
+/**
+ * Returns templates filtered by occasion category ('birthday', 'romance', 'scrapbook', 'apology').
+ * If no category is passed or unknown, returns birthday templates.
+ *
+ * @param {string} category
+ * @returns {Array} List of templates matching the category
+ */
+export const getTemplatesByCategory = (category = 'birthday') => {
+  if (!category) return TEMPLATES.filter((t) => t.category === 'birthday');
+  const matched = TEMPLATES.filter((t) => t.category === category);
+  return matched.length > 0 ? matched : TEMPLATES.filter((t) => t.category === 'birthday');
+};
+
+/**
+ * Filter birthday templates by gender for backward compatibility.
+ *
+ * @param {string} gender 'boy' | 'girl'
+ * @returns {Array} List of birthday templates matching gender
+ */
+export const getTemplatesByGender = (gender = 'boy') => {
+  if (!gender) return TEMPLATES.filter((t) => t.category === 'birthday');
+  return TEMPLATES.filter((t) => t.category === 'birthday' && t.gender === gender);
 };

@@ -30,15 +30,19 @@ export default function App() {
     return 'home';
   });
   const [selectedTemplateId, setSelectedTemplateId] = useState('royal-sapphire');
+  const [selectedCategory, setSelectedCategory] = useState('birthday');
   const [siteData, setSiteData] = useState(null);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [isLoadingSite, setIsLoadingSite] = useState(false);
   const [toast, setToast] = useState(null);
   const [recipientModalCategory, setRecipientModalCategory] = useState(null);
 
-  const handleNavigate = (view, templateId = null) => {
+  const handleNavigate = (view, templateId = null, categoryId = null) => {
     if (templateId) {
       setSelectedTemplateId(templateId);
+    }
+    if (categoryId) {
+      setSelectedCategory(categoryId);
     }
     if (view === 'home') {
       setSiteData(null);
@@ -159,16 +163,18 @@ export default function App() {
   };
 
   const handleCategoryClick = (cat) => {
+    setSelectedCategory(cat.id);
     if (cat.hasGender) {
       setRecipientModalCategory(cat);
     } else {
-      handleNavigate('builder', cat.defaultTemplate);
+      handleNavigate('builder', cat.defaultTemplate, cat.id);
     }
   };
 
   const handleRecipientSelect = (_gender, templateId) => {
+    const categoryId = recipientModalCategory?.id || 'birthday';
     setRecipientModalCategory(null);
-    handleNavigate('builder', templateId);
+    handleNavigate('builder', templateId, categoryId);
   };
 
   const handleStartCreating = () => {
@@ -237,6 +243,8 @@ export default function App() {
           <div className="py-6 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <ErrorBoundary onReset={() => handleNavigate('home')}>
               <BuilderStudio
+                key={`${selectedCategory}-${selectedTemplateId}`}
+                initialCategory={selectedCategory}
                 initialTemplateId={selectedTemplateId}
                 onBack={() => handleNavigate('home')}
                 onComplete={(result) => {

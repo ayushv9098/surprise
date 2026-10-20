@@ -30,11 +30,31 @@ export default function RecipientModal({
 
   if (!isOpen || !category) return null;
 
+  const isRomance = category.id === 'romance';
+
   const handleChoose = (gender) => {
-    const defaultTemplateId = category.defaultTemplates?.[gender] || 
-      (gender === 'boy' ? 'royal-sapphire' : 'blush-rose');
+    let defaultTemplateId;
+    if (isRomance) {
+      defaultTemplateId = gender === 'boy' ? 'velvet-romance' : 'sunset-romance';
+    } else if (category.defaultTemplates?.[gender]) {
+      defaultTemplateId = category.defaultTemplates[gender];
+    } else {
+      defaultTemplateId = gender === 'boy' ? 'royal-sapphire' : 'blush-rose';
+    }
     onSelect?.(gender, defaultTemplateId);
   };
+
+  const girlTitle = isRomance ? 'For Her' : 'For a Girl';
+  const girlDesc = isRomance
+    ? 'Soft roses, warm starlight & romantic letters'
+    : 'Blush rose, sparkles & chimes';
+  const girlAction = isRomance ? 'Select for her' : 'Select girl style';
+
+  const boyTitle = isRomance ? 'For Him' : 'For a Boy';
+  const boyDesc = isRomance
+    ? 'Velvet crimson, timeless memories & promises'
+    : 'Royal sapphire & golden spark';
+  const boyAction = isRomance ? 'Select for him' : 'Select boy style';
 
   return (
     <div
@@ -69,15 +89,17 @@ export default function RecipientModal({
           id="recipient-modal-title"
           className="text-lg sm:text-2xl font-bold text-gray-900 tracking-tight leading-tight"
         >
-          Who are you celebrating?
+          {isRomance ? 'Who is this love surprise for?' : 'Who are you celebrating?'}
         </h3>
         <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
-          Choose who this surprise is crafted for to personalize music, colors, and keepsake scenes.
+          {isRomance
+            ? 'Choose who this love surprise is crafted for to personalize romantic music, letters, and keepsake scenes.'
+            : 'Choose who this surprise is crafted for to personalize music, colors, and keepsake scenes.'}
         </p>
 
         {/* Two Large Toggle Selection Cards */}
         <div className="grid grid-cols-2 gap-2.5 sm:gap-4 mt-4 sm:mt-6">
-          {/* For a Girl Card */}
+          {/* For a Girl / Her Card */}
           <button
             type="button"
             onClick={() => handleChoose('girl')}
@@ -89,25 +111,25 @@ export default function RecipientModal({
               </div>
 
               <div className="font-bold text-xs sm:text-base text-gray-900 group-hover:text-rose-600 flex items-center gap-1 transition-colors leading-tight">
-                <span>For a Girl</span>
+                <span>{girlTitle}</span>
                 <AppleEmoji emoji="🌸" size={13} />
               </div>
 
               <p className="text-[10px] sm:text-xs text-gray-500 mt-1 leading-snug line-clamp-2">
-                Blush rose, sparkles & chimes
+                {girlDesc}
               </p>
             </div>
 
             <div className="mt-3 sm:mt-5 pt-2 sm:pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] sm:text-xs font-bold">
               <span className="text-rose-600">
                 <span className="sm:hidden">Select</span>
-                <span className="hidden sm:inline">Select girl style</span>
+                <span className="hidden sm:inline">{girlAction}</span>
               </span>
               <ArrowRight className="w-3.5 h-3.5 text-rose-600 group-hover:translate-x-1 transition-transform" />
             </div>
           </button>
 
-          {/* For a Boy Card */}
+          {/* For a Boy / Him Card */}
           <button
             type="button"
             onClick={() => handleChoose('boy')}
@@ -119,19 +141,19 @@ export default function RecipientModal({
               </div>
 
               <div className="font-bold text-xs sm:text-base text-gray-900 group-hover:text-blue-600 flex items-center gap-1 transition-colors leading-tight">
-                <span>For a Boy</span>
+                <span>{boyTitle}</span>
                 <AppleEmoji emoji="👑" size={13} />
               </div>
 
               <p className="text-[10px] sm:text-xs text-gray-500 mt-1 leading-snug line-clamp-2">
-                Royal sapphire & golden spark
+                {boyDesc}
               </p>
             </div>
 
             <div className="mt-3 sm:mt-5 pt-2 sm:pt-3 border-t border-gray-100 flex items-center justify-between text-[11px] sm:text-xs font-bold">
               <span className="text-blue-600">
                 <span className="sm:hidden">Select</span>
-                <span className="hidden sm:inline">Select boy style</span>
+                <span className="hidden sm:inline">{boyAction}</span>
               </span>
               <ArrowRight className="w-3.5 h-3.5 text-blue-600 group-hover:translate-x-1 transition-transform" />
             </div>

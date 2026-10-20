@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .font-cursive { font-family: 'Dancing Script', cursive, sans-serif; }
+      .font-sans { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    </style>
+
+    <!-- Retro Kodak Warm Amber Gradient -->
+    <linearGradient id="kodakBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffdf5"/>
+      <stop offset="40%" stop-color="#fef9c3"/>
+      <stop offset="85%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#fef08a"/>
+    </linearGradient>
+
+    <radialGradient id="kodakGlow" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="kodakCardShadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#b45309" flood-opacity="0.18"/>
+    </filter>
+    <filter id="kodakBtnGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#d97706" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Button Gradient -->
+    <linearGradient id="kodakBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </linearGradient>
+
+    <!-- Glass Overlay -->
+    <linearGradient id="kodakGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#fffef7" stop-opacity="0.95"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="300" fill="url(#kodakBg)"/>
+  <rect width="400" height="300" fill="url(#kodakGlow)"/>
+
+  <!-- Vintage Film Sprocket Holes along top & bottom -->
+  <g fill="#451a03" opacity="0.15">
+    <rect x="20" y="8" width="12" height="8" rx="2"/>
+    <rect x="60" y="8" width="12" height="8" rx="2"/>
+    <rect x="100" y="8" width="12" height="8" rx="2"/>
+    <rect x="140" y="8" width="12" height="8" rx="2"/>
+    <rect x="180" y="8" width="12" height="8" rx="2"/>
+    <rect x="220" y="8" width="12" height="8" rx="2"/>
+    <rect x="260" y="8" width="12" height="8" rx="2"/>
+    <rect x="300" y="8" width="12" height="8" rx="2"/>
+    <rect x="340" y="8" width="12" height="8" rx="2"/>
+    <rect x="370" y="8" width="12" height="8" rx="2"/>
+
+    <rect x="20" y="284" width="12" height="8" rx="2"/>
+    <rect x="60" y="284" width="12" height="8" rx="2"/>
+    <rect x="100" y="284" width="12" height="8" rx="2"/>
+    <rect x="140" y="284" width="12" height="8" rx="2"/>
+    <rect x="180" y="284" width="12" height="8" rx="2"/>
+    <rect x="220" y="284" width="12" height="8" rx="2"/>
+    <rect x="260" y="284" width="12" height="8" rx="2"/>
+    <rect x="300" y="284" width="12" height="8" rx="2"/>
+    <rect x="340" y="284" width="12" height="8" rx="2"/>
+    <rect x="370" y="284" width="12" height="8" rx="2"/>
+  </g>
+
+  <!-- Floating Emojis -->
+  <text x="25" y="70" font-size="16" opacity="0.85">📸</text>
+  <text x="355" y="60" font-size="16" opacity="0.85">🎞️</text>
+  <text x="24" y="200" font-size="15" opacity="0.75">⚡</text>
+  <text x="355" y="200" font-size="16" opacity="0.8">📜</text>
+  <text x="348" y="265" font-size="15" opacity="0.8">☕</text>
+
+  <!-- Central Card -->
+  <g filter="url(#kodakCardShadow)">
+    <rect x="50" y="38" width="300" height="224" rx="20" fill="url(#kodakGlass)" stroke="#fde68a" stroke-width="1.5"/>
+
+    <!-- Top Badge Pill -->
+    <rect x="115" y="22" width="170" height="30" rx="15" fill="#ffffff" stroke="#fde68a" stroke-width="1.5" filter="url(#kodakCardShadow)"/>
+    <text x="132" y="42" font-size="15">📸</text>
+    <text x="156" y="42" class="font-sans" font-size="9.5" font-weight="700" fill="#b45309" letter-spacing="0.5">RETRO KODAK &amp; FILM STRIP</text>
+
+    <!-- Main Headline -->
+    <text x="200" y="85" class="font-cursive" font-size="28" font-weight="700" fill="#78350f" text-anchor="middle">Chapters of Our</text>
+    <text x="200" y="118" class="font-sans" font-size="21" font-weight="800" fill="#d97706" text-anchor="middle" letter-spacing="-0.5">Timeless Journey 📸🎞️</text>
+
+    <!-- Decorative Ribbon -->
+    <path d="M140 133 Q 200 135 260 133" stroke="#fef3c7" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="200" cy="133.5" r="3" fill="#d97706"/>
+
+    <!-- Subtitle Text -->
+    <text x="200" y="154" class="font-sans" font-size="11.5" font-weight="600" fill="#92400e" text-anchor="middle">Taped forever into timeless memories</text>
+    <text x="200" y="171" class="font-sans" font-size="10" font-weight="500" fill="#b45309" text-anchor="middle" opacity="0.85">Moments captured for eternity...</text>
+
+    <!-- Action Button -->
+    <g transform="translate(125, 192)" filter="url(#kodakBtnGlow)">
+      <rect width="150" height="38" rx="19" fill="url(#kodakBtn)"/>
+      <rect x="2" y="2" width="146" height="17" rx="9" fill="#ffffff" opacity="0.2"/>
+      <text x="75" y="24" class="font-sans" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.3">View Scrapbook 📸</text>
+    </g>
+  </g>
+</svg>

@@ -10,7 +10,7 @@ import StepSurprises from './StepSurprises';
 import LivePhonePreview from './LivePhonePreview';
 import ShareModal from './ShareModal';
 import { getPresetForTemplate } from '../../data/samplePresets';
-import { getTemplateById } from '../../data/templates';
+import { getTemplateById, getTemplatesByCategory } from '../../data/templates';
 import { saveSurprise } from '../../utils/storage';
 import AppleEmoji from '../common/AppleEmoji';
 
@@ -112,6 +112,8 @@ export default function BuilderStudio({
     });
   };
 
+  const handleFieldChange = handleUpdateFormData;
+
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
     const targetTemplateId = gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
@@ -141,16 +143,20 @@ export default function BuilderStudio({
     if (tmpl.gender && tmpl.gender !== selectedGender) {
       setSelectedGender(tmpl.gender);
     }
+    if (tmpl.category && tmpl.category !== selectedCategory) {
+      setSelectedCategory(tmpl.category);
+    }
     setFormData((prev) => ({
       ...prev,
       templateId,
+      category: tmpl.category || prev.category || selectedCategory,
       gender: tmpl.gender || prev.gender,
       recipientName: currentStep === 1 ? (preset.recipientName || (tmpl.gender === 'girl' ? 'Sarah' : 'Rohan')) : prev.recipientName,
       senderName: currentStep === 1 ? (preset.senderName || (tmpl.gender === 'girl' ? 'Elena' : 'Alex')) : prev.senderName,
-      occasion: currentStep === 1 ? (preset.occasion || 'Happy Birthday') : (prev.occasion || preset.occasion || 'Happy Birthday'),
-      subtitle: preset.subtitle || prev.subtitle,
+      occasion: currentStep === 1 ? (preset.occasion || tmpl.defaultOccasion || 'Happy Birthday') : (prev.occasion || preset.occasion || tmpl.defaultOccasion || 'Happy Birthday'),
+      subtitle: preset.subtitle || tmpl.defaultSubtitle || prev.subtitle,
       heroPhoto: preset.heroPhoto || tmpl.samplePhoto || prev.heroPhoto,
-      photoCaption: preset.photoCaption || prev.photoCaption,
+      photoCaption: preset.photoCaption || tmpl.defaultCaption || prev.photoCaption,
       photos: preset.photos?.length ? preset.photos : prev.photos,
       specialReasons: preset.specialReasons?.length ? preset.specialReasons : prev.specialReasons,
       letter: preset.letter || prev.letter,
@@ -261,12 +267,24 @@ export default function BuilderStudio({
               <div className="space-y-6 animate-fadeIn">
                 <TemplateSelector
                   selectedId={formData.templateId}
+                  selectedCategory={selectedCategory}
                   selectedGender={selectedGender}
+                  onSelectCategory={(catId) => {
+                    setSelectedCategory(catId);
+                    handleFieldChange({ category: catId });
+                    // Automatically switch to the top template of that category if current doesn't match
+                    const catTmpls = getTemplatesByCategory(catId);
+                    if (catTmpls.length > 0 && !catTmpls.some((t) => t.id === formData.templateId)) {
+                      const topTmpl =
+                        catId === 'birthday'
+                          ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
+                          : catTmpls[0].id;
+                      handleTemplateChange(topTmpl);
+                    }
+                  }}
                   onSelectGender={handleGenderChange}
                   onSelectTemplate={handleTemplateChange}
                 />
-
-
               </div>
             )}
 

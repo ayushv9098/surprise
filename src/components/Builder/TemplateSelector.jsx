@@ -1,33 +1,63 @@
 import React from 'react';
 import { Check } from 'lucide-react';
-import { TEMPLATES, getTemplatesByGender } from '../../data/templates';
+import { CATEGORIES } from '../../data/categories';
+import { TEMPLATES, getTemplatesByCategory } from '../../data/templates';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 
 export default function TemplateSelector({
   selectedId,
+  selectedCategory = 'birthday',
   selectedGender = 'boy',
+  onSelectCategory,
   onSelectGender,
   onSelectTemplate,
 }) {
-  const matchingTemplates = getTemplatesByGender(selectedGender);
+  // Fetch templates for selected category
+  const categoryTemplates = typeof getTemplatesByCategory === 'function'
+    ? getTemplatesByCategory(selectedCategory)
+    : TEMPLATES.filter((t) => t.category === selectedCategory);
+
+  // If birthday, filter by gender; for other categories, render their dedicated Top 3 Pro Templates
+  const matchingTemplates = selectedCategory === 'birthday'
+    ? categoryTemplates.filter((tmpl) => tmpl.gender === selectedGender)
+    : categoryTemplates;
 
   const handleGenderToggle = (newGender) => {
     if (onSelectGender) {
       onSelectGender(newGender);
     }
-    // If current template doesn't belong to the newly selected gender, select the top match
-    const currentTmpl = TEMPLATES.find((t) => t.id === selectedId);
-    if (!currentTmpl || currentTmpl.gender !== newGender) {
-      const topMatch = newGender === 'girl' ? 'blush-rose' : 'royal-sapphire';
-      if (onSelectTemplate) {
-        onSelectTemplate(topMatch);
+    const birthdayTmpls = typeof getTemplatesByCategory === 'function'
+      ? getTemplatesByCategory('birthday')
+      : TEMPLATES.filter((t) => t.category === 'birthday');
+    const genderTmpls = birthdayTmpls.filter((t) => t.gender === newGender);
+    const topMatch = genderTmpls[0]?.id || (newGender === 'girl' ? 'blush-rose' : 'royal-sapphire');
+    if (onSelectTemplate) {
+      onSelectTemplate(topMatch);
+    }
+  };
+
+  const handleCategoryClick = (catId) => {
+    if (onSelectCategory) {
+      onSelectCategory(catId);
+    }
+    const catTmpls = typeof getTemplatesByCategory === 'function'
+      ? getTemplatesByCategory(catId)
+      : TEMPLATES.filter((t) => t.category === catId);
+
+    if (catTmpls && catTmpls.length > 0) {
+      const topTmpl = catId === 'birthday'
+        ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
+        : catTmpls[0].id;
+
+      if (topTmpl && onSelectTemplate) {
+        onSelectTemplate(topTmpl);
       }
     }
   };
 
   return (
     <div className="space-y-6">
-      {/* 1) ULTRA-CLEAN MINIMAL HEADER */}
+      {/* 1) HEADER & GENDER TOGGLE */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-100">
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
@@ -38,54 +68,85 @@ export default function TemplateSelector({
           </p>
         </div>
 
-        {/* Subtle, small text pill: For a Boy 👑 • Switch to Girl 🌸 (or vice versa) */}
-        <button
-          type="button"
-          onClick={() => handleGenderToggle(selectedGender === 'boy' ? 'girl' : 'boy')}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200/90 text-xs text-slate-700 transition-all cursor-pointer shadow-xs hover:border-slate-300 group select-none self-start sm:self-auto"
-          title={selectedGender === 'boy' ? 'Switch to Girl styles' : 'Switch to Boy styles'}
-        >
-          <span className="font-semibold text-slate-800 flex items-center gap-1.5">
-            {selectedGender === 'boy' ? (
-              <>
-                <span>For a Boy</span>
-                <AppleEmoji emoji="👑" size={14} />
-              </>
-            ) : (
-              <>
-                <span>For a Girl</span>
-                <AppleEmoji emoji="🌸" size={14} />
-              </>
-            )}
-          </span>
-          <span className="text-slate-300">•</span>
-          <span className="text-rose-600 font-semibold group-hover:text-rose-700 group-hover:underline flex items-center gap-1">
-            {selectedGender === 'boy' ? (
-              <>
-                <span>Switch to Girl</span>
-                <AppleEmoji emoji="🌸" size={14} />
-              </>
-            ) : (
-              <>
-                <span>Switch to Boy</span>
-                <AppleEmoji emoji="👑" size={14} />
-              </>
-            )}
-          </span>
-        </button>
+        {/* Small, sleek pill toggle for Birthday */}
+        {selectedCategory === 'birthday' && (
+          <button
+            type="button"
+            onClick={() => handleGenderToggle(selectedGender === 'boy' ? 'girl' : 'boy')}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200/90 text-xs text-slate-700 transition-all cursor-pointer shadow-xs hover:border-slate-300 group select-none self-start sm:self-auto"
+            title={selectedGender === 'boy' ? 'Switch to Girl styles' : 'Switch to Boy styles'}
+          >
+            <span className="font-semibold text-slate-800 flex items-center gap-1.5">
+              {selectedGender === 'boy' ? (
+                <>
+                  <span>For a Boy</span>
+                  <AppleEmoji emoji="👑" size={14} />
+                </>
+              ) : (
+                <>
+                  <span>For a Girl</span>
+                  <AppleEmoji emoji="🌸" size={14} />
+                </>
+              )}
+            </span>
+            <span className="text-slate-300">•</span>
+            <span className="text-rose-600 font-semibold group-hover:text-rose-700 group-hover:underline flex items-center gap-1">
+              {selectedGender === 'boy' ? (
+                <>
+                  <span>Switch to Girl</span>
+                  <AppleEmoji emoji="🌸" size={14} />
+                </>
+              ) : (
+                <>
+                  <span>Switch to Boy</span>
+                  <AppleEmoji emoji="👑" size={14} />
+                </>
+              )}
+            </span>
+          </button>
+        )}
       </div>
 
-      {/* 2) REDESIGNED RECOMMENDED STYLE CARDS GRID */}
+      {/* 2) OCCASION NAVIGATION TABS */}
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-1">
+        {CATEGORIES.map((cat) => {
+          const isActive = selectedCategory === cat.id;
+          const label =
+            cat.id === 'birthday'
+              ? 'Birthday'
+              : cat.id === 'scrapbook'
+              ? 'Scrapbook'
+              : cat.name;
+
+          return (
+            <button
+              key={cat.id}
+              type="button"
+              onClick={() => handleCategoryClick(cat.id)}
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 shrink-0 cursor-pointer select-none active:scale-95 ${
+                isActive
+                  ? 'bg-[#E8364E] text-white shadow-sm shadow-rose-500/25 ring-2 ring-[#E8364E]/20'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+              }`}
+            >
+              <AppleEmoji emoji={cat.emoji} size={15} />
+              <span>{label}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* 3) RECOMMENDED PRO STYLE CARDS GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
         {matchingTemplates.map((tmpl) => {
           const isSelected = selectedId === tmpl.id;
-          const cleanTitle = tmpl.name.replace(/\p{Extended_Pictographic}/gu, '').trim();
+          const cleanTitle = (tmpl.name || '').replace(/\p{Extended_Pictographic}/gu, '').trim();
 
           return (
             <div
               key={tmpl.id}
               onClick={() => onSelectTemplate && onSelectTemplate(tmpl.id)}
-              className={`group relative rounded-2xl sm:rounded-3xl cursor-pointer transition-all duration-300 flex flex-col overflow-hidden ${
+              className={`group relative rounded-2xl sm:rounded-3xl cursor-pointer transition-all duration-300 flex flex-col overflow-hidden active:scale-[0.98] ${
                 isSelected
                   ? 'ring-2 ring-rose-500 border border-rose-500/50 shadow-lg shadow-rose-500/10 bg-gradient-to-b from-rose-50/20 to-white'
                   : 'bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1'
@@ -93,7 +154,11 @@ export default function TemplateSelector({
             >
               {/* Image Container */}
               <div className="p-2 sm:p-3.5 pb-0">
-                <div className={`relative aspect-[4/3] w-full rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs bg-gradient-to-br ${tmpl.gradientBg || 'from-slate-100 to-slate-200'}`}>
+                <div
+                  className={`relative aspect-[4/3] w-full rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs bg-gradient-to-br ${
+                    tmpl.gradientBg || 'from-slate-100 to-slate-200'
+                  }`}
+                >
                   <img
                     src={tmpl.previewImage}
                     alt={cleanTitle}
@@ -130,9 +195,9 @@ export default function TemplateSelector({
                     <span className="truncate">{cleanTitle}</span>
                   </h3>
 
-                  {/* Description */}
+                  {/* Description / Headline */}
                   <p className="text-[10px] sm:text-xs text-slate-500 leading-snug sm:leading-relaxed mt-1 line-clamp-2 min-h-[28px]">
-                    {renderAppleText(tmpl.description, 11)}
+                    {renderAppleText(tmpl.description || tmpl.headline || '', 11)}
                   </p>
 
                   {/* Features List / Pills (hidden on mobile for 100% height symmetry) */}

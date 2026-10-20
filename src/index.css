@@ -285,6 +285,126 @@
   inset: 0;
 }
 
+/* Romance Themes */
+.bg-soft-aesthetic-velvet {
+  background: linear-gradient(150deg, #fff1f2 0%, #ffe4e6 35%, #fecdd3 70%, #fff5f5 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-velvet:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(225, 29, 72, 0.2), transparent 45%), radial-gradient(circle at 80% 25%, rgba(244, 63, 94, 0.15), transparent 50%), radial-gradient(circle at 50% 85%, rgba(255, 228, 230, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-sunset {
+  background: linear-gradient(150deg, #fffbeb 0%, #fef3c7 35%, #fed7aa 70%, #fff7ed 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-sunset:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(245, 158, 11, 0.22), transparent 45%), radial-gradient(circle at 80% 25%, rgba(251, 146, 60, 0.18), transparent 50%), radial-gradient(circle at 50% 85%, rgba(254, 243, 199, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-celestial {
+  background: linear-gradient(150deg, #eef2ff 0%, #e0e7ff 35%, #c7d2fe 70%, #f5f3ff 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-celestial:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(99, 102, 241, 0.22), transparent 45%), radial-gradient(circle at 80% 25%, rgba(129, 140, 248, 0.18), transparent 50%), radial-gradient(circle at 50% 85%, rgba(224, 231, 255, 0.45), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+/* Scrapbook Themes */
+.bg-soft-aesthetic-vintage {
+  background: linear-gradient(150deg, #fefce8 0%, #fef3c7 35%, #fde68a 70%, #fffbeb 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-vintage:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(217, 119, 6, 0.2), transparent 45%), radial-gradient(circle at 80% 25%, rgba(180, 83, 9, 0.15), transparent 50%), radial-gradient(circle at 50% 85%, rgba(254, 243, 199, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-neon {
+  background: linear-gradient(150deg, #f0fdfa 0%, #ccfbf1 35%, #99f6e4 70%, #f0fdf4 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-neon:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(13, 148, 136, 0.2), transparent 45%), radial-gradient(circle at 80% 25%, rgba(6, 182, 212, 0.18), transparent 50%), radial-gradient(circle at 50% 85%, rgba(204, 251, 241, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-cozy {
+  background: linear-gradient(150deg, #fff7ed 0%, #ffedd5 35%, #fed7aa 70%, #fffbeb 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-cozy:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(194, 65, 12, 0.2), transparent 45%), radial-gradient(circle at 80% 25%, rgba(234, 88, 12, 0.16), transparent 50%), radial-gradient(circle at 50% 85%, rgba(255, 237, 213, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+/* Apology Themes */
+.bg-soft-aesthetic-olive {
+  background: linear-gradient(150deg, #f0fdf4 0%, #dcfce7 35%, #bbf7d0 70%, #f7fee7 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-olive:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(21, 128, 61, 0.2), transparent 45%), radial-gradient(circle at 80% 25%, rgba(34, 197, 94, 0.16), transparent 50%), radial-gradient(circle at 50% 85%, rgba(220, 252, 231, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-forgive {
+  background: linear-gradient(150deg, #faf5ff 0%, #f3e8ff 35%, #e9d5ff 70%, #f5f3ff 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-forgive:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(139, 92, 246, 0.22), transparent 45%), radial-gradient(circle at 80% 25%, rgba(168, 85, 247, 0.18), transparent 50%), radial-gradient(circle at 50% 85%, rgba(243, 232, 255, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-sunrise {
+  background: linear-gradient(150deg, #fefce8 0%, #fef9c3 35%, #fef08a 70%, #fffbeb 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-sunrise:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(217, 119, 6, 0.2), transparent 45%), radial-gradient(circle at 80% 25%, rgba(250, 204, 21, 0.18), transparent 50%), radial-gradient(circle at 50% 85%, rgba(254, 240, 138, 0.4), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
 .bg-envelope-celebration {
   background: linear-gradient(150deg, #172554 0%, #1e3a8a 45%, #0f172a 100%);
   transition: background 0.7s;
@@ -369,6 +489,135 @@
   inset: 0;
 }
 
+/* Romance Envelope Celebrations */
+.bg-envelope-celebration-velvet {
+  background: linear-gradient(150deg, #4c0519 0%, #881337 45%, #1c050c 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-velvet:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(225, 29, 72, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-sunset {
+  background: linear-gradient(150deg, #451a03 0%, #7c2d12 45%, #1c0a04 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-sunset:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-celestial {
+  background: linear-gradient(150deg, #1e1b4b 0%, #312e81 45%, #0f0e26 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-celestial:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(99, 102, 241, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+/* Scrapbook Envelope Celebrations */
+.bg-envelope-celebration-vintage {
+  background: linear-gradient(150deg, #291e0a 0%, #451a03 45%, #140b02 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-vintage:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(217, 119, 6, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-neon {
+  background: linear-gradient(150deg, #042f2e 0%, #115e59 45%, #021a19 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-neon:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(13, 148, 136, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-cozy {
+  background: linear-gradient(150deg, #431407 0%, #7c2d12 45%, #1c0803 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-cozy:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(194, 65, 12, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+/* Apology Envelope Celebrations */
+.bg-envelope-celebration-olive {
+  background: linear-gradient(150deg, #052e16 0%, #14532d 45%, #02180b 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-olive:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(21, 128, 61, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-forgive {
+  background: linear-gradient(150deg, #3b0764 0%, #581c87 45%, #1a032d 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-forgive:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-sunrise {
+  background: linear-gradient(150deg, #422006 0%, #713f12 45%, #1c0d02 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-sunrise:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(217, 119, 6, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
 /* Birthday Cards & Polaroids */
 .birthday-card {
   -webkit-backdrop-filter: blur(20px);
@@ -430,13 +679,115 @@
   box-shadow: 0 16px 36px -10px rgba(225, 29, 72, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+/* Romance Cards */
+.birthday-card-velvet {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(225, 29, 72, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.birthday-card-sunset {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(245, 158, 11, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.birthday-card-celestial {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(79, 70, 229, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Scrapbook Cards */
+.birthday-card-vintage {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 16px 36px -10px rgba(180, 83, 9, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.birthday-card-neon {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 16px 36px -10px rgba(13, 148, 136, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.birthday-card-cozy {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(194, 65, 12, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(194, 65, 12, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Apology Cards */
+.birthday-card-olive {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(21, 128, 61, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(21, 128, 61, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.birthday-card-forgive {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(139, 92, 246, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.birthday-card-sunrise {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(217, 119, 6, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(217, 119, 6, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
 @media (max-width: 640px) {
   .birthday-card,
   .birthday-card-girl,
   .birthday-card-peach,
   .birthday-card-lavender,
   .birthday-card-gold,
-  .birthday-card-polaroid {
+  .birthday-card-polaroid,
+  .birthday-card-velvet,
+  .birthday-card-sunset,
+  .birthday-card-celestial,
+  .birthday-card-vintage,
+  .birthday-card-neon,
+  .birthday-card-cozy,
+  .birthday-card-olive,
+  .birthday-card-forgive,
+  .birthday-card-sunrise {
     border-radius: 22px;
   }
 }
@@ -602,6 +953,216 @@
   transform: translateY(0) scale(0.98);
 }
 
+/* Romance Buttons */
+.btn-primary-velvet {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #E11D48 0%, #BE123C 50%, #9F1239 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(225, 29, 72, 0.35);
+}
+.btn-primary-velvet:hover {
+  background: linear-gradient(135deg, #BE123C 0%, #9F1239 50%, #881337 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(225, 29, 72, 0.45);
+}
+.btn-primary-velvet:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-sunset {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #F59E0B 0%, #EA580C 50%, #C2410C 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(245, 158, 11, 0.35);
+}
+.btn-primary-sunset:hover {
+  background: linear-gradient(135deg, #EA580C 0%, #C2410C 50%, #9A3412 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(245, 158, 11, 0.45);
+}
+.btn-primary-sunset:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-celestial {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #6366F1 0%, #4F46E5 50%, #3730A3 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(79, 70, 229, 0.35);
+}
+.btn-primary-celestial:hover {
+  background: linear-gradient(135deg, #4F46E5 0%, #3730A3 50%, #312E81 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(79, 70, 229, 0.45);
+}
+.btn-primary-celestial:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Scrapbook Buttons */
+.btn-primary-vintage {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #D97706 0%, #B45309 50%, #92400E 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(217, 119, 6, 0.35);
+}
+.btn-primary-vintage:hover {
+  background: linear-gradient(135deg, #B45309 0%, #92400E 50%, #78350F 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(217, 119, 6, 0.45);
+}
+.btn-primary-vintage:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-neon {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #14B8A6 0%, #0D9488 50%, #0F766E 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(13, 148, 136, 0.35);
+}
+.btn-primary-neon:hover {
+  background: linear-gradient(135deg, #0D9488 0%, #0F766E 50%, #115E59 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(13, 148, 136, 0.45);
+}
+.btn-primary-neon:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-cozy {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #EA580C 0%, #C2410C 50%, #9A3412 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(194, 65, 12, 0.35);
+}
+.btn-primary-cozy:hover {
+  background: linear-gradient(135deg, #C2410C 0%, #9A3412 50%, #7C2D12 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(194, 65, 12, 0.45);
+}
+.btn-primary-cozy:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Apology Buttons */
+.btn-primary-olive {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #16A34A 0%, #15803D 50%, #14532D 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(21, 128, 61, 0.35);
+}
+.btn-primary-olive:hover {
+  background: linear-gradient(135deg, #15803D 0%, #14532D 50%, #052E16 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(21, 128, 61, 0.45);
+}
+.btn-primary-olive:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-forgive {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #A855F7 0%, #8B5CF6 50%, #7C3AED 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(139, 92, 246, 0.35);
+}
+.btn-primary-forgive:hover {
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 50%, #6D28D9 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(139, 92, 246, 0.45);
+}
+.btn-primary-forgive:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-sunrise {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #EAB308 0%, #CA8A04 50%, #A16207 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(202, 138, 4, 0.35);
+}
+.btn-primary-sunrise:hover {
+  background: linear-gradient(135deg, #CA8A04 0%, #A16207 50%, #713F12 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(202, 138, 4, 0.45);
+}
+.btn-primary-sunrise:active {
+  transform: translateY(0) scale(0.98);
+}
+
 .btn-secondary {
   color: #fff;
   cursor: pointer;
@@ -739,6 +1300,225 @@
   box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
 }
 .btn-secondary-polaroid:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Romance Secondary Buttons */
+.btn-secondary-velvet {
+  color: #881337 !important;
+  cursor: pointer;
+  background: #fff1f2;
+  border: 1px solid rgba(254, 205, 211, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(225, 29, 72, 0.08);
+}
+.btn-secondary-velvet:hover {
+  background: #ffe4e6;
+  color: #4c0519 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(225, 29, 72, 0.15);
+}
+.btn-secondary-velvet:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-sunset {
+  color: #78350f !important;
+  cursor: pointer;
+  background: #fffbeb;
+  border: 1px solid rgba(254, 215, 170, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(245, 158, 11, 0.08);
+}
+.btn-secondary-sunset:hover {
+  background: #fef3c7;
+  color: #451a03 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(245, 158, 11, 0.15);
+}
+.btn-secondary-sunset:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-celestial {
+  color: #312e81 !important;
+  cursor: pointer;
+  background: #eef2ff;
+  border: 1px solid rgba(199, 210, 254, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(79, 70, 229, 0.08);
+}
+.btn-secondary-celestial:hover {
+  background: #e0e7ff;
+  color: #1e1b4b !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(79, 70, 229, 0.15);
+}
+.btn-secondary-celestial:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Scrapbook Secondary Buttons */
+.btn-secondary-vintage {
+  color: #78350f !important;
+  cursor: pointer;
+  background: #fffbeb;
+  border: 1px solid rgba(253, 230, 138, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(217, 119, 6, 0.08);
+}
+.btn-secondary-vintage:hover {
+  background: #fef3c7;
+  color: #451a03 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(217, 119, 6, 0.15);
+}
+.btn-secondary-vintage:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-neon {
+  color: #115e59 !important;
+  cursor: pointer;
+  background: #f0fdfa;
+  border: 1px solid rgba(153, 246, 228, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(13, 148, 136, 0.08);
+}
+.btn-secondary-neon:hover {
+  background: #ccfbf1;
+  color: #042f2e !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(13, 148, 136, 0.15);
+}
+.btn-secondary-neon:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-cozy {
+  color: #7c2d12 !important;
+  cursor: pointer;
+  background: #fff7ed;
+  border: 1px solid rgba(254, 215, 170, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(194, 65, 12, 0.08);
+}
+.btn-secondary-cozy:hover {
+  background: #ffedd5;
+  color: #431407 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(194, 65, 12, 0.15);
+}
+.btn-secondary-cozy:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Apology Secondary Buttons */
+.btn-secondary-olive {
+  color: #14532d !important;
+  cursor: pointer;
+  background: #f0fdf4;
+  border: 1px solid rgba(187, 247, 208, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(21, 128, 61, 0.08);
+}
+.btn-secondary-olive:hover {
+  background: #dcfce7;
+  color: #052e16 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(21, 128, 61, 0.15);
+}
+.btn-secondary-olive:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-forgive {
+  color: #581c87 !important;
+  cursor: pointer;
+  background: #faf5ff;
+  border: 1px solid rgba(233, 213, 255, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(139, 92, 246, 0.08);
+}
+.btn-secondary-forgive:hover {
+  background: #f3e8ff;
+  color: #3b0764 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(139, 92, 246, 0.15);
+}
+.btn-secondary-forgive:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-sunrise {
+  color: #713f12 !important;
+  cursor: pointer;
+  background: #fefce8;
+  border: 1px solid rgba(254, 240, 138, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(202, 138, 4, 0.08);
+}
+.btn-secondary-sunrise:hover {
+  background: #fef9c3;
+  color: #422006 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(202, 138, 4, 0.15);
+}
+.btn-secondary-sunrise:active {
   transform: translateY(0) scale(0.98);
 }
 
@@ -892,6 +1672,153 @@
   box-shadow: 0 14px 28px -6px rgba(225, 29, 72, 0.16);
 }
 
+/* Romance Special Reason Cards */
+.special-reason-card-velvet {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(254, 205, 211, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(225, 29, 72, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-velvet:hover {
+  background: #ffffff;
+  border-color: rgba(225, 29, 72, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(225, 29, 72, 0.16);
+}
+
+.special-reason-card-sunset {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(254, 215, 170, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-sunset:hover {
+  background: #ffffff;
+  border-color: rgba(245, 158, 11, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(245, 158, 11, 0.16);
+}
+
+.special-reason-card-celestial {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(199, 210, 254, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(79, 70, 229, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-celestial:hover {
+  background: #ffffff;
+  border-color: rgba(99, 102, 241, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(79, 70, 229, 0.16);
+}
+
+/* Scrapbook Special Reason Cards */
+.special-reason-card-vintage {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(253, 230, 138, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(217, 119, 6, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-vintage:hover {
+  background: #ffffff;
+  border-color: rgba(217, 119, 6, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(217, 119, 6, 0.16);
+}
+
+.special-reason-card-neon {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(153, 246, 228, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(13, 148, 136, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-neon:hover {
+  background: #ffffff;
+  border-color: rgba(13, 148, 136, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(13, 148, 136, 0.16);
+}
+
+.special-reason-card-cozy {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(254, 215, 170, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(194, 65, 12, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-cozy:hover {
+  background: #ffffff;
+  border-color: rgba(194, 65, 12, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(194, 65, 12, 0.16);
+}
+
+/* Apology Special Reason Cards */
+.special-reason-card-olive {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(187, 247, 208, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(21, 128, 61, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-olive:hover {
+  background: #ffffff;
+  border-color: rgba(21, 128, 61, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(21, 128, 61, 0.16);
+}
+
+.special-reason-card-forgive {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(233, 213, 255, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(139, 92, 246, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-forgive:hover {
+  background: #ffffff;
+  border-color: rgba(139, 92, 246, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(139, 92, 246, 0.16);
+}
+
+.special-reason-card-sunrise {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(254, 240, 138, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(217, 119, 6, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-sunrise:hover {
+  background: #ffffff;
+  border-color: rgba(217, 119, 6, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(217, 119, 6, 0.16);
+}
+
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 10px 24px -4px rgba(37, 99, 235, 0.35); }
   50% { box-shadow: 0 12px 32px 0 rgba(37, 99, 235, 0.6), 0 0 24px rgba(59, 130, 246, 0.35); }
@@ -919,6 +1846,43 @@
 @keyframes pulseGlowPolaroid {
   0%, 100% { box-shadow: 0 10px 24px -4px rgba(225, 29, 72, 0.35); }
   50% { box-shadow: 0 12px 32px 0 rgba(225, 29, 72, 0.6), 0 0 24px rgba(251, 113, 133, 0.35); }
+}
+
+@keyframes pulseGlowVelvet {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(225, 29, 72, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(225, 29, 72, 0.6), 0 0 24px rgba(251, 113, 133, 0.35); }
+}
+@keyframes pulseGlowSunset {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(245, 158, 11, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(245, 158, 11, 0.6), 0 0 24px rgba(251, 191, 36, 0.4); }
+}
+@keyframes pulseGlowCelestial {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(79, 70, 229, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(79, 70, 229, 0.6), 0 0 24px rgba(129, 140, 248, 0.35); }
+}
+@keyframes pulseGlowVintage {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(217, 119, 6, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(217, 119, 6, 0.6), 0 0 24px rgba(245, 158, 11, 0.4); }
+}
+@keyframes pulseGlowNeon {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(13, 148, 136, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(13, 148, 136, 0.6), 0 0 24px rgba(20, 184, 166, 0.4); }
+}
+@keyframes pulseGlowCozy {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(194, 65, 12, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(194, 65, 12, 0.6), 0 0 24px rgba(234, 88, 12, 0.4); }
+}
+@keyframes pulseGlowOlive {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(21, 128, 61, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(21, 128, 61, 0.6), 0 0 24px rgba(34, 197, 94, 0.4); }
+}
+@keyframes pulseGlowForgive {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(139, 92, 246, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(139, 92, 246, 0.6), 0 0 24px rgba(168, 85, 247, 0.4); }
+}
+@keyframes pulseGlowSunrise {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(202, 138, 4, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(202, 138, 4, 0.6), 0 0 24px rgba(250, 204, 21, 0.4); }
 }
 
 @keyframes floatGentle {
@@ -957,6 +1921,15 @@
 .animate-pulse-glow-lavender { animation: 2.4s ease-in-out infinite pulseGlowLavender; }
 .animate-pulse-glow-gold { animation: 2.4s ease-in-out infinite pulseGlowGold; }
 .animate-pulse-glow-polaroid { animation: 2.4s ease-in-out infinite pulseGlowPolaroid; }
+.animate-pulse-glow-velvet { animation: 2.4s ease-in-out infinite pulseGlowVelvet; }
+.animate-pulse-glow-sunset { animation: 2.4s ease-in-out infinite pulseGlowSunset; }
+.animate-pulse-glow-celestial { animation: 2.4s ease-in-out infinite pulseGlowCelestial; }
+.animate-pulse-glow-vintage { animation: 2.4s ease-in-out infinite pulseGlowVintage; }
+.animate-pulse-glow-neon { animation: 2.4s ease-in-out infinite pulseGlowNeon; }
+.animate-pulse-glow-cozy { animation: 2.4s ease-in-out infinite pulseGlowCozy; }
+.animate-pulse-glow-olive { animation: 2.4s ease-in-out infinite pulseGlowOlive; }
+.animate-pulse-glow-forgive { animation: 2.4s ease-in-out infinite pulseGlowForgive; }
+.animate-pulse-glow-sunrise { animation: 2.4s ease-in-out infinite pulseGlowSunrise; }
 .animate-float-gentle { animation: floatGentle 4s ease-in-out infinite; }
 .animate-pop-in { animation: 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards popIn; }
 .animate-fade-in-up,

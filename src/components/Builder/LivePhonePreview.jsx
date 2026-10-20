@@ -291,19 +291,447 @@ const THEMES = {
       `Dear ${recipientName}, wishing you the gentlest fairy magic, sweetest dreams, and a world of endless wonder on your special day. 💜🌙\n\nYour presence is a calming melody and a beautiful spark of joy in this world. Keep shining and dreaming big! 🦋✨`,
     defaultSignOff: (senderName) => `With love & magic, ${senderName} 💜🌙`,
   },
+
+  // =========================================================================
+  // ROMANCE THEMES
+  // =========================================================================
+  'velvet-romance': {
+    id: 'velvet-romance',
+    name: 'Velvet Rose ❤️',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['❤️', '🌹', '✨', '🍷', '💫', '💖', '💌', '🥀'],
+    primaryEmoji: '❤️',
+    containerBgClass: 'bg-soft-aesthetic-velvet',
+    envelopeCelebrationBg: 'bg-envelope-celebration-velvet',
+    cardClass: 'birthday-card-velvet p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-velvet p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-rose-950',
+    accentTextClass: 'text-rose-600',
+    subtitleClass: 'text-rose-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-velvet animate-pulse-glow-velvet cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-velvet active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-velvet active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-rose-900 bg-rose-100/70 hover:bg-rose-100 border border-rose-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-velvet',
+    iconBoxClass: 'bg-rose-50/90 border border-rose-200/80',
+    waxColor: '#E11D48',
+    sealEmoji: '❤️',
+    envelopeGradient: 'bg-gradient-to-br from-rose-700 via-rose-800 to-rose-950 border-rose-400/40',
+    envelopeOverlay: 'bg-rose-950/60',
+    envelopePeekingBorder: 'border-rose-200',
+    envelopePeekingText: 'text-rose-900',
+    envelopeFolds: ['#881337', '#9f1239', '#e11d48'],
+    letterCardBorder: 'border-rose-200/90',
+    letterBorderBottom: 'border-rose-100',
+    letterHeaderClass: 'text-rose-950',
+    letterSignOffClass: 'text-rose-800',
+    confettiColors: ['#e11d48', '#f43f5e', '#fb7185', '#ffffff', '#ffd1dc'],
+    defaultReasons: [
+      { icon: '❤️', title: 'Endless Devotion', desc: 'Every day with you feels like a romantic dream that never ends.' },
+      { icon: '🌹', title: 'Graceful Elegance', desc: 'Your warm touch, gentle smile, and loving heart make my world complete.' },
+      { icon: '💫', title: 'My Forever', desc: 'You are my safe harbor, my greatest adventure, and my eternal love.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, words can never fully capture the deep warmth and joy you bring to my heart every single day. ❤️🌹\n\nThank you for loving me so purely and beautifully. May our love continue to blossom with timeless passion, sweetest laughter, and endless shared dreams! Always yours.`,
+    defaultSignOff: (senderName) => `Forever & Always, ${senderName} ❤️🌹`,
+  },
+
+  'sunset-romance': {
+    id: 'sunset-romance',
+    name: 'Sunset Glow 🌅',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['🌅', '✨', '🧡', '🌇', '💫', '💛', '💌', '🥂'],
+    primaryEmoji: '✨',
+    containerBgClass: 'bg-soft-aesthetic-sunset',
+    envelopeCelebrationBg: 'bg-envelope-celebration-sunset',
+    cardClass: 'birthday-card-sunset p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-sunset p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-amber-950',
+    accentTextClass: 'text-amber-600',
+    subtitleClass: 'text-amber-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-sunset animate-pulse-glow-sunset cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-sunset active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-sunset active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-900 bg-amber-100/70 hover:bg-amber-100 border border-amber-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-sunset',
+    iconBoxClass: 'bg-amber-50 border border-amber-200/80',
+    waxColor: '#F59E0B',
+    sealEmoji: '✨',
+    envelopeGradient: 'bg-gradient-to-br from-amber-500 via-rose-500 to-amber-700 border-amber-300/40',
+    envelopeOverlay: 'bg-amber-950/60',
+    envelopePeekingBorder: 'border-amber-200',
+    envelopePeekingText: 'text-amber-900',
+    envelopeFolds: ['#9a3412', '#c2410c', '#f59e0b'],
+    letterCardBorder: 'border-amber-200/90',
+    letterBorderBottom: 'border-amber-100',
+    letterHeaderClass: 'text-amber-950',
+    letterSignOffClass: 'text-amber-800',
+    confettiColors: ['#f59e0b', '#fbbf24', '#f43f5e', '#ffffff', '#fde68a'],
+    defaultReasons: [
+      { icon: '🌅', title: 'Golden Warmth', desc: 'Watching the sunset with you makes time stop in the most magical way.' },
+      { icon: '✨', title: 'Radiant Laughter', desc: 'Your smile brings a golden hue to the simplest everyday moments.' },
+      { icon: '🧡', title: 'Warm Embrace', desc: 'In your arms is where I always feel completely at home and cherished.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, you bring a warm, golden glow into my world that illuminates even the cloudiest days. 🌅✨\n\nThank you for every shared sunset, cozy whisper, and sweet smile. You are my greatest blessing, and I cherish every second by your side.`,
+    defaultSignOff: (senderName) => `With golden love, ${senderName} 🌅💛`,
+  },
+
+  'celestial-love': {
+    id: 'celestial-love',
+    name: 'Celestial Indigo 🌌',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['🌌', '🌙', '⭐', '✨', '💫', '🔮', '💙', '🪐'],
+    primaryEmoji: '🌙',
+    containerBgClass: 'bg-soft-aesthetic-celestial',
+    envelopeCelebrationBg: 'bg-envelope-celebration-celestial',
+    cardClass: 'birthday-card-celestial p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-celestial p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-indigo-950',
+    accentTextClass: 'text-indigo-600',
+    subtitleClass: 'text-indigo-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-celestial animate-pulse-glow-celestial cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-indigo-950 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-celestial active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-celestial active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-indigo-950 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-indigo-900 bg-indigo-100/70 hover:bg-indigo-100 border border-indigo-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-celestial',
+    iconBoxClass: 'bg-indigo-50 border border-indigo-200/80',
+    waxColor: '#4F46E5',
+    sealEmoji: '🌙',
+    envelopeGradient: 'bg-gradient-to-br from-indigo-700 via-indigo-900 to-purple-950 border-indigo-400/40',
+    envelopeOverlay: 'bg-indigo-950/60',
+    envelopePeekingBorder: 'border-indigo-200',
+    envelopePeekingText: 'text-indigo-900',
+    envelopeFolds: ['#312e81', '#3730a3', '#4f46e5'],
+    letterCardBorder: 'border-indigo-200/90',
+    letterBorderBottom: 'border-indigo-100',
+    letterHeaderClass: 'text-indigo-950',
+    letterSignOffClass: 'text-indigo-800',
+    confettiColors: ['#6366f1', '#818cf8', '#a5b4fc', '#ffffff', '#38bdf8'],
+    defaultReasons: [
+      { icon: '🌌', title: 'Written in the Stars', desc: 'Out of billions in this universe, finding you was my greatest miracle.' },
+      { icon: '🌙', title: 'Infinite Calm', desc: 'Like the gentle moonlight, your love brings peace and calm to my soul.' },
+      { icon: '⭐', title: 'My Guiding Star', desc: 'No matter how deep the night, your love always guides my path home.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, you are the constellation that illuminates my entire universe. 🌌🌙\n\nI love you to the moon and beyond all galaxies. May our cosmic journey together be blessed with endless wonder, boundless joy, and infinite love.`,
+    defaultSignOff: (senderName) => `To the stars & back, ${senderName} 🌌🌙`,
+  },
+
+  // =========================================================================
+  // MEMORY SCRAPBOOK THEMES
+  // =========================================================================
+  'vintage-kodak': {
+    id: 'vintage-kodak',
+    name: 'Vintage Kodak 📸',
+    gender: 'boy',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['📸', '⚡', '🎞️', '⭐', '📼', '☕', '🔥', '✨'],
+    primaryEmoji: '📸',
+    containerBgClass: 'bg-soft-aesthetic-vintage',
+    envelopeCelebrationBg: 'bg-envelope-celebration-vintage',
+    cardClass: 'birthday-card-vintage p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-vintage p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-amber-950',
+    accentTextClass: 'text-amber-700',
+    subtitleClass: 'text-amber-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-vintage animate-pulse-glow-vintage cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-vintage active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-vintage active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-900 bg-amber-100/70 hover:bg-amber-100 border border-amber-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-vintage',
+    iconBoxClass: 'bg-amber-50 border border-amber-200/80',
+    waxColor: '#D97706',
+    sealEmoji: '⚡',
+    envelopeGradient: 'bg-gradient-to-br from-amber-700 via-yellow-700 to-amber-900 border-amber-300/40',
+    envelopeOverlay: 'bg-amber-950/60',
+    envelopePeekingBorder: 'border-amber-200',
+    envelopePeekingText: 'text-amber-900',
+    envelopeFolds: ['#78350f', '#92400e', '#d97706'],
+    letterCardBorder: 'border-amber-200/90',
+    letterBorderBottom: 'border-amber-100',
+    letterHeaderClass: 'text-amber-950',
+    letterSignOffClass: 'text-amber-800',
+    confettiColors: ['#d97706', '#b45309', '#f59e0b', '#ffffff', '#fef3c7'],
+    defaultReasons: [
+      { icon: '🎞️', title: 'Timeless Snapshots', desc: 'Every memory we capture becomes an instant classic in our story.' },
+      { icon: '⚡', title: 'Candid Energy', desc: 'Unfiltered, raw, hilarious moments that keep getting better with time.' },
+      { icon: '☕', title: 'Golden Chapters', desc: 'Years may pass, but our bond stays rich and warm like vintage film.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, flipping through the scrapbook of all our memories, I smile at every candid shot and hilarious adventure we've shared. 📸🎞️\n\nThank you for being such an authentic, loyal companion. Here's to adding a thousand more unforgettable snapshots to our collection!`,
+    defaultSignOff: (senderName) => `Captured with love, ${senderName} 📸⚡`,
+  },
+
+  'neon-nostalgia': {
+    id: 'neon-nostalgia',
+    name: 'Electric Vibes ⚡',
+    gender: 'boy',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['⚡', '🔥', '🩵', '🛹', '✨', '💿', '💫', '🎉'],
+    primaryEmoji: '⚡',
+    containerBgClass: 'bg-soft-aesthetic-neon',
+    envelopeCelebrationBg: 'bg-envelope-celebration-neon',
+    cardClass: 'birthday-card-neon p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-neon p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-teal-950',
+    accentTextClass: 'text-teal-600',
+    subtitleClass: 'text-teal-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-neon animate-pulse-glow-neon cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-teal-950 bg-teal-50 hover:bg-teal-100 border border-teal-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-neon active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-neon active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-teal-950 bg-teal-50 hover:bg-teal-100 border border-teal-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-teal-900 bg-teal-100/70 hover:bg-teal-100 border border-teal-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-neon',
+    iconBoxClass: 'bg-teal-50 border border-teal-200/80',
+    waxColor: '#0D9488',
+    sealEmoji: '🔥',
+    envelopeGradient: 'bg-gradient-to-br from-teal-600 via-cyan-600 to-teal-800 border-cyan-300/40',
+    envelopeOverlay: 'bg-teal-950/60',
+    envelopePeekingBorder: 'border-teal-200',
+    envelopePeekingText: 'text-teal-900',
+    envelopeFolds: ['#134e4a', '#115e59', '#0d9488'],
+    letterCardBorder: 'border-teal-200/90',
+    letterBorderBottom: 'border-teal-100',
+    letterHeaderClass: 'text-teal-950',
+    letterSignOffClass: 'text-teal-800',
+    confettiColors: ['#14b8a6', '#06b6d4', '#3b82f6', '#ffffff', '#facc15'],
+    defaultReasons: [
+      { icon: '⚡', title: 'High Voltage Energy', desc: 'Whenever you walk in, the excitement and positive vibe double instantly!' },
+      { icon: '🔥', title: 'Fearless Spirit', desc: 'Always ready for spontaneous road trips, wild ideas, and big wins!' },
+      { icon: '🩵', title: 'Pure Authenticity', desc: 'One hundred percent genuine, real, and always keeping it vibrant!' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, life with you is high-voltage electric excitement! ⚡🔥\n\nThank you for bringing non-stop laughter, spontaneous hype, and fearless energy into everything we do. Never dim your bright neon glow!`,
+    defaultSignOff: (senderName) => `Stay Electric, ${senderName} ⚡🔥`,
+  },
+
+  'cozy-memories': {
+    id: 'cozy-memories',
+    name: 'Cozy Sunset ☕',
+    gender: 'boy',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['☕', '🌻', '🍂', '🤎', '✨', '📖', '💫', '🌅'],
+    primaryEmoji: '🌻',
+    containerBgClass: 'bg-soft-aesthetic-cozy',
+    envelopeCelebrationBg: 'bg-envelope-celebration-cozy',
+    cardClass: 'birthday-card-cozy p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-cozy p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-orange-950',
+    accentTextClass: 'text-orange-700',
+    subtitleClass: 'text-orange-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-cozy animate-pulse-glow-cozy cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-orange-950 bg-orange-50 hover:bg-orange-100 border border-orange-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-cozy active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-cozy active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-950 bg-orange-50 hover:bg-orange-100 border border-orange-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-900 bg-orange-100/70 hover:bg-orange-100 border border-orange-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-cozy',
+    iconBoxClass: 'bg-orange-50 border border-orange-200/80',
+    waxColor: '#C2410C',
+    sealEmoji: '🌻',
+    envelopeGradient: 'bg-gradient-to-br from-orange-700 via-amber-800 to-amber-950 border-orange-400/40',
+    envelopeOverlay: 'bg-amber-950/60',
+    envelopePeekingBorder: 'border-orange-200',
+    envelopePeekingText: 'text-orange-900',
+    envelopeFolds: ['#7c2d12', '#9a3412', '#c2410c'],
+    letterCardBorder: 'border-orange-200/90',
+    letterBorderBottom: 'border-orange-100',
+    letterHeaderClass: 'text-orange-950',
+    letterSignOffClass: 'text-orange-800',
+    confettiColors: ['#ea580c', '#c2410c', '#f59e0b', '#ffffff', '#fed7aa'],
+    defaultReasons: [
+      { icon: '☕', title: 'Warm Comfort', desc: 'Heart-to-heart chats over coffee that feel like a soothing warm blanket.' },
+      { icon: '🌻', title: 'Simple Joys', desc: 'Appreciating the peaceful, quiet, precious moments that mean the most.' },
+      { icon: '📖', title: 'Treasured Chapters', desc: 'Every memory we build together is etched in warm terracotta gold.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, you bring such peaceful warmth, grounded comfort, and sweet joy into my life. ☕🌻\n\nThank you for the endless cozy memories, deep conversations, and unwavering companionship. Here's to many more peaceful, golden afternoons together!`,
+    defaultSignOff: (senderName) => `With warm hugs, ${senderName} ☕🌻`,
+  },
+
+  // =========================================================================
+  // HEARTFELT APOLOGY THEMES
+  // =========================================================================
+  'gentle-peace': {
+    id: 'gentle-peace',
+    name: 'Olive Peace 🕊️',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['🕊️', '🌿', '🍃', '💚', '✨', '🤍', '💫', '🌸'],
+    primaryEmoji: '🕊️',
+    containerBgClass: 'bg-soft-aesthetic-olive',
+    envelopeCelebrationBg: 'bg-envelope-celebration-olive',
+    cardClass: 'birthday-card-olive p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-olive p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-emerald-950',
+    accentTextClass: 'text-emerald-700',
+    subtitleClass: 'text-emerald-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-olive animate-pulse-glow-olive cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-olive active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-olive active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-100/70 hover:bg-emerald-100 border border-emerald-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-olive',
+    iconBoxClass: 'bg-emerald-50 border border-emerald-200/80',
+    waxColor: '#15803D',
+    sealEmoji: '🕊️',
+    envelopeGradient: 'bg-gradient-to-br from-emerald-600 via-green-700 to-emerald-900 border-emerald-300/40',
+    envelopeOverlay: 'bg-emerald-950/60',
+    envelopePeekingBorder: 'border-emerald-200',
+    envelopePeekingText: 'text-emerald-900',
+    envelopeFolds: ['#14532d', '#166534', '#15803d'],
+    letterCardBorder: 'border-emerald-200/90',
+    letterBorderBottom: 'border-emerald-100',
+    letterHeaderClass: 'text-emerald-950',
+    letterSignOffClass: 'text-emerald-800',
+    confettiColors: ['#16a34a', '#22c55e', '#86efac', '#ffffff', '#dcfce7'],
+    defaultReasons: [
+      { icon: '🕊️', title: 'Heartfelt Regret', desc: 'I am truly sorry from the bottom of my heart for hurting you.' },
+      { icon: '🌿', title: 'Your Precious Peace', desc: 'Your happiness and peace of mind matter more to me than anything else.' },
+      { icon: '💚', title: 'A New Understanding', desc: 'I promise to listen more, care deeper, and never take your bond for granted.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, I want to apologize sincerely from the deepest corner of my heart. 🕊️🌿\n\nSeeing you hurt breaks my spirit. You mean the world to me, and our bond is too precious to ever put at risk. I hope you can forgive me and allow us to heal together peacefully.`,
+    defaultSignOff: (senderName) => `With sincere apology, ${senderName} 🕊️💚`,
+  },
+
+  'sweet-forgive': {
+    id: 'sweet-forgive',
+    name: 'Sweet Hugs 🥺',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['🥺', '💜', '🌸', '🧸', '✨', '💌', '💫', '🤍'],
+    primaryEmoji: '💜',
+    containerBgClass: 'bg-soft-aesthetic-forgive',
+    envelopeCelebrationBg: 'bg-envelope-celebration-forgive',
+    cardClass: 'birthday-card-forgive p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-forgive p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-purple-950',
+    accentTextClass: 'text-purple-600',
+    subtitleClass: 'text-purple-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-forgive animate-pulse-glow-forgive cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-purple-950 bg-purple-50 hover:bg-purple-100 border border-purple-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-forgive active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-forgive active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-950 bg-purple-50 hover:bg-purple-100 border border-purple-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-900 bg-purple-100/70 hover:bg-purple-100 border border-purple-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-forgive',
+    iconBoxClass: 'bg-purple-50 border border-purple-200/80',
+    waxColor: '#8B5CF6',
+    sealEmoji: '💜',
+    envelopeGradient: 'bg-gradient-to-br from-purple-600 via-pink-600 to-violet-800 border-purple-300/40',
+    envelopeOverlay: 'bg-purple-950/60',
+    envelopePeekingBorder: 'border-purple-200',
+    envelopePeekingText: 'text-purple-900',
+    envelopeFolds: ['#581c87', '#7c3aed', '#8b5cf6'],
+    letterCardBorder: 'border-purple-200/90',
+    letterBorderBottom: 'border-purple-100',
+    letterHeaderClass: 'text-purple-950',
+    letterSignOffClass: 'text-purple-800',
+    confettiColors: ['#a855f7', '#c084fc', '#e879f9', '#ffffff', '#f3e8ff'],
+    defaultReasons: [
+      { icon: '🥺', title: 'Miss Your Smile', desc: 'Nothing feels right without your laughter and sweet presence around.' },
+      { icon: '💜', title: 'True Regret', desc: 'I made a genuine mistake, and I am so sorry for causing you any pain.' },
+      { icon: '🧸', title: 'Warmest Hugs', desc: 'Sending you the biggest, gentlest hug hoping we can share a smile again.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, I am so very sorry. 🥺💜\n\nI miss your laughter, your sweet messages, and the gentle comfort of having you close. Please forgive my mistake — I promise to make it up to you with all my care and affection.`,
+    defaultSignOff: (senderName) => `With warm hugs & sorry, ${senderName} 🥺💜`,
+  },
+
+  'fresh-start': {
+    id: 'fresh-start',
+    name: 'Sunrise Renewal 🌤️',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['🌤️', '☀️', '🌻', '💛', '✨', '🌈', '💫', '🌱'],
+    primaryEmoji: '🌤️',
+    containerBgClass: 'bg-soft-aesthetic-sunrise',
+    envelopeCelebrationBg: 'bg-envelope-celebration-sunrise',
+    cardClass: 'birthday-card-sunrise p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-sunrise p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-amber-950',
+    accentTextClass: 'text-amber-600',
+    subtitleClass: 'text-amber-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-sunrise animate-pulse-glow-sunrise cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-sunrise active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-sunrise active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-900 bg-amber-100/70 hover:bg-amber-100 border border-amber-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-sunrise',
+    iconBoxClass: 'bg-amber-50 border border-amber-200/80',
+    waxColor: '#D97706',
+    sealEmoji: '🌤️',
+    envelopeGradient: 'bg-gradient-to-br from-amber-500 via-yellow-600 to-amber-700 border-yellow-300/40',
+    envelopeOverlay: 'bg-amber-950/60',
+    envelopePeekingBorder: 'border-amber-200',
+    envelopePeekingText: 'text-amber-900',
+    envelopeFolds: ['#92400e', '#b45309', '#d97706'],
+    letterCardBorder: 'border-amber-200/90',
+    letterBorderBottom: 'border-amber-100',
+    letterHeaderClass: 'text-amber-950',
+    letterSignOffClass: 'text-amber-800',
+    confettiColors: ['#eab308', '#facc15', '#fef08a', '#ffffff', '#fed7aa'],
+    defaultReasons: [
+      { icon: '🌤️', title: 'A Brighter Dawn', desc: 'Every sunrise brings an opportunity to start fresh, forgive, and grow stronger.' },
+      { icon: '🌱', title: 'Growing Together', desc: 'Mistakes happen, but the strength of our bond is in how we overcome them.' },
+      { icon: '💛', title: 'Golden Hope', desc: 'Looking forward with pure gratitude, hoping for smiles, warmth, and laughter.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, with every sunrise comes the promise of a fresh start and brighter days. 🌤️🌱\n\nI am genuinely sorry for where things went wrong. I value you more than words can express, and I hope we can step forward into a warm new chapter together.`,
+    defaultSignOff: (senderName) => `With hope & apology, ${senderName} 🌤️💛`,
+  },
 };
 
 /**
  * Resolves theme configuration based on templateId and fallback gender
  */
 const resolveTheme = (templateId, gender) => {
-  let targetId = templateId || '';
-  if (targetId === 'blush-romance') targetId = 'blush-rose';
-  if (targetId === 'heartfelt-apology') targetId = 'lavender-dream';
+  let targetId = (templateId || '').trim();
+  if (targetId === 'blush-romance') targetId = 'velvet-romance';
+  if (targetId === 'heartfelt-apology') targetId = 'gentle-peace';
 
   if (THEMES[targetId]) {
     return THEMES[targetId];
   }
+
+  // Exact & partial aliases lookup
+  if (targetId.includes('velvet')) return THEMES['velvet-romance'];
+  if (targetId.includes('sunset')) return THEMES['sunset-romance'];
+  if (targetId.includes('celestial')) return THEMES['celestial-love'];
+  if (targetId.includes('kodak')) return THEMES['vintage-kodak'];
+  if (targetId.includes('neon')) return THEMES['neon-nostalgia'];
+  if (targetId.includes('cozy')) return THEMES['cozy-memories'];
+  if (targetId.includes('peace') || targetId.includes('olive')) return THEMES['gentle-peace'];
+  if (targetId.includes('forgive') || targetId.includes('sweet')) return THEMES['sweet-forgive'];
+  if (targetId.includes('fresh') || targetId.includes('sunrise') || targetId.includes('start')) return THEMES['fresh-start'];
+
+  if (targetId.includes('sapphire') || targetId.includes('royal')) return THEMES['royal-sapphire'];
+  if (targetId.includes('gold')) return THEMES['golden-birthday'];
+  if (targetId.includes('polaroid')) return THEMES['polaroid-scrapbook'];
+  if (targetId.includes('rose') || targetId.includes('blush')) return THEMES['blush-rose'];
+  if (targetId.includes('peach')) return THEMES['princess-peach'];
+  if (targetId.includes('lavender')) return THEMES['lavender-dream'];
+
+  if (targetId.includes('romance') || targetId.includes('love') || targetId.includes('anniversary')) return THEMES['velvet-romance'];
+  if (targetId.includes('scrapbook') || targetId.includes('retro') || targetId.includes('vintage')) return THEMES['vintage-kodak'];
+  if (targetId.includes('apology') || targetId.includes('sorry')) return THEMES['gentle-peace'];
+
   return gender === 'girl' ? THEMES['blush-rose'] : THEMES['royal-sapphire'];
 };
 
@@ -351,6 +779,10 @@ export default function LivePhonePreview({ formData = {} }) {
   let line1Text = '';
   let line2Text = '';
 
+  const isRomanceTheme = ['velvet-romance', 'sunset-romance', 'celestial-love'].includes(theme.id);
+  const isScrapbookTheme = ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(theme.id);
+  const isApologyTheme = ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(theme.id);
+
   if (rawOccasion) {
     if (rawOccasion.includes(',')) {
       const commaIdx = rawOccasion.indexOf(',');
@@ -362,7 +794,15 @@ export default function LivePhonePreview({ formData = {} }) {
       line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     }
   } else {
-    line1Text = 'Happy Birthday,';
+    if (isRomanceTheme) {
+      line1Text = 'With All My Love,';
+    } else if (isScrapbookTheme) {
+      line1Text = 'Cherished Memories,';
+    } else if (isApologyTheme) {
+      line1Text = 'From My Heart,';
+    } else {
+      line1Text = 'Happy Birthday,';
+    }
     line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
   }
 
@@ -375,6 +815,15 @@ export default function LivePhonePreview({ formData = {} }) {
     'blush-rose': 'Stay Wonderful Always! 🌸✨',
     'princess-peach': 'May All Your Wishes Sparkle! ✨💖',
     'lavender-dream': 'Never Stop Dreaming Beautiful Dreams! 💜🦋',
+    'velvet-romance': 'Forever in My Heart ❤️🌹',
+    'sunset-romance': 'Golden Moments With You 🌅✨',
+    'celestial-love': 'Written in the Stars 🌌🌙',
+    'vintage-kodak': 'Captured Moments Never Fade 📸🎞️',
+    'neon-nostalgia': 'Electric Memories & Good Times ⚡🔥',
+    'cozy-memories': 'Warm Days & Sweet Conversations ☕🌻',
+    'gentle-peace': 'Peace, Love & Healing 🕊️🌿',
+    'sweet-forgive': 'Sending the Warmest Hugs 🥺💜',
+    'fresh-start': 'Here is to a Fresh Beginning 🌤️🌱',
   };
 
   const photoCaption =
@@ -691,10 +1140,22 @@ export default function LivePhonePreview({ formData = {} }) {
                   <div className="w-full flex flex-col items-center text-center animate-pop-in">
                     <div className={theme.subCardClass}>
                       <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold leading-tight ${theme.headingClass}`}>
-                        How do you feel today?
+                        {isApologyTheme
+                          ? 'A Heartfelt Question...'
+                          : isRomanceTheme
+                          ? 'How is your heart feeling?'
+                          : isScrapbookTheme
+                          ? 'How is nostalgia hitting?'
+                          : 'How do you feel today?'}
                       </h2>
                       <p className={`mt-1.5 text-xs ${theme.subtitleClass}`}>
-                        Pick your vibe to unlock the next chapter ✨
+                        {isApologyTheme
+                          ? 'Pick your mood to open my note 🕊️'
+                          : isRomanceTheme
+                          ? 'Pick your vibe to unlock my heart ✨'
+                          : isScrapbookTheme
+                          ? 'Pick your vibe to flip the album 📸'
+                          : 'Pick your vibe to unlock the next chapter ✨'}
                       </p>
 
                       <div className="mt-4 flex flex-col gap-2.5 w-full">
@@ -703,8 +1164,27 @@ export default function LivePhonePreview({ formData = {} }) {
                           onClick={handleChooseFeeling}
                           className={`w-full flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
                         >
-                          <span>Super Happy!</span>
-                          <AppleEmoji emoji="🥳" size={15} />
+                          <span>
+                            {isApologyTheme
+                              ? 'Ready to Talk'
+                              : isRomanceTheme
+                              ? 'So In Love!'
+                              : isScrapbookTheme
+                              ? 'Best Days Ever!'
+                              : 'Super Happy!'}
+                          </span>
+                          <AppleEmoji
+                            emoji={
+                              isApologyTheme
+                                ? '🤍'
+                                : isRomanceTheme
+                                ? '❤️'
+                                : isScrapbookTheme
+                                ? '⚡'
+                                : '🥳'
+                            }
+                            size={15}
+                          />
                         </button>
 
                         <button
@@ -712,8 +1192,27 @@ export default function LivePhonePreview({ formData = {} }) {
                           onClick={handleChooseFeeling}
                           className={`w-full flex items-center justify-center gap-2 ${theme.btnMood2Class}`}
                         >
-                          <span>So Excited!</span>
-                          <AppleEmoji emoji="✨" size={15} />
+                          <span>
+                            {isApologyTheme
+                              ? 'Soft Hug Accepted'
+                              : isRomanceTheme
+                              ? 'Butterflies Always!'
+                              : isScrapbookTheme
+                              ? 'Pure Golden Vibes'
+                              : 'So Excited!'}
+                          </span>
+                          <AppleEmoji
+                            emoji={
+                              isApologyTheme
+                                ? '🥺'
+                                : isRomanceTheme
+                                ? '✨'
+                                : isScrapbookTheme
+                                ? '📸'
+                                : '✨'
+                            }
+                            size={15}
+                          />
                         </button>
 
                         <div className="mt-1">
@@ -737,9 +1236,26 @@ export default function LivePhonePreview({ formData = {} }) {
                   <div className="w-full flex flex-col items-center text-center space-y-1.5 py-1 max-w-[280px]">
                     <div className="flex items-center justify-center gap-1.5 mb-0.5">
                       <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
-                        Why You're Special
+                        {isApologyTheme
+                          ? 'Why You Mean So Much'
+                          : isRomanceTheme
+                          ? 'Why I Love You'
+                          : isScrapbookTheme
+                          ? 'Why We Are Unstoppable'
+                          : "Why You're Special"}
                       </h2>
-                      <AppleEmoji emoji="💫" size={20} />
+                      <AppleEmoji
+                        emoji={
+                          isApologyTheme
+                            ? '🕊️'
+                            : isRomanceTheme
+                            ? '❤️'
+                            : isScrapbookTheme
+                            ? '📸'
+                            : '💫'
+                        }
+                        size={20}
+                      />
                     </div>
 
                     <div className="mt-2 flex flex-col gap-2 w-full">

@@ -63,6 +63,63 @@ const DEFAULT_POLAROID_REASONS = [
   { icon: '📸', title: 'Timeless Memories', desc: 'Every road trip, late-night chat, and memory taped forever into our story!' }
 ];
 
+// Romance Theme Reasons
+const DEFAULT_VELVET_REASONS = [
+  { icon: '❤️', title: 'Endless Devotion', desc: 'Every day with you feels like a romantic dream that never ends.' },
+  { icon: '🌹', title: 'Graceful Elegance', desc: 'Your warm touch, gentle smile, and loving heart make my world complete.' },
+  { icon: '💫', title: 'My Forever', desc: 'You are my safe harbor, my greatest adventure, and my eternal love.' }
+];
+
+const DEFAULT_SUNSET_REASONS = [
+  { icon: '🌅', title: 'Golden Warmth', desc: 'Watching the sunset with you makes time stop in the most magical way.' },
+  { icon: '✨', title: 'Radiant Laughter', desc: 'Your smile brings a golden hue to the simplest everyday moments.' },
+  { icon: '🧡', title: 'Warm Embrace', desc: 'In your arms is where I always feel completely at home and cherished.' }
+];
+
+const DEFAULT_CELESTIAL_REASONS = [
+  { icon: '🌌', title: 'Written in the Stars', desc: 'Out of billions in this universe, finding you was my greatest miracle.' },
+  { icon: '🌙', title: 'Infinite Calm', desc: 'Like the gentle moonlight, your love brings peace and calm to my soul.' },
+  { icon: '⭐', title: 'My Guiding Star', desc: 'No matter how deep the night, your love always guides my path home.' }
+];
+
+// Scrapbook Theme Reasons
+const DEFAULT_VINTAGE_REASONS = [
+  { icon: '🎞️', title: 'Timeless Snapshots', desc: 'Every memory we capture becomes an instant classic in our story.' },
+  { icon: '⚡', title: 'Candid Energy', desc: 'Unfiltered, raw, hilarious moments that keep getting better with time.' },
+  { icon: '☕', title: 'Golden Chapters', desc: 'Years may pass, but our bond stays rich and warm like vintage film.' }
+];
+
+const DEFAULT_NEON_REASONS = [
+  { icon: '⚡', title: 'High Voltage Energy', desc: 'Whenever you walk in, the excitement and positive vibe double instantly!' },
+  { icon: '🔥', title: 'Fearless Spirit', desc: 'Always ready for spontaneous road trips, wild ideas, and big wins!' },
+  { icon: '🩵', title: 'Pure Authenticity', desc: 'One hundred percent genuine, real, and always keeping it vibrant!' }
+];
+
+const DEFAULT_COZY_REASONS = [
+  { icon: '☕', title: 'Warm Comfort', desc: 'Heart-to-heart chats over coffee that feel like a soothing warm blanket.' },
+  { icon: '🌻', title: 'Simple Joys', desc: 'Appreciating the peaceful, quiet, precious moments that mean the most.' },
+  { icon: '📖', title: 'Treasured Chapters', desc: 'Every memory we build together is etched in warm terracotta gold.' }
+];
+
+// Apology Theme Reasons
+const DEFAULT_PEACE_REASONS = [
+  { icon: '🕊️', title: 'Heartfelt Regret', desc: 'I am truly sorry from the bottom of my heart for hurting you.' },
+  { icon: '🌿', title: 'Your Precious Peace', desc: 'Your happiness and peace of mind matter more to me than anything else.' },
+  { icon: '💚', title: 'A New Understanding', desc: 'I promise to listen more, care deeper, and never take your bond for granted.' }
+];
+
+const DEFAULT_FORGIVE_REASONS = [
+  { icon: '🥺', title: 'Miss Your Smile', desc: 'Nothing feels right without your laughter and sweet presence around.' },
+  { icon: '💜', title: 'True Regret', desc: 'I made a genuine mistake, and I am so sorry for causing you any pain.' },
+  { icon: '🧸', title: 'Warmest Hugs', desc: 'Sending you the biggest, gentlest hug hoping we can share a smile again.' }
+];
+
+const DEFAULT_SUNRISE_REASONS = [
+  { icon: '🌤️', title: 'A Brighter Dawn', desc: 'Every sunrise brings an opportunity to start fresh, forgive, and grow stronger.' },
+  { icon: '🌱', title: 'Growing Together', desc: 'Mistakes happen, but the strength of our bond is in how we overcome them.' },
+  { icon: '💛', title: 'Golden Hope', desc: 'Looking forward with pure gratitude, hoping for smiles, warmth, and laughter.' }
+];
+
 export default function MultiSceneBirthdayView({ 
   siteData = {}, 
   onNavigateCreate: _onNavigateCreate,
@@ -74,23 +131,315 @@ export default function MultiSceneBirthdayView({
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
-  // Multi-Theme Awareness (Royal Sapphire, Blush Blossom, Princess Peach, Lavender Dream, Golden Spark)
+  // Multi-Theme Awareness across all 4 occasions (Birthday, Romance, Scrapbook, Apology)
   const templateId = (siteData.templateId || (siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire')).toLowerCase();
-  const isPeach = templateId.includes('peach');
-  const isLavender = templateId.includes('lavender');
+
+  // Romance themes
+  const isVelvet = templateId.includes('velvet') || templateId === 'blush-romance';
+  const isSunset = templateId.includes('sunset');
+  const isCelestial = templateId.includes('celestial');
+
+  // Scrapbook themes
+  const isVintage = templateId.includes('kodak') || (templateId.includes('vintage') && !templateId.includes('scrapbook'));
+  const isNeon = templateId.includes('neon');
+  const isCozy = templateId.includes('cozy');
+  const isPolaroid = !isVintage && !isNeon && !isCozy && (templateId.includes('polaroid') || templateId.includes('scrapbook'));
+
+  // Apology themes
+  const isPeace = templateId.includes('peace') || templateId.includes('olive') || templateId === 'heartfelt-apology';
+  const isForgive = templateId.includes('forgive') || templateId.includes('sweet');
+  const isSunrise = templateId.includes('sunrise') || templateId.includes('fresh') || templateId.includes('start');
+
+  // Birthday themes
+  const isPeach = !isSunrise && templateId.includes('peach');
+  const isLavender = !isForgive && templateId.includes('lavender');
   const isGold = templateId.includes('gold');
-  const isPolaroid = templateId.includes('polaroid') || templateId.includes('scrapbook');
-  const isBlush = templateId.includes('rose') || templateId.includes('blush') || (!isPeach && !isLavender && !isGold && !isPolaroid && siteData.gender === 'girl');
-  const isRoyal = !isBlush && !isPeach && !isLavender && !isGold && !isPolaroid;
+  const isBlush = !isVelvet && !isPeach && !isLavender && !isGold && !isPolaroid && (templateId.includes('rose') || templateId.includes('blush') || siteData.gender === 'girl');
+  const isRoyal = !isVelvet && !isSunset && !isCelestial && !isVintage && !isNeon && !isCozy && !isPeace && !isForgive && !isSunrise && !isPeach && !isLavender && !isGold && !isPolaroid && !isBlush;
+
+  const isRomanceCategory = isVelvet || isSunset || isCelestial;
+  const isScrapbookCategory = isVintage || isNeon || isCozy || isPolaroid;
+  const isApologyCategory = isPeace || isForgive || isSunrise;
 
   // Font family determination
   // Princess Peach: Playfair Display serif (.font-serif)
-  // Royal Sapphire, Blush Blossom, Lavender Dream, Golden Spark, Retro Polaroid: Dancing Script (.font-cursive)
+  // All other themes: Dancing Script (.font-cursive)
   const fontFamilyClass = isPeach ? 'font-serif' : 'font-cursive';
   const handwritingClass = 'font-cursive';
 
   // Theme styling tokens mapping
   const themeTokens = (() => {
+    // 1. Velvet Rose (Romance)
+    if (isVelvet) {
+      return {
+        celebrationEmoji: '❤️',
+        headingColorClass: 'text-rose-950',
+        headingAccentClass: 'text-rose-600',
+        cardClass: 'birthday-card-velvet',
+        reasonCardClass: 'special-reason-card-velvet',
+        reasonIconBgClass: 'bg-rose-50/90 border border-rose-100/80',
+        reasonTitleClass: 'text-rose-950',
+        primaryBtnClass: 'btn-primary-velvet',
+        secondaryBtnClass: 'btn-secondary-velvet',
+        coverBtnGradient: 'bg-gradient-to-r from-[#E11D48] via-[#BE123C] to-[#9F1239] hover:from-[#BE123C] hover:to-[#881337] shadow-rose-600/35 hover:shadow-rose-600/50 animate-pulse-glow-velvet',
+        envelopeBgGradient: 'bg-gradient-to-br from-rose-700 via-rose-800 to-rose-950 border-rose-400/40',
+        envelopeShading: 'bg-rose-950/60',
+        envelopeCardBorder: 'border-rose-200',
+        envelopeCardTitle: 'text-rose-900',
+        envelopeFolds: { fold1: '#881337', fold2: '#9f1239', fold3: '#e11d48' },
+        defaultWaxColor: '#E11D48',
+        defaultSealEmoji: '❤️',
+        openLetterBorder: 'border-rose-200/90',
+        openLetterHeader: 'text-rose-950',
+        signatureColorClass: 'text-rose-800',
+        bgContainerOpen: 'bg-envelope-celebration-velvet',
+        bgContainerClosed: 'bg-soft-aesthetic-velvet',
+        confettiColors: ['#e11d48', '#f43f5e', '#fb7185', '#ffffff', '#ffd1dc'],
+        defaultSignOffEmoji: '❤️🌹',
+      };
+    }
+
+    // 2. Sunset Glow (Romance)
+    if (isSunset) {
+      return {
+        celebrationEmoji: '✨',
+        headingColorClass: 'text-amber-950',
+        headingAccentClass: 'text-amber-600',
+        cardClass: 'birthday-card-sunset',
+        reasonCardClass: 'special-reason-card-sunset',
+        reasonIconBgClass: 'bg-amber-50 border border-amber-200/80',
+        reasonTitleClass: 'text-amber-950',
+        primaryBtnClass: 'btn-primary-sunset',
+        secondaryBtnClass: 'btn-secondary-sunset',
+        coverBtnGradient: 'bg-gradient-to-r from-[#F59E0B] via-[#EA580C] to-[#C2410C] hover:from-[#EA580C] hover:to-[#9A3412] shadow-amber-500/35 hover:shadow-amber-500/50 animate-pulse-glow-sunset',
+        envelopeBgGradient: 'bg-gradient-to-br from-amber-500 via-rose-500 to-amber-700 border-amber-300/40',
+        envelopeShading: 'bg-amber-950/60',
+        envelopeCardBorder: 'border-amber-200',
+        envelopeCardTitle: 'text-amber-900',
+        envelopeFolds: { fold1: '#9a3412', fold2: '#c2410c', fold3: '#f59e0b' },
+        defaultWaxColor: '#F59E0B',
+        defaultSealEmoji: '✨',
+        openLetterBorder: 'border-amber-200/90',
+        openLetterHeader: 'text-amber-950',
+        signatureColorClass: 'text-amber-800',
+        bgContainerOpen: 'bg-envelope-celebration-sunset',
+        bgContainerClosed: 'bg-soft-aesthetic-sunset',
+        confettiColors: ['#f59e0b', '#fbbf24', '#f43f5e', '#ffffff', '#fde68a'],
+        defaultSignOffEmoji: '🌅✨',
+      };
+    }
+
+    // 3. Celestial Indigo (Romance)
+    if (isCelestial) {
+      return {
+        celebrationEmoji: '🌙',
+        headingColorClass: 'text-indigo-950',
+        headingAccentClass: 'text-indigo-600',
+        cardClass: 'birthday-card-celestial',
+        reasonCardClass: 'special-reason-card-celestial',
+        reasonIconBgClass: 'bg-indigo-50 border border-indigo-200/80',
+        reasonTitleClass: 'text-indigo-950',
+        primaryBtnClass: 'btn-primary-celestial',
+        secondaryBtnClass: 'btn-secondary-celestial',
+        coverBtnGradient: 'bg-gradient-to-r from-[#6366F1] via-[#4F46E5] to-[#3730A3] hover:from-[#4F46E5] hover:to-[#312E81] shadow-indigo-600/35 hover:shadow-indigo-600/50 animate-pulse-glow-celestial',
+        envelopeBgGradient: 'bg-gradient-to-br from-indigo-700 via-indigo-900 to-purple-950 border-indigo-400/40',
+        envelopeShading: 'bg-indigo-950/60',
+        envelopeCardBorder: 'border-indigo-200',
+        envelopeCardTitle: 'text-indigo-900',
+        envelopeFolds: { fold1: '#312e81', fold2: '#3730a3', fold3: '#4f46e5' },
+        defaultWaxColor: '#4F46E5',
+        defaultSealEmoji: '🌙',
+        openLetterBorder: 'border-indigo-200/90',
+        openLetterHeader: 'text-indigo-950',
+        signatureColorClass: 'text-indigo-800',
+        bgContainerOpen: 'bg-envelope-celebration-celestial',
+        bgContainerClosed: 'bg-soft-aesthetic-celestial',
+        confettiColors: ['#6366f1', '#818cf8', '#a5b4fc', '#ffffff', '#38bdf8'],
+        defaultSignOffEmoji: '🌌🌙',
+      };
+    }
+
+    // 4. Vintage Kodak (Scrapbook)
+    if (isVintage) {
+      return {
+        celebrationEmoji: '📸',
+        headingColorClass: 'text-amber-950',
+        headingAccentClass: 'text-amber-700',
+        cardClass: 'birthday-card-vintage',
+        reasonCardClass: 'special-reason-card-vintage',
+        reasonIconBgClass: 'bg-amber-50 border border-amber-200/80',
+        reasonTitleClass: 'text-amber-950',
+        primaryBtnClass: 'btn-primary-vintage',
+        secondaryBtnClass: 'btn-secondary-vintage',
+        coverBtnGradient: 'bg-gradient-to-r from-[#D97706] via-[#B45309] to-[#92400E] hover:from-[#B45309] hover:to-[#78350F] shadow-amber-600/35 hover:shadow-amber-600/50 animate-pulse-glow-vintage',
+        envelopeBgGradient: 'bg-gradient-to-br from-amber-700 via-yellow-700 to-amber-900 border-amber-300/40',
+        envelopeShading: 'bg-amber-950/60',
+        envelopeCardBorder: 'border-amber-200',
+        envelopeCardTitle: 'text-amber-900',
+        envelopeFolds: { fold1: '#78350f', fold2: '#92400e', fold3: '#d97706' },
+        defaultWaxColor: '#D97706',
+        defaultSealEmoji: '⚡',
+        openLetterBorder: 'border-amber-200/90',
+        openLetterHeader: 'text-amber-950',
+        signatureColorClass: 'text-amber-800',
+        bgContainerOpen: 'bg-envelope-celebration-vintage',
+        bgContainerClosed: 'bg-soft-aesthetic-vintage',
+        confettiColors: ['#d97706', '#b45309', '#f59e0b', '#ffffff', '#fef3c7'],
+        defaultSignOffEmoji: '📸⚡',
+      };
+    }
+
+    // 5. Electric Vibes (Scrapbook)
+    if (isNeon) {
+      return {
+        celebrationEmoji: '⚡',
+        headingColorClass: 'text-teal-950',
+        headingAccentClass: 'text-teal-600',
+        cardClass: 'birthday-card-neon',
+        reasonCardClass: 'special-reason-card-neon',
+        reasonIconBgClass: 'bg-teal-50 border border-teal-200/80',
+        reasonTitleClass: 'text-teal-950',
+        primaryBtnClass: 'btn-primary-neon',
+        secondaryBtnClass: 'btn-secondary-neon',
+        coverBtnGradient: 'bg-gradient-to-r from-[#14B8A6] via-[#0D9488] to-[#0F766E] hover:from-[#0D9488] hover:to-[#115E59] shadow-teal-600/35 hover:shadow-teal-600/50 animate-pulse-glow-neon',
+        envelopeBgGradient: 'bg-gradient-to-br from-teal-600 via-cyan-600 to-teal-800 border-cyan-300/40',
+        envelopeShading: 'bg-teal-950/60',
+        envelopeCardBorder: 'border-teal-200',
+        envelopeCardTitle: 'text-teal-900',
+        envelopeFolds: { fold1: '#134e4a', fold2: '#115e59', fold3: '#0d9488' },
+        defaultWaxColor: '#0D9488',
+        defaultSealEmoji: '🔥',
+        openLetterBorder: 'border-teal-200/90',
+        openLetterHeader: 'text-teal-950',
+        signatureColorClass: 'text-teal-800',
+        bgContainerOpen: 'bg-envelope-celebration-neon',
+        bgContainerClosed: 'bg-soft-aesthetic-neon',
+        confettiColors: ['#14b8a6', '#06b6d4', '#3b82f6', '#ffffff', '#facc15'],
+        defaultSignOffEmoji: '⚡🔥',
+      };
+    }
+
+    // 6. Cozy Sunset (Scrapbook)
+    if (isCozy) {
+      return {
+        celebrationEmoji: '🌻',
+        headingColorClass: 'text-orange-950',
+        headingAccentClass: 'text-orange-700',
+        cardClass: 'birthday-card-cozy',
+        reasonCardClass: 'special-reason-card-cozy',
+        reasonIconBgClass: 'bg-orange-50 border border-orange-200/80',
+        reasonTitleClass: 'text-orange-950',
+        primaryBtnClass: 'btn-primary-cozy',
+        secondaryBtnClass: 'btn-secondary-cozy',
+        coverBtnGradient: 'bg-gradient-to-r from-[#EA580C] via-[#C2410C] to-[#9A3412] hover:from-[#C2410C] hover:to-[#7C2D12] shadow-orange-600/35 hover:shadow-orange-600/50 animate-pulse-glow-cozy',
+        envelopeBgGradient: 'bg-gradient-to-br from-orange-700 via-amber-800 to-amber-950 border-orange-400/40',
+        envelopeShading: 'bg-amber-950/60',
+        envelopeCardBorder: 'border-orange-200',
+        envelopeCardTitle: 'text-orange-900',
+        envelopeFolds: { fold1: '#7c2d12', fold2: '#9a3412', fold3: '#c2410c' },
+        defaultWaxColor: '#C2410C',
+        defaultSealEmoji: '🌻',
+        openLetterBorder: 'border-orange-200/90',
+        openLetterHeader: 'text-orange-950',
+        signatureColorClass: 'text-orange-800',
+        bgContainerOpen: 'bg-envelope-celebration-cozy',
+        bgContainerClosed: 'bg-soft-aesthetic-cozy',
+        confettiColors: ['#ea580c', '#c2410c', '#f59e0b', '#ffffff', '#fed7aa'],
+        defaultSignOffEmoji: '☕🌻',
+      };
+    }
+
+    // 7. Olive Peace (Apology)
+    if (isPeace) {
+      return {
+        celebrationEmoji: '🕊️',
+        headingColorClass: 'text-emerald-950',
+        headingAccentClass: 'text-emerald-700',
+        cardClass: 'birthday-card-olive',
+        reasonCardClass: 'special-reason-card-olive',
+        reasonIconBgClass: 'bg-emerald-50 border border-emerald-200/80',
+        reasonTitleClass: 'text-emerald-950',
+        primaryBtnClass: 'btn-primary-olive',
+        secondaryBtnClass: 'btn-secondary-olive',
+        coverBtnGradient: 'bg-gradient-to-r from-[#16A34A] via-[#15803D] to-[#14532D] hover:from-[#15803D] hover:to-[#052E16] shadow-emerald-600/35 hover:shadow-emerald-600/50 animate-pulse-glow-olive',
+        envelopeBgGradient: 'bg-gradient-to-br from-emerald-600 via-green-700 to-emerald-900 border-emerald-300/40',
+        envelopeShading: 'bg-emerald-950/60',
+        envelopeCardBorder: 'border-emerald-200',
+        envelopeCardTitle: 'text-emerald-900',
+        envelopeFolds: { fold1: '#14532d', fold2: '#166534', fold3: '#15803d' },
+        defaultWaxColor: '#15803D',
+        defaultSealEmoji: '🕊️',
+        openLetterBorder: 'border-emerald-200/90',
+        openLetterHeader: 'text-emerald-950',
+        signatureColorClass: 'text-emerald-800',
+        bgContainerOpen: 'bg-envelope-celebration-olive',
+        bgContainerClosed: 'bg-soft-aesthetic-olive',
+        confettiColors: ['#16a34a', '#22c55e', '#86efac', '#ffffff', '#dcfce7'],
+        defaultSignOffEmoji: '🕊️💚',
+      };
+    }
+
+    // 8. Sweet Hugs (Apology)
+    if (isForgive) {
+      return {
+        celebrationEmoji: '💜',
+        headingColorClass: 'text-purple-950',
+        headingAccentClass: 'text-purple-600',
+        cardClass: 'birthday-card-forgive',
+        reasonCardClass: 'special-reason-card-forgive',
+        reasonIconBgClass: 'bg-purple-50 border border-purple-200/80',
+        reasonTitleClass: 'text-purple-950',
+        primaryBtnClass: 'btn-primary-forgive',
+        secondaryBtnClass: 'btn-secondary-forgive',
+        coverBtnGradient: 'bg-gradient-to-r from-[#A855F7] via-[#8B5CF6] to-[#7C3AED] hover:from-[#8B5CF6] hover:to-[#6D28D9] shadow-purple-600/35 hover:shadow-purple-600/50 animate-pulse-glow-forgive',
+        envelopeBgGradient: 'bg-gradient-to-br from-purple-600 via-pink-600 to-violet-800 border-purple-300/40',
+        envelopeShading: 'bg-purple-950/60',
+        envelopeCardBorder: 'border-purple-200',
+        envelopeCardTitle: 'text-purple-900',
+        envelopeFolds: { fold1: '#581c87', fold2: '#7c3aed', fold3: '#8b5cf6' },
+        defaultWaxColor: '#8B5CF6',
+        defaultSealEmoji: '💜',
+        openLetterBorder: 'border-purple-200/90',
+        openLetterHeader: 'text-purple-950',
+        signatureColorClass: 'text-purple-800',
+        bgContainerOpen: 'bg-envelope-celebration-forgive',
+        bgContainerClosed: 'bg-soft-aesthetic-forgive',
+        confettiColors: ['#a855f7', '#c084fc', '#e879f9', '#ffffff', '#f3e8ff'],
+        defaultSignOffEmoji: '🥺💜',
+      };
+    }
+
+    // 9. Sunrise Renewal (Apology)
+    if (isSunrise) {
+      return {
+        celebrationEmoji: '🌤️',
+        headingColorClass: 'text-amber-950',
+        headingAccentClass: 'text-amber-600',
+        cardClass: 'birthday-card-sunrise',
+        reasonCardClass: 'special-reason-card-sunrise',
+        reasonIconBgClass: 'bg-amber-50 border border-amber-200/80',
+        reasonTitleClass: 'text-amber-950',
+        primaryBtnClass: 'btn-primary-sunrise',
+        secondaryBtnClass: 'btn-secondary-sunrise',
+        coverBtnGradient: 'bg-gradient-to-r from-[#EAB308] via-[#CA8A04] to-[#A16207] hover:from-[#CA8A04] hover:to-[#713F12] shadow-amber-500/35 hover:shadow-amber-500/50 animate-pulse-glow-sunrise',
+        envelopeBgGradient: 'bg-gradient-to-br from-amber-500 via-yellow-600 to-amber-700 border-yellow-300/40',
+        envelopeShading: 'bg-amber-950/60',
+        envelopeCardBorder: 'border-amber-200',
+        envelopeCardTitle: 'text-amber-900',
+        envelopeFolds: { fold1: '#92400e', fold2: '#b45309', fold3: '#d97706' },
+        defaultWaxColor: '#D97706',
+        defaultSealEmoji: '🌤️',
+        openLetterBorder: 'border-amber-200/90',
+        openLetterHeader: 'text-amber-950',
+        signatureColorClass: 'text-amber-800',
+        bgContainerOpen: 'bg-envelope-celebration-sunrise',
+        bgContainerClosed: 'bg-soft-aesthetic-sunrise',
+        confettiColors: ['#eab308', '#facc15', '#fef08a', '#ffffff', '#fed7aa'],
+        defaultSignOffEmoji: '🌤️💛',
+      };
+    }
+
+    // 10. Princess Peach (Birthday)
     if (isPeach) {
       return {
         celebrationEmoji: '✨',
@@ -119,6 +468,8 @@ export default function MultiSceneBirthdayView({
         defaultSignOffEmoji: '✨🧡',
       };
     }
+
+    // 11. Lavender Dream (Birthday)
     if (isLavender) {
       return {
         celebrationEmoji: '💜',
@@ -147,6 +498,8 @@ export default function MultiSceneBirthdayView({
         defaultSignOffEmoji: '💜✨',
       };
     }
+
+    // 12. Golden Spark (Birthday)
     if (isGold) {
       return {
         celebrationEmoji: '🎂',
@@ -175,6 +528,8 @@ export default function MultiSceneBirthdayView({
         defaultSignOffEmoji: '🎂⭐',
       };
     }
+
+    // 13. Retro Polaroid (Scrapbook/Birthday)
     if (isPolaroid) {
       return {
         celebrationEmoji: '📸',
@@ -203,6 +558,8 @@ export default function MultiSceneBirthdayView({
         defaultSignOffEmoji: '📸⚡',
       };
     }
+
+    // 14. Blush Blossom (Birthday)
     if (isBlush) {
       return {
         celebrationEmoji: '🌸',
@@ -231,7 +588,8 @@ export default function MultiSceneBirthdayView({
         defaultSignOffEmoji: '🌸❤️',
       };
     }
-    // Royal Sapphire (default / boy)
+
+    // 15. Royal Sapphire (Birthday default / boy)
     return {
       isRoyal,
       celebrationEmoji: '👑',
@@ -262,7 +620,28 @@ export default function MultiSceneBirthdayView({
   })();
 
   // Floating emoji selector based on active theme
-  const getFloatingEmoji = (e) => {
+  const themeFloatingEmojis = isVelvet
+    ? ['❤️', '🌹', '✨', '🍷', '💫', '💖', '💌', '🥀']
+    : isSunset
+    ? ['🌅', '✨', '🧡', '🌇', '💫', '💛', '💌', '🥂']
+    : isCelestial
+    ? ['🌌', '🌙', '⭐', '✨', '💫', '🔮', '💙', '🪐']
+    : isVintage
+    ? ['📸', '⚡', '🎞️', '⭐', '📼', '☕', '🔥', '✨']
+    : isNeon
+    ? ['⚡', '🔥', '🩵', '🛹', '✨', '💿', '💫', '🎉']
+    : isCozy
+    ? ['☕', '🌻', '🍂', '🤎', '✨', '📖', '💫', '🌅']
+    : isPeace
+    ? ['🕊️', '🌿', '🍃', '💚', '✨', '🤍', '💫', '🌸']
+    : isForgive
+    ? ['🥺', '💜', '🌸', '🧸', '✨', '💌', '💫', '🤍']
+    : isSunrise
+    ? ['🌤️', '☀️', '🌻', '💛', '✨', '🌈', '💫', '🌱']
+    : null;
+
+  const getFloatingEmoji = (e, index = 0) => {
+    if (themeFloatingEmojis) return themeFloatingEmojis[index % themeFloatingEmojis.length];
     if (isPolaroid) return e.polaroid || '📸';
     if (isPeach) return e.peach || e.girl;
     if (isLavender) return e.lavender || e.girl;
@@ -272,7 +651,7 @@ export default function MultiSceneBirthdayView({
   };
 
   // Personalization data with neutral defaults
-  const isGirlGender = siteData.gender === 'girl' || isBlush || isPeach || isLavender;
+  const isGirlGender = siteData.gender === 'girl' || isBlush || isPeach || isLavender || isVelvet || isSunset || isCelestial || isPeace || isForgive || isSunrise;
   const recipientName = siteData.recipientName || (isGirlGender ? 'Sarah' : 'Rohan');
   const senderName = siteData.senderName || (isGirlGender ? 'Elena' : 'Alex');
   const subtitle = siteData.subtitle || 'I have a small surprise for you...';
@@ -295,7 +674,15 @@ export default function MultiSceneBirthdayView({
       line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     }
   } else {
-    line1Text = 'Happy Birthday,';
+    if (isRomanceCategory) {
+      line1Text = 'With All My Love,';
+    } else if (isScrapbookCategory && !isPolaroid) {
+      line1Text = 'Cherished Memories,';
+    } else if (isApologyCategory) {
+      line1Text = 'From My Heart,';
+    } else {
+      line1Text = 'Happy Birthday,';
+    }
     line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
   }
   
@@ -305,44 +692,87 @@ export default function MultiSceneBirthdayView({
                      ? 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80' 
                      : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80');
 
-  const photoCaption = siteData.photoCaption || 
-                       (isPeach 
-                         ? "Shining with Pure Warmth & Grace! ✨🍑"
-                         : (isLavender 
-                           ? "Dreamy, Radiant & Magical Always! 💜✨"
-                           : (isGold
-                             ? "Golden Spark & Boundless Joy! 🎂✨"
-                             : (isPolaroid
-                               ? "Brothers & Besties For Life! 📸⚡"
-                               : (isBlush ? "Stay Wonderful Always! 🌸✨" : "Keep Rocking Always! 👑🔥")))));
+  const photoCaption = siteData.photoCaption || (() => {
+    if (isVelvet) return "Forever in My Heart ❤️🌹";
+    if (isSunset) return "Golden Moments With You 🌅✨";
+    if (isCelestial) return "Written in the Stars 🌌🌙";
+    if (isVintage) return "Captured Moments Never Fade 📸🎞️";
+    if (isNeon) return "Electric Memories & Good Times ⚡🔥";
+    if (isCozy) return "Warm Days & Sweet Conversations ☕🌻";
+    if (isPeace) return "Peace, Love & Healing 🕊️🌿";
+    if (isForgive) return "Sending the Warmest Hugs 🥺💜";
+    if (isSunrise) return "Here is to a Fresh Beginning 🌤️🌱";
+    if (isPeach) return "Shining with Pure Warmth & Grace! ✨🍑";
+    if (isLavender) return "Dreamy, Radiant & Magical Always! 💜✨";
+    if (isGold) return "Golden Spark & Boundless Joy! 🎂✨";
+    if (isPolaroid) return "Brothers & Besties For Life! 📸⚡";
+    if (isBlush) return "Stay Wonderful Always! 🌸✨";
+    return "Keep Rocking Always! 👑🔥";
+  })();
 
-  const defaultReasons = isPeach 
-    ? DEFAULT_PEACH_REASONS 
-    : (isLavender 
-      ? DEFAULT_LAVENDER_REASONS 
-      : (isGold 
-        ? DEFAULT_GOLD_REASONS 
-        : (isPolaroid
-          ? DEFAULT_POLAROID_REASONS
-          : (isBlush ? DEFAULT_GIRL_REASONS : DEFAULT_BOY_REASONS))));
+  const defaultReasons = isVelvet
+    ? DEFAULT_VELVET_REASONS
+    : isSunset
+    ? DEFAULT_SUNSET_REASONS
+    : isCelestial
+    ? DEFAULT_CELESTIAL_REASONS
+    : isVintage
+    ? DEFAULT_VINTAGE_REASONS
+    : isNeon
+    ? DEFAULT_NEON_REASONS
+    : isCozy
+    ? DEFAULT_COZY_REASONS
+    : isPeace
+    ? DEFAULT_PEACE_REASONS
+    : isForgive
+    ? DEFAULT_FORGIVE_REASONS
+    : isSunrise
+    ? DEFAULT_SUNRISE_REASONS
+    : (isPeach 
+      ? DEFAULT_PEACH_REASONS 
+      : (isLavender 
+        ? DEFAULT_LAVENDER_REASONS 
+        : (isGold 
+          ? DEFAULT_GOLD_REASONS 
+          : (isPolaroid
+            ? DEFAULT_POLAROID_REASONS
+            : (isBlush ? DEFAULT_GIRL_REASONS : DEFAULT_BOY_REASONS)))));
 
   const reasons = siteData.reasons || 
                   siteData.specialReasons || 
                   defaultReasons;
 
   // Letter content
-  const letterTitle = siteData.letter?.title || siteData.letterTitle || 'A Little Note For You';
-  const defaultLetter = isPeach
-    ? `Happy Birthday, ${recipientName}!\n\nYou bring a radiant warmth, golden sunshine, and beautiful energy wherever you go. Your smile lights up every room, and you make every ordinary day feel like something magical.\n\nMay this year unfold with sweet laughter, wonderful new adventures, and all the happiest moments your heart can hold. Stay glorious! ✨🍑`
-    : (isLavender
-      ? `Happy Birthday, ${recipientName}!\n\nYou possess such a dreamy spirit, creative wonder, and comforting kindness. Being in your presence feels like a breath of fresh lilac and pure calm.\n\nMay this year grant you your most cherished wishes, endless inspiration, and moments full of starlight and joy. Keep dreaming wonderfully! 💜✨`
-      : (isGold
-        ? `Happy Birthday, ${recipientName}!\n\nToday we celebrate a heart of pure gold. Your generosity, infectious laughter, and bright spirit illuminate the paths of everyone around you.\n\nMay your year ahead be crowned with grand triumphs, blissful memories, and radiant good health! 🎂✨`
-        : (isPolaroid
-          ? `Happy Birthday, ${recipientName}!\n\nLooking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. You bring unmatched loyalty, real energy, and genuine warmth into every day.\n\nMay this year bring you all the grand achievements, unforgettable memories, and boundless happiness you deserve. Keep rocking, brother! 📸⚡`
-          : (isBlush
-            ? `Happy Birthday, ${recipientName}!\n\nYou bring so much elegance, warmth, and sparkling wonder wherever you go. Your kind soul touches everyone you meet, and you make ordinary days feel truly unforgettable.\n\nMay this year bring you all the sweetest dreams, vibrant laughter, and boundless happiness you deserve so deeply.`
-            : `Happy Birthday, ${recipientName}!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`))));
+  const letterTitle = siteData.letter?.title || siteData.letterTitle || (isRomanceCategory ? 'A Love Note For You' : (isApologyCategory ? 'From My Heart' : 'A Little Note For You'));
+  const defaultLetter = isVelvet
+    ? `Dear ${recipientName},\n\nEvery day with you feels like a dream I never want to wake up from. Your gentle touch, beautiful laughter, and caring heart are the greatest gifts of my life. ❤️🌹\n\nThank you for loving me and being my forever companion. May our love continue to blossom with timeless passion and sweet romance. Forever yours.`
+    : isSunset
+    ? `Dear ${recipientName},\n\nWatching the sunset by your side is my favorite place in the world. You bring a golden glow, peaceful warmth, and endless joy to my life. 🌅✨\n\nThank you for every shared laugh and tender moment. Here's to countless more golden sunsets together!`
+    : isCelestial
+    ? `Dear ${recipientName},\n\nOut of all the stars in the universe, you are the one that shines brightest in my heart. Being with you feels like destiny written in the cosmos. 🌌🌙\n\nThank you for guiding my path with your endless love, gentle calm, and pure soul. I love you to the moon and beyond all galaxies!`
+    : isVintage
+    ? `Dear ${recipientName},\n\nLooking through all our snapshots and golden memories, I can't help but smile at how incredible our journey has been. Every laugh, road trip, and spontaneous moment is treasured forever. 📸🎞️\n\nThank you for being such a real and loyal companion. Here's to making many more timeless memories!`
+    : isNeon
+    ? `Dear ${recipientName},\n\nLife with you is pure electric energy! From spontaneous adventures to late-night laughs, every moment is packed with high voltage hype and good vibes. ⚡🔥\n\nThank you for always keeping things vibrant and genuine. Stay electric and keep rocking!`
+    : isCozy
+    ? `Dear ${recipientName},\n\nThank you for the warm comfort, peaceful talks, and sweet memories we've shared. Sitting together with good coffee and honest conversations is one of life's greatest pleasures. ☕🌻\n\nHere's to many more peaceful, golden afternoons and cherished memories together!`
+    : isPeace
+    ? `Dear ${recipientName},\n\nI want to apologize to you sincerely from the bottom of my heart. Seeing you hurt breaks my spirit, and I deeply regret my words and actions. 🕊️🌿\n\nYour happiness and peace of mind mean the world to me. I hope you can find it in your heart to forgive me so we can heal and start anew.`
+    : isForgive
+    ? `Dear ${recipientName},\n\nI am so genuinely sorry for my mistake. Nothing feels right without your sweet smile, laughter, and warmth around. 🥺💜\n\nI value our connection more than words can say. Sending you the warmest hug and hoping we can smile together again soon.`
+    : isSunrise
+    ? `Dear ${recipientName},\n\nEvery sunrise is a chance to heal, learn, and grow closer. I am so sorry for where things went wrong between us. 🌤️🌱\n\nOur bond means everything to me, and I promise to cherish and protect it with greater care. Here's to hope, renewal, and a brighter tomorrow together.`
+    : (isPeach
+      ? `Happy Birthday, ${recipientName}!\n\nYou bring a radiant warmth, golden sunshine, and beautiful energy wherever you go. Your smile lights up every room, and you make every ordinary day feel like something magical.\n\nMay this year unfold with sweet laughter, wonderful new adventures, and all the happiest moments your heart can hold. Stay glorious! ✨🍑`
+      : (isLavender
+        ? `Happy Birthday, ${recipientName}!\n\nYou possess such a dreamy spirit, creative wonder, and comforting kindness. Being in your presence feels like a breath of fresh lilac and pure calm.\n\nMay this year grant you your most cherished wishes, endless inspiration, and moments full of starlight and joy. Keep dreaming wonderfully! 💜✨`
+        : (isGold
+          ? `Happy Birthday, ${recipientName}!\n\nToday we celebrate a heart of pure gold. Your generosity, infectious laughter, and bright spirit illuminate the paths of everyone around you.\n\nMay your year ahead be crowned with grand triumphs, blissful memories, and radiant good health! 🎂✨`
+          : (isPolaroid
+            ? `Happy Birthday, ${recipientName}!\n\nLooking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. You bring unmatched loyalty, real energy, and genuine warmth into every day.\n\nMay this year bring you all the grand achievements, unforgettable memories, and boundless happiness you deserve. Keep rocking, brother! 📸⚡`
+            : (isBlush
+              ? `Happy Birthday, ${recipientName}!\n\nYou bring so much elegance, warmth, and sparkling wonder wherever you go. Your kind soul touches everyone you meet, and you make ordinary days feel truly unforgettable.\n\nMay this year bring you all the sweetest dreams, vibrant laughter, and boundless happiness you deserve so deeply.`
+              : `Happy Birthday, ${recipientName}!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`)))));
 
   const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || 
                      siteData.letterBody || 
@@ -502,7 +932,7 @@ export default function MultiSceneBirthdayView({
               animationDelay: e.del,
             }}
           >
-            <AppleEmoji emoji={getFloatingEmoji(e)} size={e.size} />
+            <AppleEmoji emoji={getFloatingEmoji(e, idx)} size={e.size} />
           </div>
         ))}
       </div>
@@ -567,9 +997,26 @@ export default function MultiSceneBirthdayView({
           <div className="flex flex-col items-center text-center animate-fade-in-up w-full max-w-[94vw] sm:max-w-md">
             <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4">
               <h2 className={`${fontFamilyClass} text-3xl sm:text-5xl font-bold ${themeTokens.headingColorClass} leading-tight`}>
-                The Star of the Day
+                {isRomanceCategory
+                  ? 'My Favorite Person'
+                  : isScrapbookCategory
+                  ? 'A Timeless Memory'
+                  : isApologyCategory
+                  ? 'A Moment to Reflect'
+                  : 'The Star of the Day'}
               </h2>
-              <AppleEmoji emoji="🌟" size={28} />
+              <AppleEmoji
+                emoji={
+                  isRomanceCategory
+                    ? '❤️'
+                    : isScrapbookCategory
+                    ? '📸'
+                    : isApologyCategory
+                    ? '🕊️'
+                    : '🌟'
+                }
+                size={28}
+              />
             </div>
 
             {/* Polaroid Frame */}
@@ -615,10 +1062,22 @@ export default function MultiSceneBirthdayView({
           <div className="flex flex-col items-center text-center animate-pop-in w-full max-w-[94vw] sm:max-w-sm">
             <div className={`${themeTokens.cardClass} px-5 py-7 sm:px-10 sm:py-10 w-full`}>
               <h2 className={`${fontFamilyClass} text-3xl sm:text-5xl font-bold ${themeTokens.headingColorClass} leading-tight`}>
-                Before we proceed...
+                {isApologyCategory
+                  ? 'A Heartfelt Question...'
+                  : isRomanceCategory
+                  ? 'How is your heart feeling?'
+                  : isScrapbookCategory
+                  ? 'How is nostalgia hitting?'
+                  : 'Before we proceed...'}
               </h2>
               <p className="mt-2 sm:mt-3 text-slate-500 text-sm sm:text-base">
-                How are you feeling today?
+                {isApologyCategory
+                  ? 'Pick your feelings to open my note 🕊️'
+                  : isRomanceCategory
+                  ? 'Pick your vibe to unlock my heart ✨'
+                  : isScrapbookCategory
+                  ? 'Pick your vibe to flip the album 📸'
+                  : 'How are you feeling today?'}
               </p>
 
               <div className="mt-5 sm:mt-7 flex flex-col gap-3 sm:gap-3.5 w-full">
@@ -627,8 +1086,27 @@ export default function MultiSceneBirthdayView({
                   onClick={handleChooseFeeling}
                   className={`${primaryBtnClass} w-full py-3.5 px-6`}
                 >
-                  <span>Super Happy!</span>
-                  <AppleEmoji emoji="🥳" size={20} />
+                  <span>
+                    {isApologyCategory
+                      ? 'Ready to Talk'
+                      : isRomanceCategory
+                      ? 'So In Love!'
+                      : isScrapbookCategory
+                      ? 'Best Days Ever!'
+                      : 'Super Happy!'}
+                  </span>
+                  <AppleEmoji
+                    emoji={
+                      isApologyCategory
+                        ? '🤍'
+                        : isRomanceCategory
+                        ? '❤️'
+                        : isScrapbookCategory
+                        ? '⚡'
+                        : '🥳'
+                    }
+                    size={20}
+                  />
                 </button>
 
                 <button
@@ -636,8 +1114,27 @@ export default function MultiSceneBirthdayView({
                   onClick={handleChooseFeeling}
                   className={`${secondaryBtnClass} w-full py-3.5 px-6`}
                 >
-                  <span>So Excited!</span>
-                  <AppleEmoji emoji="✨" size={20} />
+                  <span>
+                    {isApologyCategory
+                      ? 'Soft Hug Accepted'
+                      : isRomanceCategory
+                      ? 'Butterflies Always!'
+                      : isScrapbookCategory
+                      ? 'Pure Golden Vibes'
+                      : 'So Excited!'}
+                  </span>
+                  <AppleEmoji
+                    emoji={
+                      isApologyCategory
+                        ? '🥺'
+                        : isRomanceCategory
+                        ? '✨'
+                        : isScrapbookCategory
+                        ? '📸'
+                        : '✨'
+                    }
+                    size={20}
+                  />
                 </button>
 
                 <div className="mt-1">
@@ -661,9 +1158,26 @@ export default function MultiSceneBirthdayView({
           <div className="flex flex-col items-center text-center animate-fade-in-up w-full max-w-[94vw] sm:max-w-md">
             <div className="flex items-center justify-center gap-2 mb-1 sm:mb-2">
               <h2 className={`${fontFamilyClass} text-3xl sm:text-5xl font-bold ${themeTokens.headingColorClass} leading-tight`}>
-                Why You're Special
+                {isApologyCategory
+                  ? 'Why You Mean So Much'
+                  : isRomanceCategory
+                  ? 'Why I Love You'
+                  : isScrapbookCategory
+                  ? 'Why We Are Unstoppable'
+                  : "Why You're Special"}
               </h2>
-              <AppleEmoji emoji="💫" size={28} />
+              <AppleEmoji
+                emoji={
+                  isApologyCategory
+                    ? '🕊️'
+                    : isRomanceCategory
+                    ? '❤️'
+                    : isScrapbookCategory
+                    ? '📸'
+                    : '💫'
+                }
+                size={28}
+              />
             </div>
 
             <div className="mt-4 sm:mt-5 flex flex-col gap-3 w-full max-w-[94vw] sm:max-w-md">
@@ -737,8 +1251,27 @@ export default function MultiSceneBirthdayView({
                     {/* Peeking Letter Card Inside */}
                     <div className={`absolute top-3 sm:top-4 left-4 right-4 sm:left-5 sm:right-5 h-[100px] sm:h-[110px] bg-white rounded-t-xl shadow-md border-t-2 ${themeTokens.envelopeCardBorder} p-2.5 sm:p-3 transform transition-transform duration-300 group-hover:-translate-y-3`}>
                       <div className={`flex items-center justify-center gap-1.5 ${themeTokens.envelopeCardTitle} font-bold text-xs sm:text-sm`}>
-                        <span>Happy Birthday!</span>
-                        <AppleEmoji emoji="🎉" size={16} />
+                        <span>
+                          {isRomanceCategory
+                            ? 'Forever & Always'
+                            : isScrapbookCategory
+                            ? 'Cherished Memories'
+                            : isApologyCategory
+                            ? 'From My Heart'
+                            : 'Happy Birthday!'}
+                        </span>
+                        <AppleEmoji
+                          emoji={
+                            isRomanceCategory
+                              ? '❤️'
+                              : isScrapbookCategory
+                              ? '📸'
+                              : isApologyCategory
+                              ? '🕊️'
+                              : '🎉'
+                          }
+                          size={16}
+                        />
                         <AppleEmoji emoji="✨" size={16} />
                       </div>
                       <div className="mt-1.5 sm:mt-2 text-center text-[10px] sm:text-[11px] text-slate-400">
