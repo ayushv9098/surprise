@@ -9,18 +9,18 @@ import { getSongById } from '../../data/songs';
 const FLOATING_EMOJIS_DEF = [
   { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '💜', gold: '⭐', polaroid: '📸', left: '4%', top: '8%', size: 24, dur: '7s', del: '0s' },
   { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '⚡', left: '10%', top: '45%', size: 26, dur: '8.5s', del: '1.2s' },
-  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '🌲', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
+  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '🔥', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
   { boy: '🌹', girl: '🌹', peach: '🧡', lavender: '🌸', gold: '🎂', polaroid: '⭐', left: '8%', top: '78%', size: 24, dur: '7.5s', del: '2s' },
   { boy: '💫', girl: '💫', peach: '💫', lavender: '💫', gold: '💫', polaroid: '✨', left: '88%', top: '52%', size: 22, dur: '8s', del: '0.8s' },
-  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', polaroid: '💚', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
+  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', polaroid: '❤️', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
   { boy: '💙', girl: '💖', peach: '🌟', lavender: '💜', gold: '💛', polaroid: '💫', left: '80%', top: '82%', size: 22, dur: '7s', del: '1s' },
   { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '🎉', left: '48%', top: '6%', size: 22, dur: '6.5s', del: '2.3s' },
   { boy: '🔥', girl: '🎀', peach: '🍰', lavender: '🌙', gold: '🔥', polaroid: '📸', left: '70%', top: '36%', size: 22, dur: '8s', del: '1.1s' },
   { boy: '🏆', girl: '🍰', peach: '⭐', lavender: '🍰', gold: '🏆', polaroid: '⚡', left: '16%', top: '92%', size: 24, dur: '8.5s', del: '0.4s' },
-  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', polaroid: '🌲', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
+  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', polaroid: '⭐', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
   { boy: '🎊', girl: '🧸', peach: '🎊', lavender: '🧸', gold: '🎊', polaroid: '⭐', left: '38%', top: '89%', size: 24, dur: '9s', del: '1.7s' },
   { boy: '⚡', girl: '🍓', peach: '🧡', lavender: '🍓', gold: '⚡', polaroid: '✨', left: '58%', top: '72%', size: 20, dur: '7.5s', del: '2.1s' },
-  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', polaroid: '💚', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
+  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', polaroid: '🔥', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
   { boy: '🧿', girl: '🌈', peach: '🌈', lavender: '🌈', gold: '🧿', polaroid: '💫', left: '32%', top: '50%', size: 24, dur: '7s', del: '1.3s' },
   { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '🎉', left: '74%', top: '94%', size: 26, dur: '8s', del: '2.6s' },
   { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '📸', left: '6%', top: '32%', size: 20, dur: '8.2s', del: '0.3s' },
@@ -84,11 +84,10 @@ export default function MultiSceneBirthdayView({
   const isRoyal = !isBlush && !isPeach && !isLavender && !isGold && !isPolaroid;
 
   // Font family determination
-  // Princess Peach & Golden Spark: Playfair Display serif (.font-serif)
-  // Retro Polaroid: Caveat handwriting (.font-handwriting)
-  // Royal Sapphire, Blush Blossom, Lavender Dream: Dancing Script (.font-cursive)
-  const fontFamilyClass = (isPeach || isGold) ? 'font-serif' : (isPolaroid ? 'font-handwriting' : 'font-cursive');
-  const handwritingClass = isPolaroid ? 'font-handwriting' : 'font-cursive';
+  // Princess Peach: Playfair Display serif (.font-serif)
+  // Royal Sapphire, Blush Blossom, Lavender Dream, Golden Spark, Retro Polaroid: Dancing Script (.font-cursive)
+  const fontFamilyClass = isPeach ? 'font-serif' : 'font-cursive';
+  const handwritingClass = 'font-cursive';
 
   // Theme styling tokens mapping
   const themeTokens = (() => {
@@ -574,8 +573,8 @@ export default function MultiSceneBirthdayView({
             </div>
 
             {/* Polaroid Frame */}
-            <div className="polaroid-frame my-2 w-full max-w-[260px] sm:max-w-[310px] mx-auto">
-              <div className="relative w-full h-[280px] sm:h-[360px] overflow-hidden rounded-[4px] bg-slate-100 shadow-inner">
+            <div className="polaroid-frame my-2 w-full max-w-[260px] sm:max-w-[310px] mx-auto flex flex-col items-center justify-center">
+              <div className="relative w-full h-[280px] sm:h-[360px] mx-auto overflow-hidden rounded-[8px] bg-slate-100 shadow-inner">
                 <img
                   src={photoUrl}
                   alt={recipientName}

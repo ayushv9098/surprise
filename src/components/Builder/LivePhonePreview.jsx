@@ -76,27 +76,27 @@ const THEMES = {
     id: 'golden-birthday',
     name: 'Golden Spark 🎂',
     gender: 'boy',
-    fontFamily: 'font-serif',
+    fontFamily: 'font-cursive',
     ambientEmojis: ['🎂', '✨', '🥂', '💛', '⭐', '🎉', '🌟', '💫'],
     primaryEmoji: '🎂',
     containerBgClass: 'bg-soft-aesthetic-gold',
     envelopeCelebrationBg: 'bg-envelope-celebration-gold',
-    cardClass: 'border border-amber-200/90 bg-white/95 shadow-xl shadow-amber-500/10 rounded-3xl p-5 sm:p-6 w-full text-center relative',
-    subCardClass: 'border border-amber-200/90 bg-white/95 shadow-xl shadow-amber-500/10 rounded-3xl p-5 sm:p-6 w-full max-w-[260px] text-center',
-    headingClass: 'text-amber-950',
-    accentTextClass: 'text-amber-600',
-    subtitleClass: 'text-amber-900/80',
-    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#F59E0B] via-[#EAB308] to-[#D97706] shadow-md shadow-amber-500/35 hover:shadow-lg hover:shadow-amber-500/45 active:scale-95 cursor-pointer',
-    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100/90 border border-amber-200/90 shadow-2xs active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#F59E0B] via-[#EAB308] to-[#D97706] shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
-    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#F59E0B] via-[#EAB308] to-[#D97706] shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
-    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100/90 border border-amber-200/90 shadow-2xs active:scale-95 cursor-pointer',
-    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-900 bg-yellow-50 hover:bg-yellow-100/90 border border-yellow-200/90 shadow-2xs active:scale-95 cursor-pointer',
-    reasonCardClass: 'border border-amber-200/90 bg-white/95 shadow-xs rounded-2xl',
+    cardClass: 'birthday-card-gold p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-gold p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-slate-900',
+    accentTextClass: 'text-amber-500',
+    subtitleClass: 'text-slate-500',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 hover:shadow-lg hover:shadow-amber-500/40 active:scale-95 cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200/90 shadow-xs active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200/90 shadow-xs active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-gold',
     iconBoxClass: 'bg-amber-50 border border-amber-200/80',
     waxColor: '#D97706',
     sealEmoji: '⭐',
-    envelopeGradient: 'bg-gradient-to-br from-[#F59E0B] via-[#D97706] to-[#B45309] border-amber-300/70',
+    envelopeGradient: 'bg-gradient-to-br from-amber-500 via-yellow-600 to-amber-700 border-amber-300/50',
     envelopeOverlay: 'bg-amber-950/60',
     envelopePeekingBorder: 'border-amber-200',
     envelopePeekingText: 'text-amber-900',
@@ -105,7 +105,7 @@ const THEMES = {
     letterBorderBottom: 'border-amber-100',
     letterHeaderClass: 'text-amber-900',
     letterSignOffClass: 'text-amber-800',
-    confettiColors: ['#f59e0b', '#fbbf24', '#d97706', '#b45309', '#fef3c7', '#ffffff'],
+    confettiColors: ['#f59e0b', '#fbbf24', '#d97706', '#ffffff', '#38bdf8'],
     defaultReasons: [
       { icon: '🌟', title: 'Golden Heart', desc: 'Your radiant kindness and golden energy brightens every room you step into!' },
       { icon: '🥂', title: 'Endless Cheers', desc: 'Every memory together feels like a grand celebration full of laughter and victory!' },
@@ -120,43 +120,43 @@ const THEMES = {
     id: 'polaroid-scrapbook',
     name: 'Retro Polaroid 📸',
     gender: 'boy',
-    fontFamily: 'font-handwriting',
-    ambientEmojis: ['📸', '⚡', '🌲', '💚', '⭐', '✨', '🎉', '💫'],
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['📸', '⚡', '🔥', '⭐', '✨', '🎉', '💫', '❤️'],
     primaryEmoji: '📸',
     containerBgClass: 'bg-soft-aesthetic-polaroid',
     envelopeCelebrationBg: 'bg-envelope-celebration-polaroid',
-    cardClass: 'border border-emerald-200/90 bg-white/95 shadow-xl shadow-emerald-900/10 rounded-3xl p-5 sm:p-6 w-full text-center relative',
-    subCardClass: 'border border-emerald-200/90 bg-white/95 shadow-xl shadow-emerald-900/10 rounded-3xl p-5 sm:p-6 w-full max-w-[260px] text-center',
-    headingClass: 'text-emerald-950',
-    accentTextClass: 'text-emerald-700',
-    subtitleClass: 'text-emerald-800/80',
-    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 shadow-md shadow-emerald-700/30 hover:shadow-lg hover:shadow-emerald-700/40 active:scale-95 cursor-pointer',
-    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 shadow-md shadow-emerald-700/30 active:scale-95 cursor-pointer',
-    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 shadow-md shadow-emerald-700/30 active:scale-95 cursor-pointer',
-    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/80 shadow-xs active:scale-95 cursor-pointer',
-    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-teal-900 bg-teal-50 hover:bg-teal-100 border border-teal-200/80 shadow-xs active:scale-95 cursor-pointer',
-    reasonCardClass: 'border border-emerald-200/90 bg-white/95 shadow-xs rounded-2xl',
-    iconBoxClass: 'bg-emerald-50 border border-emerald-200/80',
-    waxColor: '#047857',
+    cardClass: 'birthday-card-polaroid p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-polaroid p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-slate-900',
+    accentTextClass: 'text-rose-600',
+    subtitleClass: 'text-slate-500',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 shadow-md shadow-rose-600/30 hover:shadow-lg hover:shadow-rose-600/40 active:scale-95 cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 border border-slate-200/90 shadow-2xs active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 shadow-md shadow-rose-600/30 active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 shadow-md shadow-rose-600/30 active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200/90 shadow-xs active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200/90 shadow-xs active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-polaroid',
+    iconBoxClass: 'bg-rose-50 border border-rose-200/80',
+    waxColor: '#E11D48',
     sealEmoji: '⚡',
-    envelopeGradient: 'bg-gradient-to-br from-emerald-700 via-teal-800 to-emerald-950 border-emerald-400/50',
-    envelopeOverlay: 'bg-emerald-950/60',
-    envelopePeekingBorder: 'border-emerald-200',
-    envelopePeekingText: 'text-emerald-950',
-    envelopeFolds: ['#064e3b', '#047857', '#059669'],
-    letterCardBorder: 'border-emerald-200/90 bg-white/95',
-    letterBorderBottom: 'border-emerald-100',
-    letterHeaderClass: 'text-emerald-950',
-    letterSignOffClass: 'text-emerald-800',
-    confettiColors: ['#10b981', '#34d399', '#059669', '#f59e0b', '#fbbf24', '#ffffff'],
+    envelopeGradient: 'bg-gradient-to-br from-rose-700 via-red-700 to-rose-900 border-rose-400/50',
+    envelopeOverlay: 'bg-rose-950/60',
+    envelopePeekingBorder: 'border-rose-200',
+    envelopePeekingText: 'text-rose-950',
+    envelopeFolds: ['#881337', '#9f1239', '#e11d48'],
+    letterCardBorder: 'border-rose-200/90 bg-white/95',
+    letterBorderBottom: 'border-rose-100',
+    letterHeaderClass: 'text-rose-950',
+    letterSignOffClass: 'text-rose-800',
+    confettiColors: ['#e11d48', '#f43f5e', '#fb7185', '#ffffff', '#f59e0b'],
     defaultReasons: [
       { icon: '🤝', title: 'Loyal Brotherhood', desc: 'Standing together through every laugh, victory, and unforgettable chapter!' },
       { icon: '⚡', title: 'Unmatched Energy', desc: 'From crazy ideas to unstoppable adventures, our vibe is completely one of a kind!' },
       { icon: '📸', title: 'Timeless Memories', desc: 'Every road trip, late-night chat, and memory taped forever into our story!' },
     ],
     defaultLetter: (recipientName) =>
-      `Dear ${recipientName}, looking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. 📸⚡\n\nYou bring unmatched loyalty, real energy, and genuine warmth into every day. Wishing you the happiest and most unforgettable birthday! 💚⚡`,
+      `Dear ${recipientName}, looking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. 📸⚡\n\nYou bring unmatched loyalty, real energy, and genuine warmth into every day. Wishing you the happiest and most unforgettable birthday! ❤️⚡`,
     defaultSignOff: (senderName) => `Always your brother, ${senderName} 📸⚡`,
   },
 
@@ -648,9 +648,9 @@ export default function LivePhonePreview({ formData = {} }) {
                         <AppleEmoji emoji="🌟" size={18} />
                       </div>
 
-                      <div className="relative my-1 mx-auto inline-block">
-                        <div className="polaroid-frame shadow-xl">
-                          <div className="relative w-[170px] sm:w-[185px] h-[215px] sm:h-[235px] overflow-hidden rounded-[3px] bg-slate-100 shadow-inner">
+                      <div className="relative my-1 mx-auto flex flex-col items-center justify-center">
+                        <div className="polaroid-frame shadow-xl flex flex-col items-center justify-center mx-auto">
+                          <div className="relative w-[170px] sm:w-[185px] h-[215px] sm:h-[235px] mx-auto overflow-hidden rounded-[8px] bg-slate-100 shadow-inner">
                             <img
                               src={heroPhotoUrl}
                               alt={recipientName}
@@ -658,7 +658,7 @@ export default function LivePhonePreview({ formData = {} }) {
                               style={{ objectPosition: 'center 12%' }}
                             />
                           </div>
-                          <p className={`mt-2 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1`}>
+                          <p className={`mt-2 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1 max-w-[170px] sm:max-w-[185px] leading-relaxed mx-auto`}>
                             <span>{renderAppleText(photoCaption, 12)}</span>
                           </p>
                         </div>

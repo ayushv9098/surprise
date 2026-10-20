@@ -153,10 +153,10 @@ export const TEMPLATE_PRESETS = {
     ],
     letter: {
       title: 'A Little Note For You',
-      content: `Dear Rohan,\n\nLooking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. 📸⚡\n\nYou bring unmatched loyalty, real energy, and genuine warmth into every day. Wishing you the happiest and most unforgettable birthday! 💚⚡`,
+      content: `Dear Rohan,\n\nLooking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. 📸⚡\n\nYou bring unmatched loyalty, real energy, and genuine warmth into every day. Wishing you the happiest and most unforgettable birthday! ❤️⚡`,
       signOff: 'Always your brother,\nAlex 📸⚡',
       sealEmoji: '⚡',
-      waxColor: '#047857',
+      waxColor: '#E11D48',
     },
     songId: 'bollywood-lofi-chill',
   },
