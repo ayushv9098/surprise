@@ -44,7 +44,7 @@ const THEMES = {
     subtitleClass: 'text-slate-500',
     btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary animate-pulse-glow cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white btn-primary active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary active:scale-95 cursor-pointer',
     btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary active:scale-95 cursor-pointer',
     btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-blue-900 bg-blue-50 hover:bg-blue-100 border border-blue-200 active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-indigo-900 bg-indigo-50/80 hover:bg-indigo-100 border border-indigo-200 active:scale-95 cursor-pointer',
@@ -88,7 +88,7 @@ const THEMES = {
     subtitleClass: 'text-amber-900/80',
     btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-amber-900 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
     btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 shadow-md shadow-amber-500/30 active:scale-95 cursor-pointer',
     btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-950 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-900 bg-yellow-100/70 hover:bg-yellow-100 border border-yellow-200/80 shadow-xs active:scale-95 cursor-pointer',
@@ -96,11 +96,11 @@ const THEMES = {
     iconBoxClass: 'bg-amber-50 border border-amber-200/80',
     waxColor: '#D97706',
     sealEmoji: '⭐',
-    envelopeGradient: 'bg-gradient-to-br from-amber-600 via-amber-700 to-yellow-800 border-amber-300/50',
+    envelopeGradient: 'bg-gradient-to-br from-amber-500 via-amber-600 to-yellow-600 border-amber-300/60',
     envelopeOverlay: 'bg-amber-950/60',
     envelopePeekingBorder: 'border-amber-200',
     envelopePeekingText: 'text-amber-900',
-    envelopeFolds: ['#78350f', '#b45309', '#d97706'],
+    envelopeFolds: ['#b45309', '#d97706', '#f59e0b'],
     letterCardBorder: 'border-amber-200/90',
     letterBorderBottom: 'border-amber-100',
     letterHeaderClass: 'text-amber-900',
@@ -124,27 +124,27 @@ const THEMES = {
     ambientEmojis: ['📸', '⚡', '🎞️', '📜', '🤎', '⭐', '✨', '☕'],
     primaryEmoji: '📸',
     containerBgClass: 'bg-gradient-to-b from-stone-100/80 via-amber-50/50 to-orange-50/30',
-    envelopeCelebrationBg: 'bg-gradient-to-b from-stone-950 via-amber-950 to-stone-900',
+    envelopeCelebrationBg: 'bg-gradient-to-b from-stone-900 via-amber-950 to-stone-950',
     cardClass: 'border border-amber-800/20 bg-[#FFFDF9]/95 shadow-lg shadow-amber-900/5 rounded-3xl p-5 sm:p-6 w-full text-center relative',
     subCardClass: 'border border-amber-800/20 bg-[#FFFDF9]/95 shadow-lg shadow-amber-900/5 rounded-3xl p-5 sm:p-6 w-full max-w-[260px] text-center',
     headingClass: 'text-stone-900',
     accentTextClass: 'text-amber-800',
     subtitleClass: 'text-stone-700',
-    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-800 via-stone-800 to-amber-950 shadow-md shadow-stone-800/30 active:scale-95 cursor-pointer',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 shadow-md shadow-amber-700/25 active:scale-95 cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-stone-900 bg-amber-100/70 hover:bg-amber-100 border border-amber-200/80 active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-800 via-stone-800 to-amber-950 shadow-md shadow-stone-800/30 active:scale-95 cursor-pointer',
-    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-800 via-stone-800 to-amber-950 shadow-stone-800/20 active:scale-95 cursor-pointer',
-    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-stone-900 bg-amber-100/70 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 shadow-md shadow-amber-700/25 active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 shadow-xs active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-stone-900 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-stone-800 bg-stone-100/90 hover:bg-stone-200/90 border border-stone-300/80 shadow-xs active:scale-95 cursor-pointer',
     reasonCardClass: 'border border-amber-800/20 bg-[#FFFDF9]/95 shadow-xs rounded-2xl',
     iconBoxClass: 'bg-amber-50/80 border border-amber-200/60',
-    waxColor: '#78350F',
+    waxColor: '#92400E',
     sealEmoji: '⚡',
-    envelopeGradient: 'bg-gradient-to-br from-amber-900 via-stone-800 to-amber-950 border-amber-600/40',
+    envelopeGradient: 'bg-gradient-to-br from-amber-600 via-amber-700 to-stone-800 border-amber-400/50',
     envelopeOverlay: 'bg-stone-950/60',
     envelopePeekingBorder: 'border-amber-300',
     envelopePeekingText: 'text-stone-900',
-    envelopeFolds: ['#451a03', '#78350f', '#92400e'],
+    envelopeFolds: ['#78350f', '#92400e', '#b45309'],
     letterCardBorder: 'border-amber-800/20 bg-[#FFFDF9]',
     letterBorderBottom: 'border-amber-100',
     letterHeaderClass: 'text-stone-900',
@@ -176,7 +176,7 @@ const THEMES = {
     subtitleClass: 'text-slate-500',
     btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-rose animate-pulse-glow-rose cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-rose-900 bg-rose-50 hover:bg-rose-100 border border-rose-200 active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-5 rounded-xl text-xs font-bold text-white btn-primary-rose active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-rose active:scale-95 cursor-pointer',
     btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-rose active:scale-95 cursor-pointer',
     btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200 active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-pink-950 bg-pink-50/80 hover:bg-pink-100 border border-pink-200 active:scale-95 cursor-pointer',
@@ -220,7 +220,7 @@ const THEMES = {
     subtitleClass: 'text-orange-900/70',
     btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-orange-950 bg-orange-100/80 hover:bg-orange-100 border border-orange-200/80 active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
     btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-orange-500/30 active:scale-95 cursor-pointer',
     btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-950 bg-orange-100/80 hover:bg-orange-100 border border-orange-200/80 shadow-xs active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-900 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
@@ -264,7 +264,7 @@ const THEMES = {
     subtitleClass: 'text-purple-900/70',
     btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-purple-950 bg-purple-100/80 hover:bg-purple-100 border border-purple-300/80 active:scale-95 cursor-pointer',
-    btnActionClass: 'py-2 px-5 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
     btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-purple-600/30 active:scale-95 cursor-pointer',
     btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-950 bg-purple-100/80 hover:bg-purple-100 border border-purple-200/80 shadow-xs active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-900 bg-violet-100/80 hover:bg-violet-100 border border-violet-200/80 shadow-xs active:scale-95 cursor-pointer',
@@ -664,20 +664,20 @@ export default function LivePhonePreview({ formData = {} }) {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-center gap-2.5 mt-2 w-full">
+                      <div className="flex items-center justify-center gap-2.5 mt-2.5 w-full max-w-[240px]">
                         <button
                           type="button"
                           onClick={() => setScreen(0)}
-                          className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                          className="flex-1 py-2 px-3 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs text-xs font-semibold transition-all active:scale-95 cursor-pointer text-center"
                         >
                           ← Back
                         </button>
                         <button
                           type="button"
                           onClick={handleNextPhoto}
-                          className={`inline-flex items-center justify-center gap-1.5 ${theme.btnActionClass}`}
+                          className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 ${theme.btnActionClass}`}
                         >
-                          <span>Tap to Continue</span>
+                          <span>Next</span>
                           <span>→</span>
                         </button>
                       </div>
@@ -717,20 +717,11 @@ export default function LivePhonePreview({ formData = {} }) {
                           <AppleEmoji emoji="✨" size={15} />
                         </button>
 
-                        <button
-                          type="button"
-                          onClick={handleChooseFeeling}
-                          className={`w-full flex items-center justify-center gap-2 ${theme.btnMood3Class}`}
-                        >
-                          <span>Blessed & Loved!</span>
-                          <AppleEmoji emoji="💖" size={15} />
-                        </button>
-
                         <div className="mt-1">
                           <button
                             type="button"
                             onClick={() => setScreen(1)}
-                            className="inline-flex items-center justify-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 w-full cursor-pointer"
+                            className="w-full py-2 px-3 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs text-xs font-semibold transition-all active:scale-95 cursor-pointer text-center"
                           >
                             ← Back
                           </button>
@@ -773,20 +764,20 @@ export default function LivePhonePreview({ formData = {} }) {
                       ))}
                     </div>
 
-                    <div className="flex items-center justify-center gap-2.5 mt-2.5 w-full">
+                    <div className="flex items-center justify-center gap-2.5 mt-2.5 w-full max-w-[240px]">
                       <button
                         type="button"
                         onClick={() => setScreen(2)}
-                        className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                        className="flex-1 py-2 px-3 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs text-xs font-semibold transition-all active:scale-95 cursor-pointer text-center"
                       >
                         ← Back
                       </button>
                       <button
                         type="button"
                         onClick={handleNextReasons}
-                        className={`inline-flex items-center justify-center gap-1.5 ${theme.btnActionClass}`}
+                        className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 ${theme.btnActionClass}`}
                       >
-                        <span>One Last Surprise</span>
+                        <span>Next</span>
                         <span>→</span>
                       </button>
                     </div>
@@ -859,11 +850,11 @@ export default function LivePhonePreview({ formData = {} }) {
                         </p>
 
                         {/* Back Button */}
-                        <div className="mt-2.5">
+                        <div className="mt-2.5 w-full max-w-[240px] flex justify-center">
                           <button
                             type="button"
                             onClick={() => setScreen(3)}
-                            className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                            className="py-2 px-6 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-2xs text-xs font-semibold transition-all active:scale-95 cursor-pointer text-center"
                           >
                             ← Back
                           </button>
@@ -904,20 +895,20 @@ export default function LivePhonePreview({ formData = {} }) {
                         </div>
 
                         {/* Action Buttons Below Open Letter */}
-                        <div className="flex items-center justify-center gap-2.5 mt-3.5">
+                        <div className="flex items-center justify-center gap-2.5 mt-3 w-full max-w-[240px]">
                           <button
                             type="button"
                             onClick={() => setEnvelopeOpen(false)}
-                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl text-white/90 hover:text-white border border-white/30 bg-white/15 backdrop-blur-sm text-xs font-semibold transition-all active:scale-95 cursor-pointer"
+                            className="flex-1 py-2 px-3 rounded-xl text-white/90 hover:text-white border border-white/30 bg-white/15 backdrop-blur-sm text-xs font-semibold transition-all active:scale-95 cursor-pointer text-center"
                           >
-                            <span>Close</span>
+                            Close
                           </button>
                           <button
                             type="button"
                             onClick={handleResetScreen}
-                            className={`inline-flex items-center justify-center gap-1.5 ${theme.btnActionClass}`}
+                            className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 ${theme.btnActionClass}`}
                           >
-                            <span>Celebrate Again</span>
+                            <span>Replay</span>
                             <span>🔁</span>
                           </button>
                         </div>

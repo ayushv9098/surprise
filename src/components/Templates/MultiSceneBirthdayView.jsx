@@ -180,20 +180,20 @@ export default function MultiSceneBirthdayView({
       return {
         celebrationEmoji: '📸',
         headingColorClass: 'text-stone-900',
-        headingAccentClass: 'text-amber-800',
+        headingAccentClass: 'text-amber-700',
         cardClass: 'birthday-card-polaroid',
         reasonCardClass: 'special-reason-card-polaroid',
         reasonIconBgClass: 'bg-amber-100/60 border border-amber-200/80',
         reasonTitleClass: 'text-stone-900',
         primaryBtnClass: 'btn-primary-polaroid',
         secondaryBtnClass: 'btn-secondary-polaroid',
-        coverBtnGradient: 'bg-gradient-to-r from-[#92400E] via-[#78350F] to-[#451A03] hover:from-[#78350F] hover:to-[#291002] shadow-amber-900/35',
-        envelopeBgGradient: 'bg-gradient-to-br from-amber-800 via-stone-800 to-amber-950 border-amber-500/40',
+        coverBtnGradient: 'bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 hover:from-amber-700 hover:to-amber-900 shadow-amber-700/35',
+        envelopeBgGradient: 'bg-gradient-to-br from-amber-600 via-amber-700 to-stone-800 border-amber-400/50',
         envelopeShading: 'bg-stone-950/60',
         envelopeCardBorder: 'border-amber-200/80',
         envelopeCardTitle: 'text-amber-950',
-        envelopeFolds: { fold1: '#451a03', fold2: '#78350f', fold3: '#92400e' },
-        defaultWaxColor: '#78350F',
+        envelopeFolds: { fold1: '#78350f', fold2: '#92400e', fold3: '#b45309' },
+        defaultWaxColor: '#92400E',
         defaultSealEmoji: '⚡',
         openLetterBorder: 'border-amber-200/60',
         openLetterHeader: 'text-amber-950',
@@ -468,11 +468,11 @@ export default function MultiSceneBirthdayView({
   const containerBgClass = isCelebrationBg ? themeTokens.bgContainerOpen : themeTokens.bgContainerClosed;
 
   // Modern Luxury Squircle Button Classes with min-h-[44px] touch targets
-  const backBtnClass = "inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-2xl bg-white/85 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs hover:shadow-md text-xs sm:text-sm font-semibold transition-all active:scale-95 cursor-pointer min-h-[44px]";
+  const backBtnClass = "inline-flex items-center justify-center gap-1.5 px-6 py-3 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 border border-slate-200/90 shadow-xs hover:shadow-md text-xs sm:text-sm font-bold transition-all active:scale-95 cursor-pointer min-h-[44px]";
 
-  const primaryBtnClass = `inline-flex items-center justify-center gap-1.5 px-7 py-2.5 rounded-2xl text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer ${themeTokens.primaryBtnClass} min-h-[44px]`;
+  const primaryBtnClass = `inline-flex items-center justify-center gap-1.5 px-6 py-3 rounded-xl text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer ${themeTokens.primaryBtnClass} min-h-[44px]`;
 
-  const secondaryBtnClass = `inline-flex items-center justify-center gap-1.5 px-7 py-2.5 rounded-2xl text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer ${themeTokens.secondaryBtnClass} min-h-[44px]`;
+  const secondaryBtnClass = `inline-flex items-center justify-center gap-1.5 px-6 py-3 rounded-xl text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer ${themeTokens.secondaryBtnClass} min-h-[44px]`;
 
   return (
     <div className={`relative min-h-[100dvh] w-full flex flex-col items-center justify-center px-3 sm:px-4 py-4 sm:py-8 overflow-x-hidden transition-colors duration-700 ${containerBgClass}`}>
@@ -591,21 +591,20 @@ export default function MultiSceneBirthdayView({
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-5 sm:mt-6 w-full max-w-xs sm:max-w-sm flex-wrap">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-5 sm:mt-6 w-full max-w-xs sm:max-w-sm">
               <button
                 type="button"
                 onClick={() => setScene(0)}
-                className={`${backBtnClass} flex-1 sm:flex-initial`}
+                className={`${backBtnClass} flex-1 text-center`}
               >
                 ← Back
               </button>
               <button
                 type="button"
                 onClick={handleNextFromPhoto}
-                className={`${primaryBtnClass} flex-1 sm:flex-initial`}
+                className={`${primaryBtnClass} flex-1 text-center`}
               >
-                <span>Next</span>
-                <AppleEmoji emoji="✨" size={18} />
+                <span>Next →</span>
               </button>
             </div>
           </div>
@@ -628,7 +627,7 @@ export default function MultiSceneBirthdayView({
                 <button
                   type="button"
                   onClick={handleChooseFeeling}
-                  className={`${primaryBtnClass} w-full py-3 sm:py-3.5 px-6`}
+                  className={`${primaryBtnClass} w-full py-3.5 px-6`}
                 >
                   <span>Super Happy!</span>
                   <AppleEmoji emoji="🥳" size={20} />
@@ -637,7 +636,7 @@ export default function MultiSceneBirthdayView({
                 <button
                   type="button"
                   onClick={handleChooseFeeling}
-                  className={`${secondaryBtnClass} w-full py-3 sm:py-3.5 px-6`}
+                  className={`${secondaryBtnClass} w-full py-3.5 px-6`}
                 >
                   <span>So Excited!</span>
                   <AppleEmoji emoji="✨" size={20} />
@@ -647,7 +646,7 @@ export default function MultiSceneBirthdayView({
                   <button
                     type="button"
                     onClick={() => setScene(1)}
-                    className={`${backBtnClass} w-full py-2.5 sm:py-3`}
+                    className={`${backBtnClass} w-full py-3`}
                   >
                     ← Back
                   </button>
@@ -691,21 +690,20 @@ export default function MultiSceneBirthdayView({
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 w-full max-w-xs sm:max-w-sm flex-wrap">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 w-full max-w-xs sm:max-w-sm">
               <button
                 type="button"
                 onClick={() => setScene(2)}
-                className={`${backBtnClass} flex-1 sm:flex-initial`}
+                className={`${backBtnClass} flex-1 text-center`}
               >
                 ← Back
               </button>
               <button
                 type="button"
                 onClick={handleNextFromReasons}
-                className={`${primaryBtnClass} flex-1 sm:flex-initial`}
+                className={`${primaryBtnClass} flex-1 text-center`}
               >
-                <span>Next</span>
-                <AppleEmoji emoji="✨" size={18} />
+                <span>Next →</span>
               </button>
             </div>
           </div>
@@ -838,24 +836,26 @@ export default function MultiSceneBirthdayView({
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 w-full max-w-xs sm:max-w-sm flex-wrap">
+                <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 w-full max-w-xs sm:max-w-sm">
                   <button
                     type="button"
                     onClick={() => {
                       setIsEnvelopeOpen(false);
-                      setScene(3);
+                      setScene(0);
+                      triggerConfettiCannon();
                     }}
-                    className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-2xl text-white/90 hover:text-white border border-white/30 bg-white/15 hover:bg-white/25 backdrop-blur-md text-xs sm:text-sm font-semibold shadow-xs hover:shadow-md transition-all duration-200 active:scale-95 cursor-pointer min-h-[44px] flex-1 sm:flex-initial"
+                    className="inline-flex items-center justify-center gap-1.5 px-6 py-3 rounded-xl text-white/95 hover:text-white border border-white/30 bg-white/20 hover:bg-white/30 backdrop-blur-md text-xs sm:text-sm font-bold shadow-md transition-all duration-200 active:scale-95 cursor-pointer min-h-[44px] flex-1 text-center"
                   >
-                    ← Back
+                    <span>Replay</span>
+                    <AppleEmoji emoji="🔄" size={16} />
                   </button>
                   <button
                     type="button"
                     onClick={handleCloseEnvelope}
-                    className={`${primaryBtnClass} px-7 py-2.5 text-xs sm:text-sm flex-1 sm:flex-initial min-h-[44px]`}
+                    className={`${primaryBtnClass} flex-1 text-center`}
                   >
-                    <span>Close Envelope</span>
-                    <AppleEmoji emoji="💌" size={18} />
+                    <span>Close</span>
+                    <AppleEmoji emoji="💌" size={16} />
                   </button>
                 </div>
               </div>

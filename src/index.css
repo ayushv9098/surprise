@@ -343,7 +343,7 @@
 }
 
 .bg-envelope-celebration-polaroid {
-  background: linear-gradient(150deg, #1c1917 0%, #292524 45%, #0c0a09 100%);
+  background: linear-gradient(150deg, #292524 0%, #44403c 45%, #1c1917 100%);
   transition: background 0.7s;
   position: relative;
 }
@@ -410,11 +410,11 @@
 .birthday-card-polaroid {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(214, 211, 209, 0.85);
+  background: rgba(255, 253, 249, 0.95);
+  border: 1px solid rgba(245, 158, 11, 0.25);
   border-radius: 28px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 20px 45px -15px rgba(68, 64, 60, 0.15), 0 4px 12px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 45px -15px rgba(180, 83, 9, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 @media (max-width: 640px) {
@@ -569,7 +569,7 @@
 .btn-primary-polaroid {
   color: #fff;
   cursor: pointer;
-  background: linear-gradient(135deg, #92400E 0%, #78350F 50%, #451A03 100%);
+  background: linear-gradient(135deg, #D97706 0%, #B45309 50%, #78350F 100%);
   border: none;
   border-radius: 1rem;
   justify-content: center;
@@ -578,12 +578,12 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   min-height: 44px;
-  box-shadow: 0 10px 24px -4px rgba(120, 53, 15, 0.35);
+  box-shadow: 0 10px 24px -4px rgba(180, 83, 9, 0.35);
 }
 .btn-primary-polaroid:hover {
-  background: linear-gradient(135deg, #78350F 0%, #451A03 50%, #291002 100%);
+  background: linear-gradient(135deg, #B45309 0%, #92400E 50%, #682607 100%);
   transform: translateY(-1.5px) scale(1.01);
-  box-shadow: 0 14px 30px -4px rgba(120, 53, 15, 0.45);
+  box-shadow: 0 14px 30px -4px rgba(180, 83, 9, 0.45);
 }
 .btn-primary-polaroid:active {
   transform: translateY(0) scale(0.98);
@@ -707,7 +707,7 @@
 .btn-secondary-polaroid {
   color: #fff;
   cursor: pointer;
-  background: linear-gradient(135deg, #B45309 0%, #92400E 50%, #78350F 100%);
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #92400E 100%);
   border: none;
   border-radius: 1rem;
   justify-content: center;
@@ -716,12 +716,12 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   min-height: 44px;
-  box-shadow: 0 8px 20px -4px rgba(146, 64, 14, 0.3);
+  box-shadow: 0 8px 20px -4px rgba(217, 119, 6, 0.3);
 }
 .btn-secondary-polaroid:hover {
-  background: linear-gradient(135deg, #92400E 0%, #78350F 50%, #451A03 100%);
+  background: linear-gradient(135deg, #D97706 0%, #B45309 50%, #78350F 100%);
   transform: translateY(-1.5px) scale(1.01);
-  box-shadow: 0 12px 26px -4px rgba(146, 64, 14, 0.4);
+  box-shadow: 0 12px 26px -4px rgba(217, 119, 6, 0.4);
 }
 .btn-secondary-polaroid:active {
   transform: translateY(0) scale(0.98);
