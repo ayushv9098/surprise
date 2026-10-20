@@ -1,349 +1,217 @@
-import React, { useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import React from 'react';
 import AppleEmoji from '../common/AppleEmoji';
 
 const WAX_SEALS = [
-  { emoji: '💌', color: '#E11D48', label: 'Ruby Heart' },
-  { emoji: '🌹', color: '#BE123C', label: 'Rose Wine' },
-  { emoji: '✨', color: '#D97706', label: 'Golden Sparkle' },
-  { emoji: '🕊️', color: '#7C3AED', label: 'Lavender Peace' },
-  { emoji: '🎂', color: '#B45309', label: 'Birthday Gold' },
-  { emoji: '💖', color: '#DB2777', label: 'Soft Berry' },
+  { emoji: '👑', color: '#1D4ED8', label: 'Royal Sapphire' },
+  { emoji: '🌸', color: '#E11D48', label: 'Blush Blossom' },
+  { emoji: '⭐', color: '#D97706', label: 'Golden Spark' },
+  { emoji: '⚡', color: '#78350F', label: 'Retro Polaroid' },
+  { emoji: '✨', color: '#EA580C', label: 'Princess Peach' },
+  { emoji: '💜', color: '#7C3AED', label: 'Lavender Dream' },
 ];
 
 export default function StepSurprises({ formData, onChange }) {
-  const [activeTab, setActiveTab] = useState('letter'); // 'letter' | 'quiz' | 'scratch'
+  const isBoy = formData.gender === 'boy';
+
+  // Default 3 reasons
+  const specialReasons = formData.specialReasons && formData.specialReasons.length === 3
+    ? formData.specialReasons
+    : isBoy
+    ? [
+        { icon: '💪', title: 'Lucky to Have You', desc: 'So grateful to have a brother like you in my corner every day!' },
+        { icon: '⭐', title: 'Always There', desc: 'Always standing by my side with endless laughs and genuine support!' },
+        { icon: '👑', title: 'Irreplaceable', desc: 'No one can ever match your incredible spirit and heart. A true champion!' },
+      ]
+    : [
+        { icon: '🌸', title: 'Pure Sunshine', desc: 'The effortless way you turn every ordinary moment into joy!' },
+        { icon: '✨', title: 'Gentle Soul', desc: 'The quiet kindness and sparkling positivity you share with everyone!' },
+        { icon: '💖', title: 'Irreplaceable Friend', desc: 'A truly irreplaceable friend whose presence makes everything brighter!' },
+      ];
 
   const letter = formData.letter || {
-    title: 'A note sealed with my entire heart...',
-    content: '',
-    sealEmoji: '💌',
-    waxColor: '#E11D48',
+    title: 'A Little Note For You',
+    content: isBoy
+      ? `Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`
+      : `My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together. 🌸✨`,
+    signOff: isBoy
+      ? `With all my love & respect,\n${formData.senderName || 'Alex'} 👑`
+      : `Forever & always,\n${formData.senderName || 'Elena'} 🌸`,
+    sealEmoji: isBoy ? '👑' : '🌸',
+    waxColor: isBoy ? '#1D4ED8' : '#E11D48',
   };
 
-  const quiz = formData.quiz || {
-    enabled: true,
-    question: 'What is my absolute favorite thing about you?',
-    options: [
-      'The way your eyes crinkle when you laugh',
-      'How passionately you talk about your dreams',
-      'How you steal all the French fries',
-      'All of the above & everything you are ❤️',
-    ],
-    correctIndex: 3,
-    rewardTitle: 'Cadbury Dairy Milk Silk Unlocked! 🍫✨',
-    rewardMessage: 'Show this secret screen to me to claim your giant chocolate bar + warm bear hug tonight!',
-  };
-
-  const scratchCard = formData.scratchCard || {
-    enabled: true,
-    title: 'Scratch to reveal my secret promise ✨',
-    hiddenSecret: 'Coupon for 1 spontaneous midnight ice-cream drive + unlimited forehead kisses whenever you want! Valid forever.',
+  const updateReason = (index, field, value) => {
+    const updated = specialReasons.map((r, i) => (i === index ? { ...r, [field]: value } : r));
+    onChange({ specialReasons: updated });
   };
 
   const updateLetter = (patch) => {
     onChange({ letter: { ...letter, ...patch } });
   };
 
-  const updateQuiz = (patch) => {
-    onChange({ quiz: { ...quiz, ...patch } });
-  };
-
-  const updateQuizOption = (index, value) => {
-    const newOptions = [...quiz.options];
-    newOptions[index] = value;
-    onChange({ quiz: { ...quiz, options: newOptions } });
-  };
-
-  const updateScratch = (patch) => {
-    onChange({ scratchCard: { ...scratchCard, ...patch } });
-  };
+  const selectedSeal = WAX_SEALS.find((s) => s.emoji === letter.sealEmoji) || WAX_SEALS[0];
 
   return (
-    <div className="space-y-6">
-      {/* Header Info */}
-      <div className="border-b border-gray-100 pb-4">
-        <h2 className="text-lg font-semibold text-gray-900">
-          Letters & Surprises
-        </h2>
-        <p className="text-sm text-gray-500 mt-0.5">
-          Write a secret sealed letter, and add interactive surprises.
-        </p>
+    <div className="space-y-7">
+      {/* 1) "WHY YOU'RE SPECIAL" 3 CARDS */}
+      <div className="space-y-4">
+        <div className="border-b border-slate-100 pb-3">
+          <h2 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-1.5 truncate">
+            <span>1. Three "Why You're Special" Reasons</span>
+            <AppleEmoji emoji="💫" size={16} />
+          </h2>
+        </div>
+
+        <div className="space-y-3">
+          {specialReasons.map((card, idx) => {
+            const basePalette = isBoy
+              ? ['💪', '⭐', '👑', '⚡', '🔥']
+              : ['🌸', '✨', '💖', '⭐', '🧸'];
+            const palette = basePalette.includes(card.icon)
+              ? basePalette
+              : [card.icon, ...basePalette.slice(0, 4)];
+
+            return (
+              <div
+                key={idx}
+                className="p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 bg-slate-50/50 hover:bg-white transition-all space-y-2.5"
+              >
+                {/* Row 1 (Icon selector) */}
+                <div className="flex items-center justify-between gap-2 pb-0.5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-5 h-5 rounded-full bg-slate-900 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                      {idx + 1}
+                    </span>
+                    <span className="text-[11px] font-semibold text-slate-500">Icon:</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    {palette.map((em) => (
+                      <button
+                        key={em}
+                        type="button"
+                        onClick={() => updateReason(idx, 'icon', em)}
+                        title={`Use ${em}`}
+                        className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
+                          card.icon === em
+                            ? 'bg-rose-100 ring-2 ring-rose-400 scale-105 shadow-2xs'
+                            : 'bg-white hover:bg-slate-100 border border-slate-200/70'
+                        }`}
+                      >
+                        <AppleEmoji emoji={em} size={14} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Row 2 (Reason Title Input) */}
+                <input
+                  type="text"
+                  value={card.title || ''}
+                  onChange={(e) => updateReason(idx, 'title', e.target.value)}
+                  placeholder="Reason Title (e.g. Lucky to Have You)"
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
+                />
+
+                {/* Row 3 (Description Textarea) */}
+                <textarea
+                  rows={2}
+                  value={card.desc || ''}
+                  onChange={(e) => updateReason(idx, 'desc', e.target.value)}
+                  placeholder="e.g. Always bringing energy and joy..."
+                  className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 placeholder-slate-400 leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all resize-none"
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Surprises Sub-navigation Tabs */}
-      <div className="flex border-b border-gray-200">
-        <button
-          type="button"
-          onClick={() => setActiveTab('letter')}
-          className={`py-2 px-4 text-sm font-medium border-b-2 transition-all cursor-pointer ${
-            activeTab === 'letter'
-              ? 'border-rose-500 text-rose-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          Sealed Letter
-        </button>
+      {/* 2) SECRET ENVELOPE LETTER */}
+      <div className="space-y-4 pt-5 border-t border-slate-100">
+        <div className="border-b border-slate-100 pb-3">
+          <h2 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-1.5 truncate">
+            <span>2. Secret Envelope Letter</span>
+            <AppleEmoji emoji="💌" size={16} />
+          </h2>
+        </div>
 
-        <button
-          type="button"
-          onClick={() => setActiveTab('quiz')}
-          className={`py-2 px-4 text-sm font-medium border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
-            activeTab === 'quiz'
-              ? 'border-rose-500 text-rose-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          <span>Fun Quiz</span>
-          {quiz.enabled && (
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-          )}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('scratch')}
-          className={`py-2 px-4 text-sm font-medium border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
-            activeTab === 'scratch'
-              ? 'border-rose-500 text-rose-600'
-              : 'border-transparent text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          <span>Scratch Card</span>
-          {scratchCard.enabled && (
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" />
-          )}
-        </button>
-      </div>
-
-      {/* TAB 1: WAX SEALED LETTER */}
-      {activeTab === 'letter' && (
-        <div className="space-y-5">
-          {/* Letter Title */}
-          <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-gray-700">
-              Envelope Header
-            </label>
-            <input
-              type="text"
-              value={letter.title}
-              onChange={(e) => updateLetter({ title: e.target.value })}
-              placeholder="e.g. A note sealed with my entire heart..."
-              className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
-            />
-          </div>
-
-          {/* Letter Wax Seal Stamp Selector */}
-          <div className="space-y-2">
-            <label className="block text-xs font-medium text-gray-700">
-              Wax Seal Stamp
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {WAX_SEALS.map((seal, idx) => {
+        <div className="space-y-4">
+          {/* Wax Seal Stamp Selector */}
+          <div className="space-y-2.5">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <label className="text-xs font-semibold text-slate-700">
+                Wax Seal Stamp Style
+              </label>
+              {selectedSeal && (
+                <span className="text-[11px] sm:text-xs font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-full flex items-center gap-1 shrink-0">
+                  <span>{selectedSeal.label}</span>
+                  <AppleEmoji emoji={selectedSeal.emoji} size={12} />
+                </span>
+              )}
+            </div>
+            <div className="grid grid-cols-6 gap-2 sm:gap-3 max-w-sm">
+              {WAX_SEALS.map((seal, sIdx) => {
                 const isSelected = letter.sealEmoji === seal.emoji;
                 return (
                   <button
+                    key={sIdx}
                     type="button"
-                    key={idx}
                     onClick={() => updateLetter({ sealEmoji: seal.emoji, waxColor: seal.color })}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium transition-all cursor-pointer ${
+                    title={seal.label}
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xs ${
                       isSelected
-                        ? 'border-rose-500 bg-rose-50 text-rose-700'
-                        : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
+                        ? 'ring-3 ring-rose-500 scale-105 shadow-md'
+                        : 'opacity-70 hover:opacity-100 hover:scale-105'
                     }`}
+                    style={{ backgroundColor: seal.color }}
                   >
-                    <AppleEmoji emoji={seal.emoji} size={16} />
-                    <span>{seal.label}</span>
+                    <AppleEmoji emoji={seal.emoji} size={18} />
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Letter Body Textarea */}
+          {/* Letter Message Body */}
           <div className="space-y-1.5">
-            <div className="flex items-center justify-between">
-              <label className="block text-xs font-medium text-gray-700">
-                Letter Message
+            <div className="flex items-center justify-between gap-2">
+              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+                <span>Heartfelt Letter Message</span>
+                <AppleEmoji emoji="💌" size={14} />
               </label>
-              <span className="text-xs text-gray-400">
-                They tap the wax seal to open
+              <span className="text-[10px] sm:text-[11px] font-medium text-rose-600 bg-rose-50/90 px-2 py-0.5 rounded-full border border-rose-200/60 shrink-0">
+                Revealed on seal break
               </span>
             </div>
             <textarea
-              rows={8}
-              value={letter.content}
+              rows={6}
+              value={letter.content || ''}
               onChange={(e) => updateLetter({ content: e.target.value })}
-              placeholder="Write your heartfelt note here... Pour your feelings, inside jokes, or sweet promises into this letter."
-              className="w-full p-4 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-sans resize-none"
+              placeholder="Write your heartfelt note here... Pour your feelings, inside jokes, or sweet memories."
+              className="w-full min-h-[145px] sm:min-h-[160px] p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border border-slate-200/90 bg-slate-50/40 hover:bg-white focus:bg-white text-slate-900 placeholder-slate-400 text-xs sm:text-sm leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all resize-none shadow-2xs"
+            />
+            <div className="flex items-center justify-between text-[11px] text-slate-400 px-1 pt-0.5">
+              <span>Pour memories, sweet wishes & feelings</span>
+              <span className="font-mono text-[10px] text-slate-400">{letter.content?.length || 0} chars</span>
+            </div>
+          </div>
+
+          {/* Sign-Off Signature */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+              <span>Letter Sign-Off Signature</span>
+              <AppleEmoji emoji="✍️" size={13} />
+            </label>
+            <input
+              type="text"
+              value={letter.signOff || ''}
+              onChange={(e) => updateLetter({ signOff: e.target.value })}
+              placeholder={isBoy ? `With all my love & respect, ${formData.senderName || 'Alex'} 👑` : `Forever & always, ${formData.senderName || 'Elena'} 🌸`}
+              className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-slate-50/40 hover:bg-white focus:bg-white text-slate-900 placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all font-sans shadow-2xs"
             />
           </div>
         </div>
-      )}
-
-      {/* TAB 2: CUTE QUIZ */}
-      {activeTab === 'quiz' && (
-        <div className="space-y-5">
-          {/* Enable Toggle */}
-          <div className="flex items-center justify-between p-3.5 rounded-xl border border-gray-200 bg-gray-50/50">
-            <div>
-              <h4 className="text-sm font-medium text-gray-900">Include Sweet Quiz</h4>
-              <p className="text-xs text-gray-500">
-                A playful question they answer to unlock a treat.
-              </p>
-            </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={quiz.enabled}
-                onChange={(e) => updateQuiz({ enabled: e.target.checked })}
-                className="sr-only peer"
-              />
-              <div className="w-10 h-5 bg-gray-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500" />
-            </label>
-          </div>
-
-          {quiz.enabled && (
-            <div className="space-y-4 pt-1">
-              {/* Question */}
-              <div className="space-y-1.5">
-                <label className="block text-xs font-medium text-gray-700">
-                  Question
-                </label>
-                <input
-                  type="text"
-                  value={quiz.question}
-                  onChange={(e) => updateQuiz({ question: e.target.value })}
-                  placeholder="e.g. What is my favorite thing about you?"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
-                />
-              </div>
-
-              {/* 4 Options */}
-              <div className="space-y-2">
-                <label className="block text-xs font-medium text-gray-700">
-                  Choices (Click checkmark to pick winning answer)
-                </label>
-                <div className="space-y-2">
-                  {quiz.options.map((opt, idx) => {
-                    const isWinning = quiz.correctIndex === idx;
-                    return (
-                      <div
-                        key={idx}
-                        className={`flex items-center gap-2 p-2 rounded-xl border transition-all ${
-                          isWinning
-                            ? 'border-emerald-400 bg-emerald-50/40'
-                            : 'border-gray-200 bg-white'
-                        }`}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => updateQuiz({ correctIndex: idx })}
-                          title={isWinning ? 'Winning answer' : 'Set as winning answer'}
-                          className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 transition-colors cursor-pointer ${
-                            isWinning
-                              ? 'bg-emerald-500 text-white'
-                              : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-                          }`}
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                        </button>
-                        <input
-                          type="text"
-                          value={opt}
-                          onChange={(e) => updateQuizOption(idx, e.target.value)}
-                          placeholder={`Option ${idx + 1}`}
-                          className="w-full text-xs text-gray-800 bg-transparent focus:outline-hidden"
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Reward */}
-              <div className="p-4 rounded-xl border border-gray-200 bg-gray-50/30 space-y-3">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-gray-700">Reward Title</label>
-                  <input
-                    type="text"
-                    value={quiz.rewardTitle}
-                    onChange={(e) => updateQuiz({ rewardTitle: e.target.value })}
-                    placeholder="e.g. Cadbury Dairy Milk Silk Unlocked! 🍫"
-                    className="w-full px-3 py-2 rounded-lg border border-gray-200 bg-white text-xs text-gray-900 focus:outline-hidden focus:border-rose-400"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-gray-700">
-                    Reward Claim Message
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={quiz.rewardMessage}
-                    onChange={(e) => updateQuiz({ rewardMessage: e.target.value })}
-                    placeholder="e.g. Show this screen to Rahul to claim your treat!"
-                    className="w-full p-2.5 rounded-lg border border-gray-200 bg-white text-xs text-gray-900 focus:outline-hidden focus:border-rose-400 resize-none"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* TAB 3: SCRATCH CARD */}
-      {activeTab === 'scratch' && (
-        <div className="space-y-5">
-          {/* Enable Toggle */}
-          <div className="flex items-center justify-between p-3.5 rounded-xl border border-gray-200 bg-gray-50/50">
-            <div>
-              <h4 className="text-sm font-medium text-gray-900">Include Mystery Scratch Card</h4>
-              <p className="text-xs text-gray-500">
-                A card they scratch on screen to reveal a secret coupon or promise.
-              </p>
-            </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={scratchCard.enabled}
-                onChange={(e) => updateScratch({ enabled: e.target.checked })}
-                className="sr-only peer"
-              />
-              <div className="w-10 h-5 bg-gray-200 peer-focus:outline-hidden rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500" />
-            </label>
-          </div>
-
-          {scratchCard.enabled && (
-            <div className="space-y-4 pt-1">
-              <div className="space-y-1.5">
-                <label className="block text-xs font-medium text-gray-700">
-                  Card Cover Title
-                </label>
-                <input
-                  type="text"
-                  value={scratchCard.title}
-                  onChange={(e) => updateScratch({ title: e.target.value })}
-                  placeholder="e.g. Scratch to reveal my secret promise ✨"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="block text-xs font-medium text-gray-700">
-                  Hidden Secret Message
-                </label>
-                <textarea
-                  rows={3}
-                  value={scratchCard.hiddenSecret}
-                  onChange={(e) => updateScratch({ hiddenSecret: e.target.value })}
-                  placeholder="e.g. Coupon for 1 spontaneous midnight ice-cream drive!"
-                  className="w-full p-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all resize-none"
-                />
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

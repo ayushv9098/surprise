@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .font-cursive { font-family: 'Dancing Script', cursive, sans-serif; }
+      .font-sans { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    </style>
+    
+    <!-- Background Gradients -->
+    <linearGradient id="royalBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+
+    <!-- Radial Glow for Ambiance -->
+    <radialGradient id="blueGlow" cx="50%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Card Shadow & Button Glow -->
+    <filter id="royalShadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#020617" flood-opacity="0.45"/>
+    </filter>
+    <filter id="btnGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2563eb" flood-opacity="0.5"/>
+    </filter>
+    <filter id="polaroidShadow" x="-15%" y="-15%" width="130%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+
+    <!-- Button Gradient -->
+    <linearGradient id="royalBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
+
+    <!-- Gold Crown Gradient -->
+    <linearGradient id="goldCrown" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <!-- Glass Overlay Gradient -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#f8fafc" stop-opacity="0.94"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="300" fill="url(#royalBg)"/>
+  <rect width="400" height="300" fill="url(#blueGlow)"/>
+
+  <!-- Ambient Floating Emojis / Stars -->
+  <g opacity="0.6">
+    <circle cx="45" cy="45" r="1.5" fill="#93c5fd" opacity="0.8"/>
+    <circle cx="360" cy="55" r="2" fill="#fef08a" opacity="0.8"/>
+    <circle cx="330" cy="245" r="1.5" fill="#60a5fa" opacity="0.8"/>
+    <circle cx="70" cy="235" r="1.5" fill="#fef08a" opacity="0.8"/>
+    <circle cx="370" cy="150" r="1" fill="#93c5fd" opacity="0.6"/>
+  </g>
+
+  <!-- Ambient Decorative Badges -->
+  <text x="35" y="48" font-size="18" opacity="0.75">⭐</text>
+  <text x="355" y="45" font-size="17" opacity="0.75">👑</text>
+  <text x="362" y="195" font-size="16" opacity="0.7">💙</text>
+  <text x="28" y="240" font-size="17" opacity="0.75">✨</text>
+  <text x="350" y="265" font-size="16" opacity="0.65">🎉</text>
+
+  <!-- Central Frosted White Luxury Card -->
+  <g filter="url(#royalShadow)">
+    <rect x="52" y="38" width="296" height="224" rx="20" fill="url(#glassGrad)" stroke="#bfdbfe" stroke-width="1.5"/>
+    
+    <!-- Top Decorative Badge Pill -->
+    <rect x="134" y="22" width="132" height="30" rx="15" fill="#ffffff" stroke="#93c5fd" stroke-width="1.5" filter="url(#royalShadow)"/>
+    
+    <!-- Crown inside badge -->
+    <g transform="translate(145, 27) scale(0.85)">
+      <path d="M4 17L1 6L9 11L14 3L19 11L27 6L24 17H4Z" fill="url(#goldCrown)"/>
+      <circle cx="1" cy="5" r="1.8" fill="#fef08a"/>
+      <circle cx="14" cy="2" r="2" fill="#fef08a"/>
+      <circle cx="27" cy="5" r="1.8" fill="#fef08a"/>
+      <circle cx="9" cy="10" r="1.5" fill="#fef08a"/>
+      <circle cx="19" cy="10" r="1.5" fill="#fef08a"/>
+    </g>
+    <text x="175" y="42" class="font-sans" font-size="10.5" font-weight="700" fill="#1e40af" letter-spacing="0.5">ROYAL SPECIAL</text>
+
+    <!-- Main Greeting Headline -->
+    <text x="200" y="85" class="font-cursive" font-size="28" font-weight="700" fill="#1e293b" text-anchor="middle">Happy Birthday,</text>
+    <text x="200" y="118" class="font-sans" font-size="24" font-weight="800" fill="#1d4ed8" text-anchor="middle" letter-spacing="-0.5">Rohan! 👑</text>
+
+    <!-- Decorative Divider Line -->
+    <path d="M140 133 Q 200 135 260 133" stroke="#e2e8f0" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="200" cy="133.5" r="3" fill="#3b82f6"/>
+
+    <!-- Subtitle Text -->
+    <text x="200" y="154" class="font-sans" font-size="11.5" font-weight="600" fill="#475569" text-anchor="middle">For the King of the Day</text>
+    <text x="200" y="171" class="font-sans" font-size="10" font-weight="500" fill="#64748b" text-anchor="middle">I have a small surprise for you...</text>
+
+    <!-- Action Button (Pill with glowing shadow) -->
+    <g transform="translate(125, 192)" filter="url(#btnGlow)">
+      <rect width="150" height="38" rx="19" fill="url(#royalBtn)"/>
+      <!-- Inner subtle highlight -->
+      <rect x="2" y="2" width="146" height="17" rx="9" fill="#ffffff" opacity="0.15"/>
+      <text x="75" y="24" class="font-sans" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.3">Tap to Open 🎁</text>
+    </g>
+  </g>
+
+  <!-- Miniature Polaroid Corner Accent (Bottom Left) -->
+  <g transform="translate(18, 168) rotate(-7)" filter="url(#polaroidShadow)">
+    <rect width="64" height="74" rx="4" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+    <!-- Photo Area -->
+    <rect x="5" y="5" width="54" height="48" rx="2" fill="#1e3a8a"/>
+    <!-- Silhouette / Graphic in photo -->
+    <circle cx="32" cy="24" r="11" fill="#3b82f6"/>
+    <path d="M16 48 C 16 38, 22 35, 32 35 C 42 35, 48 38, 48 48 Z" fill="#60a5fa"/>
+    <!-- Gold Star Sticker on Polaroid corner -->
+    <circle cx="53" cy="7" r="6" fill="#f59e0b"/>
+    <text x="50.5" y="10" font-size="7">⭐</text>
+    <!-- Handwritten style caption -->
+    <text x="32" y="65" class="font-cursive" font-size="9" font-weight="700" fill="#334155" text-anchor="middle">King Rohan</text>
+  </g>
+
+  <!-- Floating Star Badge (Top Right) -->
+  <g transform="translate(325, 105) rotate(12)" filter="url(#polaroidShadow)">
+    <rect width="42" height="42" rx="10" fill="#ffffff" stroke="#93c5fd" stroke-width="1.2"/>
+    <text x="21" y="27" font-size="18" text-anchor="middle">👑</text>
+  </g>
+</svg>

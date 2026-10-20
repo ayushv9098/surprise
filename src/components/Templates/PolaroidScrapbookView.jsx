@@ -12,7 +12,7 @@ import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'My Favorite Adventurer';
   const senderName = siteData.senderName || 'Your Memory Keeper';
-  const title = siteData.title || siteData.occasion || `The Scrapbook of Us, ${recipientName}`;
+  const title = siteData.title || (siteData.occasion ? (siteData.occasion.toLowerCase().includes(recipientName.toLowerCase()) ? siteData.occasion : `${siteData.occasion}, ${recipientName}! 📸`) : `The Scrapbook of Us, ${recipientName}`);
   const subtitle = siteData.subtitle || "A tender collection of candid smiles, little adventures, and memories taped forever to my heart.";
   const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || siteData.letterBody || `Looking through all our old photos, I can't help but smile at how much we've lived through together.\n\nFrom our very first awkward conversation to the countless late nights where we talked about everything and nothing. You've made my world softer, warmer, and so much more adventurous.\n\nHere's to all the memories we've pasted into this scrapbook, and to the blank pages waiting for us tomorrow.`;
 
@@ -64,8 +64,8 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
 
       {/* Floating Audio Player */}
       <AudioPlayer
-        audioUrl={siteData.music?.audioUrl || siteData.audioUrl}
-        title={siteData.music?.title || "Vintage Acoustic Scrapbook"}
+        audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
+        title={siteData.customSongTitle || siteData.music?.title || "Vintage Acoustic Scrapbook"}
         theme="scrapbook"
       />
 

@@ -16,7 +16,7 @@ export default function Navbar({ currentView, onNavigate }) {
 
         {/* Actions */}
         <div className="flex items-center gap-4">
-          {currentView !== 'builder' && (
+          {currentView !== 'builder' && currentView !== 'admin' && (
             <button
               onClick={() => onNavigate('builder')}
               className="px-4 py-2 rounded-xl text-sm font-medium bg-rose-500 text-white hover:bg-rose-600 active:scale-95 transition-all duration-150 cursor-pointer shadow-sm hover:shadow"
@@ -24,26 +24,6 @@ export default function Navbar({ currentView, onNavigate }) {
               Create Free
             </button>
           )}
-
-          {currentView === 'builder' && (
-            <button
-              onClick={() => onNavigate('home')}
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 active:scale-95 transition-all duration-150 cursor-pointer"
-            >
-              Templates
-            </button>
-          )}
-
-          <button
-            onClick={() => onNavigate('admin')}
-            className={`text-sm font-medium transition-all duration-150 active:scale-95 cursor-pointer ${
-              currentView === 'admin'
-                ? 'text-gray-900'
-                : 'text-gray-400 hover:text-gray-700'
-            }`}
-          >
-            Admin
-          </button>
         </div>
       </div>
     </header>

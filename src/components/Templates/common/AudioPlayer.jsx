@@ -20,12 +20,13 @@ export default function AudioPlayer({
   const [showPrompt, setShowPrompt] = useState(true);
   const audioRef = useRef(null);
 
-  const resolvedAudioUrl = audioUrl || DEFAULT_TRACKS[theme] || DEFAULT_TRACKS.romantic;
+  const isSilent = audioUrl === '';
+  const resolvedAudioUrl = isSilent ? '' : (audioUrl || DEFAULT_TRACKS[theme] || DEFAULT_TRACKS.romantic);
 
   // Attempt auto-play on first user interaction anywhere on the window
   useEffect(() => {
     const handleFirstUserTap = () => {
-      if (!hasInteracted && audioRef.current) {
+      if (!hasInteracted && audioRef.current && resolvedAudioUrl) {
         setHasInteracted(true);
         audioRef.current.play()
           .then(() => {
@@ -45,12 +46,12 @@ export default function AudioPlayer({
       window.removeEventListener('click', handleFirstUserTap);
       window.removeEventListener('touchstart', handleFirstUserTap);
     };
-  }, [hasInteracted]);
+  }, [hasInteracted, resolvedAudioUrl]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
     setShowPrompt(false);
-    if (!audioRef.current) return;
+    if (!audioRef.current || !resolvedAudioUrl) return;
 
     if (isPlaying) {
       audioRef.current.pause();
@@ -61,6 +62,10 @@ export default function AudioPlayer({
         .catch((err) => console.log('Audio playback waiting:', err));
     }
   };
+
+  if (isSilent || !resolvedAudioUrl) {
+    return null;
+  }
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex items-center gap-3">

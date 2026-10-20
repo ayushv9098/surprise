@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import LZString from 'lz-string';
 import QRCode from 'qrcode';
+import { saveSurprise, loadSurprise } from '../src/utils/storage.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -111,7 +112,7 @@ async function runE2ESuite() {
   const unapprovedUrls = [];
   for (const { url, file } of discoveredUrls) {
     // Extract hostname up to port, path, or template variable
-    const match = url.match(/^https?:\/\/([a-zA-Z0-9\.\-_]+)/);
+    const match = url.match(/^https?:\/\/([a-zA-Z0-9.\-_]+)/);
     const host = match ? match[1].toLowerCase() : null;
 
     if (!host || !ALLOWED_HOSTNAMES.has(host)) {
@@ -156,7 +157,12 @@ async function runE2ESuite() {
       enabled: true,
       title: 'Scratch for a surprise',
       hiddenSecret: 'Free ice cream date tonight! 🍦'
-    }
+    },
+    specialReasons: [
+      { icon: '⭐', title: 'Your Infectious Energy', desc: 'Lights up any room you walk into' },
+      { icon: '🦋', title: 'Always There For Me', desc: 'No matter what happens, you have my back' },
+      { icon: '👑', title: 'Truly One of a Kind', desc: 'Never stop being the awesome person you are' }
+    ]
   };
 
   const jsonStr = JSON.stringify(sampleSite);
@@ -191,6 +197,10 @@ async function runE2ESuite() {
       decompressedObj.scratchCard.hiddenSecret === sampleSite.scratchCard.hiddenSecret,
     'Decompressed scratch card object preserved with secret intact'
   );
+  assert(
+    Array.isArray(decompressedObj.specialReasons) && decompressedObj.specialReasons.length === 3,
+    'Decompressed 3 special reasons cards preserved with 100% integrity'
+  );
 
   // Test URL query string construction with ?v=...&d=...
   const testSlug = 'for-sarah';
@@ -222,11 +232,13 @@ async function runE2ESuite() {
   console.log('\n[4/8] Testing Route & Frontend HTTP Availability...');
   const frontendRoutes = [
     { url: `${FRONTEND_BASE}/`, name: 'Home page (Builder Studio)' },
-    { url: `${FRONTEND_BASE}/?preview=blush-romance`, name: 'Template: blush-romance' },
+    { url: `${FRONTEND_BASE}/?preview=royal-sapphire`, name: 'Template: royal-sapphire (Boy Multi-Scene)' },
+    { url: `${FRONTEND_BASE}/?preview=blush-rose`, name: 'Template: blush-rose (Girl Multi-Scene)' },
     { url: `${FRONTEND_BASE}/?preview=golden-birthday`, name: 'Template: golden-birthday' },
     { url: `${FRONTEND_BASE}/?preview=polaroid-scrapbook`, name: 'Template: polaroid-scrapbook' },
     { url: `${FRONTEND_BASE}/?preview=heartfelt-apology`, name: 'Template: heartfelt-apology' },
-    { url: `${FRONTEND_BASE}/?view=admin`, name: 'Admin Control Center' }
+    { url: `${FRONTEND_BASE}/?view=admin`, name: 'Admin Control Center' },
+    { url: `${FRONTEND_BASE}/admin`, name: 'Direct Admin Route (/admin)' }
   ];
 
   for (const route of frontendRoutes) {
@@ -260,6 +272,8 @@ async function runE2ESuite() {
   console.log('\n[6/8] Testing Site Creation & Automated View Count Increment...');
   const e2eSlug = `e2e-test-${Date.now().toString(36)}`;
   let createdSiteId = null;
+  let cleanSiteId = null;
+  let cleanSlug = null;
 
   try {
     const createRes = await fetch(`${BACKEND_BASE}/api/sites`, {
@@ -291,6 +305,39 @@ async function runE2ESuite() {
     const count2 = view2Data.site.viewCount;
 
     assert(count2 === count1 + 1, `View count incremented automatically from ${count1} to ${count2}`);
+
+    // 6.2 Test saveSurprise Clean Short URL Persistence
+    cleanSlug = `sarah-clean-${Date.now().toString(36)}`;
+    const saveResult = await saveSurprise({
+      ...sampleSite,
+      slug: cleanSlug,
+      recipientName: 'Sarah Jenkins',
+      template: 'blush-romance'
+    });
+
+    assert(saveResult.success === true, 'saveSurprise returned success: true');
+    assert(saveResult.savedToApi === true, 'saveSurprise successfully persisted to backend API');
+    cleanSiteId = saveResult.id;
+    assert(
+      !saveResult.shareUrl.includes('&d='),
+      `Clean Short URL verified: strictly NO massive &d= parameter in shareUrl (${saveResult.shareUrl})`
+    );
+    assert(
+      saveResult.shareUrl.includes(`?v=${encodeURIComponent(cleanSlug)}`),
+      `Clean Short URL verified: contains canonical ?v=${cleanSlug}`
+    );
+    assert(
+      saveResult.shareUrl.length < 80,
+      `Clean Short URL is ultra-compact: ${saveResult.shareUrl.length} chars (reduced from ~2000 chars)`
+    );
+
+    // 6.3 Test loadSurprise resolves site via clean short slug from API
+    const loadedSite = await loadSurprise(cleanSlug);
+    assert(loadedSite !== null, `loadSurprise("${cleanSlug}") successfully resolved site from API`);
+    assert(
+      loadedSite && (loadedSite.recipientName === 'Sarah Jenkins' || loadedSite.site?.recipientName === 'Sarah Jenkins'),
+      'loadSurprise retrieved correct recipientName payload matching created site'
+    );
   } catch (e) {
     assert(false, `Site creation or view counting failed: ${e.message}`);
   }
@@ -362,6 +409,16 @@ async function runE2ESuite() {
       assert(checkRes.status === 404, `GET /api/sites/${e2eSlug} returns 404 Not Found after deletion`);
     } else {
       assert(false, 'No createdSiteId available for deletion test');
+    }
+
+    if (cleanSiteId || cleanSlug) {
+      const targetClean = cleanSiteId || cleanSlug;
+      const cleanDelRes = await fetch(`${BACKEND_BASE}/api/admin/sites/${targetClean}`, {
+        method: 'DELETE'
+      });
+      assert(cleanDelRes.status === 200, `DELETE /api/admin/sites/${targetClean} (clean test site) returned HTTP 200 OK`);
+      const cleanCheckRes = await fetch(`${BACKEND_BASE}/api/sites/${cleanSlug}`);
+      assert(cleanCheckRes.status === 404, `GET /api/sites/${cleanSlug} returns 404 Not Found after deletion`);
     }
   } catch (e) {
     assert(false, `Site deletion and cleanup failed: ${e.message}`);

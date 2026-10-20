@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+      .font-sans { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    </style>
+
+    <!-- Warm Peach Sunset Glow Background -->
+    <linearGradient id="peachBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffdfa"/>
+      <stop offset="50%" stop-color="#fff1e6"/>
+      <stop offset="100%" stop-color="#fed7aa"/>
+    </linearGradient>
+
+    <!-- Apricot Radial Glow -->
+    <radialGradient id="apricotGlow" cx="50%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#fb923c" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#fffdfa" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Card Shadow & Peach Glow -->
+    <filter id="peachCardShadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#ea580c" flood-opacity="0.18"/>
+    </filter>
+    <filter id="peachBtnGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#ea580c" flood-opacity="0.45"/>
+    </filter>
+    <filter id="peachAccentShadow" x="-15%" y="-15%" width="130%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#9a3412" flood-opacity="0.16"/>
+    </filter>
+
+    <!-- Coral Peach Button Gradient -->
+    <linearGradient id="peachBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fb923c"/>
+      <stop offset="50%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ea580c"/>
+    </linearGradient>
+
+    <!-- Peach Wax Seal Gradient -->
+    <radialGradient id="peachSeal" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#fdba74"/>
+      <stop offset="50%" stop-color="#ea580c"/>
+      <stop offset="100%" stop-color="#9a3412"/>
+    </radialGradient>
+
+    <!-- Frosted Glass Overlay -->
+    <linearGradient id="peachGlass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.97"/>
+      <stop offset="100%" stop-color="#fffaf5" stop-opacity="0.93"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="300" fill="url(#peachBg)"/>
+  <rect width="400" height="300" fill="url(#apricotGlow)"/>
+
+  <!-- Fairy Starlight & Sparkles -->
+  <g opacity="0.65">
+    <circle cx="35" cy="40" r="1.5" fill="#f97316"/>
+    <circle cx="360" cy="50" r="2" fill="#fb923c"/>
+    <circle cx="370" cy="180" r="1.5" fill="#f97316"/>
+    <circle cx="28" cy="230" r="2" fill="#ea580c"/>
+    <polygon points="50,110 53,116 47,114" fill="#fb923c" opacity="0.7"/>
+    <polygon points="350,140 354,146 346,144" fill="#f97316" opacity="0.7"/>
+  </g>
+
+  <!-- Floating Emojis -->
+  <text x="25" y="72" font-size="16" opacity="0.85">✨</text>
+  <text x="355" y="48" font-size="16" opacity="0.85">🍑</text>
+  <text x="360" y="195" font-size="15" opacity="0.8">🌟</text>
+  <text x="26" y="195" font-size="15" opacity="0.75">🧡</text>
+  <text x="348" y="265" font-size="16" opacity="0.8">👑</text>
+
+  <!-- Central Luxury Frosted Card -->
+  <g filter="url(#peachCardShadow)">
+    <rect x="52" y="38" width="296" height="224" rx="20" fill="url(#peachGlass)" stroke="#fed7aa" stroke-width="1.5"/>
+
+    <!-- Top Badge Pill -->
+    <rect x="130" y="22" width="140" height="30" rx="15" fill="#ffffff" stroke="#fed7aa" stroke-width="1.5" filter="url(#peachCardShadow)"/>
+    <text x="146" y="42" font-size="15">🍑</text>
+    <text x="172" y="42" class="font-sans" font-size="10.5" font-weight="700" fill="#c2410c" letter-spacing="0.5">PRINCESS GLOW</text>
+
+    <!-- Main Headline in Luxury Display Serif -->
+    <text x="200" y="85" class="font-serif" font-size="20" font-weight="600" fill="#7c2d12" text-anchor="middle">Happy Birthday</text>
+    <text x="200" y="118" class="font-serif" font-size="24" font-weight="700" fill="#ea580c" text-anchor="middle" letter-spacing="-0.3">Princess! ✨👑</text>
+
+    <!-- Decorative Warm Divider Line -->
+    <path d="M140 133 Q 200 135 260 133" stroke="#ffedd5" stroke-width="1.8" stroke-linecap="round"/>
+    <circle cx="200" cy="133.5" r="3" fill="#f97316"/>
+
+    <!-- Subtitle Text -->
+    <text x="200" y="154" class="font-sans" font-size="11" font-weight="600" fill="#9a3412" text-anchor="middle">May your day sparkle with pure fairy dust</text>
+    <text x="200" y="171" class="font-sans" font-size="9.5" font-weight="500" fill="#c2410c" text-anchor="middle" opacity="0.85">A royal celebration crafted just for you...</text>
+
+    <!-- Action Button (Coral Peach Pill with Glowing Shadow) -->
+    <g transform="translate(120, 192)" filter="url(#peachBtnGlow)">
+      <rect width="160" height="38" rx="19" fill="url(#peachBtn)"/>
+      <rect x="2" y="2" width="156" height="17" rx="9" fill="#ffffff" opacity="0.22"/>
+      <text x="80" y="24" class="font-sans" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.3">Open Magic Note 💌</text>
+    </g>
+  </g>
+
+  <!-- Corner Polaroid (Bottom Left) -->
+  <g transform="translate(18, 168) rotate(-7)" filter="url(#peachAccentShadow)">
+    <rect width="64" height="74" rx="4" fill="#ffffff" stroke="#fed7aa" stroke-width="1"/>
+    <rect x="5" y="5" width="54" height="48" rx="2" fill="#ffedd5"/>
+    <circle cx="32" cy="22" r="11" fill="#ea580c"/>
+    <path d="M16 48 C 16 38, 22 34, 32 34 C 42 34, 48 38, 48 48 Z" fill="#fb923c"/>
+    <!-- Crown sticker -->
+    <circle cx="53" cy="7" r="6" fill="#fff7ed"/>
+    <text x="49" y="10.5" font-size="7">👑</text>
+    <text x="32" y="65" class="font-serif" font-size="8.5" font-weight="700" fill="#9a3412" text-anchor="middle">Princess</text>
+  </g>
+
+  <!-- Wax Seal Accent (Top Right) -->
+  <g transform="translate(332, 108) rotate(8)" filter="url(#peachCardShadow)">
+    <circle cx="20" cy="20" r="18" fill="url(#peachSeal)"/>
+    <circle cx="20" cy="20" r="14" fill="none" stroke="#fed7aa" stroke-width="1" stroke-dasharray="2 1.5"/>
+    <text x="20" y="25" font-size="12" text-anchor="middle">✨</text>
+  </g>
+</svg>

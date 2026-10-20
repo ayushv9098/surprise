@@ -14,7 +14,7 @@ import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'My Favorite Person';
   const senderName = siteData.senderName || 'Sincerely Yours';
-  const title = siteData.title || siteData.occasion || `I am really sorry, ${recipientName} 🥺💜`;
+  const title = siteData.title || (siteData.occasion ? (siteData.occasion.toLowerCase().includes(recipientName.toLowerCase()) ? siteData.occasion : `${siteData.occasion}, ${recipientName} 🥺💜`) : `I am really sorry, ${recipientName} 🥺💜`);
   const subtitle = siteData.subtitle || "My heart aches when things aren't right between us. You mean far too much to me for silly mistakes to get in the way.";
   const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || siteData.letterBody || `I've been thinking non-stop about what happened, and I genuinely want to apologize from the bottom of my heart.\n\nI never want to be the reason behind your sadness or frustration. Your smile and our bond are irreplaceable to me, and I deeply regret my thoughtlessness.\n\nI promise to listen more patiently, communicate more gently, and do better. I hope you can find it in your heart to forgive me.`;
 
@@ -84,8 +84,8 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
 
       {/* Floating Audio Player */}
       <AudioPlayer
-        audioUrl={siteData.music?.audioUrl || siteData.audioUrl}
-        title={siteData.music?.title || "Comfort & Peace Melody"}
+        audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
+        title={siteData.customSongTitle || siteData.music?.title || "Comfort & Peace Melody"}
         theme="apology"
         accentColor="from-purple-500 to-indigo-500"
       />

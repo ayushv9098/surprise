@@ -11,7 +11,7 @@ import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'My Love';
   const senderName = siteData.senderName || 'Your Favorite Person';
-  const title = siteData.title || siteData.occasion || `To My Favorite Person, ${recipientName}`;
+  const title = siteData.title || (siteData.occasion ? (siteData.occasion.toLowerCase().includes(recipientName.toLowerCase()) ? siteData.occasion : `${siteData.occasion}, ${recipientName}! 🌸`) : `To My Favorite Person, ${recipientName}`);
   const subtitle = siteData.subtitle || "In a world of billions of people, my happiest place will always be right beside you.";
   const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || siteData.letterBody || `I still remember the first time you smiled at me. It felt like the entire room went quiet and time stood still.\n\nThank you for being my anchor, my sweetest distraction, and the person I can always be silly with. With you, even ordinary grocery runs and quiet rainy afternoons feel like adventures.\n\nI love you more than words could ever fit on this page, today and for all the tomorrows to come.`;
 
@@ -30,8 +30,8 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
 
       {/* Floating Audio Player */}
       <AudioPlayer
-        audioUrl={siteData.music?.audioUrl || siteData.audioUrl}
-        title={siteData.music?.title || `${recipientName}'s Keepsake Melody`}
+        audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
+        title={siteData.customSongTitle || siteData.music?.title || `${recipientName}'s Keepsake Melody`}
         theme="romantic"
       />
 

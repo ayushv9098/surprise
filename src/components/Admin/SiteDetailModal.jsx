@@ -56,7 +56,7 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
     tag: 'Custom'
   };
 
-  const shareUrl = `${window.location.origin}/?slug=${encodeURIComponent(site.slug)}`;
+  const shareUrl = `${window.location.origin}/?v=${encodeURIComponent(site.slug)}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);

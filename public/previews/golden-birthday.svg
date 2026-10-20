@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;family=Plus+Jakarta+Sans:wght@500;600;700&amp;display=swap');
+      .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+      .font-sans { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; }
+    </style>
+
+    <!-- Warm Champagne Gold Background Gradient -->
+    <linearGradient id="goldBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffdfa"/>
+      <stop offset="45%" stop-color="#fff8ec"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+
+    <!-- Ambient Gold Radial Glows -->
+    <radialGradient id="sunGlow" cx="50%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="#fde68a" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#fff8ec" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="goldCardShadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#b45309" flood-opacity="0.12"/>
+    </filter>
+    <filter id="flameGlow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#f59e0b" flood-opacity="0.9"/>
+    </filter>
+    <filter id="amberBtnGlow" x="-20%" y="-20%" width="140%" height="140%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#d97706" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Button & Cake Gradients -->
+    <linearGradient id="amberBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+
+    <linearGradient id="cakeTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef9c3"/>
+      <stop offset="100%" stop-color="#fde047"/>
+    </linearGradient>
+
+    <linearGradient id="cakeBottom" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+
+    <linearGradient id="candleFlame" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#ea580c"/>
+      <stop offset="40%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fef08a"/>
+    </linearGradient>
+
+    <!-- Gold Foil Box Gradient -->
+    <linearGradient id="goldFoil" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="40%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="400" height="300" fill="url(#goldBg)"/>
+  <rect width="400" height="300" fill="url(#sunGlow)"/>
+
+  <!-- Ambient Gold Confetti / Floating Elements -->
+  <g opacity="0.75">
+    <circle cx="28" cy="40" r="2.5" fill="#f59e0b"/>
+    <circle cx="75" cy="22" r="1.5" fill="#d97706"/>
+    <circle cx="365" cy="38" r="2" fill="#f59e0b"/>
+    <circle cx="340" cy="90" r="1.5" fill="#fbbf24"/>
+    <circle cx="35" cy="245" r="2" fill="#d97706"/>
+    <circle cx="370" cy="235" r="2.5" fill="#f59e0b"/>
+    <polygon points="45,110 48,118 40,115" fill="#f59e0b" opacity="0.6"/>
+    <polygon points="360,165 365,172 356,170" fill="#f59e0b" opacity="0.6"/>
+  </g>
+
+  <!-- Ambient Emojis -->
+  <text x="22" y="70" font-size="16" opacity="0.8">✨</text>
+  <text x="350" y="65" font-size="16" opacity="0.85">💛</text>
+  <text x="24" y="195" font-size="15" opacity="0.75">🥂</text>
+  <text x="355" y="198" font-size="16" opacity="0.8">🎉</text>
+
+  <!-- Header Badge: A Golden Birthday Celebration 🎂✨ -->
+  <g transform="translate(100, 16)">
+    <rect width="200" height="24" rx="12" fill="#fef3c7" stroke="#fde68a" stroke-width="1"/>
+    <text x="100" y="16.5" class="font-sans" font-size="10" font-weight="700" fill="#b45309" text-anchor="middle" letter-spacing="0.4">A Golden Birthday Celebration 🎂✨</text>
+  </g>
+
+  <!-- Main Luxury Showcase Card -->
+  <g filter="url(#goldCardShadow)">
+    <rect x="44" y="48" width="312" height="200" rx="20" fill="#ffffff" fill-opacity="0.94" stroke="#fde68a" stroke-width="1.2"/>
+
+    <!-- Headline: Happy Birthday, Shining Star! -->
+    <text x="200" y="76" class="font-serif" font-size="20" font-weight="700" fill="#78350f" text-anchor="middle">Happy Birthday, Shining Star!</text>
+    <text x="200" y="93" class="font-sans" font-size="9.5" font-weight="500" fill="#92400e" text-anchor="middle" opacity="0.85">Blow the Candles to Make a Wish 🕯️</text>
+
+    <!-- Center Stage: 2-Tier Birthday Cake -->
+    <g transform="translate(142, 104)">
+      <!-- 3 Glowing Candles -->
+      <!-- Candle 1 -->
+      <g transform="translate(24, 0)">
+        <path d="M4 -10 Q 7 -16 4 -22 Q 1 -16 4 -10 Z" fill="url(#candleFlame)" filter="url(#flameGlow)"/>
+        <line x1="4" y1="-8" x2="4" y2="-2" stroke="#78350f" stroke-width="1"/>
+        <rect x="2" y="-2" width="4.5" height="15" rx="1" fill="#fde047" stroke="#ca8a04" stroke-width="0.5"/>
+      </g>
+      <!-- Candle 2 (Center, slightly taller) -->
+      <g transform="translate(56, -4)">
+        <path d="M4 -10 Q 7 -17 4 -23 Q 1 -17 4 -10 Z" fill="url(#candleFlame)" filter="url(#flameGlow)"/>
+        <line x1="4" y1="-8" x2="4" y2="-2" stroke="#78350f" stroke-width="1"/>
+        <rect x="2" y="-2" width="4.5" height="17" rx="1" fill="#f59e0b" stroke="#b45309" stroke-width="0.5"/>
+      </g>
+      <!-- Candle 3 -->
+      <g transform="translate(88, 0)">
+        <path d="M4 -10 Q 7 -16 4 -22 Q 1 -16 4 -10 Z" fill="url(#candleFlame)" filter="url(#flameGlow)"/>
+        <line x1="4" y1="-8" x2="4" y2="-2" stroke="#78350f" stroke-width="1"/>
+        <rect x="2" y="-2" width="4.5" height="15" rx="1" fill="#fde047" stroke="#ca8a04" stroke-width="0.5"/>
+      </g>
+
+      <!-- Cake Top Layer (Tier 1) -->
+      <rect x="18" y="13" width="80" height="26" rx="6" fill="url(#cakeTop)" stroke="#fcd34d" stroke-width="1"/>
+      <!-- Frosting scallops top tier -->
+      <path d="M 18 20 Q 28 26 38 20 Q 48 26 58 20 Q 68 26 78 20 Q 88 26 98 20 L 98 13 L 18 13 Z" fill="#ffffff" opacity="0.75"/>
+
+      <!-- Cake Bottom Layer (Tier 2) -->
+      <rect x="6" y="38" width="104" height="30" rx="8" fill="url(#cakeBottom)" stroke="#fde68a" stroke-width="1.2"/>
+      <!-- Decorative pearls on Tier 2 -->
+      <circle cx="20" cy="53" r="3" fill="#f59e0b"/>
+      <circle cx="43" cy="53" r="3" fill="#fbbf24"/>
+      <circle cx="58" cy="53" r="3.5" fill="#f59e0b"/>
+      <circle cx="73" cy="53" r="3" fill="#fbbf24"/>
+      <circle cx="96" cy="53" r="3" fill="#f59e0b"/>
+
+      <!-- Cake Stand Plate -->
+      <rect x="-4" y="68" width="124" height="5" rx="2.5" fill="#fef08a" stroke="#eab308" stroke-width="0.8"/>
+      <polygon points="46,73 70,73 66,80 50,80" fill="#fef08a"/>
+    </g>
+
+    <!-- Side Accent: Golden Gift Box (Left) -->
+    <g transform="translate(62, 126)" filter="url(#goldCardShadow)">
+      <!-- Box Body -->
+      <rect x="0" y="12" width="50" height="42" rx="4" fill="url(#goldFoil)" stroke="#b45309" stroke-width="0.8"/>
+      <!-- Box Lid -->
+      <rect x="-3" y="6" width="56" height="10" rx="2" fill="#fbbf24" stroke="#92400e" stroke-width="0.8"/>
+      <!-- Vertical Ribbon -->
+      <rect x="20" y="6" width="10" height="48" fill="#ffffff" opacity="0.85"/>
+      <!-- Ribbon Bow -->
+      <ellipse cx="18" cy="4" rx="7" ry="5" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8"/>
+      <ellipse cx="32" cy="4" rx="7" ry="5" fill="#ffffff" stroke="#e2e8f0" stroke-width="0.8"/>
+      <circle cx="25" cy="5" r="3.5" fill="#f59e0b"/>
+      <!-- Tag: Tap to Unbox -->
+      <rect x="2" y="44" width="46" height="12" rx="3" fill="#78350f"/>
+      <text x="25" y="52.5" class="font-sans" font-size="6.5" font-weight="700" fill="#fef3c7" text-anchor="middle">Tap to Unbox 🎁</text>
+    </g>
+
+    <!-- Side Accent: Champagne Flutes / Confetti Badge (Right) -->
+    <g transform="translate(288, 128)" filter="url(#goldCardShadow)">
+      <rect width="48" height="52" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+      <text x="24" y="26" font-size="18" text-anchor="middle">🥂</text>
+      <text x="24" y="42" class="font-sans" font-size="7.5" font-weight="700" fill="#b45309" text-anchor="middle">Make a Wish</text>
+    </g>
+  </g>
+
+  <!-- Big Amber Gradient CTA Button -->
+  <g transform="translate(125, 258)" filter="url(#amberBtnGlow)">
+    <rect width="150" height="34" rx="17" fill="url(#amberBtn)"/>
+    <!-- Button top glow line -->
+    <rect x="2" y="2" width="146" height="15" rx="8" fill="#ffffff" opacity="0.2"/>
+    <text x="75" y="21.5" class="font-sans" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">Celebrate in Gold ✨</text>
+  </g>
+</svg>

@@ -4,164 +4,29 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DATA_DIR = path.resolve(__dirname, '../data');
+const DATA_DIR = process.env.VERCEL
+  ? path.join('/tmp', 'wishcraft-data')
+  : path.resolve(__dirname, '../data');
 const SITES_FILE = path.join(DATA_DIR, 'sites.json');
 
-// Initial seed sites for lively first run
-const SEED_SITES = [
-  {
-    id: 'seed-blush-01',
-    slug: 'for-elena',
-    title: 'To My Dearest Elena 🌸',
-    recipientName: 'Elena Rostova',
-    senderName: 'Daniel',
-    template: 'blush-romance',
-    templateId: 'blush-romance',
-    occasion: '2nd Anniversary',
-    theme: 'rose',
-    accentColor: '#F43F5E',
-    letter: 'Elena, from the rainy afternoon we spent sharing an umbrella in Florence, I knew life with you was going to be extraordinary. Thank you for filling every single day with quiet laughter, warm matcha lattes, and gentle reassurance. Happy 2nd Anniversary, my sweetest heart.',
-    photos: [
-      {
-        url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
-        caption: 'Florence under the rain 🌧️'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80',
-        caption: 'Our Sunday botanical garden walk 🌿'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=800&q=80',
-        caption: 'Forever starts here 💍'
-      }
-    ],
-    quiz: [
-      {
-        question: 'Where did we have our very first date?',
-        options: ['Caffè Paszkowski', 'Piazza Michelangelo', 'Trattoria Mario'],
-        correctAnswer: 'Caffè Paszkowski'
-      },
-      {
-        question: 'Who fell asleep first during our first movie marathon?',
-        options: ['Daniel', 'Elena (100%)', 'Neither, we finished both films!'],
-        correctAnswer: 'Elena (100%)'
-      }
-    ],
-    scratchSecret: 'Pack your bags for Venice this weekend! ✈️💌',
-    musicTrack: 'romantic-acoustic',
-    viewCount: 42,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 36).toISOString(),
-    lastViewedAt: new Date(Date.now() - 1000 * 60 * 12).toISOString()
-  },
-  {
-    id: 'seed-gold-02',
-    slug: 'happy-25th-lucas',
-    title: 'Happy 25th Birthday, Lucas! 🎂',
-    recipientName: 'Lucas Vance',
-    senderName: 'Chloe & The Crew',
-    template: 'golden-birthday',
-    templateId: 'golden-birthday',
-    occasion: '25th Birthday Milestone',
-    theme: 'amber',
-    accentColor: '#D97706',
-    letter: 'Lucas! Quarter of a century looks dangerously sharp on you. From late-night gaming marathons to spontaneous mountain drives, you have been the absolute soul of our crew. May this year bring wild adventures and massive wins!',
-    photos: [
-      {
-        url: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=800&q=80',
-        caption: 'Golden champagne birthday moments 🥂'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=800&q=80',
-        caption: 'Camping under Tahoe stars ✨'
-      }
-    ],
-    quiz: [
-      {
-        question: 'What is Lucas’s signature catchphrase?',
-        options: ['"Trust the process"', '"Let’s get tacos"', '"Just one more game"'],
-        correctAnswer: '"Just one more game"'
-      }
-    ],
-    scratchSecret: 'Check under your car driver seat for the festival VIP passes! 🎸🎫',
-    musicTrack: 'upbeat-birthday',
-    viewCount: 118,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(),
-    lastViewedAt: new Date(Date.now() - 1000 * 60 * 5).toISOString()
-  },
-  {
-    id: 'seed-polaroid-03',
-    slug: 'summer-with-maya',
-    title: 'Our Golden Summer Memories 📸',
-    recipientName: 'Maya Lin',
-    senderName: 'Sophia',
-    template: 'polaroid-scrapbook',
-    templateId: 'polaroid-scrapbook',
-    occasion: 'Friendship Scrapbook',
-    theme: 'yellow',
-    accentColor: '#CA8A04',
-    letter: 'Maya, flipping through our camera roll from this past summer made me smile until my cheeks hurt. Thank you for being the most spontaneous, creative, and sunshine-filled best friend in the universe. Here is to 100 more road trips!',
-    photos: [
-      {
-        url: 'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=800&q=80',
-        caption: 'Polaroid film roll #04 — Highway 1 🌊'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
-        caption: 'Sunset bonfire with s’mores 🔥'
-      }
-    ],
-    quiz: [
-      {
-        question: 'What ice cream flavor melted all over Maya’s shoes?',
-        options: ['Pistachio Gelato', 'Salted Caramel Cone', 'Strawberry Sorbet'],
-        correctAnswer: 'Pistachio Gelato'
-      }
-    ],
-    scratchSecret: 'Trip to Big Sur cabins is already reserved for next month! 🌲⛺',
-    musicTrack: 'lofi-nostalgia',
-    viewCount: 65,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 72).toISOString(),
-    lastViewedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString()
-  },
-  {
-    id: 'seed-apology-04',
-    slug: 'heartfelt-hug-liam',
-    title: 'A Little Peace Offering for Liam 🥺',
-    recipientName: 'Liam Chen',
-    senderName: 'Aria',
-    template: 'heartfelt-apology',
-    templateId: 'heartfelt-apology',
-    occasion: 'Sweet Apology & Hug',
-    theme: 'violet',
-    accentColor: '#8B5CF6',
-    letter: 'Liam, I am genuinely sorry for misunderstanding things the other night. You mean too much to me for silly pride to get in the way. I baked your favorite cinnamon rolls as a peace offering. Forgive me?',
-    photos: [
-      {
-        url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
-        caption: 'Our peace truce cinnamon roll date ☕'
-      }
-    ],
-    quiz: [
-      {
-        question: 'Will you accept the warmest hug and cinnamon roll?',
-        options: ['Yes, definitely! ❤️', 'Only if extra frosting!', 'Thinking about it... (Yes)'],
-        correctAnswer: 'Yes, definitely! ❤️'
-      }
-    ],
-    scratchSecret: 'Unlimited boba tea on me for the rest of the semester! 🧋🤍',
-    musicTrack: 'soft-guitar',
-    viewCount: 29,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(),
-    lastViewedAt: new Date(Date.now() - 1000 * 60 * 45).toISOString()
-  }
-];
+// Clean seed sites - no fake/mock entries, production real data only
+export const SEED_SITES = [];
 
 function ensureDataFile() {
   if (!fs.existsSync(DATA_DIR)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
-
   if (!fs.existsSync(SITES_FILE)) {
+    // If on Vercel and original file exists, copy it
+    const sourcePath = path.resolve(__dirname, '../data/sites.json');
+    if (fs.existsSync(sourcePath)) {
+      try {
+        fs.copyFileSync(sourcePath, SITES_FILE);
+        return;
+      } catch {
+        // fallback to SEED_SITES
+      }
+    }
     fs.writeFileSync(SITES_FILE, JSON.stringify(SEED_SITES, null, 2), 'utf-8');
   }
 }
@@ -254,7 +119,9 @@ export const db = {
     const sites = readSites();
     const normalizedSlug = slug.toLowerCase().trim();
     const index = sites.findIndex(
-      (s) => (s.slug || '').toLowerCase() === normalizedSlug
+      (s) =>
+        (s.slug || '').toLowerCase() === normalizedSlug ||
+        (s.id || '').toLowerCase() === normalizedSlug
     );
 
     if (index === -1) {
@@ -335,12 +202,7 @@ export const db = {
     const totalSites = sites.length;
     const totalViews = sites.reduce((sum, s) => sum + (Number(s.viewCount) || 0), 0);
 
-    const templateBreakdown = {
-      'blush-romance': 0,
-      'golden-birthday': 0,
-      'polaroid-scrapbook': 0,
-      'heartfelt-apology': 0
-    };
+    const templateBreakdown = {};
 
     sites.forEach((site) => {
       const t = site.template || site.templateId;
@@ -349,8 +211,8 @@ export const db = {
       }
     });
 
-    // Determine most popular template
-    let mostPopularTemplate = 'blush-romance';
+    // Determine most popular template dynamically from real data
+    let mostPopularTemplate = 'none';
     let maxCount = -1;
     for (const [tpl, count] of Object.entries(templateBreakdown)) {
       if (count > maxCount) {

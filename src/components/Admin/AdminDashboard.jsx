@@ -186,6 +186,8 @@ export default function AdminDashboard({ onNavigate }) {
   // Helper for template display label
   const getTemplateDisplayName = (key) => {
     const map = {
+      'royal-sapphire': 'Royal Sapphire 👑',
+      'blush-rose': 'Blush Rose 🌸',
       'blush-romance': 'Blush Romance 🌸',
       'golden-birthday': 'Golden Birthday 🎂',
       'polaroid-scrapbook': 'Polaroid Scrapbook 📸',
@@ -384,6 +386,8 @@ export default function AdminDashboard({ onNavigate }) {
             className="px-4 py-2.5 rounded-xl text-sm bg-white border border-gray-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
           >
             <option value="all">All Templates</option>
+            <option value="royal-sapphire">Royal Sapphire 👑</option>
+            <option value="blush-rose">Blush Rose 🌸</option>
             <option value="blush-romance">Blush Romance 🌸</option>
             <option value="golden-birthday">Golden Birthday 🎂</option>
             <option value="polaroid-scrapbook">Polaroid Scrapbook 📸</option>

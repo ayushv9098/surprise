@@ -14,7 +14,7 @@ import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) {
   const recipientName = siteData.recipientName || 'Birthday Star';
   const senderName = siteData.senderName || 'Your Biggest Fan';
-  const title = siteData.title || siteData.occasion || `Happy Birthday, ${recipientName}! 🎉`;
+  const title = siteData.title || (siteData.occasion ? (siteData.occasion.toLowerCase().includes(recipientName.toLowerCase()) ? siteData.occasion : `${siteData.occasion}, ${recipientName}! 🎉`) : `Happy Birthday, ${recipientName}! 🎉`);
   const subtitle = siteData.subtitle || "May this new chapter sparkle with boundless joy, unforgettable adventures, and every dream you've wished for.";
   const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || siteData.letterBody || `Another year older, wiser, and even more wonderful!\n\nI want to remind you just how special your presence is in this world. Your laughter lights up every room, your kindness touches everyone you meet, and you bring so much warmth to the lives around you.\n\nToday is entirely about celebrating YOU. May your year ahead be showered with blessings, sweet laughter, good health, and magic in every single step!`;
 
@@ -85,8 +85,8 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
 
       {/* Floating Audio Player */}
       <AudioPlayer
-        audioUrl={siteData.music?.audioUrl || siteData.audioUrl}
-        title={siteData.music?.title || "Golden Birthday Celebration"}
+        audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
+        title={siteData.customSongTitle || siteData.music?.title || "Golden Birthday Celebration"}
         theme="birthday"
         accentColor="from-amber-500 to-yellow-500"
       />
@@ -99,7 +99,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
         </div>
 
         {/* Big Celebratory Headline */}
-        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
+        <h1 className="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-slate-900 leading-tight">
           {renderAppleText(title)}
         </h1>
 
@@ -131,7 +131,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
             <span>Interactive Cake Ritual</span>
           </div>
 
-          <h3 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
+          <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-800">
             Make a Wish & Blow Out the Candles
           </h3>
           <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-sm mx-auto">
@@ -224,7 +224,7 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
             <span>Surprise Package</span>
           </div>
 
-          <h3 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
+          <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-800">
             Open Your Birthday Gift Box
           </h3>
           <p className="text-xs text-slate-500 mt-1">

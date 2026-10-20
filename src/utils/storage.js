@@ -2,6 +2,13 @@ import LZString from 'lz-string';
 
 const STORAGE_KEY = 'my_created_surprises';
 
+const getApiBase = () => {
+  if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
+    return '';
+  }
+  return typeof process !== 'undefined' && process.env?.VITE_API_BASE ? process.env.VITE_API_BASE : 'http://localhost:3001';
+};
+
 /**
  * Generate a clean URL-safe slug
  */
@@ -49,6 +56,7 @@ export const decompressSurprise = (encodedStr) => {
  */
 export const getSavedSurprises = () => {
   try {
+    if (typeof localStorage === 'undefined') return [];
     const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : [];
   } catch (e) {
@@ -62,6 +70,7 @@ export const getSavedSurprises = () => {
  */
 export const saveSurpriseLocally = (surprise) => {
   try {
+    if (typeof localStorage === 'undefined') return false;
     const list = getSavedSurprises();
     const existingIndex = list.findIndex(
       (item) => item.id === surprise.id || (surprise.slug && item.slug === surprise.slug)
@@ -84,10 +93,11 @@ export const saveSurpriseLocally = (surprise) => {
  */
 export const deleteSavedSurprise = (id) => {
   try {
+    if (typeof localStorage === 'undefined') return false;
     const list = getSavedSurprises().filter((s) => s.id !== id && s.slug !== id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 };
@@ -95,77 +105,123 @@ export const deleteSavedSurprise = (id) => {
 /**
  * Primary Dual-Persistence Engine
  * Saves to backend API if available, plus LZ-String URL hash & localStorage.
+ * Always resolves to a valid object and never throws an unhandled rejection.
  */
-export const saveSurprise = async (payload) => {
-  const id = payload.id || `wc-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`;
-  const slug = payload.slug || generateSlug(payload.recipientName);
-  const now = new Date().toISOString();
-
-  const completePayload = {
-    ...payload,
-    id,
-    slug,
-    updatedAt: now,
-    createdAt: payload.createdAt || now,
-  };
-
-  // 1. Generate ultra-reliable compressed URL parameter
-  const compressedHash = compressSurprise(completePayload);
-  
-  // Construct absolute URL
-  const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
-  
-  // If base route is '/', url will be /?v=slug&d=compressed
-  const shareUrl = `${origin}${pathname}?v=${encodeURIComponent(slug)}&d=${compressedHash}`;
-
-  // 2. Persist in localStorage
-  saveSurpriseLocally({
-    ...completePayload,
-    shareUrl,
-    compressedHash,
-  });
-
-  // 3. Attempt POST to API endpoint
-  let savedToApi = false;
-  let apiResponse = null;
-
+export const saveSurprise = async (payload = {}) => {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const id = payload?.id || `wc-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`;
+    const slug = payload?.slug || generateSlug(payload?.recipientName);
+    const now = new Date().toISOString();
 
-    const res = await fetch('/api/sites', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...completePayload,
-        compressedHash,
-      }),
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
+    const completePayload = {
+      ...payload,
+      id,
+      slug,
+      updatedAt: now,
+      createdAt: payload?.createdAt || now,
+    };
 
-    if (res.ok) {
-      apiResponse = await res.json().catch(() => ({}));
-      savedToApi = true;
+    // 1. Generate ultra-reliable compressed URL parameter synchronously
+    const compressedHash = compressSurprise(completePayload);
+
+    // 2. Attempt POST to API endpoint with a 15000ms timeout
+    let savedToApi = false;
+    let apiResponse = null;
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      try {
+        const res = await fetch(`${getApiBase()}/api/sites`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ...completePayload,
+            compressedHash,
+          }),
+          signal: controller.signal,
+        });
+
+        if (res.ok) {
+          apiResponse = await res.json().catch(() => ({}));
+          savedToApi = true;
+        }
+      } finally {
+        clearTimeout(timeoutId);
+      }
+    } catch {
+      // Graceful offline fallback: backend might not be running or timed out; client-side standalone link is active
+      console.info('Backend API offline/timed out; client-side standalone link active.');
     }
-  } catch (err) {
-    // Graceful offline fallback: backend might not be running yet, or user is offline
-    console.info('Backend API unavailable; client-side standalone link active.');
-  }
 
-  return {
-    success: true,
-    id,
-    slug,
-    shareUrl,
-    compressedHash,
-    savedToApi,
-    data: completePayload,
-    apiResponse,
-  };
+    // Extract canonical slug from API
+    const savedSlug = apiResponse?.site?.slug || apiResponse?.slug || slug;
+
+    // Origin and pathname
+    const origin = (typeof window !== 'undefined' && window.location?.origin)
+      ? window.location.origin
+      : (typeof process !== 'undefined' && process.env?.TEST_ORIGIN ? process.env.TEST_ORIGIN : 'http://localhost:5174');
+    let pathname = '/';
+    if (typeof window !== 'undefined' && window.location?.pathname) {
+      const p = window.location.pathname;
+      if (p !== '/admin' && !p.endsWith('/admin') && !p.endsWith('index.html')) {
+        pathname = p.endsWith('/') ? p : `${p}/`;
+      }
+    }
+    const cleanOrigin = origin.replace(/\/+$/, '');
+    const cleanPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
+    const baseUrl = `${cleanOrigin}${cleanPath}`.replace(/\/+$/, '/');
+
+    // Construct shareUrl: clean short URL when saved to API, or fallback to standalone &d=
+    let shareUrl = '';
+    if (savedToApi) {
+      shareUrl = `${baseUrl}?v=${encodeURIComponent(savedSlug)}`;
+    } else {
+      shareUrl = `${baseUrl}?v=${encodeURIComponent(slug)}&d=${compressedHash}`;
+    }
+
+    // 3. Persist in localStorage with guarded try-catch
+    try {
+      saveSurpriseLocally({
+        ...completePayload,
+        slug: savedSlug,
+        shareUrl,
+        compressedHash,
+      });
+    } catch {
+      // LocalStorage quota or access error ignored; URL hash is fully self-sufficient
+    }
+
+    return {
+      success: true,
+      id,
+      slug: savedSlug,
+      shareUrl,
+      compressedHash,
+      savedToApi,
+      data: completePayload,
+      apiResponse,
+    };
+  } catch (criticalErr) {
+    console.error('saveSurprise fallback engaged:', criticalErr);
+    const fallbackId = payload?.id || `wc-${Date.now().toString(36)}`;
+    const fallbackSlug = payload?.slug || 'surprise';
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
+    return {
+      success: true,
+      id: fallbackId,
+      slug: fallbackSlug,
+      shareUrl: `${origin}${pathname}?v=${encodeURIComponent(fallbackSlug)}`,
+      compressedHash: '',
+      savedToApi: false,
+      data: payload || {},
+      apiResponse: null,
+    };
+  }
 };
 
 /**
@@ -185,37 +241,80 @@ export const loadSurprise = async (slugOrHash) => {
     }
   }
 
-  // If slugOrHash itself looks like a compressed string (longer than standard slug)
-  if (slugOrHash && slugOrHash.length > 40) {
-    const decompressed = decompressSurprise(slugOrHash);
+  // If slugOrHash itself is or contains a query string or full URL
+  let targetSlug = slugOrHash;
+  if (typeof slugOrHash === 'string' && (slugOrHash.includes('?') || slugOrHash.includes('='))) {
+    try {
+      const queryPart = slugOrHash.includes('?') ? slugOrHash.split('?')[1] : slugOrHash;
+      const params = new URLSearchParams(queryPart);
+      const dParam = params.get('d');
+      if (dParam) {
+        const decompressed = decompressSurprise(dParam);
+        if (decompressed) return decompressed;
+      }
+      const extracted = params.get('v') || params.get('id') || params.get('slug');
+      if (extracted) {
+        targetSlug = extracted;
+      }
+    } catch {
+      // fallback
+    }
+  }
+
+  // If targetSlug is missing, try reading from window.location.search in browser
+  if (!targetSlug && typeof window !== 'undefined' && window.location?.search) {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      targetSlug = params.get('v') || params.get('id') || params.get('slug');
+    } catch {
+      // fallback
+    }
+  }
+
+  if (typeof targetSlug === 'string') {
+    try {
+      targetSlug = decodeURIComponent(targetSlug).trim();
+    } catch {
+      targetSlug = targetSlug.trim();
+    }
+  }
+
+  // If targetSlug itself looks like a compressed string (longer than standard slug)
+  if (targetSlug && targetSlug.length > 40 && !targetSlug.includes('-')) {
+    const decompressed = decompressSurprise(targetSlug);
     if (decompressed) return decompressed;
   }
 
   // Try fetching from backend API
-  if (slugOrHash) {
+  if (targetSlug) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
+      const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-      const res = await fetch(`/api/sites/${encodeURIComponent(slugOrHash)}`, {
+      const res = await fetch(`${getApiBase()}/api/sites/${encodeURIComponent(targetSlug)}`, {
         signal: controller.signal,
       });
       clearTimeout(timeoutId);
 
       if (res.ok) {
         const json = await res.json();
+        if (json && json.site) return json.site;
         if (json && json.data) return json.data;
-        if (json) return json;
+        return json;
       }
-    } catch (e) {
+    } catch {
       // API failed or offline
     }
 
     // Try checking localStorage
     const saved = getSavedSurprises();
-    const localMatch = saved.find((item) => item.slug === slugOrHash || item.id === slugOrHash);
+    const localMatch = saved.find(
+      (item) =>
+        (item.slug && item.slug.toLowerCase() === targetSlug.toLowerCase()) ||
+        (item.id && item.id.toLowerCase() === targetSlug.toLowerCase())
+    );
     if (localMatch) {
-      return localMatch;
+      return localMatch.data || localMatch;
     }
   }
 
@@ -223,10 +322,10 @@ export const loadSurprise = async (slugOrHash) => {
 };
 
 /**
- * Client-side lightweight image compressor (resizes to max 800px & 0.75 JPEG)
- * Keeps payload lightweight for instant sharing without server upload limits.
+ * Client-side lightweight image compressor (resizes to max 600px & 0.72 JPEG)
+ * Keeps photo payloads under ~40KB while remaining razor sharp on retina mobile screens!
  */
-export const compressImageFile = (file, maxWidth = 800, maxHeight = 800, quality = 0.75) => {
+export const compressImageFile = (file, maxWidth = 600, maxHeight = 600, quality = 0.72) => {
   return new Promise((resolve, reject) => {
     if (!file || !file.type.startsWith('image/')) {
       return reject(new Error('Selected file is not an image'));

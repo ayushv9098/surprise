@@ -11,13 +11,18 @@ import BlushRomanceView from './BlushRomanceView';
 import GoldenBirthdayView from './GoldenBirthdayView';
 import PolaroidScrapbookView from './PolaroidScrapbookView';
 import HeartfeltApologyView from './HeartfeltApologyView';
+import MultiSceneBirthdayView from './MultiSceneBirthdayView';
 import { soundEffects } from './common/SoundEffects';
 
 const TEMPLATES = [
+  { id: 'royal-sapphire', label: 'Royal Sapphire', icon: '👑', component: MultiSceneBirthdayView },
+  { id: 'golden-birthday', label: 'Golden Spark', icon: '🎂', component: GoldenBirthdayView },
+  { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: PolaroidScrapbookView },
+  { id: 'blush-rose', label: 'Blush Blossom', icon: '🌸', component: MultiSceneBirthdayView },
+  { id: 'princess-peach', label: 'Princess Peach', icon: '✨', component: MultiSceneBirthdayView },
+  { id: 'lavender-dream', label: 'Lavender Dream', icon: '💜', component: MultiSceneBirthdayView },
   { id: 'blush-romance', label: 'Blush Romance', icon: '💖', component: BlushRomanceView },
-  { id: 'golden-birthday', label: 'Golden Birthday', icon: '🎂', component: GoldenBirthdayView },
-  { id: 'polaroid-scrapbook', label: 'Polaroid Scrapbook', icon: '📖', component: PolaroidScrapbookView },
-  { id: 'heartfelt-apology', label: 'Heartfelt Apology', icon: '💜', component: HeartfeltApologyView },
+  { id: 'heartfelt-apology', label: 'Heartfelt Apology', icon: '🥺', component: HeartfeltApologyView },
 ];
 
 export default function TemplateViewer({ 
@@ -29,7 +34,15 @@ export default function TemplateViewer({
 }) {
   const propTemplateId = (() => {
     const raw = (siteData.templateId || siteData.theme || siteData.type || '').toLowerCase();
-    if (raw.includes('birthday') || raw.includes('bday')) return 'golden-birthday';
+    if (raw.includes('sapphire') || raw.includes('royal')) return 'royal-sapphire';
+    if (raw.includes('multiscene') || raw.includes('multi-scene')) return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
+    if (raw.includes('rose') || raw.includes('blush-rose')) return 'blush-rose';
+    if (raw.includes('peach')) return 'princess-peach';
+    if (raw.includes('lavender')) return 'lavender-dream';
+    if (raw === 'golden-birthday' || raw === 'golden') return 'golden-birthday';
+    if (raw.includes('birthday') || raw.includes('bday')) {
+      return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
+    }
     if (raw.includes('scrapbook') || raw.includes('retro') || raw.includes('vintage')) return 'polaroid-scrapbook';
     if (raw.includes('apology') || raw.includes('sorry')) return 'heartfelt-apology';
     if (raw.includes('blush') || raw.includes('romance') || raw.includes('love')) return 'blush-romance';
@@ -37,7 +50,7 @@ export default function TemplateViewer({
   })();
 
   const [selectedOverride, setSelectedOverride] = useState(null);
-  const activeTemplateId = selectedOverride || propTemplateId || 'blush-romance';
+  const activeTemplateId = selectedOverride || propTemplateId || (siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showCopiedToast, setShowCopiedToast] = useState(false);
 
@@ -94,87 +107,89 @@ export default function TemplateViewer({
   const ComponentToRender = selectedTemplate.component;
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       
-      {/* Top Floating Controls Bar */}
-      <nav 
-        aria-label="Keepsake Controls"
-        className="fixed top-4 left-4 right-4 z-40 max-w-5xl mx-auto flex items-center justify-between pointer-events-none"
-      >
-        {/* Left Side: Back / Brand Pill */}
-        <div className="flex items-center gap-2 pointer-events-auto">
-          {onBack && (
+      {/* Top Floating Controls Bar (Hidden in Live Keepsake View for pure recipient experience) */}
+      {!isLiveView && (
+        <nav 
+          aria-label="Keepsake Controls"
+          className="fixed top-4 left-4 right-4 z-40 max-w-5xl mx-auto flex items-center justify-between pointer-events-none"
+        >
+          {/* Left Side: Back / Brand Pill */}
+          <div className="flex items-center gap-2 pointer-events-auto">
+            {onBack && (
+              <button
+                onClick={onBack}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-slate-800 hover:text-slate-950 backdrop-blur-md shadow-md border border-slate-200/90 text-xs sm:text-sm font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer pointer-events-auto"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back to WishCraft</span>
+              </button>
+            )}
+
+            {/* Quick Template Switcher (Visible in preview / demo mode) */}
+            {showTemplateSwitcher && (
+              <div className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/85 backdrop-blur-md border border-slate-200/80 shadow-md overflow-x-auto max-w-md">
+                {TEMPLATES.slice(0, 6).map((t) => (
+                  <button
+                    key={t.id}
+                    onClick={() => {
+                      soundEffects.playPop();
+                      setSelectedOverride(t.id);
+                    }}
+                    className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1 shrink-0 ${
+                      activeTemplateId === t.id
+                        ? 'bg-slate-900 text-white shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    }`}
+                  >
+                    <span>{t.icon}</span>
+                    <span className="truncate max-w-[100px]">{t.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Right Side: Share & Fullscreen Controls */}
+          <div className="flex items-center gap-2 pointer-events-auto">
+            {/* Share Button */}
             <button
-              onClick={onBack}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              onClick={handleShare}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              title="Copy Keepsake Link"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Back</span>
+              {showCopiedToast ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-emerald-700">Link Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5 text-rose-500" />
+                  <span className="hidden sm:inline">Share</span>
+                </>
+              )}
             </button>
-          )}
 
-          {/* Quick Template Switcher (Visible in preview / demo mode) */}
-          {showTemplateSwitcher && !isLiveView && (
-            <div className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/85 backdrop-blur-md border border-slate-200/80 shadow-md">
-              {TEMPLATES.map((t) => (
-                <button
-                  key={t.id}
-                  onClick={() => {
-                    soundEffects.playPop();
-                    setSelectedOverride(t.id);
-                  }}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
-                    activeTemplateId === t.id
-                      ? 'bg-slate-900 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-                >
-                  <span>{t.icon}</span>
-                  <span>{t.label}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Right Side: Share & Fullscreen Controls */}
-        <div className="flex items-center gap-2 pointer-events-auto">
-          {/* Share Button */}
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold transition-all hover:scale-105 active:scale-95 cursor-pointer"
-            title="Copy Keepsake Link"
-          >
-            {showCopiedToast ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-emerald-700">Link Copied!</span>
-              </>
-            ) : (
-              <>
-                <Share2 className="w-3.5 h-3.5 text-rose-500" />
-                <span className="hidden sm:inline">Share</span>
-              </>
-            )}
-          </button>
-
-          {/* Fullscreen Button */}
-          <button
-            onClick={toggleFullscreen}
-            className="p-2 sm:px-3 sm:py-2 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold transition-all hover:scale-105 active:scale-95 cursor-pointer"
-            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen View"}
-          >
-            {isFullscreen ? (
-              <Minimize className="w-4 h-4" />
-            ) : (
-              <Maximize className="w-4 h-4" />
-            )}
-          </button>
-        </div>
-      </nav>
+            {/* Fullscreen Button */}
+            <button
+              onClick={toggleFullscreen}
+              className="p-2 sm:px-3 sm:py-2 rounded-full bg-white/90 hover:bg-white text-slate-700 hover:text-slate-900 backdrop-blur-md shadow-md border border-slate-200/80 text-xs font-semibold transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              title={isFullscreen ? "Exit Fullscreen" : "Fullscreen View"}
+            >
+              {isFullscreen ? (
+                <Minimize className="w-4 h-4" />
+              ) : (
+                <Maximize className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+        </nav>
+      )}
 
       {/* Floating Copied Toast Notification */}
-      {showCopiedToast && (
+      {!isLiveView && showCopiedToast && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-medium shadow-xl">
             <Sparkles className="w-4 h-4 text-amber-400" />
@@ -187,7 +202,10 @@ export default function TemplateViewer({
       <main className="w-full">
         <ComponentToRender 
           siteData={{ ...siteData, templateId: activeTemplateId }} 
+          onBack={isLiveView ? undefined : onBack}
+          onNavigate={onNavigate}
           onNavigateCreate={handleNavigateCreate}
+          isLiveView={isLiveView}
         />
       </main>
     </div>
