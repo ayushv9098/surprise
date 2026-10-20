@@ -103,17 +103,32 @@ app.get('/api/admin/metrics', (req, res) => {
 });
 
 /**
- * Admin: List sites with optional search, template filter, and sorting
+ * Admin: List sites with optional search, template filter, sorting, and pagination
  */
 app.get('/api/admin/sites', (req, res) => {
   try {
-    const { search, template, sortBy } = req.query;
-    const sites = db.getAllSites({ search, template, sortBy });
+    const { search, template, sortBy, page, limit } = req.query;
+    const allSites = db.getAllSites({ search, template, sortBy });
+    const total = allSites.length;
+
+    let sites = allSites;
+    let pageNum = null;
+    let limitNum = null;
+    let totalPages = null;
+
+    if (limit !== undefined) {
+      pageNum = Math.max(1, parseInt(page, 10) || 1);
+      limitNum = Math.max(1, parseInt(limit, 10) || 20);
+      totalPages = Math.ceil(total / limitNum) || 1;
+      const startIndex = (pageNum - 1) * limitNum;
+      sites = allSites.slice(startIndex, startIndex + limitNum);
+    }
 
     res.json({
       success: true,
       sites,
-      total: sites.length
+      total,
+      ...(limit !== undefined ? { page: pageNum, limit: limitNum, totalPages } : {})
     });
   } catch (error) {
     console.error('Error listing sites:', error);

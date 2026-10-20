@@ -32,7 +32,7 @@ export const CATEGORIES = [
     description: 'Cherished memories, trips & friendship nostalgia',
     hasGender: false,
     defaultTemplate: 'polaroid-scrapbook',
-    accent: '#CA8A04',
+    accent: '#059669',
     tag: 'Memories',
   },
   {

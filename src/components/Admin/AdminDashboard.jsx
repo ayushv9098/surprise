@@ -36,7 +36,7 @@ export default function AdminDashboard({ onNavigate }) {
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState('all');
-  const [sortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState('newest');
 
   // Inspection Modal
   const [inspectSite, setInspectSite] = useState(null);
@@ -123,6 +123,13 @@ export default function AdminDashboard({ onNavigate }) {
 
   // Handle Delete site
   const handleDeleteSite = async (id) => {
+    // Optimistic instant state update for immediate UI feedback
+    setSites((prev) => prev.filter((s) => s.id !== id && s.slug !== id));
+    setMetrics((prev) => ({
+      ...prev,
+      totalSites: Math.max(0, (prev.totalSites || 1) - 1)
+    }));
+
     try {
       const res = await fetch(`/api/admin/sites/${encodeURIComponent(id)}`, {
         method: 'DELETE'
@@ -133,13 +140,12 @@ export default function AdminDashboard({ onNavigate }) {
       }
 
       showToast({ type: 'success', message: 'Surprise website deleted permanently' });
-      // Refresh data
+      // Refresh data silently to keep counts in perfect sync
       fetchData(true);
     } catch (err) {
       console.error('Delete error:', err);
-      // Optimistic local update fallback
-      setSites((prev) => prev.filter((s) => s.id !== id && s.slug !== id));
-      showToast({ type: 'info', message: 'Site removed from view' });
+      showToast({ type: 'error', message: 'Could not sync deletion with server. Refreshing...' });
+      fetchData(true);
     }
   };
 
@@ -191,7 +197,9 @@ export default function AdminDashboard({ onNavigate }) {
       'blush-romance': 'Blush Romance 🌸',
       'golden-birthday': 'Golden Birthday 🎂',
       'polaroid-scrapbook': 'Polaroid Scrapbook 📸',
-      'heartfelt-apology': 'Heartfelt Hug 🥺'
+      'heartfelt-apology': 'Heartfelt Hug 🥺',
+      'lavender-dream': 'Lavender Dream 💜',
+      'princess-peach': 'Princess Peach ✨'
     };
     return map[key] || key;
   };
@@ -356,7 +364,7 @@ export default function AdminDashboard({ onNavigate }) {
 
         </div>
 
-        {/* TOOLBAR: Search + Template filter only */}
+        {/* TOOLBAR: Search + Template filter + Sort options */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
 
           {/* Search Input */}
@@ -391,7 +399,22 @@ export default function AdminDashboard({ onNavigate }) {
             <option value="blush-romance">Blush Romance 🌸</option>
             <option value="golden-birthday">Golden Birthday 🎂</option>
             <option value="polaroid-scrapbook">Polaroid Scrapbook 📸</option>
+            <option value="lavender-dream">Lavender Dream 💜</option>
             <option value="heartfelt-apology">Heartfelt Hug 🥺</option>
+            <option value="princess-peach">Princess Peach ✨</option>
+          </select>
+
+          {/* Sort By Dropdown */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="px-4 py-2.5 rounded-xl text-sm bg-white border border-gray-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
+          >
+            <option value="newest">Newest First ⏱️</option>
+            <option value="oldest">Oldest First ⏳</option>
+            <option value="views-desc">Most Views 🔥</option>
+            <option value="views-asc">Least Views 👀</option>
+            <option value="recipient">By Recipient (A-Z) 🔤</option>
           </select>
         </div>
 

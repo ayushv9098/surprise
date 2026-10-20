@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ExternalLink,
   Copy,
@@ -9,10 +9,20 @@ import {
   Calendar,
   Sparkles,
   Inbox,
-  ArrowRight
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 const BADGE_STYLES = {
+  'royal-sapphire': {
+    label: 'Royal Sapphire 👑',
+    classes: 'bg-sky-50 text-sky-700 border-sky-200'
+  },
+  'blush-rose': {
+    label: 'Blush Rose 🌸',
+    classes: 'bg-rose-50 text-rose-700 border-rose-200'
+  },
   'blush-romance': {
     label: 'Blush Romance 🌸',
     classes: 'bg-rose-50 text-rose-700 border-rose-200'
@@ -25,9 +35,17 @@ const BADGE_STYLES = {
     label: 'Polaroid Scrapbook 📸',
     classes: 'bg-yellow-50 text-yellow-800 border-yellow-200'
   },
+  'lavender-dream': {
+    label: 'Lavender Dream 💜',
+    classes: 'bg-purple-50 text-purple-700 border-purple-200'
+  },
   'heartfelt-apology': {
     label: 'Heartfelt Hug 🥺',
     classes: 'bg-purple-50 text-purple-700 border-purple-200'
+  },
+  'princess-peach': {
+    label: 'Princess Peach ✨',
+    classes: 'bg-orange-50 text-orange-700 border-orange-200'
   }
 };
 
@@ -40,13 +58,26 @@ export default function SitesTable({
   onCreateNew
 }) {
   const [copiedSlug, setCopiedSlug] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+
+  // Reset to first page when sites list length changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [sites.length]);
+
+  const totalPages = Math.max(1, Math.ceil(sites.length / pageSize));
+  const safePage = Math.min(Math.max(1, currentPage), totalPages);
+  const startIndex = (safePage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize, sites.length);
+  const paginatedSites = sites.slice(startIndex, endIndex);
 
   const handleCopy = (slug) => {
-    const url = `${window.location.origin}/?slug=${encodeURIComponent(slug)}`;
+    const url = `${window.location.origin}/?v=${encodeURIComponent(slug)}`;
     navigator.clipboard.writeText(url);
     setCopiedSlug(slug);
     if (onToast) {
-      onToast({ type: 'success', message: `Copied link for /${slug}` });
+      onToast({ type: 'success', message: `Copied link for /?v=${slug}` });
     }
     setTimeout(() => {
       setCopiedSlug(null);
@@ -128,10 +159,10 @@ export default function SitesTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 text-xs">
-            {sites.map((site) => {
+            {paginatedSites.map((site) => {
               const templateKey = site.template || site.templateId || 'blush-romance';
               const isCopied = copiedSlug === site.slug;
-              const directViewUrl = `${window.location.origin}/?slug=${encodeURIComponent(site.slug)}`;
+              const directViewUrl = `${window.location.origin}/?v=${encodeURIComponent(site.slug)}`;
 
               return (
                 <tr
@@ -247,15 +278,44 @@ export default function SitesTable({
         </table>
       </div>
 
-      {/* Table Footer Count Summary */}
-      <div className="px-5 py-3 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between text-xs text-slate-400 font-medium">
-        <span>
-          Showing {sites.length} surprise {sites.length === 1 ? 'website' : 'websites'}
-        </span>
-        <span className="flex items-center gap-1 text-slate-500">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>WishCraft Cloud Data</span>
-        </span>
+      {/* Table Footer Count Summary & Pagination Controls */}
+      <div className="px-5 py-3 border-t border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 font-medium">
+        <div className="flex items-center gap-2">
+          <span>
+            Showing {sites.length === 0 ? 0 : startIndex + 1}–{endIndex} of {sites.length} surprise {sites.length === 1 ? 'website' : 'websites'}
+          </span>
+          <span className="hidden sm:inline text-slate-300">•</span>
+          <span className="hidden sm:flex items-center gap-1 text-slate-400">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>WishCraft Cloud Data</span>
+          </span>
+        </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={safePage === 1}
+              className="p-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              title="Previous Page"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </button>
+
+            <span className="px-2 text-slate-600 font-semibold text-xs">
+              Page {safePage} of {totalPages}
+            </span>
+
+            <button
+              onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+              disabled={safePage === totalPages}
+              className="p-1.5 rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              title="Next Page"
+            >
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

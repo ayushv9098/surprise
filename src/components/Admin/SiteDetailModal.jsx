@@ -16,6 +16,18 @@ import {
 } from 'lucide-react';
 
 const TEMPLATE_CONFIG = {
+  'royal-sapphire': {
+    name: 'Royal Sapphire 👑',
+    color: 'bg-sky-50 text-sky-700 border-sky-200',
+    accent: 'text-sky-600',
+    tag: 'Royal & Elegant'
+  },
+  'blush-rose': {
+    name: 'Blush Rose 🌸',
+    color: 'bg-rose-50 text-rose-700 border-rose-200',
+    accent: 'text-rose-600',
+    tag: 'Dreamy & Floral'
+  },
   'blush-romance': {
     name: 'Blush Romance 🌸',
     color: 'bg-rose-50 text-rose-700 border-rose-200',
@@ -34,11 +46,23 @@ const TEMPLATE_CONFIG = {
     accent: 'text-yellow-600',
     tag: 'Vintage & Nostalgic'
   },
+  'lavender-dream': {
+    name: 'Lavender Dream 💜',
+    color: 'bg-purple-50 text-purple-700 border-purple-200',
+    accent: 'text-purple-600',
+    tag: 'Calming & Poetic'
+  },
   'heartfelt-apology': {
     name: 'Heartfelt Hug 🥺',
     color: 'bg-purple-50 text-purple-700 border-purple-200',
     accent: 'text-purple-600',
     tag: 'Sweet Apology & Love'
+  },
+  'princess-peach': {
+    name: 'Princess Peach ✨',
+    color: 'bg-orange-50 text-orange-700 border-orange-200',
+    accent: 'text-orange-600',
+    tag: 'Sparkling & Joy'
   }
 };
 
