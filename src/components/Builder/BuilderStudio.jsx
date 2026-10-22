@@ -364,7 +364,7 @@ export default function BuilderStudio({
 
           {/* RIGHT COLUMN: Sticky Live Multi-Scene Phone Preview (5 cols) */}
           <div
-            className={`lg:col-span-5 lg:sticky lg:top-24 flex flex-col items-center justify-center ${
+            className={`lg:col-span-5 lg:sticky lg:top-[72px] lg:max-h-[calc(100vh-76px)] flex flex-col items-center justify-center ${
               activeMobileView === 'editor' ? 'hidden lg:flex' : 'flex'
             }`}
           >

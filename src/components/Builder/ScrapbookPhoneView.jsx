@@ -17,13 +17,27 @@ export default function ScrapbookPhoneView({
   formData = {},
   theme = {},
   triggerConfetti,
-  onReset
+  onReset,
+  activeTab: controlledTab,
+  onTabChange,
 }) {
-  const [activeTab, setActiveTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
+  const [internalTab, setInternalTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
+  const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
+
+  const handleTabSelect = (tabKey) => {
+    soundEffects.playPop();
+    if (onTabChange) {
+      onTabChange(tabKey);
+    } else {
+      setInternalTab(tabKey);
+    }
+  };
+
   const [activeChapter, setActiveChapter] = useState(0); // 0, 1, 2
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isScratched, setIsScratched] = useState(false);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [isOpeningEnvelope, setIsOpeningEnvelope] = useState(false);
   const [revealedJokes, setRevealedJokes] = useState({});
 
   const templateId = (formData.templateId || theme.id || '').toLowerCase();
@@ -124,9 +138,14 @@ export default function ScrapbookPhoneView({
   };
 
   const handleOpenEnvelope = () => {
+    if (envelopeOpen || isOpeningEnvelope) return;
+    setIsOpeningEnvelope(true);
     soundEffects.playSealBreak();
     if (triggerConfetti) triggerConfetti();
-    setEnvelopeOpen(true);
+    setTimeout(() => {
+      setEnvelopeOpen(true);
+      setIsOpeningEnvelope(false);
+    }, 420);
   };
 
   const toggleJoke = (id) => {
@@ -135,7 +154,7 @@ export default function ScrapbookPhoneView({
   };
 
   return (
-    <div className="flex-1 w-full flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
+    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
       {/* =================================================================== */}
       {/* 1. RETRO 35MM FILM HEADER & WASHI TAPE */}
       {/* =================================================================== */}
@@ -228,7 +247,7 @@ export default function ScrapbookPhoneView({
         <div className="grid grid-cols-4 gap-1 p-1 bg-amber-900/10 rounded-xl border border-amber-900/10 text-[10px] font-bold">
           <button
             type="button"
-            onClick={() => setActiveTab('timeline')}
+            onClick={() => handleTabSelect('timeline')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'timeline'
                 ? 'bg-amber-800 text-white shadow-xs'
@@ -241,7 +260,7 @@ export default function ScrapbookPhoneView({
 
           <button
             type="button"
-            onClick={() => setActiveTab('jokes')}
+            onClick={() => handleTabSelect('jokes')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'jokes'
                 ? 'bg-amber-800 text-white shadow-xs'
@@ -254,7 +273,7 @@ export default function ScrapbookPhoneView({
 
           <button
             type="button"
-            onClick={() => setActiveTab('scratch')}
+            onClick={() => handleTabSelect('scratch')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'scratch'
                 ? 'bg-amber-800 text-white shadow-xs'
@@ -267,7 +286,7 @@ export default function ScrapbookPhoneView({
 
           <button
             type="button"
-            onClick={() => setActiveTab('letter')}
+            onClick={() => handleTabSelect('letter')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'letter'
                 ? 'bg-amber-800 text-white shadow-xs'
@@ -283,7 +302,7 @@ export default function ScrapbookPhoneView({
       {/* =================================================================== */}
       {/* 4. ACTIVE TAB CONTENT BODY */}
       {/* =================================================================== */}
-      <div className="flex-1 px-3 py-2 flex flex-col items-center justify-center">
+      <div className="flex-1 min-h-0 w-full px-3 py-2 flex flex-col items-center justify-start overflow-y-auto custom-scrollbar">
         {/* ----------------------------------------------------------------- */}
         {/* TAB 1: CHAPTER-BY-CHAPTER MEMORY TIMELINE */}
         {/* ----------------------------------------------------------------- */}
@@ -497,7 +516,9 @@ export default function ScrapbookPhoneView({
             {!envelopeOpen ? (
               <div
                 onClick={handleOpenEnvelope}
-                className="group relative cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                className={`group relative cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${
+                  isOpeningEnvelope ? 'scale-95 brightness-110 shadow-2xl' : ''
+                }`}
                 title="Tap wax seal to open letter"
               >
                 {/* Realistic Kraft Envelope Container */}
@@ -523,14 +544,21 @@ export default function ScrapbookPhoneView({
                     </svg>
                   </div>
 
-                  {/* Wax Seal Center */}
-                  <div className="absolute top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full border-2 border-amber-200 shadow-lg bg-[#b91c1c] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  {/* Wax Seal Center with Crack Effect */}
+                  <div className={`absolute top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full border-2 border-amber-200 shadow-lg bg-[#b91c1c] flex items-center justify-center transition-all duration-300 group-hover:scale-110 active:scale-90 ${
+                    isOpeningEnvelope ? 'scale-125 rotate-12 ring-2 ring-amber-300 animate-pulse' : ''
+                  }`}>
                     <AppleEmoji emoji={isNeon ? '⚡' : isCozy ? '🌻' : '📸'} size={18} />
+                    {isOpeningEnvelope && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-full h-0.5 bg-white/90 rotate-45 animate-ping" />
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <p className="mt-2 text-[10px] font-bold text-amber-900 animate-bounce flex items-center justify-center gap-1">
-                  <span>Tap wax seal to unfold letter</span>
+                  <span>{isOpeningEnvelope ? 'Breaking wax seal... ✨' : 'Tap wax seal to unfold letter'}</span>
                   <span>💌</span>
                 </p>
               </div>

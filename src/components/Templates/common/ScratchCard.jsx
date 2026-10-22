@@ -160,8 +160,9 @@ export default function ScratchCard({
     if (!ctx) return;
 
     const rect = canvas.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+    if (!rect.width || !rect.height) return;
+    const x = (clientX - rect.left) * (canvas.width / rect.width);
+    const y = (clientY - rect.top) * (canvas.height / rect.height);
 
     ctx.globalCompositeOperation = 'destination-out';
     ctx.beginPath();

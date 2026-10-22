@@ -12,11 +12,25 @@ export default function ApologyPhoneView({
   formData = {},
   theme = {},
   triggerConfetti,
-  onReset
+  onReset,
+  activeTab: controlledTab,
+  onTabChange,
 }) {
-  const [activeTab, setActiveTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
+  const [internalTab, setInternalTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
+  const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
+
+  const handleTabSelect = (tabKey) => {
+    soundEffects.playPop();
+    if (onTabChange) {
+      onTabChange(tabKey);
+    } else {
+      setInternalTab(tabKey);
+    }
+  };
+
   const [isForgiven, setIsForgiven] = useState(false);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [isOpeningEnvelope, setIsOpeningEnvelope] = useState(false);
   const [isTreatySigned, setIsTreatySigned] = useState(false);
 
   // Runaway "No" button dodge state & bribery excuses
@@ -88,13 +102,18 @@ export default function ApologyPhoneView({
   };
 
   const handleOpenEnvelope = () => {
+    if (envelopeOpen || isOpeningEnvelope) return;
+    setIsOpeningEnvelope(true);
     soundEffects.playSealBreak();
     if (triggerConfetti) triggerConfetti();
-    setEnvelopeOpen(true);
+    setTimeout(() => {
+      setEnvelopeOpen(true);
+      setIsOpeningEnvelope(false);
+    }, 420);
   };
 
   return (
-    <div className="flex-1 w-full flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
+    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
       {/* =================================================================== */}
       {/* 1. SERENE SINCERE PEACE HEADER */}
       {/* =================================================================== */}
@@ -124,7 +143,7 @@ export default function ApologyPhoneView({
         <div className="grid grid-cols-4 gap-1 p-1 bg-emerald-900/10 rounded-xl border border-emerald-900/10 text-[10px] font-bold">
           <button
             type="button"
-            onClick={() => setActiveTab('forgive')}
+            onClick={() => handleTabSelect('forgive')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'forgive'
                 ? 'bg-emerald-700 text-white shadow-xs'
@@ -137,7 +156,7 @@ export default function ApologyPhoneView({
 
           <button
             type="button"
-            onClick={() => setActiveTab('treaty')}
+            onClick={() => handleTabSelect('treaty')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'treaty'
                 ? 'bg-emerald-700 text-white shadow-xs'
@@ -150,7 +169,7 @@ export default function ApologyPhoneView({
 
           <button
             type="button"
-            onClick={() => setActiveTab('promises')}
+            onClick={() => handleTabSelect('promises')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'promises'
                 ? 'bg-emerald-700 text-white shadow-xs'
@@ -163,7 +182,7 @@ export default function ApologyPhoneView({
 
           <button
             type="button"
-            onClick={() => setActiveTab('letter')}
+            onClick={() => handleTabSelect('letter')}
             className={`py-1 rounded-lg transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer ${
               activeTab === 'letter'
                 ? 'bg-emerald-700 text-white shadow-xs'
@@ -179,7 +198,7 @@ export default function ApologyPhoneView({
       {/* =================================================================== */}
       {/* 3. ACTIVE TAB CONTENT BODY */}
       {/* =================================================================== */}
-      <div className="flex-1 px-3 py-2 flex flex-col items-center justify-center">
+      <div className="flex-1 min-h-0 w-full px-3 py-2 flex flex-col items-center justify-start overflow-y-auto custom-scrollbar">
         {/* ----------------------------------------------------------------- */}
         {/* TAB 1: INTERACTIVE FORGIVENESS BOX (THE STAR FEATURE!) */}
         {/* ----------------------------------------------------------------- */}
@@ -216,6 +235,7 @@ export default function ApologyPhoneView({
                       type="button"
                       onMouseEnter={handleNoDodge}
                       onClick={handleNoDodge}
+                      onTouchStart={handleNoDodge}
                       style={{
                         transform: `translate(${noButtonOffset.x}px, ${noButtonOffset.y}px)`,
                         transition: 'transform 0.15s ease-out'
@@ -400,7 +420,9 @@ export default function ApologyPhoneView({
             {!envelopeOpen ? (
               <div
                 onClick={handleOpenEnvelope}
-                className="group relative cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                className={`group relative cursor-pointer transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${
+                  isOpeningEnvelope ? 'scale-95 brightness-110 shadow-2xl' : ''
+                }`}
                 title="Tap olive wax seal to read apology letter"
               >
                 {/* Serene Olive Kraft Envelope */}
@@ -426,14 +448,21 @@ export default function ApologyPhoneView({
                     </svg>
                   </div>
 
-                  {/* Olive Wax Seal */}
-                  <div className="absolute top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full border-2 border-emerald-200 shadow-lg bg-[#15803d] flex items-center justify-center group-hover:scale-110 transition-transform">
+                  {/* Olive Wax Seal with Crack Effect */}
+                  <div className={`absolute top-[52%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full border-2 border-emerald-200 shadow-lg bg-[#15803d] flex items-center justify-center transition-all duration-300 group-hover:scale-110 active:scale-90 ${
+                    isOpeningEnvelope ? 'scale-125 rotate-12 ring-2 ring-emerald-300 animate-pulse' : ''
+                  }`}>
                     <AppleEmoji emoji="🕊️" size={18} />
+                    {isOpeningEnvelope && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-full h-0.5 bg-white/90 rotate-45 animate-ping" />
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <p className="mt-2 text-[10px] font-bold text-emerald-900 animate-bounce flex items-center justify-center gap-1">
-                  <span>Tap olive wax seal to read letter</span>
+                  <span>{isOpeningEnvelope ? 'Breaking wax seal... ✨' : 'Tap olive wax seal to read letter'}</span>
                   <span>🕊️</span>
                 </p>
               </div>
