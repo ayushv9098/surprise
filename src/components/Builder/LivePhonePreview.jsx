@@ -8,12 +8,10 @@ import {
   BookOpen,
   Copy,
   Sparkles,
-  Heart,
 } from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { getTemplateById } from '../../data/templates';
 import { soundEffects } from '../Templates/common/SoundEffects';
-import RomancePhoneView from './RomancePhoneView';
 import ScrapbookPhoneView from './ScrapbookPhoneView';
 import ApologyPhoneView from './ApologyPhoneView';
 
@@ -816,9 +814,7 @@ export default function LivePhonePreview({ formData = {} }) {
     };
   }, []);
 
-  // Romance & Dedicated Experience States
-  const [romanticTab, setRomanticTab] = useState('letter'); // 'letter' | 'moments' | 'adore' | 'scratch' | 'all'
-  const [romanticLoveCount, setRomanticLoveCount] = useState(0);
+  // Dedicated Experience States
   const [scrapbookTab, setScrapbookTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
   const [apologyTab, setApologyTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
   const [bookmarkSaved, setBookmarkSaved] = useState(false);
@@ -828,8 +824,6 @@ export default function LivePhonePreview({ formData = {} }) {
     setScreen(0);
     setEnvelopeOpen(false);
     setApologyForgiveState('initial');
-    setRomanticTab('letter');
-    setRomanticLoveCount(0);
     setScrapbookTab('timeline');
     setApologyTab('forgive');
     setBookmarkSaved(false);
@@ -1119,8 +1113,6 @@ export default function LivePhonePreview({ formData = {} }) {
     triggerConfetti();
     setScreen(0);
     setEnvelopeOpen(false);
-    setRomanticTab('letter');
-    setRomanticLoveCount(0);
     setScrapbookTab('timeline');
     setApologyTab('forgive');
     setApologyForgiveState('initial');
@@ -1142,11 +1134,7 @@ export default function LivePhonePreview({ formData = {} }) {
 
   const handleToolbarBack = () => {
     soundEffects.playPop();
-    if (isRomance) {
-      const tabs = ['letter', 'moments', 'adore', 'scratch', 'all'];
-      const idx = tabs.indexOf(romanticTab);
-      if (idx > 0) setRomanticTab(tabs[idx - 1]);
-    } else if (isScrapbook) {
+    if (isScrapbook) {
       const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
       const idx = tabs.indexOf(scrapbookTab);
       if (idx > 0) setScrapbookTab(tabs[idx - 1]);
@@ -1161,11 +1149,7 @@ export default function LivePhonePreview({ formData = {} }) {
 
   const handleToolbarForward = () => {
     soundEffects.playPop();
-    if (isRomance) {
-      const tabs = ['letter', 'moments', 'adore', 'scratch', 'all'];
-      const idx = tabs.indexOf(romanticTab);
-      if (idx >= 0 && idx < tabs.length - 1) setRomanticTab(tabs[idx + 1]);
-    } else if (isScrapbook) {
+    if (isScrapbook) {
       const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
       const idx = tabs.indexOf(scrapbookTab);
       if (idx >= 0 && idx < tabs.length - 1) setScrapbookTab(tabs[idx + 1]);
@@ -1321,21 +1305,7 @@ export default function LivePhonePreview({ formData = {} }) {
               {/* ========================================================== */}
               {/* INTERACTIVE SCREEN BODY: DEDICATED OCCASION EXPERIENCES */}
               {/* ========================================================== */}
-              {isRomance ? (
-                <RomancePhoneView
-                  formData={formData}
-                  theme={theme}
-                  triggerConfetti={triggerConfetti}
-                  onReset={handleResetScreen}
-                  activeTab={romanticTab}
-                  onTabChange={setRomanticTab}
-                  loveCount={romanticLoveCount}
-                  onShowerLove={() => {
-                    setRomanticLoveCount((c) => c + 1);
-                    triggerConfetti();
-                  }}
-                />
-              ) : isScrapbook ? (
+              {isScrapbook ? (
                 <ScrapbookPhoneView
                   formData={formData}
                   theme={theme}
@@ -1971,8 +1941,8 @@ export default function LivePhonePreview({ formData = {} }) {
                   </button>
                 </div>
 
-                {/* Scene Indicator Dots for Birthday Flow / Chapters for Dedicated Occasions */}
-                {isBirthday ? (
+                {/* Scene Indicator Dots for Birthday & Romance Flow / Chapters for Dedicated Occasions */}
+                {isBirthday || isRomance ? (
                   <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5">
                     {[0, 1, 2, 3, 4].map((i) => (
                       <button
@@ -1985,38 +1955,13 @@ export default function LivePhonePreview({ formData = {} }) {
                         }}
                         className={`h-1.5 rounded-full transition-all cursor-pointer ${
                           screen === i
-                            ? 'w-4 bg-blue-600 shadow-xs'
+                            ? isRomance
+                              ? 'w-4 bg-rose-600 shadow-xs'
+                              : 'w-4 bg-blue-600 shadow-xs'
                             : 'w-1.5 bg-slate-400/60 hover:bg-slate-500'
                         }`}
                         aria-label={`Go to scene ${i + 1}`}
                       />
-                    ))}
-                  </div>
-                ) : isRomance ? (
-                  <div className="flex items-center justify-center gap-1 py-0.5 mb-0.5">
-                    {[
-                      { key: 'letter', icon: '💌', label: 'Letter' },
-                      { key: 'moments', icon: '📸', label: 'Story' },
-                      { key: 'adore', icon: '❤️', label: 'Adore' },
-                      { key: 'scratch', icon: '🎁', label: 'Secret' },
-                      { key: 'all', icon: '📜', label: 'All' },
-                    ].map((tab) => (
-                      <button
-                        key={tab.key}
-                        type="button"
-                        onClick={() => {
-                          soundEffects.playPop();
-                          setRomanticTab(tab.key);
-                        }}
-                        className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold flex items-center gap-0.5 transition-all cursor-pointer ${
-                          romanticTab === tab.key
-                            ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-xs scale-105'
-                            : 'text-slate-600 hover:text-slate-900 bg-white/70'
-                        }`}
-                      >
-                        <span>{tab.icon}</span>
-                        <span className="hidden min-[360px]:inline">{tab.label}</span>
-                      </button>
                     ))}
                   </div>
                 ) : isScrapbook ? (
@@ -2085,26 +2030,22 @@ export default function LivePhonePreview({ formData = {} }) {
                     type="button"
                     onClick={handleToolbarBack}
                     disabled={
-                      isRomance
-                        ? romanticTab === 'letter'
-                        : isScrapbook
+                      isScrapbook
                         ? scrapbookTab === 'timeline'
                         : isApology
                         ? apologyTab === 'forgive'
-                        : (!isBirthday || screen === 0)
+                        : (!isBirthday && !isRomance) || screen === 0
                     }
                     className={`cursor-pointer transition-opacity p-1 rounded-full ${
-                      (isRomance
-                        ? romanticTab === 'letter'
-                        : isScrapbook
+                      (isScrapbook
                         ? scrapbookTab === 'timeline'
                         : isApology
                         ? apologyTab === 'forgive'
-                        : (!isBirthday || screen === 0))
+                        : (!isBirthday && !isRomance) || screen === 0)
                         ? 'opacity-30 cursor-not-allowed'
                         : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
                     }`}
-                    title={isRomance || isScrapbook || isApology ? 'Previous Chapter' : 'Previous Scene'}
+                    title={isScrapbook || isApology ? 'Previous Chapter' : 'Previous Scene'}
                   >
                     <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
                   </button>
@@ -2114,71 +2055,46 @@ export default function LivePhonePreview({ formData = {} }) {
                     type="button"
                     onClick={handleToolbarForward}
                     disabled={
-                      isRomance
-                        ? romanticTab === 'all'
-                        : isScrapbook
+                      isScrapbook
                         ? scrapbookTab === 'letter'
                         : isApology
                         ? apologyTab === 'letter'
-                        : (!isBirthday || screen === 4)
+                        : (!isBirthday && !isRomance) || screen === 4
                     }
                     className={`cursor-pointer transition-opacity p-1 rounded-full ${
-                      (isRomance
-                        ? romanticTab === 'all'
-                        : isScrapbook
+                      (isScrapbook
                         ? scrapbookTab === 'letter'
                         : isApology
                         ? apologyTab === 'letter'
-                        : (!isBirthday || screen === 4))
+                        : (!isBirthday && !isRomance) || screen === 4)
                         ? 'opacity-30 cursor-not-allowed'
                         : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
                     }`}
-                    title={isRomance || isScrapbook || isApology ? 'Next Chapter' : 'Next Scene'}
+                    title={isScrapbook || isApology ? 'Next Chapter' : 'Next Scene'}
                   >
                     <ChevronRight className="w-5 h-5 stroke-[2.2]" />
                   </button>
 
-                  {/* 3. Center Button: Shower Love for Romance / iOS Share Sheet for Others */}
-                  {isRomance ? (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        soundEffects.playCelebration();
-                        setRomanticLoveCount((c) => c + 1);
-                        triggerConfetti();
-                      }}
-                      className="px-2.5 py-0.5 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 text-[10px] font-bold flex items-center gap-1 active:scale-95 cursor-pointer shadow-2xs"
-                      title="Shower Love"
+                  {/* 3. Center Button: iOS Share Sheet */}
+                  <button
+                    type="button"
+                    onClick={triggerConfetti}
+                    className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
+                    title="Share"
+                  >
+                    <svg
+                      className="w-4 h-4 stroke-[2.2]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
-                      <Heart className="w-3 h-3 text-rose-500 fill-current animate-pulse" />
-                      <span>Love</span>
-                      {romanticLoveCount > 0 && (
-                        <span className="px-1 py-0.2 rounded-full bg-rose-600 text-white text-[8px] font-mono">
-                          {romanticLoveCount}
-                        </span>
-                      )}
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={triggerConfetti}
-                      className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
-                      title="Share"
-                    >
-                      <svg
-                        className="w-4 h-4 stroke-[2.2]"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                        <polyline points="16 6 12 2 8 6" />
-                        <line x1="12" y1="2" x2="12" y2="15" />
-                      </svg>
-                    </button>
-                  )}
+                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                      <polyline points="16 6 12 2 8 6" />
+                      <line x1="12" y1="2" x2="12" y2="15" />
+                    </svg>
+                  </button>
 
                   {/* 4. Bookmarks Book Icon */}
                   <button
