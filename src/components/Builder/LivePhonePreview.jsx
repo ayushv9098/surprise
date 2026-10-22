@@ -1,13 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import confetti from 'canvas-confetti';
-import {
-  Lock,
-  RotateCw,
-  ChevronLeft,
-  ChevronRight,
-  BookOpen,
-  Copy,
-} from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { getTemplateById } from '../../data/templates';
 import { soundEffects } from '../Templates/common/SoundEffects';
@@ -826,7 +818,6 @@ export default function LivePhonePreview({
   const [resetNonce, setResetNonce] = useState(0);
   const [scrapbookTab, setScrapbookTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
   const [apologyTab, setApologyTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
-  const [bookmarkSaved, setBookmarkSaved] = useState(false);
 
   // Synchronize simulator scene with active form section or focused field
   useEffect(() => {
@@ -1185,56 +1176,6 @@ export default function LivePhonePreview({
     }
   };
 
-  const handleToolbarBack = () => {
-    soundEffects.playPop();
-    if (isRomance) {
-      const tabs = ['photos', 'letter', 'quiz'];
-      const idx = tabs.indexOf(romanticTab);
-      if (idx > 0) {
-        const nextTab = tabs[idx - 1];
-        setRomanticTab(nextTab);
-        if (nextTab === 'letter') setEnvelopeOpen(true);
-      }
-    } else if (isScrapbook) {
-      const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
-      const idx = tabs.indexOf(scrapbookTab);
-      if (idx > 0) setScrapbookTab(tabs[idx - 1]);
-    } else if (isApology) {
-      const tabs = ['forgive', 'treaty', 'promises', 'letter'];
-      const idx = tabs.indexOf(apologyTab);
-      if (idx > 0) setApologyTab(tabs[idx - 1]);
-    } else {
-      handlePrevScene();
-    }
-  };
-
-  const handleToolbarForward = () => {
-    soundEffects.playPop();
-    if (isRomance) {
-      const tabs = ['photos', 'letter', 'quiz'];
-      const idx = tabs.indexOf(romanticTab);
-      if (idx >= 0 && idx < tabs.length - 1) {
-        const nextTab = tabs[idx + 1];
-        setRomanticTab(nextTab);
-        if (nextTab === 'letter') setEnvelopeOpen(true);
-      }
-    } else if (isScrapbook) {
-      const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
-      const idx = tabs.indexOf(scrapbookTab);
-      if (idx >= 0 && idx < tabs.length - 1) setScrapbookTab(tabs[idx + 1]);
-    } else if (isApology) {
-      const tabs = ['forgive', 'treaty', 'promises', 'letter'];
-      const idx = tabs.indexOf(apologyTab);
-      if (idx >= 0 && idx < tabs.length - 1) setApologyTab(tabs[idx + 1]);
-    } else {
-      handleNextScene();
-    }
-  };
-
-  // Address bar display URL
-  const cleanName = (recipientName || 'someone').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
-  const displayUrl = `for-${cleanName || 'someone'}.wishly.live`;
-
   // Dynamic background styling matching the chosen template
   const isCelebrationBg = screen === 4 && envelopeOpen;
   const isDarkScene = isCelebrationBg;
@@ -1292,8 +1233,8 @@ export default function LivePhonePreview({
                 className="absolute inset-0 w-full h-full pointer-events-none z-30"
               />
 
-              {/* 8 Ambient Floating Apple Emojis Scaled to Selected Theme */}
-              {AMBIENT_EMOJIS_CONFIG.map((cfg, idx) => (
+              {/* 8 Ambient Floating Apple Emojis Scaled to Selected Theme (strictly for Birthday to keep Romance/Scrapbook/Apology clean and uncluttered) */}
+              {isBirthday && AMBIENT_EMOJIS_CONFIG.map((cfg, idx) => (
                 <div
                   key={idx}
                   className="absolute pointer-events-none select-none z-10 opacity-70"
@@ -2004,36 +1945,12 @@ export default function LivePhonePreview({
               )}
 
               {/* ========================================================== */}
-              {/* BOTTOM iOS SAFARI ADDRESS BAR & TOOLBAR */}
+              {/* BOTTOM HOME INDICATOR & SCENE DOTS */}
               {/* ========================================================== */}
               <div className="w-full pb-1 z-30 shrink-0 select-none">
-                {/* Floating Safari Address Bar */}
-                <div className="mx-3 mb-1 px-3 py-1.5 rounded-2xl bg-[#e5e5ea]/85 backdrop-blur-md border border-slate-200/60 flex items-center justify-between text-xs text-slate-800 shadow-2xs">
-                  {/* Left: AA Text Size Icon */}
-                  <span className="text-[11px] font-semibold text-slate-700 select-none tracking-tight">
-                    AA
-                  </span>
-
-                  {/* Center: Lock Icon + Live Link Domain */}
-                  <div className="flex items-center gap-1 text-[11px] font-normal text-slate-800 truncate max-w-[165px]">
-                    <Lock className="w-2.5 h-2.5 text-slate-600 shrink-0 stroke-[2.5]" />
-                    <span className="truncate">{displayUrl}</span>
-                  </div>
-
-                  {/* Right: Safari Reload Button (Resets to Cover Scene) */}
-                  <button
-                    type="button"
-                    onClick={handleResetScreen}
-                    title="Reload Surprise"
-                    className="text-slate-700 hover:text-slate-900 transition-colors p-1 rounded-full hover:bg-slate-300/40 cursor-pointer active:rotate-180 duration-300"
-                  >
-                    <RotateCw className="w-3.5 h-3.5 stroke-[2.2]" />
-                  </button>
-                </div>
-
-                {/* Scene Indicator Dots strictly for Multi-Scene Birthday (Romance/Scrapbook/Apology have their own top tabs) */}
+                {/* Scene Indicator Dots strictly for Multi-Scene Birthday (Romance/Scrapbook/Apology have their own dedicated tabs) */}
                 {isBirthday && (
-                  <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5">
+                  <div className="flex items-center justify-center gap-1.5 py-1 mb-0.5">
                     {[0, 1, 2, 3, 4].map((i) => (
                       <button
                         key={i}
@@ -2054,116 +1971,8 @@ export default function LivePhonePreview({
                   </div>
                 )}
 
-                {/* Safari Bottom 5-Button Toolbar */}
-                <div className="px-5 pt-0.5 pb-1 flex items-center justify-between text-[#007aff]">
-                  {/* 1. Back Chevron */}
-                  <button
-                    type="button"
-                    onClick={handleToolbarBack}
-                    disabled={
-                      isRomance
-                        ? romanticTab === 'photos'
-                        : isScrapbook
-                        ? scrapbookTab === 'timeline'
-                        : isApology
-                        ? apologyTab === 'forgive'
-                        : !isBirthday || screen === 0
-                    }
-                    className={`cursor-pointer transition-opacity p-1 rounded-full ${
-                      (isRomance
-                        ? romanticTab === 'photos'
-                        : isScrapbook
-                        ? scrapbookTab === 'timeline'
-                        : isApology
-                        ? apologyTab === 'forgive'
-                        : !isBirthday || screen === 0)
-                        ? 'opacity-30 cursor-not-allowed'
-                        : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
-                    }`}
-                    title={isRomance || isScrapbook || isApology ? 'Previous Chapter' : 'Previous Scene'}
-                  >
-                    <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
-                  </button>
-
-                  {/* 2. Forward Chevron */}
-                  <button
-                    type="button"
-                    onClick={handleToolbarForward}
-                    disabled={
-                      isRomance
-                        ? romanticTab === 'quiz'
-                        : isScrapbook
-                        ? scrapbookTab === 'letter'
-                        : isApology
-                        ? apologyTab === 'letter'
-                        : !isBirthday || screen === 4
-                    }
-                    className={`cursor-pointer transition-opacity p-1 rounded-full ${
-                      (isRomance
-                        ? romanticTab === 'quiz'
-                        : isScrapbook
-                        ? scrapbookTab === 'letter'
-                        : isApology
-                        ? apologyTab === 'letter'
-                        : !isBirthday || screen === 4)
-                        ? 'opacity-30 cursor-not-allowed'
-                        : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
-                    }`}
-                    title={isRomance || isScrapbook || isApology ? 'Next Chapter' : 'Next Scene'}
-                  >
-                    <ChevronRight className="w-5 h-5 stroke-[2.2]" />
-                  </button>
-
-                  {/* 3. Center Button: iOS Share Sheet */}
-                  <button
-                    type="button"
-                    onClick={triggerConfetti}
-                    className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
-                    title="Share"
-                  >
-                    <svg
-                      className="w-4 h-4 stroke-[2.2]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                      <polyline points="16 6 12 2 8 6" />
-                      <line x1="12" y1="2" x2="12" y2="15" />
-                    </svg>
-                  </button>
-
-                  {/* 4. Bookmarks Book Icon */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      soundEffects.playPop();
-                      setBookmarkSaved(true);
-                      setTimeout(() => setBookmarkSaved(false), 1600);
-                    }}
-                    className={`cursor-pointer transition-all duration-200 active:scale-90 p-1 rounded-full ${
-                      bookmarkSaved ? 'text-amber-500 scale-110' : 'hover:opacity-80 hover:bg-slate-200/50'
-                    }`}
-                    title={bookmarkSaved ? 'Saved to Bookmarks ⭐' : 'Bookmarks'}
-                  >
-                    <BookOpen className={`w-4 h-4 stroke-[2.2] ${bookmarkSaved ? 'fill-amber-400' : ''}`} />
-                  </button>
-
-                  {/* 5. Safari Tabs Icon */}
-                  <button
-                    type="button"
-                    onClick={triggerConfetti}
-                    className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
-                    title="Tabs"
-                  >
-                    <Copy className="w-4 h-4 stroke-[2.2]" />
-                  </button>
-                </div>
-
-                {/* iOS Home Indicator Bar */}
-                <div className="w-28 h-1 bg-black rounded-full mx-auto mb-1" />
+                {/* Minimal iOS Home Indicator Bar */}
+                <div className="w-28 h-1 bg-black/40 rounded-full mx-auto my-1.5" />
               </div>
             </div>
           </div>

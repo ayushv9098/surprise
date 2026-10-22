@@ -250,7 +250,7 @@ export default function RomancePhoneView({
     : 'bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 text-white shadow-rose-500/25';
 
   return (
-    <div className={`flex-1 w-full min-h-0 flex flex-col overflow-y-auto overflow-x-hidden custom-scrollbar relative z-20 select-none pb-4 ${containerBg}`}>
+    <div className={`flex-1 w-full min-h-0 flex flex-col overflow-y-auto overflow-x-hidden custom-scrollbar relative z-20 select-none pb-2 ${containerBg}`}>
       {/* Audio Element */}
       <audio
         ref={audioRef}
@@ -262,10 +262,13 @@ export default function RomancePhoneView({
       />
 
       {/* 1. TOP HEADER & ROTATING VINYL MUSIC PILL */}
-      <div className="w-full px-3 pt-1 pb-1 shrink-0 flex items-center justify-between gap-1.5 z-30">
-        <div className="flex items-center gap-1 min-w-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping shrink-0" />
-          <span className="text-[10px] font-bold tracking-tight truncate opacity-80">
+      <div className="w-full px-3 pt-1.5 pb-1 shrink-0 flex items-center justify-between gap-2 z-30">
+        <div className="flex items-center gap-1.5 min-w-0 flex-1">
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
+          </span>
+          <span className={`text-[10px] font-bold tracking-tight truncate ${isCelestial ? 'text-slate-200' : 'text-slate-700'}`}>
             {formData.occasion || 'Romantic Keepsake 🌸'}
           </span>
         </div>
@@ -274,44 +277,50 @@ export default function RomancePhoneView({
         <button
           type="button"
           onClick={toggleAudio}
-          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/90 hover:bg-white border border-rose-200/80 shadow-2xs text-[9.5px] font-medium text-slate-800 transition-all active:scale-95 cursor-pointer max-w-[145px]"
+          className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border shadow-2xs text-[9.5px] font-medium transition-all active:scale-95 cursor-pointer shrink-0 max-w-[135px] ${
+            isCelestial
+              ? 'bg-slate-800/90 hover:bg-slate-800 border-indigo-400/40 text-slate-200'
+              : 'bg-white/95 hover:bg-white border-rose-200/80 text-slate-800'
+          }`}
           title={isPlayingAudio ? 'Pause melody' : 'Play melody'}
         >
           {/* Mini Rotating Disc Graphic */}
           <div className="relative w-4 h-4 rounded-full bg-slate-900 flex items-center justify-center shrink-0 shadow-inner">
-            <div className={`w-1.5 h-1.5 rounded-full bg-rose-400 ${isPlayingAudio ? 'animate-spin' : ''}`} />
+            <div className={`w-1.5 h-1.5 rounded-full ${isCelestial ? 'bg-indigo-400' : 'bg-rose-400'} ${isPlayingAudio ? 'animate-spin' : ''}`} />
           </div>
 
           <span className="truncate">{audioTitle}</span>
 
           {/* Mini 3-bar Equalizer */}
           <div className="flex items-end gap-0.5 h-2.5 shrink-0">
-            <span className={`w-0.5 bg-rose-500 rounded-full ${isPlayingAudio ? 'h-2.5 animate-pulse' : 'h-1'}`} />
-            <span className={`w-0.5 bg-pink-500 rounded-full ${isPlayingAudio ? 'h-1.5 animate-pulse delay-75' : 'h-1.5'}`} />
-            <span className={`w-0.5 bg-rose-600 rounded-full ${isPlayingAudio ? 'h-2 animate-pulse delay-150' : 'h-0.5'}`} />
+            <span className={`w-0.5 rounded-full ${isCelestial ? 'bg-indigo-400' : 'bg-rose-500'} ${isPlayingAudio ? 'h-2.5 animate-pulse' : 'h-1'}`} />
+            <span className={`w-0.5 rounded-full ${isCelestial ? 'bg-purple-400' : 'bg-pink-500'} ${isPlayingAudio ? 'h-1.5 animate-pulse delay-75' : 'h-1.5'}`} />
+            <span className={`w-0.5 rounded-full ${isCelestial ? 'bg-pink-400' : 'bg-rose-600'} ${isPlayingAudio ? 'h-2 animate-pulse delay-150' : 'h-0.5'}`} />
           </div>
         </button>
       </div>
 
       {/* 2. SOFT HERO GREETING */}
       <div className="px-3 pt-0.5 pb-1 text-center shrink-0">
-        <h1 className="font-serif text-lg font-bold tracking-tight flex items-center justify-center gap-1 text-slate-900 leading-tight">
+        <h1 className={`font-serif text-lg font-bold tracking-tight flex items-center justify-center gap-1 leading-tight ${isCelestial ? 'text-white' : 'text-slate-900'}`}>
           <span>Hey {renderAppleText(recipientName)}</span>
           <AppleEmoji emoji="🌸" size={18} />
         </h1>
-        <p className="text-[10px] text-slate-500 leading-snug mt-0.5 max-w-[250px] mx-auto truncate">
+        <p className={`text-[10px] leading-snug mt-0.5 max-w-[250px] mx-auto truncate ${isCelestial ? 'text-slate-400' : 'text-slate-500'}`}>
           A little corner made just to bring a smile to your face ✨
         </p>
       </div>
 
       {/* 3. THREE ICONIC SEGMENTED NAV PILLS */}
-      <div className="w-full max-w-[245px] mx-auto px-2 pb-2 shrink-0">
-        <div className="w-full flex items-center p-0.5 rounded-full bg-white/85 backdrop-blur-md border border-rose-200/80 shadow-2xs text-[10px]">
+      <div className="w-full max-w-[250px] mx-auto px-2 pb-2 shrink-0">
+        <div className={`w-full flex items-center p-0.5 rounded-full backdrop-blur-md border shadow-2xs text-[10px] ${
+          isCelestial ? 'bg-slate-800/80 border-indigo-400/30' : 'bg-white/85 border-rose-200/80'
+        }`}>
           <button
             type="button"
             onClick={() => handleSelectTab('photos')}
             className={`flex-1 py-1 px-1.5 rounded-full transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none font-bold ${
-              activeTab === 'photos' ? pillActiveBg : 'text-slate-600 hover:text-slate-900'
+              activeTab === 'photos' ? pillActiveBg : isCelestial ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <AppleEmoji emoji="📸" size={12} />
@@ -322,7 +331,7 @@ export default function RomancePhoneView({
             type="button"
             onClick={() => handleSelectTab('letter')}
             className={`flex-1 py-1 px-1.5 rounded-full transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none font-bold ${
-              activeTab === 'letter' ? pillActiveBg : 'text-slate-600 hover:text-slate-900'
+              activeTab === 'letter' ? pillActiveBg : isCelestial ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <AppleEmoji emoji="💌" size={12} />
@@ -333,7 +342,7 @@ export default function RomancePhoneView({
             type="button"
             onClick={() => handleSelectTab('quiz')}
             className={`flex-1 py-1 px-1.5 rounded-full transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none font-bold ${
-              activeTab === 'quiz' ? pillActiveBg : 'text-slate-600 hover:text-slate-900'
+              activeTab === 'quiz' ? pillActiveBg : isCelestial ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <AppleEmoji emoji="🎀" size={12} />
@@ -342,12 +351,12 @@ export default function RomancePhoneView({
         </div>
       </div>
 
-      {/* 4. MAIN DEDICATED CONTENT PANELS (Scoped neatly to 245px) */}
-      <div className="flex-1 w-full px-2 flex flex-col items-center justify-start min-h-0 pt-0.5 pb-2">
+      {/* 4. MAIN DEDICATED CONTENT PANELS (Scoped neatly to 250px) */}
+      <div className="flex-1 w-full px-2 flex flex-col items-center justify-start min-h-0 pt-0.5 pb-1">
 
         {/* TAB 1: [📸 PHOTOS] */}
         {activeTab === 'photos' && (
-          <div className="w-full max-w-[245px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
+          <div className="w-full max-w-[250px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
             {/* Polaroid Memory Card */}
             <div className={`w-full rounded-2xl p-2.5 shadow-md border ${cardBg} relative`}>
               {/* Cute Washi Tape Accent on Top */}
@@ -421,7 +430,7 @@ export default function RomancePhoneView({
 
         {/* TAB 2: [💌 LETTER] */}
         {activeTab === 'letter' && (
-          <div className="w-full max-w-[245px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
+          <div className="w-full max-w-[250px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
             {!isLetterOpen ? (
               /* CLOSED VINTAGE ENVELOPE */
               <div
@@ -451,7 +460,7 @@ export default function RomancePhoneView({
 
                 {/* Center Wax Seal Button */}
                 <div className="my-3 flex justify-center">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 border-2 border-white shadow-md flex items-center justify-center transform hover:scale-105 transition-transform">
+                  <div className="w-13 h-13 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 border-2 border-white shadow-md flex items-center justify-center transform hover:scale-105 transition-transform">
                     <span className="text-xl">🌸</span>
                   </div>
                 </div>
@@ -470,7 +479,7 @@ export default function RomancePhoneView({
                 </div>
 
                 {/* Letter Body in Romantic Handwritten Font */}
-                <div className="font-serif text-[11px] leading-relaxed text-slate-700 max-h-48 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line break-words">
+                <div className="font-serif text-[11px] leading-relaxed text-slate-700 max-h-52 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line break-words">
                   {renderAppleText(letterContent, 12)}
                 </div>
 
@@ -504,10 +513,10 @@ export default function RomancePhoneView({
 
         {/* TAB 3: [🎀 QUIZ] (RUNAWAY "NO" BUTTON GAME!) */}
         {activeTab === 'quiz' && (
-          <div className="w-full max-w-[245px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
+          <div className="w-full max-w-[250px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
             {!gameVictory ? (
               /* GAME ACTIVE ARENA */
-              <div className={`w-full rounded-2xl p-3.5 shadow-lg border text-center relative overflow-hidden ${cardBg}`}>
+              <div className={`w-full rounded-2xl p-4 shadow-lg border text-center relative overflow-hidden ${cardBg}`}>
                 <div className="w-8 h-8 rounded-full bg-rose-50 border border-rose-200 mx-auto flex items-center justify-center text-sm shadow-2xs mb-1">
                   🌸
                 </div>
@@ -525,7 +534,7 @@ export default function RomancePhoneView({
                 </p>
 
                 {/* Game Action Arena */}
-                <div className="relative w-full min-h-[92px] flex flex-col items-center justify-center gap-2 pt-1">
+                <div className="relative w-full min-h-[98px] flex flex-col items-center justify-center gap-2.5 pt-1">
                   {/* YES Button (Scales up with each No attempt!) */}
                   <div style={{ transform: `scale(${yesScale})`, transition: 'transform 0.2s ease-out' }}>
                     <button
@@ -559,13 +568,13 @@ export default function RomancePhoneView({
                   </div>
                 </div>
 
-                <p className="text-[8.5px] text-slate-400 mt-1 italic">
+                <p className="text-[8.5px] text-slate-400 mt-1.5 italic">
                   (Notice: 'No' button runs away 😉)
                 </p>
               </div>
             ) : (
               /* VICTORY STATE: TREAT UNLOCKED VOUCHER */
-              <div className={`w-full rounded-2xl p-3 shadow-lg border text-center ${cardBg} animate-in zoom-in-95 duration-200`}>
+              <div className={`w-full rounded-2xl p-3.5 shadow-lg border text-center ${cardBg} animate-in zoom-in-95 duration-200`}>
                 <div className="inline-block px-2.5 py-0.5 rounded-full bg-rose-50 border border-rose-200 text-[8.5px] font-bold text-rose-700 tracking-wider mb-1">
                   ✦ TREAT UNLOCKED ✦
                 </div>
@@ -580,7 +589,7 @@ export default function RomancePhoneView({
                 </p>
 
                 {/* Sweet Dessert Voucher Ticket */}
-                <div className="my-2 p-2.5 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 text-left relative overflow-hidden shadow-2xs">
+                <div className="my-2.5 p-2.5 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 text-left relative overflow-hidden shadow-2xs">
                   <div className="text-[7.5px] font-bold tracking-widest uppercase text-amber-800">
                     ★ SPECIAL DESSERT VOUCHER ★
                   </div>

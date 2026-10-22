@@ -130,7 +130,7 @@ export default function ApologyPhoneView({
   };
 
   return (
-    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-4">
+    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-2">
       {/* =================================================================== */}
       {/* 1. SERENE SINCERE PEACE HEADER */}
       {/* =================================================================== */}

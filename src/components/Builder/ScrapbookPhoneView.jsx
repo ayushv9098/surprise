@@ -171,7 +171,7 @@ export default function ScrapbookPhoneView({
   };
 
   return (
-    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-4">
+    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-2">
       {/* =================================================================== */}
       {/* 1. RETRO 35MM FILM HEADER & WASHI TAPE */}
       {/* =================================================================== */}
@@ -596,7 +596,7 @@ export default function ScrapbookPhoneView({
                   </div>
 
                   {letterBody ? (
-                    <div className="text-[10px] text-amber-950 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
+                    <div className="text-[10px] text-amber-950 leading-relaxed max-h-48 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
                       {renderAppleText(letterBody, 10)}
                     </div>
                   ) : null}
