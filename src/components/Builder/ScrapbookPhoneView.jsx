@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Play, 
   Pause, 
@@ -37,11 +37,17 @@ export default function ScrapbookPhoneView({
   const [activeChapter, setActiveChapter] = useState(0); // 0, 1, 2
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isScratched, setIsScratched] = useState(false);
-  const [internalEnvelopeOpen, setInternalEnvelopeOpen] = useState(false);
-  const envelopeOpen = controlledOpenEnvelope !== undefined ? controlledOpenEnvelope : internalEnvelopeOpen;
+  const [internalEnvelopeOpen, setInternalEnvelopeOpen] = useState(!!controlledOpenEnvelope);
+  const envelopeOpen = internalEnvelopeOpen;
   const setEnvelopeOpen = setInternalEnvelopeOpen;
   const [isOpeningEnvelope, setIsOpeningEnvelope] = useState(false);
   const [revealedJokes, setRevealedJokes] = useState({});
+
+  useEffect(() => {
+    if (controlledOpenEnvelope) {
+      setInternalEnvelopeOpen(true);
+    }
+  }, [controlledOpenEnvelope]);
 
   const templateId = (formData.templateId || theme.id || '').toLowerCase();
   const isNeon = templateId.includes('neon') || templateId.includes('nostalgia');
@@ -165,7 +171,7 @@ export default function ScrapbookPhoneView({
   };
 
   return (
-    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
+    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-4">
       {/* =================================================================== */}
       {/* 1. RETRO 35MM FILM HEADER & WASHI TAPE */}
       {/* =================================================================== */}

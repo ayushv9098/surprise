@@ -7,7 +7,6 @@ import {
   ChevronRight,
   BookOpen,
   Copy,
-  Sparkles,
 } from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { getTemplateById } from '../../data/templates';
@@ -17,15 +16,16 @@ import ApologyPhoneView from './ApologyPhoneView';
 import RomancePhoneView from './RomancePhoneView';
 
 // 8 Ambient Floating Apple Emojis Scaled for the Mobile Phone Simulator
+// Positioned within top 6% to 68% so they never collide with the Safari bottom bar
 const AMBIENT_EMOJIS_CONFIG = [
   { left: '6%', top: '8%', duration: '7.5s', delay: '0s', size: 16 },
   { left: '86%', top: '6%', duration: '8.4s', delay: '1.2s', size: 15 },
-  { left: '8%', top: '32%', duration: '9.2s', delay: '0.6s', size: 14 },
-  { left: '88%', top: '30%', duration: '7.1s', delay: '2.1s', size: 16 },
-  { left: '6%', top: '65%', duration: '8.8s', delay: '1.8s', size: 15 },
-  { left: '88%', top: '62%', duration: '7.6s', delay: '0.4s', size: 16 },
-  { left: '12%', top: '88%', duration: '9.5s', delay: '2.6s', size: 14 },
-  { left: '84%', top: '86%', duration: '8.1s', delay: '1.5s', size: 15 },
+  { left: '8%', top: '28%', duration: '9.2s', delay: '0.6s', size: 14 },
+  { left: '88%', top: '26%', duration: '7.1s', delay: '2.1s', size: 16 },
+  { left: '6%', top: '48%', duration: '8.8s', delay: '1.8s', size: 15 },
+  { left: '88%', top: '46%', duration: '7.6s', delay: '0.4s', size: 16 },
+  { left: '10%', top: '68%', duration: '9.5s', delay: '2.6s', size: 14 },
+  { left: '84%', top: '66%', duration: '8.1s', delay: '1.5s', size: 15 },
 ];
 
 /**
@@ -2031,8 +2031,8 @@ export default function LivePhonePreview({
                   </button>
                 </div>
 
-                {/* Scene Indicator Dots for Birthday / Chapters for Dedicated Occasions */}
-                {isBirthday ? (
+                {/* Scene Indicator Dots strictly for Multi-Scene Birthday (Romance/Scrapbook/Apology have their own top tabs) */}
+                {isBirthday && (
                   <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5">
                     {[0, 1, 2, 3, 4].map((i) => (
                       <button
@@ -2051,89 +2051,6 @@ export default function LivePhonePreview({
                         aria-label={`Go to scene ${i + 1}`}
                       />
                     ))}
-                  </div>
-                ) : isRomance ? (
-                  <div className="flex items-center justify-center gap-1 py-0.5 mb-0.5">
-                    {[
-                      { key: 'photos', icon: '📸', label: 'Photos' },
-                      { key: 'letter', icon: '💌', label: 'Letter' },
-                      { key: 'quiz', icon: '🙈', label: 'Quiz' },
-                    ].map((tab) => (
-                      <button
-                        key={tab.key}
-                        type="button"
-                        onClick={() => {
-                          soundEffects.playPop();
-                          setRomanticTab(tab.key);
-                          if (tab.key === 'letter') setEnvelopeOpen(true);
-                        }}
-                        className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold flex items-center gap-0.5 transition-all cursor-pointer ${
-                          romanticTab === tab.key
-                            ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs scale-105'
-                            : 'text-rose-950/80 hover:text-rose-950 bg-rose-100/70'
-                        }`}
-                      >
-                        <span>{tab.icon}</span>
-                        <span className="hidden min-[360px]:inline">{tab.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                ) : isScrapbook ? (
-                  <div className="flex items-center justify-center gap-1 py-0.5 mb-0.5">
-                    {[
-                      { key: 'timeline', icon: '📖', label: 'Timeline' },
-                      { key: 'jokes', icon: '⚡', label: 'Squad' },
-                      { key: 'scratch', icon: '🎫', label: 'Pass' },
-                      { key: 'letter', icon: '💌', label: 'Letter' },
-                    ].map((tab) => (
-                      <button
-                        key={tab.key}
-                        type="button"
-                        onClick={() => {
-                          soundEffects.playPop();
-                          setScrapbookTab(tab.key);
-                        }}
-                        className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold flex items-center gap-0.5 transition-all cursor-pointer ${
-                          scrapbookTab === tab.key
-                            ? 'bg-gradient-to-r from-amber-700 to-amber-900 text-white shadow-xs scale-105'
-                            : 'text-amber-950/80 hover:text-amber-950 bg-amber-100/70'
-                        }`}
-                      >
-                        <span>{tab.icon}</span>
-                        <span className="hidden min-[360px]:inline">{tab.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                ) : isApology ? (
-                  <div className="flex items-center justify-center gap-1 py-0.5 mb-0.5">
-                    {[
-                      { key: 'forgive', icon: '🥺', label: 'Forgive' },
-                      { key: 'treaty', icon: '📜', label: 'Accord' },
-                      { key: 'promises', icon: '🌿', label: 'Promises' },
-                      { key: 'letter', icon: '💌', label: 'Letter' },
-                    ].map((tab) => (
-                      <button
-                        key={tab.key}
-                        type="button"
-                        onClick={() => {
-                          soundEffects.playPop();
-                          setApologyTab(tab.key);
-                        }}
-                        className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold flex items-center gap-0.5 transition-all cursor-pointer ${
-                          apologyTab === tab.key
-                            ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-xs scale-105'
-                            : 'text-emerald-950/80 hover:text-emerald-950 bg-emerald-100/70'
-                        }`}
-                      >
-                        <span>{tab.icon}</span>
-                        <span className="hidden min-[360px]:inline">{tab.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5 text-[9px] font-semibold text-slate-500">
-                    <Sparkles className="w-2.5 h-2.5 text-rose-500" />
-                    <span>Keepsake Preview ✨</span>
                   </div>
                 )}
 

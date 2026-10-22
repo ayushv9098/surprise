@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Heart, 
   RotateCcw,
@@ -30,11 +30,17 @@ export default function ApologyPhoneView({
   };
 
   const [isForgiven, setIsForgiven] = useState(false);
-  const [internalEnvelopeOpen, setInternalEnvelopeOpen] = useState(false);
-  const envelopeOpen = controlledOpenEnvelope !== undefined ? controlledOpenEnvelope : internalEnvelopeOpen;
+  const [internalEnvelopeOpen, setInternalEnvelopeOpen] = useState(!!controlledOpenEnvelope);
+  const envelopeOpen = internalEnvelopeOpen;
   const setEnvelopeOpen = setInternalEnvelopeOpen;
   const [isOpeningEnvelope, setIsOpeningEnvelope] = useState(false);
   const [isTreatySigned, setIsTreatySigned] = useState(false);
+
+  useEffect(() => {
+    if (controlledOpenEnvelope) {
+      setInternalEnvelopeOpen(true);
+    }
+  }, [controlledOpenEnvelope]);
 
   // Runaway "No" button dodge state & bribery excuses
   const [noButtonOffset, setNoButtonOffset] = useState({ x: 0, y: 0 });
@@ -124,7 +130,7 @@ export default function ApologyPhoneView({
   };
 
   return (
-    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
+    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-4">
       {/* =================================================================== */}
       {/* 1. SERENE SINCERE PEACE HEADER */}
       {/* =================================================================== */}

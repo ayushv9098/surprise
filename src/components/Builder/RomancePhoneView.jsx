@@ -26,8 +26,8 @@ const DEFAULT_ROMANCE_PHOTOS = [
   }
 ];
 
-// Runaway "No" button messages and positions (kept safe inside 260px container)
-const RUNAWAY_POSITIONS = ['5%', '45%', '15%', '40%', '25%', '8%'];
+// Runaway "No" button messages and positions (kept safe inside 245px container)
+const RUNAWAY_POSITIONS = ['6%', '36%', '14%', '38%', '22%', '8%'];
 const NO_MESSAGES = [
   'No',
   'Think again! 😉',
@@ -113,8 +113,8 @@ export default function RomancePhoneView({
   const [showPhotoLikePop, setShowPhotoLikePop] = useState(false);
 
   // Tab 2: Letter State
-  const [internalLetterOpen, setInternalLetterOpen] = useState(false);
-  const isLetterOpen = controlledOpenEnvelope !== undefined ? controlledOpenEnvelope : internalLetterOpen;
+  const [internalLetterOpen, setInternalLetterOpen] = useState(!!controlledOpenEnvelope);
+  const isLetterOpen = internalLetterOpen;
 
   // Tab 3: Quiz State (Runaway "No" Button Game!)
   const [gameVictory, setGameVictory] = useState(false);
@@ -125,10 +125,10 @@ export default function RomancePhoneView({
   // Audio Ref
   const audioRef = useRef(null);
 
-  // Auto-open letter when prop changes
+  // Sync with controlled prop if it changes
   useEffect(() => {
-    if (controlledOpenEnvelope) {
-      setInternalLetterOpen(true);
+    if (controlledOpenEnvelope !== undefined) {
+      setInternalLetterOpen(controlledOpenEnvelope);
     }
   }, [controlledOpenEnvelope]);
 
@@ -250,7 +250,7 @@ export default function RomancePhoneView({
     : 'bg-gradient-to-r from-rose-500 via-pink-500 to-rose-600 text-white shadow-rose-500/25';
 
   return (
-    <div className={`flex-1 w-full min-h-0 flex flex-col overflow-y-auto overflow-x-hidden custom-scrollbar relative z-20 select-none pb-2 ${containerBg}`}>
+    <div className={`flex-1 w-full min-h-0 flex flex-col overflow-y-auto overflow-x-hidden custom-scrollbar relative z-20 select-none pb-4 ${containerBg}`}>
       {/* Audio Element */}
       <audio
         ref={audioRef}
@@ -305,7 +305,7 @@ export default function RomancePhoneView({
       </div>
 
       {/* 3. THREE ICONIC SEGMENTED NAV PILLS */}
-      <div className="w-full max-w-[250px] mx-auto px-2 pb-2 shrink-0">
+      <div className="w-full max-w-[245px] mx-auto px-2 pb-2 shrink-0">
         <div className="w-full flex items-center p-0.5 rounded-full bg-white/85 backdrop-blur-md border border-rose-200/80 shadow-2xs text-[10px]">
           <button
             type="button"
@@ -336,18 +336,18 @@ export default function RomancePhoneView({
               activeTab === 'quiz' ? pillActiveBg : 'text-slate-600 hover:text-slate-900'
             }`}
           >
-            <AppleEmoji emoji="🙈" size={12} />
+            <AppleEmoji emoji="🎀" size={12} />
             <span>Quiz</span>
           </button>
         </div>
       </div>
 
-      {/* 4. MAIN DEDICATED CONTENT PANELS (Scoped neatly to 260px) */}
-      <div className="flex-1 w-full px-2.5 flex flex-col items-center justify-center min-h-0">
+      {/* 4. MAIN DEDICATED CONTENT PANELS (Scoped neatly to 245px) */}
+      <div className="flex-1 w-full px-2 flex flex-col items-center justify-start min-h-0 pt-0.5 pb-2">
 
         {/* TAB 1: [📸 PHOTOS] */}
         {activeTab === 'photos' && (
-          <div className="w-full max-w-[250px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
+          <div className="w-full max-w-[245px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
             {/* Polaroid Memory Card */}
             <div className={`w-full rounded-2xl p-2.5 shadow-md border ${cardBg} relative`}>
               {/* Cute Washi Tape Accent on Top */}
@@ -421,7 +421,7 @@ export default function RomancePhoneView({
 
         {/* TAB 2: [💌 LETTER] */}
         {activeTab === 'letter' && (
-          <div className="w-full max-w-[250px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
+          <div className="w-full max-w-[245px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
             {!isLetterOpen ? (
               /* CLOSED VINTAGE ENVELOPE */
               <div
@@ -451,7 +451,7 @@ export default function RomancePhoneView({
 
                 {/* Center Wax Seal Button */}
                 <div className="my-3 flex justify-center">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 border-2 border-white shadow-md flex items-center justify-center transform group-hover:scale-105">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 border-2 border-white shadow-md flex items-center justify-center transform hover:scale-105 transition-transform">
                     <span className="text-xl">🌸</span>
                   </div>
                 </div>
@@ -474,6 +474,15 @@ export default function RomancePhoneView({
                   {renderAppleText(letterContent, 12)}
                 </div>
 
+                {/* Signature if present and not already at the end of letter */}
+                {senderName && !letterContent.includes(senderName) && (
+                  <div className="mt-2 pt-1.5 border-t border-rose-100 text-right">
+                    <p className="font-serif text-[11px] font-bold text-rose-800 italic">
+                      — With love, {renderAppleText(senderName, 12)} 💖
+                    </p>
+                  </div>
+                )}
+
                 {/* Fold Back Button */}
                 <div className="mt-2.5 pt-2 border-t border-rose-100 flex justify-center">
                   <button
@@ -493,12 +502,12 @@ export default function RomancePhoneView({
           </div>
         )}
 
-        {/* TAB 3: [🙈 QUIZ] (RUNAWAY "NO" BUTTON GAME!) */}
+        {/* TAB 3: [🎀 QUIZ] (RUNAWAY "NO" BUTTON GAME!) */}
         {activeTab === 'quiz' && (
-          <div className="w-full max-w-[250px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
+          <div className="w-full max-w-[245px] mx-auto flex flex-col items-center animate-in fade-in duration-200">
             {!gameVictory ? (
               /* GAME ACTIVE ARENA */
-              <div className={`w-full rounded-2xl p-3.5 shadow-lg border text-center relative ${cardBg}`}>
+              <div className={`w-full rounded-2xl p-3.5 shadow-lg border text-center relative overflow-hidden ${cardBg}`}>
                 <div className="w-8 h-8 rounded-full bg-rose-50 border border-rose-200 mx-auto flex items-center justify-center text-sm shadow-2xs mb-1">
                   🌸
                 </div>
@@ -516,7 +525,7 @@ export default function RomancePhoneView({
                 </p>
 
                 {/* Game Action Arena */}
-                <div className="relative w-full min-h-[90px] flex flex-col items-center justify-center gap-2 pt-1">
+                <div className="relative w-full min-h-[92px] flex flex-col items-center justify-center gap-2 pt-1">
                   {/* YES Button (Scales up with each No attempt!) */}
                   <div style={{ transform: `scale(${yesScale})`, transition: 'transform 0.2s ease-out' }}>
                     <button
@@ -529,9 +538,9 @@ export default function RomancePhoneView({
                     </button>
                   </div>
 
-                  {/* Runaway NO Button */}
+                  {/* Runaway NO Button Arena */}
                   <div
-                    className="w-full relative h-8 flex items-center justify-center"
+                    className="w-full relative h-8 flex items-center justify-center overflow-hidden"
                   >
                     <button
                       type="button"
@@ -543,7 +552,7 @@ export default function RomancePhoneView({
                         left: noAttempts === 0 ? undefined : currentNoPos,
                         transition: 'left 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
                       }}
-                      className="py-1 px-3 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-600 text-[10px] font-semibold cursor-pointer active:scale-90 shadow-2xs select-none"
+                      className="py-1 px-3 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-600 text-[10px] font-semibold cursor-pointer active:scale-90 shadow-2xs select-none whitespace-nowrap"
                     >
                       {currentNoMsg}
                     </button>

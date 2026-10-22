@@ -62,18 +62,18 @@ export default function TemplateSelector({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-3.5 sm:space-y-4">
       {/* 1) HEADER & OCCASION BADGE (Category chosen from Home page) */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-100">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-2.5 sm:pb-3 border-b border-slate-100">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200/80 mb-2 shadow-2xs select-none">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200/80 mb-1.5 shadow-2xs select-none">
             <AppleEmoji emoji={currentCategoryObj.emoji} size={13} />
             <span>{currentCategoryObj.name}</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+          <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight leading-tight">
             Choose a Style
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+          <p className="text-xs text-slate-500 mt-0.5">
             Pick the aesthetic for your {currentCategoryObj.name.toLowerCase()} surprise website
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function TemplateSelector({
           <button
             type="button"
             onClick={() => handleGenderToggle(selectedGender === 'boy' ? 'girl' : 'boy')}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200/90 text-xs text-slate-700 transition-all cursor-pointer shadow-xs hover:border-slate-300 group select-none self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white hover:bg-slate-50 border border-slate-200/90 text-xs text-slate-700 transition-all cursor-pointer shadow-xs hover:border-slate-300 group select-none self-start sm:self-auto"
             title={selectedGender === 'boy' ? 'Switch to Girl styles' : 'Switch to Boy styles'}
           >
             <span className="font-semibold text-slate-800 flex items-center gap-1.5">
@@ -118,7 +118,7 @@ export default function TemplateSelector({
       </div>
 
       {/* 2) RECOMMENDED PRO STYLE CARDS GRID */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
         {matchingTemplates.map((tmpl) => {
           const isSelected = selectedId === tmpl.id;
           const cleanTitle = (tmpl.name || '').replace(/\p{Extended_Pictographic}/gu, '').trim();
@@ -127,16 +127,16 @@ export default function TemplateSelector({
             <div
               key={tmpl.id}
               onClick={() => onSelectTemplate && onSelectTemplate(tmpl.id)}
-              className={`group relative rounded-2xl sm:rounded-3xl cursor-pointer transition-all duration-300 flex flex-col overflow-hidden active:scale-[0.98] ${
+              className={`group relative rounded-xl sm:rounded-2xl cursor-pointer transition-all duration-300 flex flex-col overflow-hidden active:scale-[0.98] ${
                 isSelected
-                  ? 'ring-2 ring-rose-500 border border-rose-500/50 shadow-lg shadow-rose-500/10 bg-gradient-to-b from-rose-50/20 to-white'
-                  : 'bg-white border border-slate-200/80 shadow-xs hover:shadow-xl hover:-translate-y-1'
+                  ? 'ring-2 ring-rose-500 border border-rose-500/50 shadow-md shadow-rose-500/10 bg-gradient-to-b from-rose-50/20 to-white'
+                  : 'bg-white border border-slate-200/80 shadow-xs hover:shadow-lg hover:-translate-y-0.5'
               }`}
             >
-              {/* Image Container */}
-              <div className="p-2 sm:p-3.5 pb-0">
+              {/* Image Container - clean preview without overlay badge clashing with SVG typography */}
+              <div className="p-2 sm:p-2.5 pb-0">
                 <div
-                  className={`relative aspect-[4/3] w-full rounded-xl sm:rounded-2xl overflow-hidden border border-slate-200/80 shadow-xs bg-gradient-to-br ${
+                  className={`relative aspect-[4/3] w-full rounded-lg sm:rounded-xl overflow-hidden border border-slate-200/80 shadow-2xs bg-gradient-to-br ${
                     tmpl.gradientBg || 'from-slate-100 to-slate-200'
                   }`}
                 >
@@ -148,19 +148,9 @@ export default function TemplateSelector({
                     draggable={false}
                   />
 
-                  {/* Floating Glassmorphism Top Badge */}
-                  {tmpl.tag && (
-                    <div className="absolute top-1.5 left-1.5 sm:top-2.5 sm:left-2.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/95 backdrop-blur-md text-[9px] sm:text-[11px] font-semibold text-slate-800 shadow-sm border border-slate-200/80 flex items-center gap-1 sm:gap-1.5 select-none max-w-[calc(100%-2.25rem)]">
-                      <span className="shrink-0 flex items-center">
-                        <AppleEmoji emoji={tmpl.emoji} size={11} />
-                      </span>
-                      <span className="truncate">{tmpl.tag}</span>
-                    </div>
-                  )}
-
                   {/* Floating Selected Glowing Checkmark */}
                   {isSelected && (
-                    <div className="absolute top-1.5 right-1.5 sm:top-2.5 sm:right-2.5 bg-rose-500 text-white rounded-full p-1 sm:p-1.5 shadow-md shadow-rose-500/30 flex items-center justify-center animate-scaleIn">
+                    <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 bg-rose-500 text-white rounded-full p-1 sm:p-1.5 shadow-md shadow-rose-500/30 flex items-center justify-center animate-scaleIn">
                       <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[3]" />
                     </div>
                   )}
@@ -168,50 +158,49 @@ export default function TemplateSelector({
               </div>
 
               {/* Card Body */}
-              <div className="p-2.5 sm:p-5 flex-1 flex flex-col justify-between">
+              <div className="p-2.5 sm:p-3 flex-1 flex flex-col justify-between">
                 <div>
                   {/* Title */}
-                  <h3 className="font-bold text-xs sm:text-base text-slate-900 flex items-center gap-1.5 sm:gap-2 leading-tight">
+                  <h3 className="font-bold text-xs sm:text-sm text-slate-900 flex items-center gap-1.5 leading-tight">
                     <AppleEmoji emoji={tmpl.emoji} size={14} />
                     <span className="truncate">{cleanTitle}</span>
                   </h3>
 
                   {/* Description / Headline */}
-                  <p className="text-[10px] sm:text-xs text-slate-500 leading-snug sm:leading-relaxed mt-1 line-clamp-2 min-h-[28px]">
+                  <p className="text-[10px] sm:text-[11px] text-slate-500 leading-snug mt-1 line-clamp-2 min-h-[26px]">
                     {renderAppleText(tmpl.description || tmpl.headline || '', 11)}
                   </p>
 
-                  {/* Features List / Pills (hidden on mobile for 100% height symmetry) */}
+                  {/* Feature Highlight Pill - cleanly proportioned to prevent clipping or multi-row distortion */}
                   {tmpl.features && tmpl.features.length > 0 && (
-                    <div className="hidden sm:flex flex-wrap gap-1.5 mt-3.5">
-                      {tmpl.features.slice(0, 2).map((feat, idx) => (
-                        <span
-                          key={idx}
-                          className="bg-slate-100 text-slate-600 text-[10px] font-medium px-2.5 py-1 rounded-full truncate max-w-full"
-                        >
-                          {renderAppleText(feat, 11)}
-                        </span>
-                      ))}
+                    <div className="flex items-center gap-1.5 mt-2 overflow-hidden">
+                      <span
+                        className="inline-flex items-center gap-1 bg-slate-100 text-slate-600 text-[10px] font-medium px-2 py-0.5 rounded-full truncate max-w-full border border-slate-200/60"
+                        title={tmpl.features[0]}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0" />
+                        <span className="truncate">{renderAppleText(tmpl.features[0], 10)}</span>
+                      </span>
                     </div>
                   )}
                 </div>
 
                 {/* Bottom Action Row */}
-                <div className="pt-2 sm:pt-4 mt-2 sm:mt-4 border-t border-slate-100 flex items-center justify-between h-7 sm:h-9">
+                <div className="pt-2 mt-2 border-t border-slate-100 flex items-center justify-between">
                   {isSelected ? (
-                    <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-rose-600">
+                    <div className="flex items-center gap-1 text-[10px] sm:text-xs font-bold text-rose-600">
                       <span>Selected</span>
-                      <Check className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.5]" />
+                      <Check className="w-3 h-3 stroke-[2.5]" />
                     </div>
                   ) : (
-                    <div className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-xs font-semibold text-slate-400 group-hover:text-slate-800 transition-colors">
+                    <div className="flex items-center gap-0.5 text-[10px] sm:text-xs font-semibold text-slate-400 group-hover:text-slate-800 transition-colors">
                       <span>Select</span>
                       <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
                     </div>
                   )}
 
                   {isSelected && (
-                    <span className="hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider text-rose-500 bg-rose-50 border border-rose-100 px-2 py-0.5 rounded-md">
+                    <span className="inline-block text-[9px] uppercase font-bold tracking-wider text-rose-500 bg-rose-50 border border-rose-200/60 px-1.5 py-0.5 rounded-md">
                       Active
                     </span>
                   )}
