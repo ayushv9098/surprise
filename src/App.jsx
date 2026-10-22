@@ -296,43 +296,6 @@ export default function App() {
                   See Example
                 </button>
               </div>
-
-              {/* Quick interactive previews for all occasions */}
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                <span className="text-xs text-gray-400 font-medium">Preview live templates:</span>
-                <button
-                  type="button"
-                  onClick={() => handlePreviewPreset('royal-sapphire')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
-                >
-                  <span>🎂</span>
-                  <span>Birthday</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handlePreviewPreset('velvet-romance')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
-                >
-                  <span>❤️</span>
-                  <span>Love & Anniversary</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handlePreviewPreset('vintage-kodak')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
-                >
-                  <span>📸</span>
-                  <span>Scrapbook</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handlePreviewPreset('gentle-peace')}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
-                >
-                  <span>🕊️</span>
-                  <span>Apology</span>
-                </button>
-              </div>
             </section>
 
             {/* OCCASION SELECTION SECTION */}
