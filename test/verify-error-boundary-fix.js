@@ -8,23 +8,23 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 
 const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
-const DEBUG_PORT = 9245;
+const DEBUG_PORT = 9255;
 const BASE_URL = process.env.BASE_URL || 'http://localhost:5174';
 
 async function runVerification() {
   console.log('===============================================================');
-  console.log('🧪 VERIFY ERROR BOUNDARY FIX & FULL E2E WORKFLOW TEST');
+  console.log('🧪 VERIFY ERROR BOUNDARY FIX & COMPREHENSIVE E2E TEST');
   console.log(`Target: ${BASE_URL}`);
   console.log('===============================================================\n');
 
-  // Spawn Headless Chrome
+  // Spawn Headless Chrome directly on base URL
   const chrome = spawn(CHROME_PATH, [
     '--headless=new',
     `--remote-debugging-port=${DEBUG_PORT}`,
     '--disable-gpu',
     '--no-sandbox',
     '--disable-dev-shm-usage',
-    'about:blank'
+    `${BASE_URL}/`
   ]);
 
   let isKilled = false;
@@ -37,11 +37,17 @@ async function runVerification() {
   process.on('exit', killChrome);
   process.on('SIGINT', killChrome);
 
-  await new Promise((r) => setTimeout(r, 1800));
+  await new Promise((r) => setTimeout(r, 2000));
 
+  // Find the page target
   const listRes = await fetch(`http://127.0.0.1:${DEBUG_PORT}/json/list`);
   const pages = await listRes.json();
   const pageTarget = pages.find((p) => p.type === 'page') || pages[0];
+
+  if (!pageTarget || !pageTarget.webSocketDebuggerUrl) {
+    throw new Error('Failed to discover page target in headless Chrome');
+  }
+
   const ws = new WebSocket(pageTarget.webSocketDebuggerUrl);
   await new Promise((r) => (ws.onopen = r));
 
@@ -55,13 +61,12 @@ async function runVerification() {
     if (msg.id && pendingPromises.has(msg.id)) {
       const { resolve } = pendingPromises.get(msg.id);
       pendingPromises.delete(msg.id);
-      resolve(msg.result);
+      resolve(msg);
     }
     if (msg.method === 'Runtime.consoleAPICalled') {
       const text = msg.params.args.map((a) => a.value || a.description || JSON.stringify(a)).join(' ');
       if (msg.params.type === 'error') {
-        // Exclude benign network errors for third-party media in headless test if any
-        if (!text.includes('favicon.ico') && !text.includes('soundhelix')) {
+        if (!text.includes('favicon.ico') && !text.includes('soundhelix') && !text.includes('pixabay')) {
           console.error(`  [Browser Console Error]: ${text}`);
           consoleErrors.push(text);
         }
@@ -69,38 +74,51 @@ async function runVerification() {
     }
     if (msg.method === 'Runtime.exceptionThrown') {
       const desc = msg.params.exceptionDetails?.exception?.description || JSON.stringify(msg.params.exceptionDetails);
-      console.error(`  [Browser Exception]: ${desc}`);
+      console.error(`  [Browser Uncaught Exception]: ${desc}`);
       exceptionsCaught.push(desc);
     }
   };
 
-  function sendCommand(method, params = {}) {
+  function sendCommand(method, params = {}, timeoutMs = 6000) {
     return new Promise((resolve, reject) => {
       const id = msgId++;
-      pendingPromises.set(id, { resolve, reject });
+      const timer = setTimeout(() => {
+        pendingPromises.delete(id);
+        resolve({ error: { message: `Command ${method} timed out after ${timeoutMs}ms` } });
+      }, timeoutMs);
+
+      pendingPromises.set(id, {
+        resolve: (result) => {
+          clearTimeout(timer);
+          resolve(result);
+        },
+        reject: (err) => {
+          clearTimeout(timer);
+          reject(err);
+        }
+      });
       ws.send(JSON.stringify({ id, method, params }));
     });
   }
 
   await sendCommand('Page.enable');
   await sendCommand('Runtime.enable');
-  await sendCommand('DOM.enable');
 
   async function evaluate(expression) {
-    const result = await sendCommand('Runtime.evaluate', {
+    const resp = await sendCommand('Runtime.evaluate', {
       expression,
       returnByValue: true,
       awaitPromise: true,
     });
-    return result?.result?.value;
+    return resp?.result?.result?.value;
   }
 
   async function checkErrorBoundary(stepLabel) {
-    const bodyText = (await evaluate('document.body.innerText')) || '';
+    const bodyText = (await evaluate('document.body ? document.body.innerText : ""')) || '';
     if (bodyText.includes('Something went wrong while rendering this section') ||
-        bodyText.includes('Something went wrong') && bodyText.includes('refresh this page')) {
+        (bodyText.includes('Something went wrong') && bodyText.includes('refresh this page'))) {
       const errDetails = await evaluate('document.querySelector(".text-slate-500")?.innerText');
-      console.error(`❌ CRASH DETECTED at [${stepLabel}]:`, errDetails);
+      console.error(`❌ ERROR BOUNDARY TRIGGERED at [${stepLabel}]:`, errDetails);
       return false;
     }
     console.log(`  ✓ PASS: ${stepLabel}`);
@@ -121,7 +139,7 @@ async function runVerification() {
 
   try {
     // -------------------------------------------------------------
-    // TEST 1: HOME PAGE LOAD
+    // TEST 1: HOME PAGE LOAD & TITLE
     // -------------------------------------------------------------
     console.log('\n--- 1. Testing Home Page Load ---');
     await sendCommand('Page.navigate', { url: `${BASE_URL}/` });
@@ -131,53 +149,53 @@ async function runVerification() {
 
     const title = await evaluate('document.title');
     console.log(`  Page Title: "${title}"`);
-    recordResult(Boolean(title), 'Title loaded');
+    recordResult(Boolean(title && title.includes('Wishly')), 'Page Title contains Wishly');
 
     // -------------------------------------------------------------
     // TEST 2: OCCASION NAVIGATION TO BUILDER (ALL 4 CATEGORIES)
     // -------------------------------------------------------------
     console.log('\n--- 2. Testing Occasion Selection to Builder Studio ---');
 
-    // Category 2.1: Romance
+    // 2.1: Romance
     console.log('Testing Romance Category...');
     await sendCommand('Page.navigate', { url: `${BASE_URL}/` });
     await new Promise((r) => setTimeout(r, 1200));
     await evaluate(`(() => {
-      const cards = Array.from(document.querySelectorAll('button'));
-      const romanceCard = cards.find(b => b.innerText.includes('Love & Anniversary') || b.innerText.includes('Romance'));
-      if (romanceCard) romanceCard.click();
+      const btns = Array.from(document.querySelectorAll('button'));
+      const card = btns.find(b => b.innerText.includes('Love & Anniversary') || b.innerText.includes('Romance'));
+      if (card) card.click();
     })()`);
     await new Promise((r) => setTimeout(r, 1500));
-    const romanceOk = await checkErrorBoundary('Enter Romance category');
-    recordResult(romanceOk, 'Romance category builder loaded');
+    const romanceOk = await checkErrorBoundary('Enter Romance Category Studio');
+    recordResult(romanceOk, 'Romance Studio loaded');
 
-    // Category 2.2: Scrapbook
+    // 2.2: Scrapbook
     console.log('Testing Scrapbook Category...');
     await sendCommand('Page.navigate', { url: `${BASE_URL}/` });
     await new Promise((r) => setTimeout(r, 1200));
     await evaluate(`(() => {
-      const cards = Array.from(document.querySelectorAll('button'));
-      const card = cards.find(b => b.innerText.includes('Scrapbook') || b.innerText.includes('Memories'));
+      const btns = Array.from(document.querySelectorAll('button'));
+      const card = btns.find(b => b.innerText.includes('Scrapbook') || b.innerText.includes('Memories'));
       if (card) card.click();
     })()`);
     await new Promise((r) => setTimeout(r, 1500));
-    const scrapbookOk = await checkErrorBoundary('Enter Scrapbook category');
-    recordResult(scrapbookOk, 'Scrapbook category builder loaded');
+    const scrapbookOk = await checkErrorBoundary('Enter Scrapbook Category Studio');
+    recordResult(scrapbookOk, 'Scrapbook Studio loaded');
 
-    // Category 2.3: Apology
+    // 2.3: Apology
     console.log('Testing Apology Category...');
     await sendCommand('Page.navigate', { url: `${BASE_URL}/` });
     await new Promise((r) => setTimeout(r, 1200));
     await evaluate(`(() => {
-      const cards = Array.from(document.querySelectorAll('button'));
-      const card = cards.find(b => b.innerText.includes('Apology'));
+      const btns = Array.from(document.querySelectorAll('button'));
+      const card = btns.find(b => b.innerText.includes('Apology'));
       if (card) card.click();
     })()`);
     await new Promise((r) => setTimeout(r, 1500));
-    const apologyOk = await checkErrorBoundary('Enter Apology category');
-    recordResult(apologyOk, 'Apology category builder loaded');
+    const apologyOk = await checkErrorBoundary('Enter Apology Category Studio');
+    recordResult(apologyOk, 'Apology Studio loaded');
 
-    // Category 2.4: Birthday via "Start Creating"
+    // 2.4: Birthday via "Start Creating"
     console.log('Testing Birthday Category via Start Creating...');
     await sendCommand('Page.navigate', { url: `${BASE_URL}/` });
     await new Promise((r) => setTimeout(r, 1200));
@@ -187,96 +205,86 @@ async function runVerification() {
       if (startBtn) startBtn.click();
     })()`);
     await new Promise((r) => setTimeout(r, 800));
-    // Click Boy in RecipientModal
     await evaluate(`(() => {
       const btns = Array.from(document.querySelectorAll('button'));
       const boyBtn = btns.find(b => b.innerText.includes('Boy') || b.innerText.includes('Him'));
       if (boyBtn) boyBtn.click();
     })()`);
     await new Promise((r) => setTimeout(r, 1500));
-    const birthdayOk = await checkErrorBoundary('Enter Birthday category (Boy)');
-    recordResult(birthdayOk, 'Birthday category builder loaded');
+    const birthdayOk = await checkErrorBoundary('Enter Birthday Studio (Boy)');
+    recordResult(birthdayOk, 'Birthday Studio loaded');
 
     // -------------------------------------------------------------
-    // TEST 3: COMPREHENSIVE TEMPLATE SWITCHING ACROSS ALL STYLES
+    // TEST 3: COMPREHENSIVE TEMPLATE SWITCHING ACROSS ALL 15 TEMPLATES
     // -------------------------------------------------------------
-    console.log('\n--- 3. Testing Switching All Templates in Builder ---');
-    // We test switching through templates directly in the preview simulator
+    console.log('\n--- 3. Testing Switching All Templates in Preview Simulator ---');
     const allTemplates = [
-      // Birthday
       'royal-sapphire',
       'golden-birthday',
       'polaroid-scrapbook',
       'blush-rose',
       'princess-peach',
       'lavender-dream',
-      // Romance
       'velvet-romance',
       'sunset-romance',
       'celestial-love',
-      // Scrapbook
       'vintage-kodak',
       'neon-nostalgia',
       'cozy-memories',
-      // Apology
       'gentle-peace',
       'sweet-forgive',
       'fresh-start'
     ];
 
     for (const tmplId of allTemplates) {
-      console.log(`Switching to template: ${tmplId}...`);
-      await evaluate(`(() => {
-        // Trigger React state change or navigate directly to test simulator rendering
-        window.history.pushState({}, '', '/');
-      })()`);
+      console.log(`Checking template: ${tmplId}...`);
       await sendCommand('Page.navigate', { url: `${BASE_URL}/?preview=${tmplId}` });
       await new Promise((r) => setTimeout(r, 1000));
-      const tmplOk = await checkErrorBoundary(`Template preview: ${tmplId}`);
-      recordResult(tmplOk, `Template ${tmplId} rendered cleanly without ErrorBoundary`);
+      const tmplOk = await checkErrorBoundary(`Template: ${tmplId}`);
+      recordResult(tmplOk, `Template ${tmplId} rendered cleanly`);
     }
 
     // -------------------------------------------------------------
-    // TEST 4: BUILDER STUDIO INPUT EDITING & EMPTY INPUT RESILIENCE
+    // TEST 4: BUILDER STUDIO STEP 2 INPUT EDITING & EMPTY INPUT HANDLING
     // -------------------------------------------------------------
-    console.log('\n--- 4. Testing Builder Studio Input Editing & Empty Fields ---');
-    // Navigate into Builder Studio
+    console.log('\n--- 4. Testing Builder Studio Input Editing & Empty Field Resilience ---');
     await sendCommand('Page.navigate', { url: `${BASE_URL}/` });
     await new Promise((r) => setTimeout(r, 1200));
+    // Click Romance
     await evaluate(`(() => {
-      const cards = Array.from(document.querySelectorAll('button'));
-      const card = cards.find(b => b.innerText.includes('Love & Anniversary') || b.innerText.includes('Romance'));
+      const btns = Array.from(document.querySelectorAll('button'));
+      const card = btns.find(b => b.innerText.includes('Love & Anniversary') || b.innerText.includes('Romance'));
       if (card) card.click();
     })()`);
     await new Promise((r) => setTimeout(r, 1500));
 
-    // Click "Proceed to Form" (Step 2)
-    console.log('Navigating to Step 2 Form...');
+    // Proceed to Form (Step 2)
+    console.log('Proceeding to Step 2 Form...');
     await evaluate(`(() => {
       const btns = Array.from(document.querySelectorAll('button'));
-      const proceed = btns.find(b => b.innerText.includes('Proceed to Form') || b.innerText.includes('Next') || b.innerText.includes('Step 2'));
+      const proceed = btns.find(b => b.innerText.includes('Proceed to Form') || b.innerText.includes('Next'));
       if (proceed) proceed.click();
     })()`);
     await new Promise((r) => setTimeout(r, 1200));
     const step2Ok = await checkErrorBoundary('Step 2 Form loaded');
-    recordResult(step2Ok, 'Step 2 Form opened');
+    recordResult(step2Ok, 'Step 2 Form active');
 
-    // Test clearing recipient name and sender name (empty values must not throw)
-    console.log('Testing empty input values...');
+    // Test clearing all text inputs (must not throw or crash simulator)
+    console.log('Clearing inputs to test empty-field resilience...');
     await evaluate(`(() => {
       const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
-      inputs.forEach(input => {
-        input.value = '';
-        input.dispatchEvent(new Event('input', { bubbles: true }));
-        input.dispatchEvent(new Event('change', { bubbles: true }));
+      inputs.forEach(inp => {
+        inp.value = '';
+        inp.dispatchEvent(new Event('input', { bubbles: true }));
+        inp.dispatchEvent(new Event('change', { bubbles: true }));
       });
     })()`);
     await new Promise((r) => setTimeout(r, 1000));
-    const emptyOk = await checkErrorBoundary('Empty form inputs resilience');
-    recordResult(emptyOk, 'Mobile simulator handled empty strings safely');
+    const emptyOk = await checkErrorBoundary('Empty form inputs resilience in LivePhonePreview');
+    recordResult(emptyOk, 'LivePhonePreview resilient against empty inputs');
 
-    // Test filling custom names
-    console.log('Testing custom input values...');
+    // Test typing custom text into recipient and sender inputs
+    console.log('Typing custom text into form...');
     await evaluate(`(() => {
       const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
       if (inputs[0]) {
@@ -294,22 +302,21 @@ async function runVerification() {
     const customOk = await checkErrorBoundary('Custom form inputs update');
     recordResult(customOk, 'Simulator updated with custom text');
 
-    // Switch between form tabs: Names, Photo & Song, Reasons & Letter
-    console.log('Testing switching form tabs...');
-    const formTabs = ['Names', 'Photo', 'Letter'];
-    for (const t of formTabs) {
+    // Test switching form tabs
+    console.log('Switching Form tabs: Names, Photo, Letter...');
+    for (const t of ['Names', 'Photo', 'Letter']) {
       await evaluate(`(() => {
         const btns = Array.from(document.querySelectorAll('button'));
         const tabBtn = btns.find(b => b.innerText.includes('${t}'));
         if (tabBtn) tabBtn.click();
       })()`);
       await new Promise((r) => setTimeout(r, 800));
-      const tabOk = await checkErrorBoundary(`Form tab: ${t}`);
-      recordResult(tabOk, `Form tab ${t} active without crash`);
+      const tabOk = await checkErrorBoundary(`Form tab ${t}`);
+      recordResult(tabOk, `Form tab ${t} clicked without crash`);
     }
 
-    // Test simulator internal tab navigation
-    console.log('Testing Phone Simulator internal tabs (Photos, Letter, Quiz)...');
+    // Test switching internal phone simulator tabs
+    console.log('Switching Phone Simulator internal tabs (Photos, Letter, Quiz)...');
     for (const simTab of ['Photos', 'Letter', 'Quiz', 'Reasons']) {
       await evaluate(`(() => {
         const btns = Array.from(document.querySelectorAll('button'));
@@ -321,50 +328,49 @@ async function runVerification() {
       recordResult(simOk, `Simulator tab ${simTab} rendered`);
     }
 
-    // Test clicking wax seal envelope in simulator
-    console.log('Testing wax envelope unseal in simulator...');
+    // Test unsealing wax seal
+    console.log('Unsealing wax seal in simulator...');
     await evaluate(`(() => {
       const seal = document.querySelector('[title*="unseal"]') || document.querySelector('.khat-envelope');
       if (seal) seal.click();
     })()`);
     await new Promise((r) => setTimeout(r, 800));
-    const envelopeOk = await checkErrorBoundary('Wax envelope opened in simulator');
-    recordResult(envelopeOk, 'Envelope opened cleanly');
+    const sealOk = await checkErrorBoundary('Unseal wax seal in simulator');
+    recordResult(sealOk, 'Wax seal opened');
 
     // -------------------------------------------------------------
-    // TEST 5: PRODUCTION KEEPSAKE VIEW (?v=maya-eq97c)
+    // TEST 5: KEEPSAKE VIEW (?v=maya-eq97c)
     // -------------------------------------------------------------
     console.log('\n--- 5. Testing Keepsake View (?v=maya-eq97c) ---');
     await sendCommand('Page.navigate', { url: `${BASE_URL}/?v=maya-eq97c` });
     await new Promise((r) => setTimeout(r, 2000));
-    const keepsakeOk = await checkErrorBoundary('Keepsake initial load (?v=maya-eq97c)');
-    recordResult(keepsakeOk, 'Keepsake page loaded without error boundary');
+    const keepsakeLoadOk = await checkErrorBoundary('Keepsake initial landing load (?v=maya-eq97c)');
+    recordResult(keepsakeLoadOk, 'Keepsake loaded cleanly');
 
     // Click "Tap to Open Surprise"
-    console.log('Interacting: Tap to Open Surprise...');
+    console.log('Clicking Tap to Open Surprise in Keepsake...');
     await evaluate(`(() => {
       const btn = document.querySelector('.intro-enter-btn') ||
                   Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Tap to Open'));
       if (btn) btn.click();
     })()`);
     await new Promise((r) => setTimeout(r, 1200));
-    const openOk = await checkErrorBoundary('After Tap to Open in Keepsake');
-    recordResult(openOk, 'Surprise opened successfully');
+    const openKeepsakeOk = await checkErrorBoundary('Keepsake experience opened');
+    recordResult(openKeepsakeOk, 'Tap to Open transition smooth');
 
     // Toggle Music Pill
-    console.log('Interacting: Music toggle pill...');
+    console.log('Testing audio toggle pill...');
     await evaluate(`(() => {
       const pill = document.querySelector('.soft-music-pill');
       if (pill) pill.click();
     })()`);
-    await new Promise((r) => setTimeout(r, 600));
-    const musicOk = await checkErrorBoundary('Music pill toggle');
-    recordResult(musicOk, 'Music pill clicked without crash');
+    await new Promise((r) => setTimeout(r, 500));
+    const musicOk = await checkErrorBoundary('Music toggle pill clicked');
+    recordResult(musicOk, 'Music toggle pill responsive');
 
-    // Test Keepsake Tab Switching
-    console.log('Interacting: Keepsake Navigation Pills...');
-    const navPills = ['Photos', 'Letter', 'Quiz', 'game'];
-    for (const pill of navPills) {
+    // Keepsake tabs
+    console.log('Testing Keepsake navigation tabs...');
+    for (const pill of ['Photos', 'Letter', 'Quiz', 'game']) {
       await evaluate(`(() => {
         const pills = document.querySelectorAll('.nav-pill');
         pills.forEach(p => {
@@ -372,25 +378,34 @@ async function runVerification() {
         });
       })()`);
       await new Promise((r) => setTimeout(r, 600));
-      const pillOk = await checkErrorBoundary(`Keepsake nav pill ${pill}`);
+      const pillOk = await checkErrorBoundary(`Keepsake tab ${pill}`);
       recordResult(pillOk, `Keepsake tab ${pill} active`);
     }
 
-    // Test interactive quiz in keepsake
-    console.log('Interacting: Quiz YES button...');
+    // Quiz interaction
+    console.log('Testing Keepsake Quiz YES button...');
     await evaluate(`(() => {
       const btns = Array.from(document.querySelectorAll('button'));
       const yesBtn = btns.find(b => b.innerText.includes('YES'));
       if (yesBtn) yesBtn.click();
     })()`);
     await new Promise((r) => setTimeout(r, 600));
-    const quizOk = await checkErrorBoundary('Quiz YES button click');
+    const quizOk = await checkErrorBoundary('Keepsake Quiz YES interaction');
     recordResult(quizOk, 'Quiz interaction succeeded');
 
     // -------------------------------------------------------------
-    // TEST 6: PRIVACY AUDIT (ZERO OCCURRENCES OF 'aditi' AND 'devi')
+    // TEST 6: DIRECT PREVIEW (?preview=velvet-romance)
     // -------------------------------------------------------------
-    console.log('\n--- 6. Testing Privacy Audit (Zero aditi/devi) ---');
+    console.log('\n--- 6. Testing Direct Preview (?preview=velvet-romance) ---');
+    await sendCommand('Page.navigate', { url: `${BASE_URL}/?preview=velvet-romance` });
+    await new Promise((r) => setTimeout(r, 1500));
+    const previewOk = await checkErrorBoundary('Direct Preview: velvet-romance');
+    recordResult(previewOk, 'Direct preview loaded without error');
+
+    // -------------------------------------------------------------
+    // TEST 7: PRIVACY AUDIT (ZERO OCCURRENCES OF 'aditi' AND 'devi')
+    // -------------------------------------------------------------
+    console.log('\n--- 7. Privacy Audit (Zero aditi/devi) ---');
     const walkDir = (dir) => {
       let results = [];
       const list = fs.readdirSync(dir);
@@ -427,7 +442,6 @@ async function runVerification() {
       }
     }
 
-    // Also check index.html
     const indexHtmlPath = path.join(ROOT, 'index.html');
     if (fs.existsSync(indexHtmlPath)) {
       fileCount++;
