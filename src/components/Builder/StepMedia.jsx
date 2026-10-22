@@ -104,13 +104,21 @@ const probeAudioUrl = (url) => {
       return;
     }
     const audio = new Audio();
+    // Do NOT set audio.crossOrigin = 'anonymous' to prevent browser network stalls on third-party servers
     let settled = false;
 
     const cleanup = () => {
       audio.oncanplaythrough = null;
       audio.onloadeddata = null;
       audio.onerror = null;
-      audio.src = '';
+      try {
+        audio.pause();
+        audio.removeAttribute('src');
+        audio.src = '';
+        audio.load();
+      } catch {
+        // Safe cleanup
+      }
     };
 
     const timeout = setTimeout(() => {
@@ -119,7 +127,7 @@ const probeAudioUrl = (url) => {
         cleanup();
         reject(new Error('Audio stream test timed out. The server may be blocking streaming or slow to respond.'));
       }
-    }, 6000);
+    }, 2500);
 
     audio.oncanplaythrough = () => {
       if (!settled) {
@@ -246,11 +254,19 @@ export default function StepMedia({ formData, onChange }) {
   const handleSelectSong = (song) => {
     setAudioError('');
     setUrlFeedback(null);
+    if (formData.customSongUrl && typeof formData.customSongUrl === 'string' && formData.customSongUrl.startsWith('blob:')) {
+      try {
+        URL.revokeObjectURL(formData.customSongUrl);
+      } catch {
+        // ignore
+      }
+    }
     onChange({
       songId: song.id,
       songUrl: song.audioUrl || song.fallbackUrl,
       customSongUrl: '',
       customSongTitle: '',
+      customAudioBlob: null,
     });
   };
 
@@ -286,38 +302,48 @@ export default function StepMedia({ formData, onChange }) {
     setAudioError('');
     setUrlFeedback(null);
 
-    const maxBytes = 10 * 1024 * 1024; // 10MB
+    const maxBytes = 15 * 1024 * 1024; // 15MB
     if (file.size > maxBytes) {
-      setAudioError('Audio file is larger than 10MB. Please pick a smaller clip (< 5MB recommended) for faster loading.');
+      setAudioError('Audio file is larger than 15MB. Please pick a smaller clip (< 5MB recommended) for faster loading.');
       return;
     }
 
-    setIsAudioUploading(true);
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const dataUrl = event.target?.result;
-      if (typeof dataUrl === 'string') {
-        const rawName = file.name ? file.name.replace(/\.[^/.]+$/, '') : 'Custom Audio';
-        const cleanTitle = rawName.length > 32 ? rawName.slice(0, 30) + '...' : rawName;
-        stopAudio();
-        onChange({
-          songId: 'custom',
-          songUrl: dataUrl,
-          customSongUrl: dataUrl,
-          customSongTitle: `Audio: ${cleanTitle}`,
-        });
-        setUrlFeedback({
-          type: 'success',
-          message: '✓ Custom audio file uploaded and ready to play!',
-        });
+    try {
+      setIsAudioUploading(true);
+      const rawName = file.name ? file.name.replace(/\.[^/.]+$/, '') : 'Custom Audio';
+      const cleanTitle = rawName.length > 32 ? rawName.slice(0, 30) + '...' : rawName;
+      stopAudio();
+
+      // Revoke prior blob URL to avoid memory leaks
+      if (formData.customSongUrl && typeof formData.customSongUrl === 'string' && formData.customSongUrl.startsWith('blob:')) {
+        try {
+          URL.revokeObjectURL(formData.customSongUrl);
+        } catch {
+          // ignore
+        }
       }
+
+      // Use URL.createObjectURL instead of multi-megabyte base64 data URLs to prevent UI freeze
+      const blobUrl = URL.createObjectURL(file);
+
+      onChange({
+        songId: 'custom',
+        songUrl: blobUrl,
+        customSongUrl: blobUrl,
+        customSongTitle: `Audio: ${cleanTitle}`,
+        customAudioBlob: file, // Keep file reference for upload if needed
+      });
+
+      setUrlFeedback({
+        type: 'success',
+        message: '✓ Custom audio file ready to play!',
+      });
+    } catch (err) {
+      console.error('Audio processing error:', err);
+      setAudioError('Could not process this audio file. Please try another format (MP3, WAV, M4A).');
+    } finally {
       setIsAudioUploading(false);
-    };
-    reader.onerror = () => {
-      setAudioError('Could not read this audio file. Please try another format (MP3, WAV, M4A).');
-      setIsAudioUploading(false);
-    };
-    reader.readAsDataURL(file);
+    }
   };
 
   const handleAudioFileInputChange = (e) => {
@@ -410,12 +436,20 @@ export default function StepMedia({ formData, onChange }) {
   // Remove custom audio and revert to default trending reel
   const handleRemoveCustomAudio = () => {
     stopAudio();
+    if (formData.customSongUrl && typeof formData.customSongUrl === 'string' && formData.customSongUrl.startsWith('blob:')) {
+      try {
+        URL.revokeObjectURL(formData.customSongUrl);
+      } catch {
+        // ignore
+      }
+    }
     const defaultSong = SONGS[0];
     onChange({
       songId: defaultSong.id,
       songUrl: defaultSong.audioUrl || defaultSong.fallbackUrl,
       customSongUrl: '',
       customSongTitle: '',
+      customAudioBlob: null,
     });
     setAudioTab('trending');
     setUrlFeedback(null);

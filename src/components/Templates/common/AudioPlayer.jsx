@@ -3,10 +3,10 @@ import { Volume2, VolumeX, Music, Disc3 } from 'lucide-react';
 
 // Curated royalty-free romantic & celebratory background streams (gentle, warm, non-intrusive)
 const DEFAULT_TRACKS = {
-  romantic: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Gentle acoustic/piano
-  birthday: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', // Uplifting cheerful bells/melody
-  scrapbook: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', // Nostalgic acoustic
-  apology: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', // Soft calming piano
+  romantic: 'https://cdn.freesound.org/previews/612/612610_5674468-lq.mp3', // Gentle acoustic strings (107 KB)
+  birthday: 'https://cdn.freesound.org/previews/541/541177_5479102-lq.mp3', // Uplifting cheerful celebration melody (222 KB)
+  scrapbook: 'https://cdn.freesound.org/previews/535/535105_11203376-lq.mp3', // Nostalgic acoustic guitar (167 KB)
+  apology: 'https://cdn.freesound.org/previews/266/266449_3598127-lq.mp3', // Soft calming piano (149 KB)
 };
 
 export default function AudioPlayer({ 
@@ -19,6 +19,7 @@ export default function AudioPlayer({
   const [hasInteracted, setHasInteracted] = useState(false);
   const [showPrompt, setShowPrompt] = useState(true);
   const audioRef = useRef(null);
+  const hasRetriedRef = useRef(false);
 
   const defaultTrack = DEFAULT_TRACKS[theme] || DEFAULT_TRACKS.romantic;
   const isSilent = audioUrl === '';
@@ -32,14 +33,19 @@ export default function AudioPlayer({
     setHasFallenBack(false);
   }
 
+  useEffect(() => {
+    hasRetriedRef.current = false;
+  }, [audioUrl]);
+
   const currentSrc = isSilent ? '' : (hasFallenBack ? defaultTrack : (audioUrl || defaultTrack));
 
-  // Gracefully fall back to default theme track if audio fails to load or play
+  // Gracefully fall back to default theme track if audio fails to load or play (at most once)
   const handleAudioError = () => {
-    if (!hasFallenBack && defaultTrack && currentSrc !== defaultTrack) {
+    if (!hasRetriedRef.current && !hasFallenBack && defaultTrack && currentSrc !== defaultTrack) {
+      hasRetriedRef.current = true;
       console.warn('Custom audio track failed to load, falling back to default theme track:', currentSrc);
       setHasFallenBack(true);
-      if (audioRef.current) {
+      if (audioRef.current && audioRef.current.src !== defaultTrack) {
         audioRef.current.src = defaultTrack;
         audioRef.current.load();
         if (isPlaying || hasInteracted) {
@@ -49,6 +55,7 @@ export default function AudioPlayer({
         }
       }
     } else {
+      hasRetriedRef.current = true;
       setIsPlaying(false);
     }
   };
@@ -91,7 +98,7 @@ export default function AudioPlayer({
         .then(() => setIsPlaying(true))
         .catch((err) => {
           console.log('Audio playback waiting:', err);
-          handleAudioError();
+          setIsPlaying(false);
         });
     }
   };

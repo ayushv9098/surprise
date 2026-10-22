@@ -24,11 +24,46 @@ export const generateSlug = (recipientName = 'special-one') => {
 };
 
 /**
+ * Strip giant audio data URLs (or non-serializable blob handles) that cause
+ * 100% CPU lockups during LZString compression, JSON serialization, and localStorage writes.
+ */
+export const sanitizeAudioPayload = (payload) => {
+  if (!payload || typeof payload !== 'object') return payload;
+
+  const isGiant = (url) => typeof url === 'string' && (
+    (url.startsWith('data:') && url.length > 500000) ||
+    (url.startsWith('data:audio') && url.length > 50000)
+  );
+
+  const hasGiantSongUrl = isGiant(payload.songUrl);
+  const hasGiantCustomSongUrl = isGiant(payload.customSongUrl);
+  const hasAudioBlob = Boolean(payload.customAudioBlob);
+
+  if (hasGiantSongUrl || hasGiantCustomSongUrl || hasAudioBlob) {
+    const clean = { ...payload };
+    if (hasGiantSongUrl) {
+      clean.songUrl = '';
+    }
+    if (hasGiantCustomSongUrl) {
+      clean.customSongUrl = '';
+    }
+    if (hasAudioBlob) {
+      delete clean.customAudioBlob;
+    }
+    return clean;
+  }
+
+  return payload;
+};
+
+/**
  * Compress arbitrary object into URL-safe string
  */
 export const compressSurprise = (payload) => {
   try {
-    const jsonStr = JSON.stringify(payload);
+    if (!payload) return '';
+    const cleanPayload = sanitizeAudioPayload(payload);
+    const jsonStr = JSON.stringify(cleanPayload);
     return LZString.compressToEncodedURIComponent(jsonStr);
   } catch (err) {
     console.error('Failed to compress surprise payload:', err);
@@ -70,18 +105,35 @@ export const getSavedSurprises = () => {
  */
 export const saveSurpriseLocally = (surprise) => {
   try {
-    if (typeof localStorage === 'undefined') return false;
+    if (typeof localStorage === 'undefined' || !surprise) return false;
+    const cleanSurprise = sanitizeAudioPayload(surprise);
     const list = getSavedSurprises();
     const existingIndex = list.findIndex(
-      (item) => item.id === surprise.id || (surprise.slug && item.slug === surprise.slug)
+      (item) => item.id === cleanSurprise.id || (cleanSurprise.slug && item.slug === cleanSurprise.slug)
     );
     if (existingIndex >= 0) {
-      list[existingIndex] = { ...list[existingIndex], ...surprise, updatedAt: new Date().toISOString() };
+      list[existingIndex] = { ...list[existingIndex], ...cleanSurprise, updatedAt: new Date().toISOString() };
     } else {
-      list.unshift({ ...surprise, createdAt: surprise.createdAt || new Date().toISOString() });
+      list.unshift({ ...cleanSurprise, createdAt: cleanSurprise.createdAt || new Date().toISOString() });
     }
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 50)));
-    return true;
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 50)));
+      return true;
+    } catch (quotaError) {
+      console.warn('localStorage quota exceeded, trimming saved surprises list:', quotaError);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10)));
+        return true;
+      } catch {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify([cleanSurprise]));
+          return true;
+        } catch {
+          return false;
+        }
+      }
+    }
   } catch (e) {
     console.warn('localStorage write failed:', e);
     return false;
@@ -109,16 +161,17 @@ export const deleteSavedSurprise = (id) => {
  */
 export const saveSurprise = async (payload = {}) => {
   try {
-    const id = payload?.id || `wc-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`;
-    const slug = payload?.slug || generateSlug(payload?.recipientName);
+    const cleanPayload = sanitizeAudioPayload(payload);
+    const id = cleanPayload?.id || `wc-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`;
+    const slug = cleanPayload?.slug || generateSlug(cleanPayload?.recipientName);
     const now = new Date().toISOString();
 
     const completePayload = {
-      ...payload,
+      ...cleanPayload,
       id,
       slug,
       updatedAt: now,
-      createdAt: payload?.createdAt || now,
+      createdAt: cleanPayload?.createdAt || now,
     };
 
     // 1. Generate ultra-reliable compressed URL parameter synchronously
