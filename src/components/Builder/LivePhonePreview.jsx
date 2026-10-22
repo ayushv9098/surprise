@@ -773,7 +773,6 @@ export default function LivePhonePreview({ formData = {} }) {
     width: typeof window !== 'undefined' ? window.innerWidth : 1200,
     height: typeof window !== 'undefined' ? window.innerHeight : 800,
   }));
-  const [scaleMode, setScaleMode] = useState('auto'); // 'auto' | '85' | '100'
 
   useEffect(() => {
     const handleResize = () => {
@@ -790,15 +789,14 @@ export default function LivePhonePreview({ formData = {} }) {
 
   const autoScale = useMemo(() => {
     if (windowWidth < 640) {
-      return Math.min(1.0, Math.max(0.75, +((windowHeight - 160) / BASE_HEIGHT).toFixed(2)));
+      return Math.min(1.0, Math.max(0.70, +((windowHeight - 160) / BASE_HEIGHT).toFixed(2)));
     }
-    // Desktop: Account for Top Navbar (56px) + Bottom Bar (72px) + Scale Pill & Gap (36px) + Breathing Margin (28px) = 192px
-    const availableHeight = windowHeight - 192;
+    // Desktop: Top Navbar (56px) + Bottom Bar (72px) + Breathing Margin (32px) = 160px
+    const availableHeight = windowHeight - 160;
     return Math.min(1.0, Math.max(0.50, +(availableHeight / BASE_HEIGHT).toFixed(2)));
   }, [windowWidth, windowHeight]);
 
-  const effectiveScale =
-    scaleMode === '85' ? 0.85 : scaleMode === '100' ? 1.0 : autoScale;
+  const effectiveScale = autoScale;
 
   // Scoped Confetti Canvas References
   const confettiCanvasRef = useRef(null);
@@ -1195,46 +1193,6 @@ export default function LivePhonePreview({ formData = {} }) {
 
   return (
     <div className="flex flex-col items-center justify-center w-full select-none py-1">
-      {/* Viewport Zoom / Auto-Scale Control Pill */}
-      <div className="inline-flex items-center p-0.5 mb-1.5 rounded-full bg-slate-100/70 border border-slate-200/50 shadow-2xs text-[10px] select-none">
-        <button
-          type="button"
-          onClick={() => setScaleMode('auto')}
-          className={`px-2 py-0.5 rounded-full transition-all cursor-pointer ${
-            scaleMode === 'auto'
-              ? 'bg-white text-slate-800 font-semibold shadow-2xs'
-              : 'text-slate-400 hover:text-slate-600 font-medium'
-          }`}
-          title={`Auto fit to screen (${Math.round(autoScale * 100)}%)`}
-        >
-          Auto ({Math.round(autoScale * 100)}%)
-        </button>
-        <button
-          type="button"
-          onClick={() => setScaleMode('85')}
-          className={`px-2 py-0.5 rounded-full transition-all cursor-pointer ${
-            scaleMode === '85'
-              ? 'bg-white text-slate-800 font-semibold shadow-2xs'
-              : 'text-slate-400 hover:text-slate-600 font-medium'
-          }`}
-          title="Scale preview to 85%"
-        >
-          85%
-        </button>
-        <button
-          type="button"
-          onClick={() => setScaleMode('100')}
-          className={`px-2 py-0.5 rounded-full transition-all cursor-pointer ${
-            scaleMode === '100'
-              ? 'bg-white text-slate-800 font-semibold shadow-2xs'
-              : 'text-slate-400 hover:text-slate-600 font-medium'
-          }`}
-          title="Scale preview to 100% (Actual size)"
-        >
-          100%
-        </button>
-      </div>
-
       {/* Viewport Auto-Scaling Dimension-Matched Container */}
       <div
         className="relative transition-all duration-150 flex flex-col items-center justify-start"
