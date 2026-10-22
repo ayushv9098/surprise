@@ -792,8 +792,9 @@ export default function LivePhonePreview({ formData = {} }) {
     if (windowWidth < 640) {
       return Math.min(1.0, Math.max(0.75, +((windowHeight - 160) / BASE_HEIGHT).toFixed(2)));
     }
-    const availableHeight = windowHeight - 146;
-    return Math.min(1.0, Math.max(0.55, +(availableHeight / BASE_HEIGHT).toFixed(2)));
+    // Desktop: Account for Top Navbar (56px) + Bottom Bar (72px) + Scale Pill & Gap (36px) + Breathing Margin (28px) = 192px
+    const availableHeight = windowHeight - 192;
+    return Math.min(1.0, Math.max(0.50, +(availableHeight / BASE_HEIGHT).toFixed(2)));
   }, [windowWidth, windowHeight]);
 
   const effectiveScale =
@@ -1195,17 +1196,16 @@ export default function LivePhonePreview({ formData = {} }) {
   return (
     <div className="flex flex-col items-center justify-center w-full select-none py-1">
       {/* Viewport Zoom / Auto-Scale Control Pill */}
-      <div className="flex items-center gap-1 mb-2 px-2.5 py-0.5 rounded-full bg-slate-100/90 backdrop-blur-sm border border-slate-200/80 shadow-2xs text-[11px] font-medium text-slate-600 select-none">
-        <span className="text-[10px] text-slate-400 font-semibold px-0.5">Scale:</span>
+      <div className="inline-flex items-center p-0.5 mb-1.5 rounded-full bg-slate-100/70 border border-slate-200/50 shadow-2xs text-[10px] select-none">
         <button
           type="button"
           onClick={() => setScaleMode('auto')}
           className={`px-2 py-0.5 rounded-full transition-all cursor-pointer ${
             scaleMode === 'auto'
-              ? 'bg-white text-slate-900 font-bold shadow-2xs'
-              : 'text-slate-500 hover:text-slate-800'
+              ? 'bg-white text-slate-800 font-semibold shadow-2xs'
+              : 'text-slate-400 hover:text-slate-600 font-medium'
           }`}
-          title="Auto fit to screen height"
+          title={`Auto fit to screen (${Math.round(autoScale * 100)}%)`}
         >
           Auto ({Math.round(autoScale * 100)}%)
         </button>
@@ -1214,9 +1214,10 @@ export default function LivePhonePreview({ formData = {} }) {
           onClick={() => setScaleMode('85')}
           className={`px-2 py-0.5 rounded-full transition-all cursor-pointer ${
             scaleMode === '85'
-              ? 'bg-white text-slate-900 font-bold shadow-2xs'
-              : 'text-slate-500 hover:text-slate-800'
+              ? 'bg-white text-slate-800 font-semibold shadow-2xs'
+              : 'text-slate-400 hover:text-slate-600 font-medium'
           }`}
+          title="Scale preview to 85%"
         >
           85%
         </button>
@@ -1225,9 +1226,10 @@ export default function LivePhonePreview({ formData = {} }) {
           onClick={() => setScaleMode('100')}
           className={`px-2 py-0.5 rounded-full transition-all cursor-pointer ${
             scaleMode === '100'
-              ? 'bg-white text-slate-900 font-bold shadow-2xs'
-              : 'text-slate-500 hover:text-slate-800'
+              ? 'bg-white text-slate-800 font-semibold shadow-2xs'
+              : 'text-slate-400 hover:text-slate-600 font-medium'
           }`}
+          title="Scale preview to 100% (Actual size)"
         >
           100%
         </button>

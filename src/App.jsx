@@ -247,24 +247,22 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW: BUILDER STUDIO */}
+        {/* VIEW: BUILDER STUDIO — full-width, no padding (BuilderStudio manages its own layout) */}
         {currentView === 'builder' && (
-          <div className="py-6 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <ErrorBoundary onReset={() => handleNavigate('home')}>
-              <BuilderStudio
-                key={`${selectedCategory}-${selectedTemplateId}`}
-                initialCategory={selectedCategory}
-                initialTemplateId={selectedTemplateId}
-                onBack={() => handleNavigate('home')}
-                onComplete={(result) => {
-                  setToast({
-                    type: 'success',
-                    message: `Surprise for ${result.recipientName || 'your special person'} is ready!`
-                  });
-                }}
-              />
-            </ErrorBoundary>
-          </div>
+          <ErrorBoundary onReset={() => handleNavigate('home')}>
+            <BuilderStudio
+              key={`${selectedCategory}-${selectedTemplateId}`}
+              initialCategory={selectedCategory}
+              initialTemplateId={selectedTemplateId}
+              onBack={() => handleNavigate('home')}
+              onComplete={(result) => {
+                setToast({
+                  type: 'success',
+                  message: `Surprise for ${result.recipientName || 'your special person'} is ready!`
+                });
+              }}
+            />
+          </ErrorBoundary>
         )}
 
         {/* VIEW: HOME LANDING PAGE */}

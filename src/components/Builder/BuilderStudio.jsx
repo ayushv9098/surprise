@@ -227,149 +227,216 @@ export default function BuilderStudio({
   ];
 
   return (
-    <div className="min-h-screen bg-[#FFFDFB] text-slate-800 pb-28 overflow-x-hidden">
-      {/* Mobile Form/Preview Toggle (only shown on small screens, minimal floating pill) */}
-      <div className="lg:hidden flex items-center justify-center pt-3 pb-1">
-        <div className="flex items-center p-0.5 rounded-full bg-slate-100 border border-slate-200 shadow-2xs">
-          <button
-            type="button"
-            onClick={() => setActiveMobileView('editor')}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              activeMobileView === 'editor'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-500 hover:text-slate-800'
-            }`}
-          >
-            Form
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveMobileView('preview')}
-            className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-              activeMobileView === 'preview'
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-500 hover:text-slate-800'
-            }`}
-          >
-            Phone Preview
-          </button>
+    <div className="bg-[#FFFDFB] text-slate-800 overflow-x-hidden">
+
+      {/* ================================================================== */}
+      {/* DESKTOP LAYOUT: Two-panel split — left scrolls, right fixed         */}
+      {/* ================================================================== */}
+      <div className="hidden lg:flex" style={{ height: 'calc(100vh - 56px - 72px)' }}>
+        {/* LEFT PANEL: Scrollable form area */}
+        <div className="flex-1 overflow-y-auto pb-10 px-6 xl:px-10 pt-6 custom-scrollbar">
+          {/* STEP 1: CHOOSE STYLE */}
+          {currentStep === 1 && (
+            <div className="space-y-6 animate-fadeIn max-w-2xl">
+              <TemplateSelector
+                selectedId={formData.templateId}
+                selectedCategory={selectedCategory}
+                selectedGender={selectedGender}
+                onSelectCategory={(catId) => {
+                  setSelectedCategory(catId);
+                  handleFieldChange({ category: catId });
+                  const catTmpls = getTemplatesByCategory(catId);
+                  if (catTmpls.length > 0 && !catTmpls.some((t) => t.id === formData.templateId)) {
+                    const topTmpl =
+                      catId === 'birthday'
+                        ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
+                        : catTmpls[0].id;
+                    handleTemplateChange(topTmpl);
+                  }
+                }}
+                onSelectGender={handleGenderChange}
+                onSelectTemplate={handleTemplateChange}
+              />
+            </div>
+          )}
+
+          {/* STEP 2: COMPLETE NON-TECHNICAL 2-MINUTE FORM */}
+          {currentStep === 2 && (
+            <div className="space-y-4 animate-fadeIn max-w-2xl">
+              <div className="w-full flex items-center p-1 rounded-2xl bg-slate-100/90 border border-slate-200/70 shadow-2xs">
+                {FORM_TABS.map((tab) => {
+                  const isActive = formSection === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setFormSection(tab.id)}
+                      className={`flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs sm:text-sm transition-all cursor-pointer select-none ${
+                        isActive
+                          ? 'bg-white text-slate-900 shadow-xs font-bold'
+                          : 'text-slate-500 hover:text-slate-800 font-semibold'
+                      }`}
+                    >
+                      <AppleEmoji emoji={tab.emoji} size={14} />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 shadow-xs p-3.5 sm:p-7 space-y-5 sm:space-y-6">
+                {formSection === 'details' && (
+                  <StepDetails formData={formData} onChange={handleUpdateFormData} />
+                )}
+                {formSection === 'media' && (
+                  <StepMedia formData={formData} onChange={handleUpdateFormData} />
+                )}
+                {formSection === 'surprises' && (
+                  <StepSurprises formData={formData} onChange={handleUpdateFormData} />
+                )}
+                {formSection !== 'surprises' && (
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
+                    {formSection === 'details' && (
+                      <button
+                        type="button"
+                        onClick={() => setFormSection('media')}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                      >
+                        <span>Next: Photo & Song</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                    {formSection === 'media' && (
+                      <button
+                        type="button"
+                        onClick={() => setFormSection('surprises')}
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                      >
+                        <span>Next: Reasons & Letter</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* RIGHT PANEL: Fixed phone simulator — never scrolls */}
+        <div
+          className="shrink-0 flex flex-col items-center justify-center border-l border-slate-100 bg-[#FAFAFA] overflow-hidden"
+          style={{ width: '420px' }}
+        >
+          <LivePhonePreview formData={formData} />
         </div>
       </div>
 
-      {/* Main Studio Work Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* LEFT COLUMN: Steps Form Editor (7 cols) */}
-          <div
-            className={`lg:col-span-7 space-y-6 ${
-              activeMobileView === 'preview' ? 'hidden lg:block' : 'block'
-            }`}
-          >
-            {/* STEP 1: CHOOSE STYLE */}
-            {currentStep === 1 && (
-              <div className="space-y-6 animate-fadeIn">
-                <TemplateSelector
-                  selectedId={formData.templateId}
-                  selectedCategory={selectedCategory}
-                  selectedGender={selectedGender}
-                  onSelectCategory={(catId) => {
-                    setSelectedCategory(catId);
-                    handleFieldChange({ category: catId });
-                    // Automatically switch to the top template of that category if current doesn't match
-                    const catTmpls = getTemplatesByCategory(catId);
-                    if (catTmpls.length > 0 && !catTmpls.some((t) => t.id === formData.templateId)) {
-                      const topTmpl =
-                        catId === 'birthday'
-                          ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
-                          : catTmpls[0].id;
-                      handleTemplateChange(topTmpl);
-                    }
-                  }}
-                  onSelectGender={handleGenderChange}
-                  onSelectTemplate={handleTemplateChange}
-                />
-              </div>
-            )}
+      {/* ================================================================== */}
+      {/* MOBILE LAYOUT: Tab toggle between Form and Phone Preview            */}
+      {/* ================================================================== */}
+      <div className="lg:hidden min-h-screen pb-28">
+        {/* Mobile toggle pill */}
+        <div className="flex items-center justify-center pt-3 pb-1">
+          <div className="flex items-center p-0.5 rounded-full bg-slate-100 border border-slate-200 shadow-2xs">
+            <button
+              type="button"
+              onClick={() => setActiveMobileView('editor')}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                activeMobileView === 'editor'
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              Form
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveMobileView('preview')}
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                activeMobileView === 'preview'
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              Phone Preview
+            </button>
+          </div>
+        </div>
 
-            {/* STEP 2: COMPLETE NON-TECHNICAL 2-MINUTE FORM */}
-            {currentStep === 2 && (
-              <div className="space-y-4 animate-fadeIn">
-                {/* Clean Full-Width Segmented Tab Navigation */}
-                <div className="w-full flex items-center p-1 rounded-2xl bg-slate-100/90 border border-slate-200/70 shadow-2xs">
-                  {FORM_TABS.map((tab) => {
-                    const isActive = formSection === tab.id;
-                    return (
-                      <button
-                        key={tab.id}
-                        type="button"
-                        onClick={() => setFormSection(tab.id)}
-                        className={`flex-1 inline-flex items-center justify-center gap-1 sm:gap-1.5 py-2 px-1.5 sm:px-3 rounded-xl text-xs sm:text-sm transition-all cursor-pointer select-none ${
-                          isActive
-                            ? 'bg-white text-slate-900 shadow-xs font-bold'
-                            : 'text-slate-500 hover:text-slate-800 font-semibold'
-                        }`}
-                      >
-                        <AppleEmoji emoji={tab.emoji} size={14} />
-                        <span className="hidden sm:inline">{tab.label}</span>
-                        <span className="sm:hidden">{tab.shortLabel}</span>
+        {/* Mobile form content */}
+        <div className={`px-4 pt-4 space-y-6 ${activeMobileView === 'preview' ? 'hidden' : 'block'}`}>
+          {currentStep === 1 && (
+            <div className="space-y-6 animate-fadeIn">
+              <TemplateSelector
+                selectedId={formData.templateId}
+                selectedCategory={selectedCategory}
+                selectedGender={selectedGender}
+                onSelectCategory={(catId) => {
+                  setSelectedCategory(catId);
+                  handleFieldChange({ category: catId });
+                  const catTmpls = getTemplatesByCategory(catId);
+                  if (catTmpls.length > 0 && !catTmpls.some((t) => t.id === formData.templateId)) {
+                    const topTmpl =
+                      catId === 'birthday'
+                        ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
+                        : catTmpls[0].id;
+                    handleTemplateChange(topTmpl);
+                  }
+                }}
+                onSelectGender={handleGenderChange}
+                onSelectTemplate={handleTemplateChange}
+              />
+            </div>
+          )}
+          {currentStep === 2 && (
+            <div className="space-y-4 animate-fadeIn">
+              <div className="w-full flex items-center p-1 rounded-2xl bg-slate-100/90 border border-slate-200/70 shadow-2xs">
+                {FORM_TABS.map((tab) => {
+                  const isActive = formSection === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setFormSection(tab.id)}
+                      className={`flex-1 inline-flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-xs transition-all cursor-pointer select-none ${
+                        isActive
+                          ? 'bg-white text-slate-900 shadow-xs font-bold'
+                          : 'text-slate-500 hover:text-slate-800 font-semibold'
+                      }`}
+                    >
+                      <AppleEmoji emoji={tab.emoji} size={13} />
+                      <span>{tab.shortLabel}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="rounded-2xl bg-white border border-slate-200/80 shadow-xs p-3.5 space-y-5">
+                {formSection === 'details' && <StepDetails formData={formData} onChange={handleUpdateFormData} />}
+                {formSection === 'media' && <StepMedia formData={formData} onChange={handleUpdateFormData} />}
+                {formSection === 'surprises' && <StepSurprises formData={formData} onChange={handleUpdateFormData} />}
+                {formSection !== 'surprises' && (
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
+                    {formSection === 'details' && (
+                      <button type="button" onClick={() => setFormSection('media')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                        <span>Next: Photo & Song</span><ArrowRight className="w-3.5 h-3.5" />
                       </button>
-                    );
-                  })}
-                </div>
-
-                {/* Single Form Section Container Card */}
-                <div className="rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 shadow-xs p-3.5 sm:p-7 space-y-5 sm:space-y-6">
-                  {formSection === 'details' && (
-                    <StepDetails formData={formData} onChange={handleUpdateFormData} />
-                  )}
-
-                  {formSection === 'media' && (
-                    <StepMedia formData={formData} onChange={handleUpdateFormData} />
-                  )}
-
-                  {formSection === 'surprises' && (
-                    <StepSurprises formData={formData} onChange={handleUpdateFormData} />
-                  )}
-
-                  {/* Clean Section Stepper Navigation */}
-                  {formSection !== 'surprises' && (
-                    <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
-                      {formSection === 'details' && (
-                        <button
-                          type="button"
-                          onClick={() => setFormSection('media')}
-                          className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
-                        >
-                          <span>Next: Photo & Song</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-
-                      {formSection === 'media' && (
-                        <button
-                          type="button"
-                          onClick={() => setFormSection('surprises')}
-                          className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
-                        >
-                          <span>Next: Reasons & Letter</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </div>
+                    )}
+                    {formSection === 'media' && (
+                      <button type="button" onClick={() => setFormSection('surprises')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                        <span>Next: Reasons & Letter</span><ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
 
-          {/* RIGHT COLUMN: Sticky Live Multi-Scene Phone Preview (5 cols) */}
-          <div
-            className={`lg:col-span-5 lg:sticky lg:top-[72px] lg:max-h-[calc(100vh-76px)] flex flex-col items-center justify-center ${
-              activeMobileView === 'editor' ? 'hidden lg:flex' : 'flex'
-            }`}
-          >
-            <LivePhonePreview formData={formData} />
-          </div>
+        {/* Mobile phone preview */}
+        <div className={`px-4 pt-4 flex justify-center ${activeMobileView === 'editor' ? 'hidden' : 'block'}`}>
+          <LivePhonePreview formData={formData} />
         </div>
       </div>
 
