@@ -1,1050 +1,1251 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { 
-  Heart, 
-  Sparkles, 
-  ChevronLeft, 
-  ChevronRight, 
-  Play, 
-  Pause, 
-  Copy, 
-  Check, 
-  RotateCcw, 
-  Wand2 
-} from 'lucide-react';
+import confetti from 'canvas-confetti';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { soundEffects } from '../Templates/common/SoundEffects';
 import { getSongById } from '../../data/songs';
+import '../Templates/common/blush-romance.css';
 
-// Ambient floating romantic particles drifting gracefully across the phone simulator
-const ROMANTIC_PARTICLES = [
-  { left: '6%', top: '8%', duration: '8.5s', delay: '0s', size: 14 },
-  { left: '88%', top: '12%', duration: '9.2s', delay: '1.4s', size: 15 },
-  { left: '10%', top: '44%', duration: '10s', delay: '0.8s', size: 13 },
-  { left: '86%', top: '50%', duration: '8.2s', delay: '2.2s', size: 14 },
-  { left: '12%', top: '80%', duration: '9.6s', delay: '1.6s', size: 13 },
-  { left: '82%', top: '82%', duration: '8.8s', delay: '0.5s', size: 15 },
+// Curated romantic Unsplash memories for fallback (strictly whitelisted domain)
+const DEFAULT_ROMANCE_PHOTOS = [
+  {
+    id: 'photo-1',
+    url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
+    caption: 'The prettiest smile in the world ✨',
+    tag: 'Favorite Smile 🌸'
+  },
+  {
+    id: 'photo-2',
+    url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
+    caption: 'Nazrein hataana thoda mushkil hai yahan 😉✨',
+    tag: 'Nazar Na Lage 🧿'
+  },
+  {
+    id: 'photo-3',
+    url: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
+    caption: 'Never a dull moment around you 🕶️💫',
+    tag: 'Memories 📸'
+  },
+  {
+    id: 'photo-4',
+    url: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
+    caption: "Some moments don't need words 💫",
+    tag: 'Holding Hands 🤝'
+  }
 ];
 
+// Cycling positions and playful taunts for the Runaway "No" button
+const RUNAWAY_POSITIONS = ['5%', '60%', '20%', '55%', '35%', '10%'];
+const NO_MESSAGES = [
+  'No',
+  'Think again! 😉',
+  'Are you sure? 🥺',
+  'Wrong button! 😂',
+  'Try the other one! 💖',
+  'You have no escape! 🥰'
+];
+
+/**
+ * Lovable Heart Graphic SVG with glossy 3D shine and twinkling sparkles
+ */
+function LovableHeartGraphic() {
+  return (
+    <div className="lovable-graphic-container" aria-hidden="true">
+      <svg className="lovable-heart-svg" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="phoneHeart3DGrad" cx="40%" cy="35%" r="65%" fx="35%" fy="30%">
+            <stop offset="0%" stopColor="#FFAEC2" />
+            <stop offset="40%" stopColor="#FF7E9F" />
+            <stop offset="85%" stopColor="#F45B82" />
+            <stop offset="100%" stopColor="#D93C68" />
+          </radialGradient>
+          <linearGradient id="phoneGlossHighlight" x1="0%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="phoneSparkleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFF2A3" />
+            <stop offset="100%" stopColor="#FFC837" />
+          </linearGradient>
+        </defs>
+
+        {/* Glow & Base Body */}
+        <path
+          d="M60 98 C35 78 14 60 14 38 C14 22 26 12 40 12 C49 12 56 17 60 23 C64 17 71 12 80 12 C94 12 106 22 106 38 C106 60 85 78 60 98 Z"
+          fill="#F45B82"
+          opacity="0.3"
+          style={{ filter: 'blur(8px)' }}
+        />
+        <path
+          d="M60 96 C36 77 16 59 16 38 C16 23 27 13 41 13 C49.5 13 56.5 17.5 60 23.5 C63.5 17.5 70.5 13 79 13 C93 13 104 23 104 38 C104 59 84 77 60 96 Z"
+          fill="url(#phoneHeart3DGrad)"
+        />
+
+        {/* Gloss Reflections */}
+        <path
+          d="M33 17 C23 21 19 31 20 42 C20 31 27 20 39 17 C42 16.5 36 16.5 33 17 Z"
+          fill="url(#phoneGlossHighlight)"
+        />
+        <ellipse cx="38" cy="25" rx="10" ry="5" transform="rotate(-30 38 25)" fill="#FFFFFF" opacity="0.55" />
+
+        {/* Happy Face */}
+        <path d="M42 45 Q46 41 50 45" stroke="#4A1E2B" strokeWidth="3" strokeLinecap="round" fill="none" />
+        <path d="M70 45 Q74 41 78 45" stroke="#4A1E2B" strokeWidth="3" strokeLinecap="round" fill="none" />
+        <ellipse cx="38" cy="52" rx="5" ry="3" fill="#FF4F7A" opacity="0.6" />
+        <ellipse cx="82" cy="52" rx="5" ry="3" fill="#FF4F7A" opacity="0.6" />
+        <path d="M56 53 Q60 58 64 53" stroke="#4A1E2B" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+
+        {/* Twinkling Floating Sparkles & Mini Heart */}
+        <path
+          className="floating-sparkle sparkle-top"
+          d="M98 16 Q100 22 106 24 Q100 26 98 32 Q96 26 90 24 Q96 22 98 16 Z"
+          fill="url(#phoneSparkleGrad)"
+        />
+        <path
+          className="floating-sparkle sparkle-left"
+          d="M12 55 Q13.5 59 17 60 Q13.5 61 12 65 Q10.5 61 7 60 Q10.5 59 12 55 Z"
+          fill="url(#phoneSparkleGrad)"
+        />
+        <path
+          className="floating-mini-heart"
+          d="M104 60 C101 57 97 59 97 62 C97 65 101 68 104 71 C107 68 111 65 111 62 C111 59 107 57 104 60 Z"
+          fill="#FFAEC2"
+        />
+      </svg>
+    </div>
+  );
+}
+
+/**
+ * Phone-Scoped Photo Lightbox Modal
+ * Contained strictly within the phone screen frame
+ */
+function PhonePhotoLightboxModal({
+  isOpen,
+  photos,
+  currentIndex,
+  onClose,
+  onNext,
+  onPrev
+}) {
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const totalPhotos = photos.length;
+  const currentPhoto = photos[(currentIndex % totalPhotos + totalPhotos) % totalPhotos] || photos[0];
+
+  const [prevIndex, setPrevIndex] = useState(currentIndex);
+  if (prevIndex !== currentIndex) {
+    setPrevIndex(currentIndex);
+    setZoomLevel(1);
+  }
+
+  if (!isOpen) return null;
+
+  const toggleZoom = () => {
+    soundEffects.playPop();
+    setZoomLevel(prev => (prev > 1 ? 1 : 2.2));
+  };
+
+  return (
+    <div
+      className="photo-lightbox-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Fullscreen photo viewer"
+    >
+      <header className="lightbox-topbar">
+        <div className="lightbox-topbar-left">
+          <div className="lightbox-counter-pill" aria-live="polite">
+            <span>{String(currentIndex + 1).padStart(2, '0')}</span>
+            <span className="opacity-40">/</span>
+            <span>{String(totalPhotos).padStart(2, '0')}</span>
+          </div>
+          <span className="lightbox-brand-pill">
+            <AppleEmoji emoji="🌸" size={12} />
+            <span>Keepsake</span>
+          </span>
+        </div>
+
+        <div className="lightbox-topbar-right">
+          <button
+            className={`lightbox-action-btn ${zoomLevel > 1 ? 'active-zoom' : ''}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleZoom();
+            }}
+            type="button"
+          >
+            <span>{zoomLevel > 1 ? '1.0x' : '2.2x'}</span>
+          </button>
+          <button
+            className="lightbox-action-btn lightbox-close-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              soundEffects.playPop();
+              onClose();
+            }}
+            type="button"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div className="lightbox-stage" onClick={(e) => e.stopPropagation()}>
+        <button
+          className="lightbox-nav-btn lightbox-prev-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            soundEffects.playPop();
+            onPrev();
+          }}
+          type="button"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
+        </button>
+
+        <button
+          className="lightbox-nav-btn lightbox-next-btn"
+          onClick={(e) => {
+            e.stopPropagation();
+            soundEffects.playPop();
+            onNext();
+          }}
+          type="button"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+
+        <div
+          className="lightbox-img-wrapper"
+          style={{
+            transform: `scale(${zoomLevel})`,
+            transition: 'transform 0.28s cubic-bezier(0.2, 0.8, 0.25, 1)'
+          }}
+          onClick={toggleZoom}
+        >
+          <img
+            key={currentPhoto.id}
+            src={currentPhoto.url}
+            alt={currentPhoto.caption || 'Memory'}
+            className="lightbox-img"
+            draggable={false}
+          />
+        </div>
+      </div>
+
+      <footer className="lightbox-footer">
+        {currentPhoto.tag && (
+          <span className="lightbox-tag-chip">
+            {currentPhoto.tag.toUpperCase()}
+          </span>
+        )}
+        <p className="lightbox-caption">
+          “{renderAppleText(currentPhoto.caption || 'Special Memory', 14)}”
+        </p>
+      </footer>
+    </div>
+  );
+}
+
+/**
+ * RomancePhoneView — Buttery-Smooth Romantic Phone Simulator
+ * Faithfully matches BlushRomanceView and the curated keepsake aesthetic
+ */
 export default function RomancePhoneView({
   formData = {},
   theme = {},
-  triggerConfetti,
-  onReset: _onReset,
+  triggerConfetti: parentTriggerConfetti,
+  onReset: _parentOnReset,
   activeTab: controlledTab,
   onTabChange,
-  loveCount: controlledLoveCount,
-  onShowerLove: controlledShowerLove,
+  openEnvelope: controlledOpenEnvelope,
+  resetNonce = 0
 }) {
-  // Tab state: 'letter' | 'moments' | 'adore' | 'scratch' | 'all'
-  const [internalTab, setInternalTab] = useState('letter');
-  const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
+  const templateId = (
+    formData.templateId ||
+    theme.id ||
+    formData.themeId ||
+    formData.theme ||
+    formData.category ||
+    ''
+  ).toLowerCase();
 
-  const handleTabSelect = (tabKey) => {
-    soundEffects.playPop();
-    if (onTabChange) {
-      onTabChange(tabKey);
-    } else {
-      setInternalTab(tabKey);
-    }
-  };
-
-  // Internal interactive states
-  const [activePhotoIdx, setActivePhotoIdx] = useState(0);
-  const [photoLiked, setPhotoLiked] = useState(false);
-  const [internalLoveCount, setInternalLoveCount] = useState(0);
-  const loveCount = controlledLoveCount !== undefined ? controlledLoveCount : internalLoveCount;
-  const [loveToast, setLoveToast] = useState(null);
-  const [envelopeOpen, setEnvelopeOpen] = useState(false);
-  const [isOpeningEnvelope, setIsOpeningEnvelope] = useState(false);
-  const [likedReasons, setLikedReasons] = useState({});
-  const [isScratched, setIsScratched] = useState(false);
-  const [scratchCopied, setScratchCopied] = useState(false);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(true);
-
-  // Audio & interaction references
-  const audioRef = useRef(null);
-  const canvasRef = useRef(null);
-  const isDrawing = useRef(false);
-  const lastCheckTime = useRef(0);
-  const lastPhotoTapRef = useRef(0);
-
-  const templateId = (formData.templateId || theme.id || '').toLowerCase();
   const isSunset = templateId.includes('sunset');
   const isCelestial = templateId.includes('celestial');
+  const themeClass = isCelestial 
+    ? 'blush-theme-celestial' 
+    : (isSunset ? 'blush-theme-sunset' : 'blush-theme-velvet');
 
   const isGirl = theme.gender === 'girl';
-  const recipientName = (formData.recipientName || '').trim() || (isGirl ? 'Maya' : 'Liam');
-  const senderName = (formData.senderName || '').trim() || (isGirl ? 'Liam' : 'Maya');
+  const recipientName = (formData.recipientName || '').trim() || (isGirl ? 'Sarah' : 'Rohan');
+  const senderName = (formData.senderName || '').trim() || (isGirl ? 'Elena' : 'Alex');
 
-  // Resolved audio track
-  const resolvedSong = getSongById(formData.songId || 'insta-acoustic-romance', formData);
-  const audioUrl = formData.songUrl || formData.customSongUrl || formData.music?.audioUrl || resolvedSong?.audioUrl || '';
-  const songTitle = formData.customSongTitle || formData.music?.title || resolvedSong?.title || 'Kesariya (Acoustic Romance)';
+  // 1. Photos Resolution
+  const rawPhotos = (formData.photos && formData.photos.length > 0)
+    ? formData.photos
+    : (formData.heroPhoto
+        ? [{
+            url: formData.heroPhoto,
+            caption: formData.photoCaption !== undefined ? formData.photoCaption : 'Our Favorite Memory ❤️',
+            tag: 'Forever & Always 🌸'
+          }]
+        : DEFAULT_ROMANCE_PHOTOS);
 
-  // Audio playback toggle
-  const toggleAudio = () => {
+  const photos = rawPhotos.map((p, idx) => ({
+    id: p.id || `photo-${idx + 1}`,
+    url: typeof p === 'string' ? p : p.url,
+    caption: (typeof p === 'object' && p.caption !== undefined) 
+      ? p.caption 
+      : (formData.photoCaption !== undefined ? formData.photoCaption : 'Special Moments ✨'),
+    tag: (typeof p === 'object' && p.tag) ? p.tag : 'Cherished Memory 🌸'
+  }));
+
+  // 2. Letter Resolution
+  const defaultLetterText = `Dear ${recipientName} 🌸,
+
+Mere paas likhne ke liye kuch bhi nahi hai,
+tu hi bata mujhe is khat me kya likhu main... 😉
+
+(Har pal jo tere saath bitata hoon, woh mere dil ke sabse kareeb rehta hai 💖)
+
+— With all my love, always ${senderName} 💖`;
+
+  const rawLetter = typeof formData.letter === 'object' && formData.letter !== null && formData.letter.content !== undefined
+    ? formData.letter.content
+    : (typeof formData.letter === 'string' ? formData.letter : formData.letterBody);
+
+  const letterContent = rawLetter !== undefined ? rawLetter : defaultLetterText;
+
+  // 3. Audio & Music Player
+  const resolvedSong = formData.songId ? getSongById(formData.songId, formData) : null;
+  const audioUrl = formData.songUrl 
+    || formData.customSongUrl 
+    || formData.music?.audioUrl 
+    || formData.audioUrl 
+    || resolvedSong?.audioUrl 
+    || 'https://cdn.freesound.org/previews/612/612610_5674468-lq.mp3';
+
+  const audioTitle = formData.customSongTitle 
+    || formData.music?.title 
+    || resolvedSong?.title 
+    || (formData.songTitle || `${recipientName}'s Keepsake Melody 🎵`);
+
+  // Interactive States
+  const [showIntro, setShowIntro] = useState(true);
+  const [isFadingIntro, setIsFadingIntro] = useState(false);
+  const [isIntroCelebrating, setIsIntroCelebrating] = useState(false);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+
+  // Tab State: 'photos' | 'letter' | 'quiz' (or 'game')
+  const [internalTab, setInternalTab] = useState('photos');
+  const activeTabRaw = controlledTab !== undefined ? controlledTab : internalTab;
+  const activeTab = activeTabRaw === 'game' ? 'quiz' : activeTabRaw;
+
+  const handleSelectTab = (tabKey) => {
     soundEffects.playPop();
-    const audioEl = audioRef.current;
-    if (audioEl && audioUrl) {
-      if (audioEl.paused) {
-        audioEl.play().then(() => {
-          setIsPlayingAudio(true);
-        }).catch(() => {
-          setIsPlayingAudio(true);
-        });
-      } else {
-        audioEl.pause();
-        setIsPlayingAudio(false);
-      }
+    const mapped = tabKey === 'quiz' ? 'quiz' : tabKey;
+    if (onTabChange) {
+      onTabChange(mapped);
     } else {
-      setIsPlayingAudio((prev) => !prev);
+      setInternalTab(mapped);
     }
   };
 
+  // Tab 1: Photos State
+  const [currentPhotoIdx, setCurrentPhotoIdx] = useState(0);
+  const [likedPhotos, setLikedPhotos] = useState({});
+  const [showPhotoLikePop, setShowPhotoLikePop] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+
+  // Tab 2: Letter State
+  const [internalLetterOpen, setInternalLetterOpen] = useState(false);
+  const isLetterOpen = controlledOpenEnvelope !== undefined ? controlledOpenEnvelope : internalLetterOpen;
+
+  // Tab 3: Quiz State (Runaway "No" Button Game!)
+  const [gameVictory, setGameVictory] = useState(false);
+  const [noRunawayStep, setNoRunawayStep] = useState(0);
+  const [noAttempts, setNoAttempts] = useState(0);
+  const [yesScale, setYesScale] = useState(1);
+
+  // Audio and Particle Canvas Refs
+  const audioRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  // When resetNonce changes (e.g. reload clicked in Safari bar), reset simulator intro
   useEffect(() => {
-    const audioEl = audioRef.current;
-    return () => {
-      if (audioEl) {
-        audioEl.pause();
-      }
-    };
+    setShowIntro(true);
+    setIsFadingIntro(false);
+    setIsIntroCelebrating(false);
+    setGameVictory(false);
+    setNoAttempts(0);
+    setNoRunawayStep(0);
+    setYesScale(1);
+  }, [resetNonce]);
+
+  // If parent specifically requested letter opening, skip intro so user can edit letter
+  useEffect(() => {
+    if (controlledOpenEnvelope) {
+      setShowIntro(false);
+      setInternalLetterOpen(true);
+    }
+  }, [controlledOpenEnvelope]);
+
+  // Audio celebration chime
+  const playCelebrationChime = useCallback(() => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      if (ctx.state === 'suspended') ctx.resume();
+
+      const notes = [
+        { freq: 523.25, time: 0 },
+        { freq: 659.25, time: 0.07 },
+        { freq: 783.99, time: 0.14 },
+        { freq: 1046.5, time: 0.22 }
+      ];
+
+      const masterGain = ctx.createGain();
+      masterGain.gain.setValueAtTime(0.35, ctx.currentTime);
+      masterGain.connect(ctx.destination);
+
+      notes.forEach(({ freq, time }) => {
+        const startTime = ctx.currentTime + time;
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(freq, startTime);
+
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(freq * 2, startTime);
+
+        gain1.gain.setValueAtTime(0.0001, startTime);
+        gain1.gain.exponentialRampToValueAtTime(0.48, startTime + 0.012);
+        gain1.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.75);
+
+        gain2.gain.setValueAtTime(0.0001, startTime);
+        gain2.gain.exponentialRampToValueAtTime(0.16, startTime + 0.01);
+        gain2.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.45);
+
+        osc1.connect(gain1);
+        gain1.connect(masterGain);
+        osc2.connect(gain2);
+        gain2.connect(masterGain);
+
+        osc1.start(startTime);
+        osc1.stop(startTime + 0.8);
+        osc2.start(startTime);
+        osc2.stop(startTime + 0.5);
+      });
+    } catch {
+      soundEffects.playCelebration();
+    }
   }, []);
 
-  // Romantic theme configurations
-  const themeConfig = (() => {
-    if (isCelestial) {
-      return {
-        id: 'celestial-love',
-        badgeText: 'Written in the Stars 🌌',
-        badgeBg: 'bg-indigo-950/70 text-indigo-200 border-indigo-400/30 shadow-indigo-950/30',
-        headerClass: 'text-white',
-        headerGlow: 'drop-shadow-[0_2px_14px_rgba(99,102,241,0.5)]',
-        accentColor: 'text-indigo-300',
-        bgPill: 'bg-indigo-950/60 border-indigo-500/30 text-indigo-200',
-        cardBg: 'bg-slate-900/90 border-indigo-500/30 text-slate-100 shadow-[0_8px_30px_rgba(79,70,229,0.15)]',
-        activeTabGradient: 'from-indigo-600 via-purple-600 to-indigo-700',
-        activeTabRing: 'ring-1 ring-indigo-400/40',
-        buttonClass: 'bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 hover:from-indigo-500 hover:to-purple-500 text-white shadow-indigo-500/30 shadow-md border border-indigo-400/40',
-        sealEmoji: '🌙',
-        waxSealBg: 'wax-seal-celestial border-2 border-indigo-200/50 text-indigo-100',
-        envelopeBg: 'bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border-indigo-500/30',
-        particleItems: ['🌌', '🌙', '⭐', '✨', '💫', '💙'],
-        tapeClass: 'washi-tape-blue',
-        scratchSecret: '1x Stargazing Drive + Midnight Conversations Under the Moon 🌙✨',
-        scratchCode: 'STARS-FOREVER-2026',
-        scratchGradColors: ['#e0e7ff', '#818cf8', '#4338ca', '#312e81'],
-        loveWhispers: [
-          'Written in the stars forever 🌌💫',
-          'Across a thousand lifetimes, I choose you 🌙',
-          'You are my universe ✨',
-          'To infinity and beyond with you 💫',
-          'Our souls were meant to meet 💙'
-        ],
-        defaultSubtitle: "In a universe of billions of galaxies, my heart was always destined to find you.",
-        defaultReasons: [
-          { title: "Cosmic Connection", desc: "Our souls connected as if we had known each other across a thousand lifetimes.", icon: "🌌" },
-          { title: "Midnight Peace", desc: "Whenever the world gets loud, being in your arms feels like stillness under the stars.", icon: "🌙" },
-          { title: "Written Destiny", desc: "Out of eight billion people on Earth, meeting you was my universe's greatest gift.", icon: "💫" },
-        ],
-        defaultLetter: `My beloved ${recipientName},\n\nThey say the odds of finding your true soulmate are one in a billion. But from the first second our eyes met, I knew our love was written in the stars long before we ever arrived.\n\nThank you for your infinite kindness, your breathtaking grace, and for loving me completely. May our love continue shining brighter than every constellation in the night sky.\n\nAcross the stars forever,\n${senderName} 🌙`,
-      };
-    }
-
-    if (isSunset) {
-      return {
-        id: 'sunset-romance',
-        badgeText: 'Golden Hour Keepsake 🌅',
-        badgeBg: 'bg-amber-50/90 text-amber-800 border-amber-300/60 shadow-amber-900/5',
-        headerClass: 'text-amber-950',
-        headerGlow: 'drop-shadow-[0_2px_12px_rgba(245,158,11,0.3)]',
-        accentColor: 'text-amber-600',
-        bgPill: 'bg-amber-100/70 border-amber-300/60 text-amber-900',
-        cardBg: 'bg-[#FFFDF9] border-amber-200/80 text-slate-800 shadow-[0_8px_30px_rgba(245,158,11,0.08)]',
-        activeTabGradient: 'from-amber-500 via-orange-500 to-rose-500',
-        activeTabRing: 'ring-1 ring-amber-400/40',
-        buttonClass: 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-amber-500/25 shadow-md border border-amber-300/40',
-        sealEmoji: '✨',
-        waxSealBg: 'wax-seal-gold border-2 border-amber-200/60 text-amber-100',
-        envelopeBg: 'bg-gradient-to-br from-[#FFFDF9] via-[#FAF5EE] to-[#F5ECE0] border-amber-200/80',
-        particleItems: ['🌅', '✨', '🧡', '💛', '💫', '🥂'],
-        tapeClass: 'washi-tape',
-        scratchSecret: '1x Sunset Walk + Warm Coffee & Pastries on Me! ☕🌅',
-        scratchCode: 'GOLDEN-HOUR-2026',
-        scratchGradColors: ['#fef3c7', '#f59e0b', '#d97706', '#fbbf24'],
-        loveWhispers: [
-          'You are my golden hour! 🌅✨',
-          'Every sunset is sweeter with you 🧡',
-          'My brightest sunshine ☀️',
-          'Forever warm beside you 🥂',
-          'My favorite adventure partner 🌅'
-        ],
-        defaultSubtitle: "From our very first hello to forever and beyond, every sunset is brighter with you.",
-        defaultReasons: [
-          { title: "Golden Warmth", desc: "Your radiant smile brings golden hour warmth into my life no matter the season.", icon: "🌅" },
-          { title: "Guiding Light", desc: "You are the calm in my storm and the brightest light guiding me forward.", icon: "✨" },
-          { title: "Tender Promises", desc: "The quiet promises kept and the steady peace you bring to my heart every day.", icon: "🧡" },
-        ],
-        defaultLetter: `Dearest ${recipientName},\n\nFrom the moment you smiled at me, my world lit up like a breathtaking sunset. You are my calm sanctuary, my favorite adventure, and my golden hour every single day.\n\nThank you for being the sweetest part of my days and for filling our life with laughter and tenderness. I adore you beyond words.\n\nAlways & forever yours,\n${senderName} 🌅✨`,
-      };
-    }
-
-    // Default: Velvet / Blush Luxury Romance
-    return {
-      id: 'velvet-romance',
-      badgeText: 'Forever in My Heart ❤️',
-      badgeBg: 'bg-rose-50/90 text-rose-800 border-rose-300/60 shadow-rose-900/5',
-      headerClass: 'text-rose-950',
-      headerGlow: 'drop-shadow-[0_2px_12px_rgba(225,29,72,0.3)]',
-      accentColor: 'text-rose-600',
-      bgPill: 'bg-rose-100/70 border-rose-300/60 text-rose-900',
-      cardBg: 'bg-[#FFFDFD] border-rose-200/80 text-slate-800 shadow-[0_8px_30px_rgba(244,63,94,0.07)]',
-      activeTabGradient: 'from-rose-500 via-rose-600 to-pink-600',
-      activeTabRing: 'ring-1 ring-rose-400/40',
-      buttonClass: 'bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white shadow-rose-500/25 shadow-md border border-rose-300/40',
-      sealEmoji: '❤️',
-      waxSealBg: 'wax-seal border-2 border-rose-200/60 text-rose-100',
-      envelopeBg: 'bg-gradient-to-br from-[#FFFDF9] via-[#FAF5EE] to-[#F5ECE0] border-rose-200/80',
-      particleItems: ['❤️', '🌹', '✨', '💖', '💌', '🌷'],
-      tapeClass: 'washi-tape-pink',
-      scratchSecret: 'Unlimited cuddles, late-night dessert runs & loving you forever! 🍨🌹',
-      scratchCode: 'LOVE-FOREVER-2026',
-      scratchGradColors: ['#ffe4e6', '#fb7185', '#e11d48', '#fbcfe8'],
-      loveWhispers: [
-        'You have my whole heart ❤️',
-        'Loving you is effortless 🌹',
-        'My favorite human in the world 🥰',
-        'To all our tomorrows together 💕',
-        'Every second with you is magic ✨',
-        'Forever & always my soulmate 💍'
-      ],
-      defaultSubtitle: "In a world of billions of people, my happiest place will always be right beside you.",
-      defaultReasons: [
-        { title: "Your Radiant Smile", desc: "How it effortlessly turns even my most exhausting day into pure joy.", icon: "✨" },
-        { title: "Your Gentle Soul", desc: "The quiet kindness and endless warmth you show to everyone around you.", icon: "🌸" },
-        { title: "Our Inside Jokes", desc: "How a single glance from across the room can make us burst into giggles.", icon: "💫" },
-      ],
-      defaultLetter: `My Love,\n\nLooking back at our journey together, every single moment by your side has been a treasure. You bring warmth, laughter, and an unspoken comfort into my life that nothing else could ever replace.\n\nThank you for choosing me, for holding my hand through everything, and for filling my heart with peace and romance.\n\nI love you more than words could ever fit on this page, today and for all the tomorrows to come.\n\nForever yours,\n${senderName} ❤️`,
-    };
-  })();
-
-  // Shower Love reaction handler
-  const handleShowerLove = () => {
-    soundEffects.playCelebration();
-    const nextCount = loveCount + 1;
-    if (controlledShowerLove) {
-      controlledShowerLove();
+  const triggerLocalConfetti = useCallback(() => {
+    if (parentTriggerConfetti) {
+      parentTriggerConfetti();
     } else {
-      setInternalLoveCount(nextCount);
+      try {
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { x: 0.5, y: 0.5 },
+          colors: isCelestial
+            ? ['#818CF8', '#A855F7', '#60A5FA', '#F472B6']
+            : ['#FF1493', '#FF69B4', '#FFB6C1', '#FFFFFF', '#FFAEC2']
+        });
+      } catch {}
     }
+  }, [parentTriggerConfetti, isCelestial]);
 
-    const msg = themeConfig.loveWhispers[loveCount % themeConfig.loveWhispers.length];
-    setLoveToast(msg);
-    setTimeout(() => setLoveToast(null), 2400);
-
-    if (triggerConfetti) {
-      triggerConfetti();
+  // Audio Play / Pause toggle
+  const toggleAudio = useCallback((e) => {
+    if (e) {
+      e.stopPropagation();
+      e.preventDefault();
     }
-  };
-
-  // Toggle devotion card like
-  const toggleReasonLike = (idx) => {
     soundEffects.playPop();
-    setLikedReasons((prev) => ({ ...prev, [idx]: !prev[idx] }));
-  };
 
-  // Envelope wax seal breaking with tactile animation
-  const handleOpenEnvelope = () => {
-    if (envelopeOpen || isOpeningEnvelope) return;
-    setIsOpeningEnvelope(true);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlayingAudio) {
+      audio.pause();
+      setIsPlayingAudio(false);
+    } else {
+      audio.play().then(() => {
+        setIsPlayingAudio(true);
+      }).catch(() => {
+        setIsPlayingAudio(false);
+      });
+    }
+  }, [isPlayingAudio]);
+
+  // Intro "Tap to Open Surprise 🌸" handler
+  const handleOpenSurprise = () => {
+    if (isFadingIntro || isIntroCelebrating) return;
+
     soundEffects.playSealBreak();
-    if (triggerConfetti) triggerConfetti();
+    playCelebrationChime();
+    triggerLocalConfetti();
+    setIsIntroCelebrating(true);
+
+    const audio = audioRef.current;
+    if (audio) {
+      try {
+        audio.play().then(() => {
+          setIsPlayingAudio(true);
+        }).catch(() => {});
+      } catch {}
+    }
+
     setTimeout(() => {
-      setEnvelopeOpen(true);
-      setIsOpeningEnvelope(false);
-    }, 450);
+      setIsFadingIntro(true);
+    }, 200);
+
+    setTimeout(() => {
+      setShowIntro(false);
+    }, 550);
   };
 
-  // Scratch card canvas foil initialization
-  const initCanvas = useCallback(() => {
+  // Canvas floating ambient flower/sparkle particles
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const width = 250;
-    const height = 124;
-    canvas.width = width;
-    canvas.height = height;
+    let animId = null;
+    let width = 0;
+    let height = 0;
+    let particles = [];
 
-    // Metallic luxury gradient foil
-    const grad = ctx.createLinearGradient(0, 0, width, height);
-    grad.addColorStop(0, themeConfig.scratchGradColors[0]);
-    grad.addColorStop(0.35, themeConfig.scratchGradColors[1]);
-    grad.addColorStop(0.7, themeConfig.scratchGradColors[2]);
-    grad.addColorStop(1, themeConfig.scratchGradColors[3]);
+    const resize = () => {
+      if (!canvas) return;
+      width = canvas.width = canvas.offsetWidth || 340;
+      height = canvas.height = canvas.offsetHeight || 600;
+    };
 
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
+    const createParticle = () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      radius: Math.random() * 2.2 + 1,
+      alpha: Math.random() * 0.45 + 0.15,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: -(Math.random() * 0.3 + 0.1),
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.015 + 0.005,
+      color: isCelestial
+        ? (Math.random() > 0.5 ? '165, 180, 252' : '192, 132, 252')
+        : (isSunset
+            ? (Math.random() > 0.5 ? '254, 215, 170' : '253, 186, 116')
+            : (Math.random() > 0.5 ? '255, 182, 193' : '255, 214, 224'))
+    });
 
-    // Subtle inner foil shine
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(6, 6, width - 12, height - 12);
+    const init = () => {
+      resize();
+      particles = Array.from({ length: 18 }, createParticle);
+    };
 
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(9, 9, width - 18, height - 18);
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        p.phase += p.speed;
+        p.x += p.vx + Math.sin(p.phase) * 0.25;
+        p.y += p.vy;
 
-    // Romantic Typography on foil
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 10px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('✨ SCRATCH WITH LOVE ✨', width / 2, height / 2 - 5);
+        if (p.y < -10) p.y = height + 10;
+        if (p.x < -10) p.x = width + 10;
+        if (p.x > width + 10) p.x = -10;
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
-    ctx.font = '8.5px sans-serif';
-    ctx.fillText('Rub gently to reveal our secret promise', width / 2, height / 2 + 10);
-  }, [themeConfig]);
-
-  useEffect(() => {
-    if (!isScratched && (activeTab === 'scratch' || activeTab === 'all')) {
-      const timer = setTimeout(initCanvas, 60);
-      return () => clearTimeout(timer);
-    }
-  }, [initCanvas, isScratched, activeTab]);
-
-  // Check scratch completion
-  const checkScratchPercentage = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || isScratched) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    try {
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      let transparentPixels = 0;
-      const totalSampled = data.length / 16;
-
-      for (let i = 3; i < data.length; i += 16) {
-        if (data[i] === 0) {
-          transparentPixels++;
-        }
+        const currentAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.phase));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.color}, ${currentAlpha})`;
+        ctx.fill();
       }
+      animId = requestAnimationFrame(render);
+    };
 
-      const percent = Math.round((transparentPixels / totalSampled) * 100);
-      if (percent >= 40 && !isScratched) {
-        soundEffects.playCelebration();
-        setIsScratched(true);
-        if (triggerConfetti) triggerConfetti();
-      }
-    } catch {
-      // Safe fallback
-    }
-  }, [isScratched, triggerConfetti]);
+    init();
+    render();
+    return () => {
+      if (animId) cancelAnimationFrame(animId);
+    };
+  }, [isCelestial, isSunset]);
 
-  const handleCanvasScratch = (x, y) => {
-    const canvas = canvasRef.current;
-    if (!canvas || isScratched) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+  // Tab 1: Photos Navigation
+  const totalPhotosCount = photos.length;
+  const activePhoto = photos[(currentPhotoIdx % totalPhotosCount + totalPhotosCount) % totalPhotosCount] || photos[0];
+  const nextPhoto1 = photos[((currentPhotoIdx + 1) % totalPhotosCount + totalPhotosCount) % totalPhotosCount] || photos[0];
+  const isCurrentPhotoLiked = !!likedPhotos[activePhoto.id];
 
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.beginPath();
-    ctx.arc(x, y, 18, 0, Math.PI * 2);
-    ctx.fill();
-
-    soundEffects.playScratch();
-
-    const now = Date.now();
-    if (now - lastCheckTime.current > 160) {
-      lastCheckTime.current = now;
-      checkScratchPercentage();
-    }
-  };
-
-  // Coordinate mapping under CSS scale
-  const getCanvasCoords = (e) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
-    const rect = canvas.getBoundingClientRect();
-    if (!rect.width || !rect.height) return { x: 0, y: 0 };
-
-    let clientX = e.clientX;
-    let clientY = e.clientY;
-
-    if (e.touches && e.touches.length > 0) {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else if (e.changedTouches && e.changedTouches.length > 0) {
-      clientX = e.changedTouches[0].clientX;
-      clientY = e.changedTouches[0].clientY;
-    }
-
-    const x = (clientX - rect.left) * (canvas.width / rect.width);
-    const y = (clientY - rect.top) * (canvas.height / rect.height);
-    return { x, y };
-  };
-
-  const handlePointerDown = (e) => {
-    isDrawing.current = true;
-    const { x, y } = getCanvasCoords(e);
-    handleCanvasScratch(x, y);
-  };
-
-  const handlePointerMove = (e) => {
-    if (!isDrawing.current) return;
-    if (e.cancelable) e.preventDefault();
-    const { x, y } = getCanvasCoords(e);
-    handleCanvasScratch(x, y);
-  };
-
-  const handlePointerUp = () => {
-    isDrawing.current = false;
-  };
-
-  const handleInstantReveal = () => {
-    if (isScratched) return;
-    soundEffects.playCelebration();
-    setIsScratched(true);
-    if (triggerConfetti) triggerConfetti();
-  };
-
-  const handleResetScratch = () => {
-    setIsScratched(false);
-    setTimeout(initCanvas, 50);
-  };
-
-  const handleCopyVoucher = () => {
-    const code = themeConfig.scratchCode;
-    if (navigator?.clipboard?.writeText) {
-      navigator.clipboard.writeText(code).catch(() => {});
-    }
-    setScratchCopied(true);
+  const handleNextPhoto = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
     soundEffects.playPop();
-    setTimeout(() => setScratchCopied(false), 2000);
+    setCurrentPhotoIdx((prev) => (prev + 1) % totalPhotosCount);
   };
 
-  // Photo adoration reactions (double tap & click)
-  const triggerPhotoLike = () => {
-    soundEffects.playCelebration();
-    setPhotoLiked(true);
-    if (controlledShowerLove) {
-      controlledShowerLove();
-    } else {
-      setInternalLoveCount((c) => c + 1);
+  const handlePrevPhoto = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    soundEffects.playPop();
+    setCurrentPhotoIdx((prev) => (prev - 1 + totalPhotosCount) % totalPhotosCount);
+  };
+
+  const togglePhotoLike = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    soundEffects.playPop();
+    const nextVal = !isCurrentPhotoLiked;
+    setLikedPhotos((prev) => ({ ...prev, [activePhoto.id]: nextVal }));
+
+    if (nextVal) {
+      setShowPhotoLikePop(true);
+      setTimeout(() => setShowPhotoLikePop(false), 900);
+      triggerLocalConfetti();
     }
-    setTimeout(() => setPhotoLiked(false), 1200);
   };
 
-  const handlePhotoClick = () => {
-    const now = Date.now();
-    if (now - lastPhotoTapRef.current < 350) {
-      triggerPhotoLike();
-    } else {
-      soundEffects.playPop();
-      setPhotoLiked(true);
-      setTimeout(() => setPhotoLiked(false), 900);
-    }
-    lastPhotoTapRef.current = now;
+  // Tab 3: Runaway "No" Button Game logic
+  const handleNoRunaway = (e) => {
+    if (e && e.cancelable) e.preventDefault();
+    soundEffects.playPop();
+    setNoRunawayStep((prev) => (prev + 1) % RUNAWAY_POSITIONS.length);
+    setNoAttempts((prev) => prev + 1);
+    setYesScale((prev) => Math.min(prev + 0.15, 1.75));
+    triggerLocalConfetti();
   };
 
-  // Content resolution
-  const reasons = (formData.specialReasons && formData.specialReasons.length > 0)
-    ? formData.specialReasons
-    : (formData.loveReasons && formData.loveReasons.length > 0)
-    ? formData.loveReasons
-    : themeConfig.defaultReasons;
+  const handleYesVictory = () => {
+    setGameVictory(true);
+    playCelebrationChime();
+    triggerLocalConfetti();
+  };
 
-  const letterBody = (typeof formData.letter === 'object' ? formData.letter?.content : formData.letter) 
-    || formData.letterBody 
-    || themeConfig.defaultLetter;
+  const handleResetGame = () => {
+    soundEffects.playPop();
+    setGameVictory(false);
+    setNoAttempts(0);
+    setNoRunawayStep(0);
+    setYesScale(1);
+  };
 
-  const letterSignOff = (typeof formData.letter === 'object' ? formData.letter?.signOff : null)
-    || formData.letterSignOff
-    || `Forever & Always,\n${senderName} ❤️🌹`;
-
-  const photos = (formData.photos && formData.photos.length > 0)
-    ? formData.photos
-    : [
-        {
-          url: formData.heroPhoto || 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
-          caption: formData.photoCaption || 'My favorite smile in the world 🌹',
-          tag: 'Day One'
-        },
-        {
-          url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
-          caption: 'Golden sunsets by your side 🌅',
-          tag: 'Pure Magic'
-        }
-      ];
-
-  const currentPhoto = photos[activePhotoIdx % photos.length];
+  const currentNoPos = RUNAWAY_POSITIONS[noRunawayStep % RUNAWAY_POSITIONS.length];
+  const currentNoMsg = NO_MESSAGES[noAttempts % NO_MESSAGES.length];
 
   return (
-    <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
-      {/* Hidden audio element for preview */}
-      {audioUrl && (
-        <audio
-          ref={audioRef}
-          src={audioUrl}
-          loop
-          preload="metadata"
-        />
-      )}
+    <div className={`romance-phone-simulator soft-app ${themeClass}`}>
+      {/* Background Animated Particle Canvas */}
+      <canvas ref={canvasRef} className="particle-canvas" aria-hidden="true" />
 
-      {/* Floating Gentle Love Particles */}
-      {ROMANTIC_PARTICLES.map((p, idx) => (
-        <div
-          key={idx}
-          className="absolute pointer-events-none select-none z-10 opacity-50"
-          style={{
-            left: p.left,
-            top: p.top,
-            animation: `floatGentleAnim ${p.duration} ease-in-out infinite`,
-            animationDelay: p.delay,
-          }}
+      {/* Audio Element */}
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        loop
+        preload="auto"
+        onPlay={() => setIsPlayingAudio(true)}
+        onPause={() => setIsPlayingAudio(false)}
+      />
+
+      {/* Floating Rotating Vinyl Music Player */}
+      <aside
+        className={`soft-music-pill ${isPlayingAudio ? 'is-playing' : 'is-paused'} ${showIntro ? 'pill-hidden' : 'pill-visible'}`}
+        onClick={toggleAudio}
+        role="button"
+        tabIndex={0}
+        aria-label={isPlayingAudio ? `Pause melody` : `Play melody`}
+        title={isPlayingAudio ? `Pause melody` : `Play melody`}
+      >
+        {/* Rotating Vinyl Disc */}
+        <div className="music-disc" aria-hidden="true">
+          <div className="music-disc-inner">
+            <span className="music-disc-center" />
+          </div>
+        </div>
+
+        {/* Song Info */}
+        <div className="music-info max-w-[110px] overflow-hidden">
+          <span className="music-title truncate">{audioTitle}</span>
+        </div>
+
+        {/* Mini 3-bar Audio Equalizer */}
+        <div className="music-equalizer" aria-hidden="true">
+          <span className="eq-bar eq-bar-1" />
+          <span className="eq-bar eq-bar-2" />
+          <span className="eq-bar eq-bar-3" />
+        </div>
+
+        {/* Play/Pause Button */}
+        <button
+          type="button"
+          className="music-toggle-btn"
+          onClick={toggleAudio}
+          aria-label={isPlayingAudio ? 'Pause music' : 'Play music'}
+          tabIndex={-1}
         >
-          <AppleEmoji emoji={themeConfig.particleItems[idx % themeConfig.particleItems.length]} size={p.size} />
-        </div>
-      ))}
+          {isPlayingAudio ? (
+            <svg viewBox="0 0 24 24" className="music-toggle-icon" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1.5" />
+              <rect x="14" y="4" width="4" height="16" rx="1.5" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" className="music-toggle-icon" fill="currentColor">
+              <polygon points="7,4 20,12 7,20" />
+            </svg>
+          )}
+        </button>
+      </aside>
 
-      {/* Floating Love Toast Notification */}
-      {loveToast && (
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/95 text-white text-[10.5px] font-semibold shadow-xl border border-rose-400/40 backdrop-blur-md">
-            <Heart className="w-3 h-3 text-rose-500 fill-current animate-pulse" />
-            <span>{loveToast}</span>
+      {/* Intro Landing Overlay ("Tap to Open Surprise 🌸") */}
+      {showIntro && (
+        <div className={`soft-intro-overlay ${isFadingIntro ? 'fade-away' : ''}`}>
+          {/* Celebratory Light Flash */}
+          <div className={`screen-light-flash ${isIntroCelebrating ? 'flash-active' : ''}`} />
+
+          {/* Center Card Content */}
+          <div className="intro-card-inner">
+            <LovableHeartGraphic />
+
+            <h2 className="intro-cursive-text text-center text-lg sm:text-xl font-bold">
+              Something special, just for you...
+            </h2>
+
+            <p className="intro-sub-text text-xs flex items-center justify-center gap-1">
+              <span>Made to make you smile</span>
+              <AppleEmoji emoji="🌸" size={14} />
+              <AppleEmoji emoji="✨" size={14} />
+            </p>
+
+            {/* Tactile Primary Button */}
+            <button
+              className={`tactile-btn tactile-btn-primary intro-enter-btn ${isIntroCelebrating ? 'is-pressed' : ''}`}
+              onClick={handleOpenSurprise}
+              aria-label="Tap to Open Surprise"
+              type="button"
+            >
+              <span className="tactile-btn-shine" />
+              <span className="tactile-btn-content">
+                <span>Tap to Open Surprise</span>
+                <AppleEmoji emoji="🌸" size={18} />
+              </span>
+            </button>
+          </div>
+
+          {/* Bottom Hint */}
+          <div className="intro-bottom-decor">
+            <p className="intro-bottom-hint text-[11px]">
+              <span>Take a soft breath & tap when you're ready</span>
+              <AppleEmoji emoji="🕊️" size={12} />
+            </p>
           </div>
         </div>
       )}
 
-      {/* =================================================================== */}
-      {/* 1. STREAMLINED LUXURY HEADER: SLEEK AUDIO PILL & SEGMENTED TABS */}
-      {/* =================================================================== */}
-      <div className="px-2.5 pt-1.5 shrink-0 z-30 space-y-1.5">
-        {/* Sleek Mini Audio Pill Header Bar */}
-        <div className="w-full flex items-center justify-between px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md border border-rose-200/70 shadow-2xs">
-          {/* Subtle Occasion Indicator */}
-          <div className="flex items-center gap-1 min-w-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
-            <span className="text-[9.5px] font-bold text-slate-800 tracking-tight truncate">
-              {formData.occasion || 'Romantic Keepsake'}
-            </span>
-          </div>
+      {/* Main Experience Container */}
+      <main className="soft-main-container">
+        {/* Hero Section */}
+        <section className="soft-hero">
+          <h1 className="soft-title text-xl font-bold flex items-center justify-center gap-1.5">
+            <span>Hey {renderAppleText(recipientName)}</span>
+            <AppleEmoji emoji="🌸" size={24} />
+          </h1>
+          <p className="soft-subtitle text-xs text-center">
+            A little corner made just to bring a smile to your face
+            {' '}
+            <AppleEmoji emoji="🌸" size={13} />
+            <AppleEmoji emoji="✨" size={13} />
+          </p>
+        </section>
 
-          {/* Interactive Mini Audio Equalizer Pill */}
+        {/* 3 Segmented Nav Pills */}
+        <nav className="soft-nav-pills" role="tablist" aria-label="Surprise sections">
           <button
+            className={`nav-pill ${activeTab === 'photos' ? 'active' : ''}`}
+            onClick={() => handleSelectTab('photos')}
+            role="tab"
+            aria-selected={activeTab === 'photos'}
             type="button"
-            onClick={toggleAudio}
-            className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-50/80 hover:bg-rose-100/90 border border-rose-200/70 text-rose-800 text-[9px] font-medium transition-all active:scale-95 cursor-pointer max-w-[150px]"
-            title={isPlayingAudio ? 'Pause Keepsake Melody' : 'Play Keepsake Melody'}
           >
-            {isPlayingAudio ? (
-              <div className="flex items-center gap-0.5 h-2.5 shrink-0">
-                <span className="w-0.5 h-2.5 bg-rose-500 rounded-full animate-[pulse_0.8s_ease-in-out_infinite]" />
-                <span className="w-0.5 h-1.5 bg-rose-400 rounded-full animate-[pulse_0.6s_ease-in-out_infinite_0.2s]" />
-                <span className="w-0.5 h-2.5 bg-rose-600 rounded-full animate-[pulse_1s_ease-in-out_infinite_0.4s]" />
-              </div>
-            ) : (
-              <Play className="w-2.5 h-2.5 fill-current text-rose-600 shrink-0" />
-            )}
-            <span className="truncate">{songTitle}</span>
-            {isPlayingAudio ? (
-              <Pause className="w-2.5 h-2.5 text-rose-600/70 shrink-0" />
-            ) : null}
+            <AppleEmoji emoji="📸" size={13} />
+            <span>Photos</span>
           </button>
-        </div>
 
-        {/* Clean Modern Segmented Pill Tabs (No cramped vertical stacking) */}
-        <div className="w-full flex items-center justify-between p-0.5 rounded-full bg-white/85 backdrop-blur-md border border-rose-200/70 shadow-2xs text-[9.5px]">
-          {[
-            { key: 'letter', label: 'Letter', icon: '💌' },
-            { key: 'moments', label: 'Story', icon: '📸' },
-            { key: 'adore', label: 'Adore', icon: '❤️' },
-            { key: 'scratch', label: 'Secret', icon: '🎁' },
-            { key: 'all', label: 'All', icon: '📜' },
-          ].map((tab) => {
-            const isTabActive = activeTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                type="button"
-                onClick={() => handleTabSelect(tab.key)}
-                className={`flex-1 py-1 px-1 rounded-full transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none ${
-                  isTabActive
-                    ? `bg-gradient-to-r ${themeConfig.activeTabGradient} text-white shadow-xs font-bold ${themeConfig.activeTabRing}`
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-rose-50/50 font-medium'
-                }`}
-              >
-                <span className="text-[11px] leading-none shrink-0">{tab.icon}</span>
-                <span className="text-[9px] font-semibold tracking-tight">{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+          <button
+            className={`nav-pill ${activeTab === 'letter' ? 'active' : ''}`}
+            onClick={() => handleSelectTab('letter')}
+            role="tab"
+            aria-selected={activeTab === 'letter'}
+            type="button"
+          >
+            <AppleEmoji emoji="💌" size={13} />
+            <span>Letter</span>
+          </button>
 
-      {/* =================================================================== */}
-      {/* 2. DEDICATED ROMANTIC CONTENT PANELS */}
-      {/* =================================================================== */}
-      <div className="flex-1 min-h-0 w-full px-2.5 py-2 overflow-y-auto custom-scrollbar flex flex-col items-center text-center">
-        
-        {/* TAB 1: LOVE LETTER & HERO HEADER (or in 'all' view) */}
-        {(activeTab === 'letter' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
-            {/* Hero Romantic Card with Soft Lighting */}
-            <div className={`w-full rounded-2xl p-3.5 border text-center transition-all ${themeConfig.cardBg} mb-3 relative overflow-hidden`}>
-              {/* Soft ambient lighting top shine */}
-              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-rose-300/40 to-transparent pointer-events-none" />
+          <button
+            className={`nav-pill ${activeTab === 'quiz' ? 'active' : ''}`}
+            onClick={() => handleSelectTab('quiz')}
+            role="tab"
+            aria-selected={activeTab === 'quiz'}
+            type="button"
+          >
+            <AppleEmoji emoji="🙈" size={13} />
+            <span>Quiz</span>
+          </button>
+        </nav>
 
-              {/* Romantic Date Badge */}
-              <div className="inline-flex items-center justify-center mb-1.5">
-                <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-semibold border flex items-center gap-1 tracking-wide uppercase ${themeConfig.badgeBg}`}>
-                  <span>✨</span>
-                  <span>{formData.date || 'Forever & Always'}</span>
-                  <span>✨</span>
-                </span>
-              </div>
-
-              {/* Romantic Title with Flowing Cursive */}
-              <h1 className={`font-cursive text-xl sm:text-2xl font-bold tracking-tight leading-snug break-words ${themeConfig.headerClass} ${themeConfig.headerGlow}`}>
-                <span className="block text-slate-800 text-base font-serif font-normal italic mb-0.5">To My One & Only,</span>
-                <span className={`${themeConfig.accentColor} inline-flex items-center gap-1`}>
-                  {recipientName} ❤️
-                </span>
-              </h1>
-
-              {/* Subtitle */}
-              <p className="text-[10px] text-slate-500 mt-1 italic leading-snug px-2 max-w-[240px] mx-auto break-words">
-                "{formData.subtitle || themeConfig.defaultSubtitle}"
-              </p>
-
-              {/* Shower Love Reaction Button */}
-              <div className="mt-2.5 flex items-center justify-center">
-                <button
-                  type="button"
-                  onClick={handleShowerLove}
-                  className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-bold transition-transform active:scale-95 cursor-pointer shadow-sm ${themeConfig.buttonClass}`}
-                  title="Tap to shower love and send hearts"
-                >
-                  <Heart className="w-3.5 h-3.5 fill-current animate-pulse text-white" />
-                  <span>Shower Love</span>
-                  {loveCount > 0 && (
-                    <span className="ml-0.5 px-1.5 py-0.2 rounded-full bg-white/30 text-[9px] font-mono">
-                      {loveCount}
-                    </span>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Interactive Wax-Sealed Love Envelope */}
-            <div className="w-full max-w-[260px] mx-auto">
-              {!envelopeOpen ? (
-                /* 3D EMBOSSED WAX-SEALED ENVELOPE */
-                <div
-                  onClick={handleOpenEnvelope}
-                  className={`group relative w-full rounded-2xl p-4 shadow-xl border cursor-pointer select-none transition-all duration-300 hover:scale-[1.02] active:scale-95 ${themeConfig.envelopeBg} ${
-                    isOpeningEnvelope ? 'scale-95 brightness-110 shadow-2xl' : ''
-                  }`}
-                  title="Tap wax seal to unfold handwritten letter"
-                >
-                  {/* Decorative envelope triangular flap fold */}
-                  <div 
-                    className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-amber-100/30 to-amber-200/20 shadow-xs border-b border-amber-300/30 pointer-events-none rounded-t-2xl"
-                    style={{
-                      clipPath: 'polygon(0% 0%, 100% 0%, 50% 100%)',
-                    }}
-                  />
-
-                  {/* Centered 3D Wax Seal */}
-                  <div className="relative pt-6 pb-2 flex flex-col items-center justify-center">
-                    <div
-                      className={`w-14 h-14 rounded-full shadow-xl relative flex items-center justify-center transition-all duration-300 group-hover:scale-110 active:scale-90 ${themeConfig.waxSealBg} ${
-                        isOpeningEnvelope ? 'scale-125 rotate-6 ring-4 ring-amber-300/60 animate-pulse' : ''
-                      }`}
-                    >
-                      {/* Inner embossed medallion ring */}
-                      <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center shadow-inner">
-                        <span className="text-xl select-none filter drop-shadow-sm leading-none flex items-center justify-center">
-                          <AppleEmoji emoji={themeConfig.sealEmoji} size={22} />
-                        </span>
-                      </div>
-
-                      {/* Sparkle ping */}
-                      <div className="absolute -top-1 -right-1">
-                        <Sparkles className="w-3.5 h-3.5 text-amber-200 animate-pulse" />
-                      </div>
-
-                      {/* Tactile Seal Crack Effect during opening */}
-                      {isOpeningEnvelope && (
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <div className="w-full h-0.5 bg-white/95 rotate-45 animate-ping" />
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Interactive hint prompt badge */}
-                    <div className="mt-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-amber-200/60 text-[10px] font-bold text-slate-800 shadow-xs flex items-center gap-1">
-                      <span>{isOpeningEnvelope ? 'Breaking wax seal...' : 'Tap wax seal to open'}</span>
-                      <span>✨</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                /* UNSEALED VINTAGE TEXTURED PARCHMENT LOVE LETTER */
-                <div className="w-full bg-[#FFFDF9] paper-parchment rounded-2xl p-4 shadow-xl border-2 border-amber-200/80 text-left relative overflow-hidden animate-fadeInSmooth text-slate-800">
-                  {/* Vintage airmail corner stamp */}
-                  <div className="absolute top-3 right-3 flex flex-col items-end pointer-events-none">
-                    <div className="w-10 h-12 rounded border border-dashed border-amber-700/40 p-1 flex flex-col items-center justify-center text-amber-800/80 rotate-2 bg-amber-50/70 shadow-2xs">
-                      <Heart className="w-3 h-3 fill-amber-700/60 text-amber-700" />
-                      <span className="text-[6.5px] font-bold mt-0.5 font-sans">AIR MAIL</span>
-                      <span className="text-[6.5px] font-sans truncate max-w-[34px]">{formData.date || 'FOREVER'}</span>
-                    </div>
-                  </div>
-
-                  {/* Letter Header */}
-                  <div className="border-b border-amber-900/10 pb-2 mb-2 pr-12">
-                    <p className="font-serif text-sm font-bold text-rose-950">
-                      Dearest {recipientName},
-                    </p>
-                    <p className="text-[8.5px] uppercase tracking-wider text-rose-600/70 font-sans mt-0.5">
-                      {formData.date || 'Forever & Always'}
-                    </p>
-                  </div>
-
-                  {/* Letter Body in Romantic Handwritten Cursive */}
-                  <div className="font-cursive text-[13px] leading-relaxed text-slate-700 max-h-48 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line break-words">
-                    {renderAppleText(letterBody, 13)}
-                  </div>
-
-                  {/* Letter Signature */}
-                  <div className="pt-2 mt-2 border-t border-amber-900/10 text-right">
-                    <p className="font-cursive text-xs font-bold text-rose-900 leading-snug whitespace-pre-line break-words">
-                      {renderAppleText(letterSignOff, 13)}
-                    </p>
-                  </div>
-
-                  {/* Action Buttons Below Letter */}
-                  <div className="mt-3 pt-2 border-t border-amber-200/60 flex items-center justify-between gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setEnvelopeOpen(false)}
-                      className="py-1 px-2.5 rounded-full text-[9.5px] font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 cursor-pointer active:scale-95 transition-transform shadow-2xs"
-                    >
-                      Reseal 💌
-                    </button>
-                    {activeTab !== 'all' && (
-                      <button
-                        type="button"
-                        onClick={() => handleTabSelect('moments')}
-                        className="py-1 px-3 rounded-full text-[9.5px] font-bold text-white bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 shadow-xs cursor-pointer active:scale-95 transition-transform flex items-center gap-1"
-                      >
-                        <span>Our Story</span>
-                        <span>📸 ➔</span>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* TAB 2: OUR CHERISHED MEMORIES POLAROID REEL (or in 'all' view) */}
-        {(activeTab === 'moments' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
-            {/* Chapter Header */}
-            <div className="text-center mb-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${themeConfig.badgeBg}`}>
-                Chapter 2 • Captured Moments
-              </span>
-              <h2 className="text-sm sm:text-base font-bold text-slate-900 mt-1 flex items-center justify-center gap-1">
-                <span>Our Cherished Memories</span>
-                <span>📸</span>
-              </h2>
-              <p className="text-[10px] text-slate-500">Every picture holds a thousand loving words</p>
-            </div>
-
-            {/* Realistic Polaroid Card with Washi Tape */}
-            <div className="relative w-full max-w-[235px] bg-[#FCFBF9] p-2.5 pb-4 rounded-sm shadow-xl border border-amber-200/50 text-slate-800 rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
-              {/* Textured Washi Tape on top */}
-              <div
-                className={`absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-4 border rounded-xs shadow-2xs rotate-[-2deg] z-10 ${themeConfig.tapeClass}`}
-              />
-
-              {/* Photo Frame Container */}
-              <div
-                onClick={handlePhotoClick}
-                onDoubleClick={triggerPhotoLike}
-                className="relative w-full aspect-square rounded-xs overflow-hidden bg-slate-100 my-1 cursor-pointer group shadow-inner"
-                title="Double tap or click to send love to this photo"
-              >
-                <img
-                  src={currentPhoto.url}
-                  alt={currentPhoto.caption || recipientName}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-
-                {/* Heart Burst Flash Overlay */}
-                {photoLiked && (
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center animate-in zoom-in-50 duration-200 z-20">
-                    <Heart className="w-12 h-12 text-rose-500 fill-current animate-ping" />
-                  </div>
-                )}
-
-                {/* Photo Pagination badge */}
-                {photos.length > 1 && (
-                  <div className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded-full bg-black/60 text-white text-[8px] font-mono backdrop-blur-xs">
-                    {activePhotoIdx + 1}/{photos.length}
-                  </div>
-                )}
-              </div>
-
-              {/* Polaroid Handwritten Caption */}
-              <p className="font-cursive text-xs text-slate-800 text-center px-1 mt-1 font-semibold leading-snug line-clamp-2 break-words">
-                "{currentPhoto.caption || formData.photoCaption || 'Forever & Always With You! ❤️🌹'}"
-              </p>
-              <div className="text-[8.5px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full inline-block mt-1 font-sans border border-rose-200/60">
-                ✨ {currentPhoto.tag || 'Cherished Moment'} ✨
-              </div>
-            </div>
-
-            {/* Carousel Controls & Like Photo Button */}
-            <div className="mt-2.5 flex items-center justify-center gap-2">
-              {photos.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    soundEffects.playPop();
-                    setActivePhotoIdx((prev) => (prev - 1 + photos.length) % photos.length);
-                  }}
-                  className="w-7 h-7 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-slate-900 shadow-2xs flex items-center justify-center cursor-pointer transition-transform active:scale-90"
-                  title="Previous Photo"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-              )}
-
-              <button
-                type="button"
-                onClick={triggerPhotoLike}
-                className="px-3.5 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-[10px] font-bold text-rose-700 flex items-center gap-1.5 cursor-pointer transition-transform active:scale-95 shadow-2xs"
-              >
-                <Heart className={`w-3.5 h-3.5 text-rose-500 ${photoLiked ? 'fill-current animate-ping' : ''}`} />
-                <span>Adore Photo</span>
-              </button>
-
-              {photos.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    soundEffects.playPop();
-                    setActivePhotoIdx((prev) => (prev + 1) % photos.length);
-                  }}
-                  className="w-7 h-7 rounded-full bg-white border border-slate-200 text-slate-700 hover:text-slate-900 shadow-2xs flex items-center justify-center cursor-pointer transition-transform active:scale-90"
-                  title="Next Photo"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-
-            {activeTab !== 'all' && (
-              <button
-                type="button"
-                onClick={() => handleTabSelect('adore')}
-                className="mt-2 text-[10px] font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1 cursor-pointer"
-              >
-                <span>Why I Adore You</span>
-                <span>❤️ ➔</span>
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* TAB 3: REASONS WHY I ADORE YOU (or in 'all' view) */}
-        {(activeTab === 'adore' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
-            {/* Chapter Header */}
-            <div className="text-center mb-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${themeConfig.badgeBg}`}>
-                Chapter 3 • Devotion
-              </span>
-              <h2 className="text-sm sm:text-base font-bold text-slate-900 mt-1 flex items-center justify-center gap-1">
-                <span>Why I Adore You</span>
-                <span>❤️</span>
-              </h2>
-              <p className="text-[10px] text-slate-500">Tap any card to save your favorite memory</p>
-            </div>
-
-            {/* Devotion Cards Grid */}
-            <div className="w-full space-y-2">
-              {reasons.map((item, idx) => {
-                const isLiked = !!likedReasons[idx];
-                return (
+        {/* ============================================================
+            TAB 1: PHOTOS
+            ============================================================ */}
+        {activeTab === 'photos' && (
+          <article className="soft-card photo-card-wrapper">
+            <div className="memory-deck-wrapper">
+              <div className="memory-deck-stage">
+                {/* Behind Card */}
+                {totalPhotosCount > 1 && (
                   <div
-                    key={idx}
-                    onClick={() => toggleReasonLike(idx)}
-                    className={`w-full rounded-2xl p-3 border transition-all text-left flex items-start gap-2.5 cursor-pointer relative shadow-2xs hover:shadow-sm select-none active:scale-[0.98] ${
-                      isLiked 
-                        ? 'border-rose-400/80 bg-rose-50/70 shadow-rose-500/5' 
-                        : 'bg-white/85 backdrop-blur-md border-rose-100/90 hover:border-rose-300'
-                    }`}
+                    className="memory-card card-behind-1"
+                    onClick={handleNextPhoto}
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Next memory preview"
                   >
-                    {/* Cute Reason Emoji Medallion */}
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-50 to-pink-100/70 border border-rose-200/70 flex items-center justify-center shrink-0 text-lg shadow-2xs">
-                      <AppleEmoji emoji={item.icon || '❤️'} size={18} />
+                    <div className="washi-tape-strip" />
+                    <div className="memory-card-image-box">
+                      <img src={nextPhoto1.url} alt="" className="memory-card-bg-blur" />
+                      <img src={nextPhoto1.url} alt="" className="memory-card-img" loading="lazy" />
                     </div>
-
-                    {/* Reason Text */}
-                    <div className="flex-1 min-w-0 pr-4">
-                      <h3 className="text-xs font-bold text-slate-900 leading-tight break-words">
-                        {renderAppleText(item.title)}
-                      </h3>
-                      <p className="text-[10px] text-slate-600 mt-0.5 leading-snug break-words">
-                        {renderAppleText(item.desc)}
-                      </p>
+                    <div className="memory-card-body opacity-55">
+                      <span className="memory-card-tag">✨ NEXT MEMORY</span>
+                      <p className="memory-card-caption">Tap to peek 🌸</p>
                     </div>
+                  </div>
+                )}
 
-                    {/* Heart Tap Icon */}
+                {/* Active Foreground Polaroid Card */}
+                <div
+                  className="memory-card card-active"
+                  onClick={() => {
+                    soundEffects.playPop();
+                    setIsLightboxOpen(true);
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Tap photo to zoom in fullscreen"
+                >
+                  <div className="washi-tape-strip" />
+
+                  <div className="memory-card-image-box">
+                    {/* Zoom Button */}
                     <button
-                      type="button"
+                      className="photo-card-zoom-btn"
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleReasonLike(idx);
+                        soundEffects.playPop();
+                        setIsLightboxOpen(true);
                       }}
-                      className={`p-1.5 rounded-full transition-transform cursor-pointer active:scale-90 ${
-                        isLiked ? 'text-rose-500 scale-110' : 'text-slate-300 hover:text-rose-400'
-                      }`}
-                      aria-label="Adore this reason"
+                      type="button"
+                      aria-label="Zoom photo fullscreen"
+                      title="Zoom photo"
                     >
-                      <Heart className={`w-4 h-4 ${isLiked ? 'fill-current text-rose-500' : ''}`} />
+                      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        <line x1="11" y1="8" x2="11" y2="14" />
+                        <line x1="8" y1="11" x2="14" y2="11" />
+                      </svg>
                     </button>
 
-                    {/* Adored Tag */}
-                    {isLiked && (
-                      <div className="absolute top-1.5 right-8 text-[8px] font-bold text-rose-600 animate-in fade-in">
-                        Adored ❤️
-                      </div>
-                    )}
+                    {/* Like Button */}
+                    <button
+                      className={`polaroid-like-btn ${isCurrentPhotoLiked ? 'is-liked' : ''}`}
+                      onClick={togglePhotoLike}
+                      type="button"
+                      aria-label={isCurrentPhotoLiked ? 'Unlike photo' : 'Like photo'}
+                      title={isCurrentPhotoLiked ? 'Liked!' : 'Like memory'}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill={isCurrentPhotoLiked ? '#FF2E63' : 'rgba(255, 46, 99, 0.12)'}
+                        stroke="#FF2E63"
+                        strokeWidth="2.3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                      </svg>
+
+                      {showPhotoLikePop && (
+                        <span className="like-mini-hearts-burst" aria-hidden="true">
+                          <span className="mini-heart-pop p1">💖</span>
+                          <span className="mini-heart-pop p2">✨</span>
+                          <span className="mini-heart-pop p3">💕</span>
+                        </span>
+                      )}
+                    </button>
+
+                    {/* Blurred BG and Main Image */}
+                    <img src={activePhoto.url} alt="" className="memory-card-bg-blur" aria-hidden="true" />
+                    <img
+                      src={activePhoto.url}
+                      alt={activePhoto.caption || 'Memory'}
+                      className="memory-card-img photo-animated"
+                      loading="eager"
+                    />
                   </div>
-                );
-              })}
+
+                  {/* Polaroid Card Caption */}
+                  <div className="memory-card-body">
+                    <span className="memory-card-tag">
+                      ✨ {activePhoto.tag}
+                    </span>
+                    <p className="memory-card-caption">
+                      “{renderAppleText(activePhoto.caption, 13)}”
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {activeTab !== 'all' && (
+            {/* Tactile Controls: Prev, [ X / Y ], Next */}
+            <div className="photo-controls-row">
               <button
+                className="tactile-btn tactile-btn-secondary photo-nav-btn"
+                onClick={handlePrevPhoto}
+                aria-label="Previous photo"
                 type="button"
-                onClick={() => handleTabSelect('scratch')}
-                className="mt-2 text-[10px] font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1 cursor-pointer"
               >
-                <span>Secret Love Promise</span>
-                <span>🎁 ➔</span>
+                <span className="tactile-btn-shine" />
+                <span className="tactile-btn-content">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                  <span>Prev</span>
+                </span>
               </button>
-            )}
-          </div>
+
+              <div className="photo-counter-pill" aria-live="polite">
+                <span>{currentPhotoIdx + 1}</span>
+                <span className="opacity-40">/</span>
+                <span>{totalPhotosCount}</span>
+              </div>
+
+              <button
+                className="tactile-btn tactile-btn-secondary photo-nav-btn"
+                onClick={handleNextPhoto}
+                aria-label="Next photo"
+                type="button"
+              >
+                <span className="tactile-btn-shine" />
+                <span className="tactile-btn-content">
+                  <span>Next</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </article>
         )}
 
-        {/* TAB 4: SECRET LOVE SCRATCH CARD (or in 'all' view) */}
-        {(activeTab === 'scratch' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
-            {/* Chapter Header */}
-            <div className="text-center mb-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${themeConfig.badgeBg}`}>
-                Chapter 4 • Special Keepsake
-              </span>
-              <h2 className="text-sm sm:text-base font-bold text-slate-900 mt-1 flex items-center justify-center gap-1">
-                <span>A Secret Love Promise</span>
-                <span>🎁</span>
-              </h2>
-              <p className="text-[10px] text-slate-500">Scratch the metallic foil to reveal our secret</p>
+        {/* Lightbox Zoom Modal (Scoped to phone simulator) */}
+        <PhonePhotoLightboxModal
+          isOpen={isLightboxOpen}
+          photos={photos}
+          currentIndex={currentPhotoIdx}
+          onClose={() => setIsLightboxOpen(false)}
+          onNext={() => setCurrentPhotoIdx((prev) => (prev + 1) % totalPhotosCount)}
+          onPrev={() => setCurrentPhotoIdx((prev) => (prev - 1 + totalPhotosCount) % totalPhotosCount)}
+        />
+
+        {/* ============================================================
+            TAB 2: LETTER
+            ============================================================ */}
+        {activeTab === 'letter' && (
+          <article className="soft-card letter-card-wrapper">
+            <div className="letter-header">
+              <div className="card-badge-icon">
+                <AppleEmoji emoji="💌" size={22} />
+              </div>
+              <h2 className="letter-heading text-base font-bold">A Piece of My Heart</h2>
+              <p className="letter-subtitle text-xs flex items-center justify-center gap-1">
+                <span>A secret message written just for you</span>
+                <AppleEmoji emoji="🌸" size={13} />
+              </p>
             </div>
 
-            {/* Scratch Box Gift Container */}
-            <div className="relative w-full max-w-[250px] mx-auto rounded-2xl overflow-hidden shadow-lg border-2 border-rose-200/90 select-none bg-white">
-              {/* Underlying Secret Revealed Card */}
-              <div className="w-full p-3.5 bg-gradient-to-br from-[#FFF8F6] via-[#FFFDF9] to-[#FFF0F4] text-slate-800 flex flex-col items-center justify-center text-center min-h-[124px]">
-                <div className="text-lg mb-0.5">
-                  <AppleEmoji emoji="🌹" size={20} />
+            {/* Opened Handwritten Khat */}
+            {isLetterOpen ? (
+              <div className="khat-letter">
+                <div className="khat-letter-crest text-[10px] tracking-wider mb-2">
+                  <span>✦ FOR MY FAVORITE PERSON ✦</span>
                 </div>
-                <h4 className="text-xs font-bold text-rose-950">Secret Promise Unlocked!</h4>
-                <p className="font-cursive text-xs text-rose-800 mt-1 leading-snug px-1 break-words font-medium">
-                  "{themeConfig.scratchSecret}"
-                </p>
 
-                {/* Voucher Code Pill with Copy Action */}
-                <div className="mt-2 flex items-center gap-1">
-                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-rose-200 text-[8.5px] font-mono font-bold text-rose-600 shadow-2xs select-all">
-                    <span>CODE: {themeConfig.scratchCode}</span>
-                  </div>
+                <div className="khat-letter-body text-xs text-left leading-relaxed">
+                  {letterContent.split('\n').map((line, idx) => {
+                    const trimmed = line.trim();
+                    if (!trimmed) {
+                      return <div key={idx} className="khat-line-gap h-2" />;
+                    }
+                    if (trimmed.startsWith('—')) {
+                      return (
+                        <div key={idx} className="khat-signature mt-3 text-right font-serif italic font-bold">
+                          {renderAppleText(line, 14)}
+                        </div>
+                      );
+                    }
+                    return (
+                      <p key={idx} className="khat-line my-1">
+                        {renderAppleText(line, 13)}
+                      </p>
+                    );
+                  })}
+                </div>
+
+                <div className="khat-actions mt-3">
                   <button
+                    className="tactile-btn tactile-btn-secondary"
+                    onClick={(e) => {
+                      if (e && e.stopPropagation) e.stopPropagation();
+                      soundEffects.playPop();
+                      setInternalLetterOpen(false);
+                    }}
                     type="button"
-                    onClick={handleCopyVoucher}
-                    className="p-1 rounded-full bg-white hover:bg-rose-50 border border-rose-200 text-rose-600 cursor-pointer transition-transform active:scale-90"
-                    title="Copy secret voucher code"
                   >
-                    {scratchCopied ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
+                    <span className="tactile-btn-shine" />
+                    <span className="tactile-btn-content text-xs">
+                      <span>Fold Back</span>
+                      <AppleEmoji emoji="🌸" size={13} />
+                    </span>
                   </button>
                 </div>
               </div>
+            ) : (
+              /* Closed Vintage Envelope */
+              <div
+                className="khat-envelope cursor-pointer"
+                onClick={(e) => {
+                  if (e && e.stopPropagation) e.stopPropagation();
+                  soundEffects.playSealBreak();
+                  playCelebrationChime();
+                  triggerLocalConfetti();
+                  setInternalLetterOpen(true);
+                }}
+                role="button"
+                tabIndex={0}
+                aria-label={`Tap to open sealed letter for ${recipientName}`}
+              >
+                {/* Postage Stamp */}
+                <div className="khat-postage-stamp" aria-hidden="true">
+                  <span className="stamp-symbol text-xs">🌹</span>
+                  <span className="stamp-text text-[8px]">SPECIAL</span>
+                </div>
 
-              {/* Canvas Metallic Foil Overlay */}
-              {!isScratched && (
-                <canvas
-                  ref={canvasRef}
-                  onMouseDown={handlePointerDown}
-                  onMouseMove={handlePointerMove}
-                  onMouseUp={handlePointerUp}
-                  onMouseLeave={handlePointerUp}
-                  onTouchStart={handlePointerDown}
-                  onTouchMove={handlePointerMove}
-                  onTouchEnd={handlePointerUp}
-                  className="absolute inset-0 w-full h-full cursor-crosshair touch-none z-10"
-                />
-              )}
-            </div>
+                {/* Diagonal Crease Lines */}
+                <svg className="khat-crease-lines" viewBox="0 0 320 220" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M0,0 L160,110 L320,0" fill="none" stroke="rgba(255, 160, 180, 0.45)" strokeWidth="1.5" strokeDasharray="5 3" />
+                  <path d="M0,220 L115,105" fill="none" stroke="rgba(255, 180, 195, 0.28)" strokeWidth="1" />
+                  <path d="M320,220 L205,105" fill="none" stroke="rgba(255, 180, 195, 0.28)" strokeWidth="1" />
+                </svg>
 
-            {/* Scratch Card Action Controls */}
-            <div className="mt-2 flex items-center justify-center gap-2">
-              {!isScratched ? (
-                <button
-                  type="button"
-                  onClick={handleInstantReveal}
-                  className="py-1 px-3.5 rounded-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 text-white text-[10px] font-bold shadow-xs flex items-center gap-1 cursor-pointer active:scale-95"
-                >
-                  <Wand2 className="w-3 h-3" />
-                  <span>Instant Reveal ✨</span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleResetScratch}
-                  className="py-1 px-3.5 rounded-full bg-white border border-rose-200 text-rose-700 text-[10px] font-semibold hover:bg-rose-50 flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
-                >
-                  <RotateCcw className="w-3 h-3" />
-                  <span>Scratch Again 🔁</span>
-                </button>
-              )}
-            </div>
-            <p className="text-[8px] text-slate-400 mt-1">Valid forever with zero expiration date ❤️</p>
-          </div>
+                {/* Wax Seal with Satin Ribbons */}
+                <div className="khat-seal-wrapper">
+                  <div className="khat-seal-ribbon ribbon-left" aria-hidden="true" />
+                  <div className="khat-seal-ribbon ribbon-right" aria-hidden="true" />
+                  <div className="khat-wax-seal">
+                    <AppleEmoji emoji="💌" size={24} />
+                  </div>
+                </div>
+
+                {/* Recipient Crest Line */}
+                <p className="khat-recipient text-xs flex items-center justify-center gap-1 font-serif">
+                  <span>To: {recipientName}</span>
+                  <AppleEmoji emoji="💌" size={13} />
+                </p>
+
+                {/* Interactive Tap Hint */}
+                <span className="khat-tap-hint text-[10px] flex items-center justify-center gap-1">
+                  <span>Tap to open sealed letter</span>
+                  <AppleEmoji emoji="🌸" size={12} />
+                </span>
+              </div>
+            )}
+          </article>
         )}
 
-        {/* Bottom Keepsake Stamp in 'all' view */}
-        {activeTab === 'all' && (
-          <div className="pt-3 pb-2 text-center text-slate-400 text-[9px] border-t border-rose-100 w-full">
-            <p className="font-cursive text-xs text-rose-800">
-              Handcrafted with endless love for {recipientName} ❤️
-            </p>
-            <p className="text-[8px] text-slate-400 mt-0.5 font-sans">
-              WishCraft Romantic Keepsake • {formData.date || 'Forever & Always'}
-            </p>
-          </div>
-        )}
+        {/* ============================================================
+            TAB 3: QUIZ (The Runaway "No" Button Game!)
+            ============================================================ */}
+        {activeTab === 'quiz' && (
+          <article className="soft-card quiz-card-wrapper">
+            {gameVictory ? (
+              /* Victory State */
+              <div className="game-victory-box">
+                <div className="victory-celebration-header">
+                  <div className="victory-sparkle-ribbon flex items-center justify-center gap-1">
+                    <AppleEmoji emoji="🎉" size={22} />
+                    <AppleEmoji emoji="💖" size={26} />
+                    <AppleEmoji emoji="✨" size={22} />
+                  </div>
+                  <div className="victory-badge-pill text-[10px]">
+                    <span>✦ TREAT UNLOCKED ✦</span>
+                  </div>
+                </div>
 
-      </div>
+                <h3 className="victory-title text-base font-bold flex items-center justify-center gap-1">
+                  <span>Haha, Knew It!</span>
+                  <AppleEmoji emoji="😄" size={20} />
+                </h3>
+
+                <div className="victory-love-note">
+                  <p className="victory-desc text-xs text-center leading-relaxed">
+                    That means one Dairy Milk Silk is officially pending from my side anytime you want! 🍫😋
+                  </p>
+                </div>
+
+                {/* ★ SPECIAL DESSERT VOUCHER ★ Ticket Card */}
+                <div className="chocolate-ticket-card">
+                  <div className="ticket-top-tag text-[9px]">
+                    <span>★ SPECIAL DESSERT VOUCHER ★</span>
+                  </div>
+                  <div className="ticket-main-title text-sm font-bold flex items-center justify-center gap-1">
+                    <AppleEmoji emoji="🍫" size={18} />
+                    <span>Dairy Milk Silk</span>
+                  </div>
+                  <p className="ticket-subtext text-[11px] text-center">
+                    Reserved exclusively for <strong>{recipientName}</strong> 🌸
+                  </p>
+                  <div className="ticket-bottom-bar text-[9px]">
+                    <span className="ticket-barcode">||| |||| || ||||| ||</span>
+                    <span className="ticket-validity">Redeemable Anytime For A Sweet Treat ✨</span>
+                  </div>
+                </div>
+
+                {/* Play Again Button */}
+                <button
+                  className="tactile-btn tactile-btn-secondary victory-replay-btn"
+                  onClick={handleResetGame}
+                  type="button"
+                >
+                  <span className="tactile-btn-shine" />
+                  <span className="tactile-btn-content text-xs">
+                    <span>Play Again</span>
+                    <AppleEmoji emoji="🔄" size={12} />
+                  </span>
+                </button>
+              </div>
+            ) : (
+              /* Game Arena */
+              <>
+                <div className="card-badge-icon">
+                  <AppleEmoji emoji="🌸" size={22} />
+                </div>
+                <h2 className="quiz-heading text-base font-bold">Tell Me Truthfully...</h2>
+                <p className="quiz-subtitle text-xs flex items-center justify-center gap-1">
+                  <span>There is only one honest answer, so think carefully!</span>
+                  <AppleEmoji emoji="💖" size={12} />
+                </p>
+
+                <div className="game-container w-full">
+                  <p className="game-question text-sm font-semibold flex items-center justify-center gap-1 text-center">
+                    “Do you like spending time with me?”
+                    {' '}
+                    <AppleEmoji emoji="🌸" size={16} />
+                  </p>
+
+                  <div className="game-action-arena">
+                    {noAttempts === 0 ? (
+                      /* Initial Side-by-Side Row */
+                      <div className="game-buttons-row flex items-center justify-center gap-3">
+                        <div className="yes-button-anchor" style={{ transform: `scale(${yesScale})` }}>
+                          <button
+                            className="tactile-btn tactile-btn-primary game-yes-btn"
+                            onClick={handleYesVictory}
+                            type="button"
+                          >
+                            <span className="tactile-btn-shine" />
+                            <span className="tactile-btn-content text-xs font-bold">
+                              <span>YES, VERY MUCH!</span>
+                              <AppleEmoji emoji="🥰" size={15} />
+                            </span>
+                          </button>
+                        </div>
+
+                        <div className="no-button-anchor">
+                          <button
+                            className="tactile-btn tactile-btn-secondary game-no-btn"
+                            onMouseEnter={handleNoRunaway}
+                            onTouchStart={handleNoRunaway}
+                            onClick={handleNoRunaway}
+                            type="button"
+                          >
+                            <span className="tactile-btn-shine" />
+                            <span className="tactile-btn-content text-xs font-bold">
+                              <span>{NO_MESSAGES[0]}</span>
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      /* Runaway Track Arena */
+                      <div className="game-runaway-arena flex flex-col items-center gap-3">
+                        <div className="yes-button-anchor is-centered" style={{ transform: `scale(${yesScale})` }}>
+                          <button
+                            className="tactile-btn tactile-btn-primary game-yes-btn"
+                            onClick={handleYesVictory}
+                            type="button"
+                          >
+                            <span className="tactile-btn-shine" />
+                            <span className="tactile-btn-content text-xs font-bold">
+                              <span>YES, VERY MUCH!</span>
+                              <AppleEmoji emoji="🥰" size={15} />
+                            </span>
+                          </button>
+                        </div>
+
+                        <div className="no-runaway-track relative w-full h-11">
+                          <div
+                            className="no-runaway-mover absolute transition-all duration-200"
+                            style={{ left: currentNoPos }}
+                            onMouseEnter={handleNoRunaway}
+                            onTouchStart={handleNoRunaway}
+                            onClick={handleNoRunaway}
+                          >
+                            <button
+                              className="tactile-btn tactile-btn-secondary game-no-btn"
+                              type="button"
+                            >
+                              <span className="tactile-btn-shine" />
+                              <span className="tactile-btn-content text-xs font-bold whitespace-nowrap">
+                                <span>{currentNoMsg}</span>
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="game-hint text-[10px] text-center text-slate-500 mt-2">
+                    (Look, the 'No' button runs away before you can even touch it 😉)
+                  </p>
+                </div>
+              </>
+            )}
+          </article>
+        )}
+      </main>
     </div>
   );
 }

@@ -14,6 +14,7 @@ import { getTemplateById } from '../../data/templates';
 import { soundEffects } from '../Templates/common/SoundEffects';
 import ScrapbookPhoneView from './ScrapbookPhoneView';
 import ApologyPhoneView from './ApologyPhoneView';
+import RomancePhoneView from './RomancePhoneView';
 
 // 8 Ambient Floating Apple Emojis Scaled for the Mobile Phone Simulator
 const AMBIENT_EMOJIS_CONFIG = [
@@ -821,6 +822,8 @@ export default function LivePhonePreview({
   }, []);
 
   // Dedicated Experience States
+  const [romanticTab, setRomanticTab] = useState('photos'); // 'photos' | 'letter' | 'quiz'
+  const [resetNonce, setResetNonce] = useState(0);
   const [scrapbookTab, setScrapbookTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
   const [apologyTab, setApologyTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
   const [bookmarkSaved, setBookmarkSaved] = useState(false);
@@ -830,12 +833,16 @@ export default function LivePhonePreview({
     if (typeof previewScreen === 'number') {
       setScreen(previewScreen);
       if (previewScreen === 0 || previewScreen === 1) {
+        setRomanticTab('photos');
         setScrapbookTab('timeline');
         setApologyTab('forgive');
       } else if (previewScreen === 3) {
+        setRomanticTab('quiz');
         setScrapbookTab('jokes');
         setApologyTab('treaty');
       } else if (previewScreen === 4) {
+        setRomanticTab('letter');
+        setEnvelopeOpen(true);
         setScrapbookTab('letter');
         setApologyTab('letter');
       }
@@ -845,6 +852,9 @@ export default function LivePhonePreview({
   useEffect(() => {
     if (typeof openEnvelope === 'boolean') {
       setEnvelopeOpen(openEnvelope);
+      if (openEnvelope) {
+        setRomanticTab('letter');
+      }
     }
   }, [openEnvelope, syncNonce]);
 
@@ -852,18 +862,27 @@ export default function LivePhonePreview({
     if (activeSection === 'details') {
       setScreen(0);
       setEnvelopeOpen(false);
+      setRomanticTab('photos');
       setScrapbookTab('timeline');
       setApologyTab('forgive');
     } else if (activeSection === 'media') {
       setScreen(1);
       setEnvelopeOpen(false);
+      setRomanticTab('photos');
       setScrapbookTab('timeline');
       setApologyTab('forgive');
     } else if (activeSection === 'surprises') {
       setScreen(3);
       setEnvelopeOpen(false);
+      setRomanticTab('quiz');
       setScrapbookTab('jokes');
       setApologyTab('treaty');
+    } else if (activeSection === 'letter') {
+      setScreen(4);
+      setEnvelopeOpen(true);
+      setRomanticTab('letter');
+      setScrapbookTab('letter');
+      setApologyTab('letter');
     }
   }, [activeSection]);
 
@@ -872,6 +891,7 @@ export default function LivePhonePreview({
     setScreen(0);
     setEnvelopeOpen(false);
     setApologyForgiveState('initial');
+    setRomanticTab('photos');
     setScrapbookTab('timeline');
     setApologyTab('forgive');
     setBookmarkSaved(false);
@@ -1144,9 +1164,11 @@ export default function LivePhonePreview({
     triggerConfetti();
     setScreen(0);
     setEnvelopeOpen(false);
+    setRomanticTab('photos');
     setScrapbookTab('timeline');
     setApologyTab('forgive');
     setApologyForgiveState('initial');
+    setResetNonce((prev) => prev + 1);
   };
 
   const handlePrevScene = () => {
@@ -1165,7 +1187,15 @@ export default function LivePhonePreview({
 
   const handleToolbarBack = () => {
     soundEffects.playPop();
-    if (isScrapbook) {
+    if (isRomance) {
+      const tabs = ['photos', 'letter', 'quiz'];
+      const idx = tabs.indexOf(romanticTab);
+      if (idx > 0) {
+        const nextTab = tabs[idx - 1];
+        setRomanticTab(nextTab);
+        if (nextTab === 'letter') setEnvelopeOpen(true);
+      }
+    } else if (isScrapbook) {
       const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
       const idx = tabs.indexOf(scrapbookTab);
       if (idx > 0) setScrapbookTab(tabs[idx - 1]);
@@ -1180,7 +1210,15 @@ export default function LivePhonePreview({
 
   const handleToolbarForward = () => {
     soundEffects.playPop();
-    if (isScrapbook) {
+    if (isRomance) {
+      const tabs = ['photos', 'letter', 'quiz'];
+      const idx = tabs.indexOf(romanticTab);
+      if (idx >= 0 && idx < tabs.length - 1) {
+        const nextTab = tabs[idx + 1];
+        setRomanticTab(nextTab);
+        if (nextTab === 'letter') setEnvelopeOpen(true);
+      }
+    } else if (isScrapbook) {
       const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
       const idx = tabs.indexOf(scrapbookTab);
       if (idx >= 0 && idx < tabs.length - 1) setScrapbookTab(tabs[idx + 1]);
@@ -1336,7 +1374,18 @@ export default function LivePhonePreview({
               {/* ========================================================== */}
               {/* INTERACTIVE SCREEN BODY: DEDICATED OCCASION EXPERIENCES */}
               {/* ========================================================== */}
-              {isScrapbook ? (
+              {isRomance ? (
+                <RomancePhoneView
+                  formData={formData}
+                  theme={theme}
+                  triggerConfetti={triggerConfetti}
+                  onReset={handleResetScreen}
+                  activeTab={romanticTab}
+                  onTabChange={setRomanticTab}
+                  openEnvelope={envelopeOpen}
+                  resetNonce={resetNonce}
+                />
+              ) : isScrapbook ? (
                 <ScrapbookPhoneView
                   formData={formData}
                   theme={theme}
@@ -1982,8 +2031,8 @@ export default function LivePhonePreview({
                   </button>
                 </div>
 
-                {/* Scene Indicator Dots for Birthday & Romance Flow / Chapters for Dedicated Occasions */}
-                {isBirthday || isRomance ? (
+                {/* Scene Indicator Dots for Birthday / Chapters for Dedicated Occasions */}
+                {isBirthday ? (
                   <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5">
                     {[0, 1, 2, 3, 4].map((i) => (
                       <button
@@ -1996,13 +2045,37 @@ export default function LivePhonePreview({
                         }}
                         className={`h-1.5 rounded-full transition-all cursor-pointer ${
                           screen === i
-                            ? isRomance
-                              ? 'w-4 bg-rose-600 shadow-xs'
-                              : 'w-4 bg-blue-600 shadow-xs'
+                            ? 'w-4 bg-blue-600 shadow-xs'
                             : 'w-1.5 bg-slate-400/60 hover:bg-slate-500'
                         }`}
                         aria-label={`Go to scene ${i + 1}`}
                       />
+                    ))}
+                  </div>
+                ) : isRomance ? (
+                  <div className="flex items-center justify-center gap-1 py-0.5 mb-0.5">
+                    {[
+                      { key: 'photos', icon: '📸', label: 'Photos' },
+                      { key: 'letter', icon: '💌', label: 'Letter' },
+                      { key: 'quiz', icon: '🙈', label: 'Quiz' },
+                    ].map((tab) => (
+                      <button
+                        key={tab.key}
+                        type="button"
+                        onClick={() => {
+                          soundEffects.playPop();
+                          setRomanticTab(tab.key);
+                          if (tab.key === 'letter') setEnvelopeOpen(true);
+                        }}
+                        className={`px-1.5 py-0.5 rounded-full text-[9px] font-bold flex items-center gap-0.5 transition-all cursor-pointer ${
+                          romanticTab === tab.key
+                            ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-xs scale-105'
+                            : 'text-rose-950/80 hover:text-rose-950 bg-rose-100/70'
+                        }`}
+                      >
+                        <span>{tab.icon}</span>
+                        <span className="hidden min-[360px]:inline">{tab.label}</span>
+                      </button>
                     ))}
                   </div>
                 ) : isScrapbook ? (
@@ -2071,22 +2144,26 @@ export default function LivePhonePreview({
                     type="button"
                     onClick={handleToolbarBack}
                     disabled={
-                      isScrapbook
+                      isRomance
+                        ? romanticTab === 'photos'
+                        : isScrapbook
                         ? scrapbookTab === 'timeline'
                         : isApology
                         ? apologyTab === 'forgive'
-                        : (!isBirthday && !isRomance) || screen === 0
+                        : !isBirthday || screen === 0
                     }
                     className={`cursor-pointer transition-opacity p-1 rounded-full ${
-                      (isScrapbook
+                      (isRomance
+                        ? romanticTab === 'photos'
+                        : isScrapbook
                         ? scrapbookTab === 'timeline'
                         : isApology
                         ? apologyTab === 'forgive'
-                        : (!isBirthday && !isRomance) || screen === 0)
+                        : !isBirthday || screen === 0)
                         ? 'opacity-30 cursor-not-allowed'
                         : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
                     }`}
-                    title={isScrapbook || isApology ? 'Previous Chapter' : 'Previous Scene'}
+                    title={isRomance || isScrapbook || isApology ? 'Previous Chapter' : 'Previous Scene'}
                   >
                     <ChevronLeft className="w-5 h-5 stroke-[2.2]" />
                   </button>
@@ -2096,22 +2173,26 @@ export default function LivePhonePreview({
                     type="button"
                     onClick={handleToolbarForward}
                     disabled={
-                      isScrapbook
+                      isRomance
+                        ? romanticTab === 'quiz'
+                        : isScrapbook
                         ? scrapbookTab === 'letter'
                         : isApology
                         ? apologyTab === 'letter'
-                        : (!isBirthday && !isRomance) || screen === 4
+                        : !isBirthday || screen === 4
                     }
                     className={`cursor-pointer transition-opacity p-1 rounded-full ${
-                      (isScrapbook
+                      (isRomance
+                        ? romanticTab === 'quiz'
+                        : isScrapbook
                         ? scrapbookTab === 'letter'
                         : isApology
                         ? apologyTab === 'letter'
-                        : (!isBirthday && !isRomance) || screen === 4)
+                        : !isBirthday || screen === 4)
                         ? 'opacity-30 cursor-not-allowed'
                         : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
                     }`}
-                    title={isScrapbook || isApology ? 'Next Chapter' : 'Next Scene'}
+                    title={isRomance || isScrapbook || isApology ? 'Next Chapter' : 'Next Scene'}
                   >
                     <ChevronRight className="w-5 h-5 stroke-[2.2]" />
                   </button>
