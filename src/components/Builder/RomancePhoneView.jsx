@@ -3,27 +3,26 @@ import {
   Heart, 
   Sparkles, 
   ChevronLeft, 
-  ChevronRight,
-  Music,
-  Play,
-  Pause,
-  Copy,
-  Check,
-  RotateCcw,
-  Wand2,
+  ChevronRight, 
+  Play, 
+  Pause, 
+  Copy, 
+  Check, 
+  RotateCcw, 
+  Wand2 
 } from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { soundEffects } from '../Templates/common/SoundEffects';
 import { getSongById } from '../../data/songs';
 
-// 6 Ambient floating love particles drifting across the romantic phone simulator
+// Ambient floating romantic particles drifting gracefully across the phone simulator
 const ROMANTIC_PARTICLES = [
-  { left: '6%', top: '10%', duration: '7.8s', delay: '0s', size: 15 },
-  { left: '86%', top: '14%', duration: '8.4s', delay: '1.2s', size: 16 },
-  { left: '8%', top: '48%', duration: '9.0s', delay: '0.6s', size: 14 },
-  { left: '88%', top: '52%', duration: '7.4s', delay: '2.1s', size: 15 },
-  { left: '10%', top: '82%', duration: '8.6s', delay: '1.8s', size: 14 },
-  { left: '84%', top: '80%', duration: '8.1s', delay: '0.4s', size: 16 },
+  { left: '6%', top: '8%', duration: '8.5s', delay: '0s', size: 14 },
+  { left: '88%', top: '12%', duration: '9.2s', delay: '1.4s', size: 15 },
+  { left: '10%', top: '44%', duration: '10s', delay: '0.8s', size: 13 },
+  { left: '86%', top: '50%', duration: '8.2s', delay: '2.2s', size: 14 },
+  { left: '12%', top: '80%', duration: '9.6s', delay: '1.6s', size: 13 },
+  { left: '82%', top: '82%', duration: '8.8s', delay: '0.5s', size: 15 },
 ];
 
 export default function RomancePhoneView({
@@ -36,7 +35,7 @@ export default function RomancePhoneView({
   loveCount: controlledLoveCount,
   onShowerLove: controlledShowerLove,
 }) {
-  // Tab state: 'letter' (0) | 'moments' (1) | 'adore' (2) | 'scratch' (3) | 'all' (4)
+  // Tab state: 'letter' | 'moments' | 'adore' | 'scratch' | 'all'
   const [internalTab, setInternalTab] = useState('letter');
   const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
 
@@ -49,7 +48,7 @@ export default function RomancePhoneView({
     }
   };
 
-  // Internal states
+  // Internal interactive states
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [photoLiked, setPhotoLiked] = useState(false);
   const [internalLoveCount, setInternalLoveCount] = useState(0);
@@ -80,10 +79,9 @@ export default function RomancePhoneView({
   // Resolved audio track
   const resolvedSong = getSongById(formData.songId || 'insta-acoustic-romance', formData);
   const audioUrl = formData.songUrl || formData.customSongUrl || formData.music?.audioUrl || resolvedSong?.audioUrl || '';
-  const songTitle = formData.customSongTitle || formData.music?.title || resolvedSong?.title || 'Kesariya & Raataan Lambiyan (Acoustic)';
-  const songArtist = resolvedSong?.artist || 'Acoustic Strings • Trending Reel';
+  const songTitle = formData.customSongTitle || formData.music?.title || resolvedSong?.title || 'Kesariya (Acoustic Romance)';
 
-  // Toggle audio
+  // Audio playback toggle
   const toggleAudio = () => {
     soundEffects.playPop();
     const audioEl = audioRef.current;
@@ -112,25 +110,26 @@ export default function RomancePhoneView({
     };
   }, []);
 
-  // Theme configuration for Romantic Experiences
+  // Romantic theme configurations
   const themeConfig = (() => {
     if (isCelestial) {
       return {
         id: 'celestial-love',
         badgeText: 'Written in the Stars 🌌',
-        badgeBg: 'bg-indigo-950/80 text-indigo-300 border-indigo-500/40 shadow-indigo-950/50 shadow-xs',
+        badgeBg: 'bg-indigo-950/70 text-indigo-200 border-indigo-400/30 shadow-indigo-950/30',
         headerClass: 'text-white',
-        headerGlow: 'drop-shadow-[0_2px_12px_rgba(99,102,241,0.5)]',
-        accentColor: 'text-indigo-400',
-        bgPill: 'bg-indigo-900/40 border-indigo-500/30 text-indigo-200',
-        cardBg: 'bg-slate-900/90 border-indigo-500/30 text-slate-100',
+        headerGlow: 'drop-shadow-[0_2px_14px_rgba(99,102,241,0.5)]',
+        accentColor: 'text-indigo-300',
+        bgPill: 'bg-indigo-950/60 border-indigo-500/30 text-indigo-200',
+        cardBg: 'bg-slate-900/90 border-indigo-500/30 text-slate-100 shadow-[0_8px_30px_rgba(79,70,229,0.15)]',
         activeTabGradient: 'from-indigo-600 via-purple-600 to-indigo-700',
-        buttonClass: 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-indigo-500/30 shadow-md border border-indigo-400/30',
+        activeTabRing: 'ring-1 ring-indigo-400/40',
+        buttonClass: 'bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 hover:from-indigo-500 hover:to-purple-500 text-white shadow-indigo-500/30 shadow-md border border-indigo-400/40',
         sealEmoji: '🌙',
-        waxSealBg: 'bg-gradient-to-br from-indigo-700 via-purple-800 to-slate-950',
-        envelopeBg: 'bg-gradient-to-br from-indigo-900 via-purple-950 to-slate-950 border-indigo-500/40',
+        waxSealBg: 'wax-seal-celestial border-2 border-indigo-200/50 text-indigo-100',
+        envelopeBg: 'bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border-indigo-500/30',
         particleItems: ['🌌', '🌙', '⭐', '✨', '💫', '💙'],
-        tapeStyle: 'bg-indigo-400/80 border-indigo-300/80',
+        tapeClass: 'washi-tape-blue',
         scratchSecret: '1x Stargazing Drive + Midnight Conversations Under the Moon 🌙✨',
         scratchCode: 'STARS-FOREVER-2026',
         scratchGradColors: ['#e0e7ff', '#818cf8', '#4338ca', '#312e81'],
@@ -155,19 +154,20 @@ export default function RomancePhoneView({
       return {
         id: 'sunset-romance',
         badgeText: 'Golden Hour Keepsake 🌅',
-        badgeBg: 'bg-amber-100/90 text-amber-800 border-amber-300/80 shadow-xs',
+        badgeBg: 'bg-amber-50/90 text-amber-800 border-amber-300/60 shadow-amber-900/5',
         headerClass: 'text-amber-950',
-        headerGlow: 'drop-shadow-[0_2px_12px_rgba(245,158,11,0.4)]',
+        headerGlow: 'drop-shadow-[0_2px_12px_rgba(245,158,11,0.3)]',
         accentColor: 'text-amber-600',
-        bgPill: 'bg-amber-100/70 border-amber-300/80 text-amber-900',
-        cardBg: 'bg-[#FFFDF9] border-amber-200/90 text-slate-800',
+        bgPill: 'bg-amber-100/70 border-amber-300/60 text-amber-900',
+        cardBg: 'bg-[#FFFDF9] border-amber-200/80 text-slate-800 shadow-[0_8px_30px_rgba(245,158,11,0.08)]',
         activeTabGradient: 'from-amber-500 via-orange-500 to-rose-500',
-        buttonClass: 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-amber-500/30 shadow-md border border-amber-300/40',
+        activeTabRing: 'ring-1 ring-amber-400/40',
+        buttonClass: 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-amber-500/25 shadow-md border border-amber-300/40',
         sealEmoji: '✨',
-        waxSealBg: 'bg-gradient-to-br from-amber-500 via-orange-600 to-amber-800',
-        envelopeBg: 'bg-gradient-to-br from-amber-600 via-rose-700 to-amber-900 border-amber-300/40',
+        waxSealBg: 'wax-seal-gold border-2 border-amber-200/60 text-amber-100',
+        envelopeBg: 'bg-gradient-to-br from-[#FFFDF9] via-[#FAF5EE] to-[#F5ECE0] border-amber-200/80',
         particleItems: ['🌅', '✨', '🧡', '💛', '💫', '🥂'],
-        tapeStyle: 'bg-amber-300/80 border-amber-400/80',
+        tapeClass: 'washi-tape',
         scratchSecret: '1x Sunset Walk + Warm Coffee & Pastries on Me! ☕🌅',
         scratchCode: 'GOLDEN-HOUR-2026',
         scratchGradColors: ['#fef3c7', '#f59e0b', '#d97706', '#fbbf24'],
@@ -188,23 +188,24 @@ export default function RomancePhoneView({
       };
     }
 
-    // Default: Velvet Romance / Blush Romance
+    // Default: Velvet / Blush Luxury Romance
     return {
       id: 'velvet-romance',
       badgeText: 'Forever in My Heart ❤️',
-      badgeBg: 'bg-rose-100/90 text-rose-800 border-rose-300/80 shadow-xs',
+      badgeBg: 'bg-rose-50/90 text-rose-800 border-rose-300/60 shadow-rose-900/5',
       headerClass: 'text-rose-950',
-      headerGlow: 'drop-shadow-[0_2px_12px_rgba(225,29,72,0.4)]',
+      headerGlow: 'drop-shadow-[0_2px_12px_rgba(225,29,72,0.3)]',
       accentColor: 'text-rose-600',
-      bgPill: 'bg-rose-100/70 border-rose-300/80 text-rose-900',
-      cardBg: 'bg-[#FFFDFD] border-rose-200/90 text-slate-800',
-      activeTabGradient: 'from-rose-600 via-rose-700 to-pink-600',
-      buttonClass: 'bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white shadow-rose-500/30 shadow-md border border-rose-300/40',
+      bgPill: 'bg-rose-100/70 border-rose-300/60 text-rose-900',
+      cardBg: 'bg-[#FFFDFD] border-rose-200/80 text-slate-800 shadow-[0_8px_30px_rgba(244,63,94,0.07)]',
+      activeTabGradient: 'from-rose-500 via-rose-600 to-pink-600',
+      activeTabRing: 'ring-1 ring-rose-400/40',
+      buttonClass: 'bg-gradient-to-r from-rose-500 via-rose-600 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white shadow-rose-500/25 shadow-md border border-rose-300/40',
       sealEmoji: '❤️',
-      waxSealBg: 'bg-gradient-to-br from-rose-600 via-rose-700 to-red-900',
-      envelopeBg: 'bg-gradient-to-br from-rose-700 via-rose-800 to-rose-950 border-rose-400/40',
+      waxSealBg: 'wax-seal border-2 border-rose-200/60 text-rose-100',
+      envelopeBg: 'bg-gradient-to-br from-[#FFFDF9] via-[#FAF5EE] to-[#F5ECE0] border-rose-200/80',
       particleItems: ['❤️', '🌹', '✨', '💖', '💌', '🌷'],
-      tapeStyle: 'bg-rose-300/80 border-rose-400/80',
+      tapeClass: 'washi-tape-pink',
       scratchSecret: 'Unlimited cuddles, late-night dessert runs & loving you forever! 🍨🌹',
       scratchCode: 'LOVE-FOREVER-2026',
       scratchGradColors: ['#ffe4e6', '#fb7185', '#e11d48', '#fbcfe8'],
@@ -226,7 +227,7 @@ export default function RomancePhoneView({
     };
   })();
 
-  // Shower Love Reaction
+  // Shower Love reaction handler
   const handleShowerLove = () => {
     soundEffects.playCelebration();
     const nextCount = loveCount + 1;
@@ -245,13 +246,13 @@ export default function RomancePhoneView({
     }
   };
 
-  // Toggle reason like
+  // Toggle devotion card like
   const toggleReasonLike = (idx) => {
     soundEffects.playPop();
     setLikedReasons((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
-  // Wax seal breaking with tactile crack animation
+  // Envelope wax seal breaking with tactile animation
   const handleOpenEnvelope = () => {
     if (envelopeOpen || isOpeningEnvelope) return;
     setIsOpeningEnvelope(true);
@@ -260,22 +261,22 @@ export default function RomancePhoneView({
     setTimeout(() => {
       setEnvelopeOpen(true);
       setIsOpeningEnvelope(false);
-    }, 420);
+    }, 450);
   };
 
-  // Canvas Scratch Card Foil Initialization
+  // Scratch card canvas foil initialization
   const initCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const width = 240;
-    const height = 120;
+    const width = 250;
+    const height = 124;
     canvas.width = width;
     canvas.height = height;
 
-    // Metallic Gradient Foil
+    // Metallic luxury gradient foil
     const grad = ctx.createLinearGradient(0, 0, width, height);
     grad.addColorStop(0, themeConfig.scratchGradColors[0]);
     grad.addColorStop(0.35, themeConfig.scratchGradColors[1]);
@@ -285,19 +286,24 @@ export default function RomancePhoneView({
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, width, height);
 
-    // Decorative Foil Border & Sparkle Text
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+    // Subtle inner foil shine
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
     ctx.lineWidth = 1.5;
-    ctx.strokeRect(5, 5, width - 10, height - 10);
+    ctx.strokeRect(6, 6, width - 12, height - 12);
 
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(9, 9, width - 18, height - 18);
+
+    // Romantic Typography on foil
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 11px sans-serif';
+    ctx.font = 'bold 10px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('✨ SCRATCH WITH LOVE ✨', width / 2, height / 2 - 6);
+    ctx.fillText('✨ SCRATCH WITH LOVE ✨', width / 2, height / 2 - 5);
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.font = '9px sans-serif';
-    ctx.fillText('Rub with finger or mouse to reveal', width / 2, height / 2 + 10);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+    ctx.font = '8.5px sans-serif';
+    ctx.fillText('Rub gently to reveal our secret promise', width / 2, height / 2 + 10);
   }, [themeConfig]);
 
   useEffect(() => {
@@ -307,7 +313,7 @@ export default function RomancePhoneView({
     }
   }, [initCanvas, isScratched, activeTab]);
 
-  // Check scratch percentage completion for automatic celebratory reveal
+  // Check scratch completion
   const checkScratchPercentage = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas || isScratched) return;
@@ -318,7 +324,7 @@ export default function RomancePhoneView({
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = imageData.data;
       let transparentPixels = 0;
-      const totalSampled = data.length / 16; // Fast sampling
+      const totalSampled = data.length / 16;
 
       for (let i = 3; i < data.length; i += 16) {
         if (data[i] === 0) {
@@ -333,7 +339,7 @@ export default function RomancePhoneView({
         if (triggerConfetti) triggerConfetti();
       }
     } catch {
-      // Ignore cross-origin canvas security limits if any
+      // Safe fallback
     }
   }, [isScratched, triggerConfetti]);
 
@@ -357,12 +363,7 @@ export default function RomancePhoneView({
     }
   };
 
-  /**
-   * Mathematically invariant coordinate calculation under CSS scaling (e.g. transform: scale(0.6-0.7))
-   * Formula:
-   * const x = (clientX - rect.left) * (canvas.width / rect.width);
-   * const y = (clientY - rect.top) * (canvas.height / rect.height);
-   */
+  // Coordinate mapping under CSS scale
   const getCanvasCoords = (e) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
@@ -448,7 +449,7 @@ export default function RomancePhoneView({
     lastPhotoTapRef.current = now;
   };
 
-  // Resolved Content
+  // Content resolution
   const reasons = (formData.specialReasons && formData.specialReasons.length > 0)
     ? formData.specialReasons
     : (formData.loveReasons && formData.loveReasons.length > 0)
@@ -482,7 +483,7 @@ export default function RomancePhoneView({
 
   return (
     <div className="flex-1 w-full min-h-0 flex flex-col justify-between overflow-y-auto custom-scrollbar relative z-20 select-none pb-1">
-      {/* Hidden audio element for melody preview */}
+      {/* Hidden audio element for preview */}
       {audioUrl && (
         <audio
           ref={audioRef}
@@ -492,11 +493,11 @@ export default function RomancePhoneView({
         />
       )}
 
-      {/* Floating Ambient Rose Petals / Hearts / Constellations */}
+      {/* Floating Gentle Love Particles */}
       {ROMANTIC_PARTICLES.map((p, idx) => (
         <div
           key={idx}
-          className="absolute pointer-events-none select-none z-10 opacity-60"
+          className="absolute pointer-events-none select-none z-10 opacity-50"
           style={{
             left: p.left,
             top: p.top,
@@ -508,65 +509,55 @@ export default function RomancePhoneView({
         </div>
       ))}
 
-      {/* Floating Love Whisper Toast Notification */}
+      {/* Floating Love Toast Notification */}
       {loveToast && (
         <div className="absolute top-2 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/95 text-white text-[11px] font-semibold shadow-xl border border-rose-400/40 backdrop-blur-md">
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-current animate-pulse" />
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/95 text-white text-[10.5px] font-semibold shadow-xl border border-rose-400/40 backdrop-blur-md">
+            <Heart className="w-3 h-3 text-rose-500 fill-current animate-pulse" />
             <span>{loveToast}</span>
           </div>
         </div>
       )}
 
       {/* =================================================================== */}
-      {/* 1. TOP FLOATING ROMANTIC BAR: ROTATING VINYL & ROMANTIC TABS */}
+      {/* 1. STREAMLINED LUXURY HEADER: SLEEK AUDIO PILL & SEGMENTED TABS */}
       {/* =================================================================== */}
-      <div className="px-3 pt-1 shrink-0 z-30">
-        {/* Floating Rotating Vinyl Music Bar */}
-        <div className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-2xl bg-white/85 backdrop-blur-md border border-rose-200/80 shadow-2xs mb-2">
-          <div className="flex items-center gap-2 min-w-0">
-            {/* Spinning Vinyl Record Disc */}
-            <div
-              className={`relative w-6 h-6 rounded-full bg-gradient-to-tr from-[#111] via-[#2a2a2a] to-[#111] border border-white/30 shadow-xs flex items-center justify-center shrink-0 ${
-                isPlayingAudio ? 'animate-[spin_4s_linear_infinite]' : ''
-              }`}
-            >
-              {/* Vinyl grooves */}
-              <div className="w-4 h-4 rounded-full border border-white/20 flex items-center justify-center">
-                {/* Vinyl center label */}
-                <div className="w-2 h-2 rounded-full bg-rose-500 flex items-center justify-center">
-                  <div className="w-0.5 h-0.5 rounded-full bg-white" />
-                </div>
-              </div>
-            </div>
-
-            {/* Song Title & Equalizer Note */}
-            <div className="text-left min-w-0 truncate">
-              <p className="text-[10px] font-bold text-slate-800 leading-none truncate flex items-center gap-1">
-                <Music className="w-2.5 h-2.5 text-rose-600 shrink-0" />
-                <span className="truncate">{songTitle}</span>
-              </p>
-              <p className="text-[8px] text-slate-500 mt-0.5 truncate">{songArtist}</p>
-            </div>
+      <div className="px-2.5 pt-1.5 shrink-0 z-30 space-y-1.5">
+        {/* Sleek Mini Audio Pill Header Bar */}
+        <div className="w-full flex items-center justify-between px-2.5 py-1 rounded-full bg-white/80 backdrop-blur-md border border-rose-200/70 shadow-2xs">
+          {/* Subtle Occasion Indicator */}
+          <div className="flex items-center gap-1 min-w-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
+            <span className="text-[9.5px] font-bold text-slate-800 tracking-tight truncate">
+              {formData.occasion || 'Romantic Keepsake'}
+            </span>
           </div>
 
-          {/* Audio Play / Pause Button */}
+          {/* Interactive Mini Audio Equalizer Pill */}
           <button
             type="button"
             onClick={toggleAudio}
-            className="w-7 h-7 rounded-full bg-rose-100/90 hover:bg-rose-200 text-rose-700 flex items-center justify-center cursor-pointer transition-transform active:scale-90 shrink-0 shadow-2xs"
+            className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-50/80 hover:bg-rose-100/90 border border-rose-200/70 text-rose-800 text-[9px] font-medium transition-all active:scale-95 cursor-pointer max-w-[150px]"
             title={isPlayingAudio ? 'Pause Keepsake Melody' : 'Play Keepsake Melody'}
           >
             {isPlayingAudio ? (
-              <Pause className="w-3.5 h-3.5 fill-current" />
+              <div className="flex items-center gap-0.5 h-2.5 shrink-0">
+                <span className="w-0.5 h-2.5 bg-rose-500 rounded-full animate-[pulse_0.8s_ease-in-out_infinite]" />
+                <span className="w-0.5 h-1.5 bg-rose-400 rounded-full animate-[pulse_0.6s_ease-in-out_infinite_0.2s]" />
+                <span className="w-0.5 h-2.5 bg-rose-600 rounded-full animate-[pulse_1s_ease-in-out_infinite_0.4s]" />
+              </div>
             ) : (
-              <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+              <Play className="w-2.5 h-2.5 fill-current text-rose-600 shrink-0" />
             )}
+            <span className="truncate">{songTitle}</span>
+            {isPlayingAudio ? (
+              <Pause className="w-2.5 h-2.5 text-rose-600/70 shrink-0" />
+            ) : null}
           </button>
         </div>
 
-        {/* Elegant Romantic Tab Navigation Bar */}
-        <div className="flex items-center justify-between p-1 rounded-2xl bg-white/70 backdrop-blur-md border border-rose-200/60 shadow-2xs text-[10px]">
+        {/* Clean Modern Segmented Pill Tabs (No cramped vertical stacking) */}
+        <div className="w-full flex items-center justify-between p-0.5 rounded-full bg-white/85 backdrop-blur-md border border-rose-200/70 shadow-2xs text-[9.5px]">
           {[
             { key: 'letter', label: 'Letter', icon: '💌' },
             { key: 'moments', label: 'Story', icon: '📸' },
@@ -580,14 +571,14 @@ export default function RomancePhoneView({
                 key={tab.key}
                 type="button"
                 onClick={() => handleTabSelect(tab.key)}
-                className={`flex-1 py-1 px-0.5 rounded-xl transition-all text-center flex flex-col items-center gap-0.5 cursor-pointer select-none ${
+                className={`flex-1 py-1 px-1 rounded-full transition-all text-center flex items-center justify-center gap-1 cursor-pointer select-none ${
                   isTabActive
-                    ? `bg-gradient-to-r ${themeConfig.activeTabGradient} text-white shadow-xs font-bold scale-[1.03]`
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 font-medium'
+                    ? `bg-gradient-to-r ${themeConfig.activeTabGradient} text-white shadow-xs font-bold ${themeConfig.activeTabRing}`
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-rose-50/50 font-medium'
                 }`}
               >
-                <span className="text-xs">{tab.icon}</span>
-                <span className="text-[8.5px] leading-tight">{tab.label}</span>
+                <span className="text-[11px] leading-none shrink-0">{tab.icon}</span>
+                <span className="text-[9px] font-semibold tracking-tight">{tab.label}</span>
               </button>
             );
           })}
@@ -597,33 +588,35 @@ export default function RomancePhoneView({
       {/* =================================================================== */}
       {/* 2. DEDICATED ROMANTIC CONTENT PANELS */}
       {/* =================================================================== */}
-      <div className="flex-1 min-h-0 w-full px-3 py-2 overflow-y-auto custom-scrollbar flex flex-col items-center text-center">
+      <div className="flex-1 min-h-0 w-full px-2.5 py-2 overflow-y-auto custom-scrollbar flex flex-col items-center text-center">
         
         {/* TAB 1: LOVE LETTER & HERO HEADER (or in 'all' view) */}
         {(activeTab === 'letter' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInUpSmooth mb-4">
-            {/* Hero Romantic Card */}
-            <div className={`w-full rounded-2xl p-3 shadow-sm border text-center transition-all ${themeConfig.cardBg} mb-3`}>
+          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
+            {/* Hero Romantic Card with Soft Lighting */}
+            <div className={`w-full rounded-2xl p-3.5 border text-center transition-all ${themeConfig.cardBg} mb-3 relative overflow-hidden`}>
+              {/* Soft ambient lighting top shine */}
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-rose-300/40 to-transparent pointer-events-none" />
+
               {/* Romantic Date Badge */}
               <div className="inline-flex items-center justify-center mb-1.5">
-                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border flex items-center gap-1 ${themeConfig.badgeBg}`}>
+                <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-semibold border flex items-center gap-1 tracking-wide uppercase ${themeConfig.badgeBg}`}>
                   <span>✨</span>
                   <span>{formData.date || 'Forever & Always'}</span>
                   <span>✨</span>
                 </span>
               </div>
 
-              {/* Romantic Title with Pulsating Soft Heart Glow */}
+              {/* Romantic Title with Flowing Cursive */}
               <h1 className={`font-cursive text-xl sm:text-2xl font-bold tracking-tight leading-snug break-words ${themeConfig.headerClass} ${themeConfig.headerGlow}`}>
-                <span>To My One & Only, </span>
-                <br />
-                <span className={`${themeConfig.accentColor} inline-flex items-center gap-1 animate-pulse`}>
+                <span className="block text-slate-800 text-base font-serif font-normal italic mb-0.5">To My One & Only,</span>
+                <span className={`${themeConfig.accentColor} inline-flex items-center gap-1`}>
                   {recipientName} ❤️
                 </span>
               </h1>
 
               {/* Subtitle */}
-              <p className="text-[10px] text-slate-500 mt-1 italic leading-snug px-1 max-w-[240px] mx-auto break-words">
+              <p className="text-[10px] text-slate-500 mt-1 italic leading-snug px-2 max-w-[240px] mx-auto break-words">
                 "{formData.subtitle || themeConfig.defaultSubtitle}"
               </p>
 
@@ -632,13 +625,13 @@ export default function RomancePhoneView({
                 <button
                   type="button"
                   onClick={handleShowerLove}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-transform active:scale-95 cursor-pointer shadow-sm ${themeConfig.buttonClass}`}
+                  className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-bold transition-transform active:scale-95 cursor-pointer shadow-sm ${themeConfig.buttonClass}`}
                   title="Tap to shower love and send hearts"
                 >
                   <Heart className="w-3.5 h-3.5 fill-current animate-pulse text-white" />
                   <span>Shower Love</span>
                   {loveCount > 0 && (
-                    <span className="ml-0.5 px-1.5 py-0.2 rounded-full bg-white/25 text-[9px] font-mono">
+                    <span className="ml-0.5 px-1.5 py-0.2 rounded-full bg-white/30 text-[9px] font-mono">
                       {loveCount}
                     </span>
                   )}
@@ -649,89 +642,96 @@ export default function RomancePhoneView({
             {/* Interactive Wax-Sealed Love Envelope */}
             <div className="w-full max-w-[260px] mx-auto">
               {!envelopeOpen ? (
-                /* SEALED ENVELOPE WITH WAX MEDALLION */
+                /* 3D EMBOSSED WAX-SEALED ENVELOPE */
                 <div
                   onClick={handleOpenEnvelope}
-                  className={`relative w-full rounded-2xl p-4 shadow-xl border cursor-pointer select-none transition-all duration-300 hover:scale-[1.02] active:scale-95 ${themeConfig.envelopeBg} ${
+                  className={`group relative w-full rounded-2xl p-4 shadow-xl border cursor-pointer select-none transition-all duration-300 hover:scale-[1.02] active:scale-95 ${themeConfig.envelopeBg} ${
                     isOpeningEnvelope ? 'scale-95 brightness-110 shadow-2xl' : ''
                   }`}
-                  title="Tap wax seal to open love letter"
+                  title="Tap wax seal to unfold handwritten letter"
                 >
-                  {/* Decorative envelope fold lines */}
-                  <div className="absolute inset-x-0 top-0 h-10 border-b border-white/20 bg-white/5 pointer-events-none rounded-t-2xl" />
+                  {/* Decorative envelope triangular flap fold */}
+                  <div 
+                    className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-amber-100/30 to-amber-200/20 shadow-xs border-b border-amber-300/30 pointer-events-none rounded-t-2xl"
+                    style={{
+                      clipPath: 'polygon(0% 0%, 100% 0%, 50% 100%)',
+                    }}
+                  />
 
-                  {/* Centered Wax Seal */}
-                  <div className="relative py-2 flex flex-col items-center justify-center">
+                  {/* Centered 3D Wax Seal */}
+                  <div className="relative pt-6 pb-2 flex flex-col items-center justify-center">
                     <div
-                      className={`w-14 h-14 rounded-full shadow-2xl relative flex items-center justify-center border-2 border-white/40 transition-all duration-300 group-hover:scale-105 active:scale-90 ${themeConfig.waxSealBg} ${
+                      className={`w-14 h-14 rounded-full shadow-xl relative flex items-center justify-center transition-all duration-300 group-hover:scale-110 active:scale-90 ${themeConfig.waxSealBg} ${
                         isOpeningEnvelope ? 'scale-125 rotate-6 ring-4 ring-amber-300/60 animate-pulse' : ''
                       }`}
                     >
-                      {/* Inner embossed ring */}
+                      {/* Inner embossed medallion ring */}
                       <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center shadow-inner">
-                        <span className="text-xl select-none filter drop-shadow-sm">
+                        <span className="text-xl select-none filter drop-shadow-sm leading-none flex items-center justify-center">
                           <AppleEmoji emoji={themeConfig.sealEmoji} size={22} />
                         </span>
                       </div>
 
                       {/* Sparkle ping */}
                       <div className="absolute -top-1 -right-1">
-                        <Sparkles className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+                        <Sparkles className="w-3.5 h-3.5 text-amber-200 animate-pulse" />
                       </div>
 
-                      {/* Wax Seal Crack Effect during opening */}
+                      {/* Tactile Seal Crack Effect during opening */}
                       {isOpeningEnvelope && (
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <div className="w-full h-0.5 bg-white/90 rotate-45 animate-ping" />
+                          <div className="w-full h-0.5 bg-white/95 rotate-45 animate-ping" />
                         </div>
                       )}
                     </div>
 
-                    {/* Pulsing prompt badge */}
-                    <div className="mt-3 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-[10px] font-bold text-white shadow-xs animate-pulse">
-                      {isOpeningEnvelope ? 'Breaking wax seal... ✨' : 'Tap wax seal to open ❤️'}
+                    {/* Interactive hint prompt badge */}
+                    <div className="mt-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-amber-200/60 text-[10px] font-bold text-slate-800 shadow-xs flex items-center gap-1">
+                      <span>{isOpeningEnvelope ? 'Breaking wax seal...' : 'Tap wax seal to open'}</span>
+                      <span>✨</span>
                     </div>
                   </div>
                 </div>
               ) : (
-                /* UNSEALED VINTAGE HANDWRITTEN LOVE LETTER */
-                <div className="w-full bg-[#FFFDF9] rounded-2xl p-4 shadow-xl border border-rose-200/90 text-left relative overflow-hidden animate-fadeInUpSmooth text-slate-800">
-                  {/* Watermark in corner */}
-                  <div className="absolute top-2 right-2 text-rose-300/30 select-none text-2xl pointer-events-none">
-                    <AppleEmoji emoji={themeConfig.sealEmoji} size={26} />
+                /* UNSEALED VINTAGE TEXTURED PARCHMENT LOVE LETTER */
+                <div className="w-full bg-[#FFFDF9] paper-parchment rounded-2xl p-4 shadow-xl border-2 border-amber-200/80 text-left relative overflow-hidden animate-fadeInSmooth text-slate-800">
+                  {/* Vintage airmail corner stamp */}
+                  <div className="absolute top-3 right-3 flex flex-col items-end pointer-events-none">
+                    <div className="w-10 h-12 rounded border border-dashed border-amber-700/40 p-1 flex flex-col items-center justify-center text-amber-800/80 rotate-2 bg-amber-50/70 shadow-2xs">
+                      <Heart className="w-3 h-3 fill-amber-700/60 text-amber-700" />
+                      <span className="text-[6.5px] font-bold mt-0.5 font-sans">AIR MAIL</span>
+                      <span className="text-[6.5px] font-sans truncate max-w-[34px]">{formData.date || 'FOREVER'}</span>
+                    </div>
                   </div>
 
                   {/* Letter Header */}
-                  <div className="border-b border-rose-100 pb-2 mb-2 flex items-center justify-between">
-                    <div>
-                      <p className="font-cursive text-sm sm:text-base font-bold text-rose-950">
-                        My Beloved {recipientName},
-                      </p>
-                      <p className="text-[9px] uppercase tracking-wider text-rose-600/70 font-sans">
-                        {formData.date || 'Forever & Always'}
-                      </p>
-                    </div>
-                    <span className="text-xs">💌</span>
+                  <div className="border-b border-amber-900/10 pb-2 mb-2 pr-12">
+                    <p className="font-serif text-sm font-bold text-rose-950">
+                      Dearest {recipientName},
+                    </p>
+                    <p className="text-[8.5px] uppercase tracking-wider text-rose-600/70 font-sans mt-0.5">
+                      {formData.date || 'Forever & Always'}
+                    </p>
                   </div>
 
-                  {/* Letter Body in Romantic Cursive Typography */}
-                  <div className="font-cursive text-xs leading-relaxed text-slate-700 max-h-48 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line break-words">
-                    {renderAppleText(letterBody, 12)}
+                  {/* Letter Body in Romantic Handwritten Cursive */}
+                  <div className="font-cursive text-[13px] leading-relaxed text-slate-700 max-h-48 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line break-words">
+                    {renderAppleText(letterBody, 13)}
                   </div>
 
                   {/* Letter Signature */}
-                  <div className="pt-2 mt-2 border-t border-rose-100 text-right">
+                  <div className="pt-2 mt-2 border-t border-amber-900/10 text-right">
                     <p className="font-cursive text-xs font-bold text-rose-900 leading-snug whitespace-pre-line break-words">
                       {renderAppleText(letterSignOff, 13)}
                     </p>
                   </div>
 
                   {/* Action Buttons Below Letter */}
-                  <div className="mt-3 pt-2 border-t border-rose-100/80 flex items-center justify-between gap-2">
+                  <div className="mt-3 pt-2 border-t border-amber-200/60 flex items-center justify-between gap-2">
                     <button
                       type="button"
                       onClick={() => setEnvelopeOpen(false)}
-                      className="py-1 px-2.5 rounded-lg text-[10px] font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 cursor-pointer active:scale-95 transition-transform shadow-2xs"
+                      className="py-1 px-2.5 rounded-full text-[9.5px] font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 cursor-pointer active:scale-95 transition-transform shadow-2xs"
                     >
                       Reseal 💌
                     </button>
@@ -739,7 +739,7 @@ export default function RomancePhoneView({
                       <button
                         type="button"
                         onClick={() => handleTabSelect('moments')}
-                        className="py-1 px-3 rounded-lg text-[10px] font-bold text-white bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 shadow-xs cursor-pointer active:scale-95 transition-transform flex items-center gap-1"
+                        className="py-1 px-3 rounded-full text-[9.5px] font-bold text-white bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 shadow-xs cursor-pointer active:scale-95 transition-transform flex items-center gap-1"
                       >
                         <span>Our Story</span>
                         <span>📸 ➔</span>
@@ -754,10 +754,10 @@ export default function RomancePhoneView({
 
         {/* TAB 2: OUR CHERISHED MEMORIES POLAROID REEL (or in 'all' view) */}
         {(activeTab === 'moments' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInUpSmooth mb-4">
+          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
             {/* Chapter Header */}
             <div className="text-center mb-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border ${themeConfig.badgeBg}`}>
+              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${themeConfig.badgeBg}`}>
                 Chapter 2 • Captured Moments
               </span>
               <h2 className="text-sm sm:text-base font-bold text-slate-900 mt-1 flex items-center justify-center gap-1">
@@ -767,46 +767,46 @@ export default function RomancePhoneView({
               <p className="text-[10px] text-slate-500">Every picture holds a thousand loving words</p>
             </div>
 
-            {/* Realistic Polaroid Card pinned with Rose Washi Tape */}
-            <div className="relative w-full max-w-[235px] bg-white p-3 pb-4 rounded-sm shadow-xl border border-slate-100 text-slate-800 rotate-[-1deg] hover:rotate-0 transition-transform">
-              {/* Top Rose Washi Tape */}
+            {/* Realistic Polaroid Card with Washi Tape */}
+            <div className="relative w-full max-w-[235px] bg-[#FCFBF9] p-2.5 pb-4 rounded-sm shadow-xl border border-amber-200/50 text-slate-800 rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
+              {/* Textured Washi Tape on top */}
               <div
-                className={`absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-4 border rounded-xs shadow-2xs rotate-[-2deg] z-10 ${themeConfig.tapeStyle}`}
+                className={`absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-4 border rounded-xs shadow-2xs rotate-[-2deg] z-10 ${themeConfig.tapeClass}`}
               />
 
-              {/* Photo Frame */}
+              {/* Photo Frame Container */}
               <div
                 onClick={handlePhotoClick}
                 onDoubleClick={triggerPhotoLike}
-                className="relative w-full aspect-square rounded-xs overflow-hidden bg-slate-100 my-1 cursor-pointer group"
+                className="relative w-full aspect-square rounded-xs overflow-hidden bg-slate-100 my-1 cursor-pointer group shadow-inner"
                 title="Double tap or click to send love to this photo"
               >
                 <img
                   src={currentPhoto.url}
                   alt={currentPhoto.caption || recipientName}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* Heart Burst Flash Overlay */}
                 {photoLiked && (
-                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center animate-in zoom-in-50 duration-200">
+                  <div className="absolute inset-0 bg-black/20 flex items-center justify-center animate-in zoom-in-50 duration-200 z-20">
                     <Heart className="w-12 h-12 text-rose-500 fill-current animate-ping" />
                   </div>
                 )}
 
                 {/* Photo Pagination badge */}
                 {photos.length > 1 && (
-                  <div className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded-full bg-black/60 text-white text-[8px] font-mono">
+                  <div className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded-full bg-black/60 text-white text-[8px] font-mono backdrop-blur-xs">
                     {activePhotoIdx + 1}/{photos.length}
                   </div>
                 )}
               </div>
 
-              {/* Polaroid Caption in Handwritten Cursive */}
+              {/* Polaroid Handwritten Caption */}
               <p className="font-cursive text-xs text-slate-800 text-center px-1 mt-1 font-semibold leading-snug line-clamp-2 break-words">
                 "{currentPhoto.caption || formData.photoCaption || 'Forever & Always With You! ❤️🌹'}"
               </p>
-              <div className="text-[9px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full inline-block mt-1 font-sans border border-rose-200/60">
+              <div className="text-[8.5px] text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full inline-block mt-1 font-sans border border-rose-200/60">
                 ✨ {currentPhoto.tag || 'Cherished Moment'} ✨
               </div>
             </div>
@@ -830,7 +830,7 @@ export default function RomancePhoneView({
               <button
                 type="button"
                 onClick={triggerPhotoLike}
-                className="px-3 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-[10px] font-bold text-rose-700 flex items-center gap-1 cursor-pointer transition-transform active:scale-95 shadow-2xs"
+                className="px-3.5 py-1.5 rounded-full bg-rose-50 hover:bg-rose-100 border border-rose-200 text-[10px] font-bold text-rose-700 flex items-center gap-1.5 cursor-pointer transition-transform active:scale-95 shadow-2xs"
               >
                 <Heart className={`w-3.5 h-3.5 text-rose-500 ${photoLiked ? 'fill-current animate-ping' : ''}`} />
                 <span>Adore Photo</span>
@@ -866,10 +866,10 @@ export default function RomancePhoneView({
 
         {/* TAB 3: REASONS WHY I ADORE YOU (or in 'all' view) */}
         {(activeTab === 'adore' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInUpSmooth mb-4">
+          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
             {/* Chapter Header */}
             <div className="text-center mb-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border ${themeConfig.badgeBg}`}>
+              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${themeConfig.badgeBg}`}>
                 Chapter 3 • Devotion
               </span>
               <h2 className="text-sm sm:text-base font-bold text-slate-900 mt-1 flex items-center justify-center gap-1">
@@ -887,18 +887,20 @@ export default function RomancePhoneView({
                   <div
                     key={idx}
                     onClick={() => toggleReasonLike(idx)}
-                    className={`w-full rounded-2xl p-2.5 border transition-all text-left flex items-start gap-2.5 cursor-pointer relative shadow-2xs hover:shadow-md select-none active:scale-98 ${
-                      themeConfig.cardBg
-                    } ${isLiked ? 'border-rose-400 bg-rose-50/40' : 'border-rose-100'}`}
+                    className={`w-full rounded-2xl p-3 border transition-all text-left flex items-start gap-2.5 cursor-pointer relative shadow-2xs hover:shadow-sm select-none active:scale-[0.98] ${
+                      isLiked 
+                        ? 'border-rose-400/80 bg-rose-50/70 shadow-rose-500/5' 
+                        : 'bg-white/85 backdrop-blur-md border-rose-100/90 hover:border-rose-300'
+                    }`}
                   >
-                    {/* Cute Reason Icon */}
-                    <div className="w-9 h-9 rounded-xl bg-rose-50/90 border border-rose-200/80 flex items-center justify-center shrink-0 text-lg shadow-2xs">
+                    {/* Cute Reason Emoji Medallion */}
+                    <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-50 to-pink-100/70 border border-rose-200/70 flex items-center justify-center shrink-0 text-lg shadow-2xs">
                       <AppleEmoji emoji={item.icon || '❤️'} size={18} />
                     </div>
 
                     {/* Reason Text */}
                     <div className="flex-1 min-w-0 pr-4">
-                      <h3 className="text-xs font-bold text-rose-950 leading-tight break-words">
+                      <h3 className="text-xs font-bold text-slate-900 leading-tight break-words">
                         {renderAppleText(item.title)}
                       </h3>
                       <p className="text-[10px] text-slate-600 mt-0.5 leading-snug break-words">
@@ -914,14 +916,14 @@ export default function RomancePhoneView({
                         toggleReasonLike(idx);
                       }}
                       className={`p-1.5 rounded-full transition-transform cursor-pointer active:scale-90 ${
-                        isLiked ? 'text-rose-500 scale-110' : 'text-slate-400 hover:text-rose-400'
+                        isLiked ? 'text-rose-500 scale-110' : 'text-slate-300 hover:text-rose-400'
                       }`}
                       aria-label="Adore this reason"
                     >
                       <Heart className={`w-4 h-4 ${isLiked ? 'fill-current text-rose-500' : ''}`} />
                     </button>
 
-                    {/* Adored tag */}
+                    {/* Adored Tag */}
                     {isLiked && (
                       <div className="absolute top-1.5 right-8 text-[8px] font-bold text-rose-600 animate-in fade-in">
                         Adored ❤️
@@ -947,10 +949,10 @@ export default function RomancePhoneView({
 
         {/* TAB 4: SECRET LOVE SCRATCH CARD (or in 'all' view) */}
         {(activeTab === 'scratch' || activeTab === 'all') && (
-          <div className="w-full flex flex-col items-center animate-fadeInUpSmooth mb-4">
+          <div className="w-full flex flex-col items-center animate-fadeInSmooth mb-4">
             {/* Chapter Header */}
             <div className="text-center mb-2">
-              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border ${themeConfig.badgeBg}`}>
+              <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider ${themeConfig.badgeBg}`}>
                 Chapter 4 • Special Keepsake
               </span>
               <h2 className="text-sm sm:text-base font-bold text-slate-900 mt-1 flex items-center justify-center gap-1">
@@ -960,21 +962,21 @@ export default function RomancePhoneView({
               <p className="text-[10px] text-slate-500">Scratch the metallic foil to reveal our secret</p>
             </div>
 
-            {/* Scratch Box Container */}
-            <div className="relative w-full max-w-[240px] mx-auto rounded-2xl overflow-hidden shadow-md border border-rose-200 select-none bg-white">
+            {/* Scratch Box Gift Container */}
+            <div className="relative w-full max-w-[250px] mx-auto rounded-2xl overflow-hidden shadow-lg border-2 border-rose-200/90 select-none bg-white">
               {/* Underlying Secret Revealed Card */}
-              <div className="w-full p-3.5 bg-gradient-to-br from-rose-50 via-pink-50 to-amber-50 text-slate-800 flex flex-col items-center justify-center text-center min-h-[120px]">
-                <div className="text-lg mb-1">
+              <div className="w-full p-3.5 bg-gradient-to-br from-[#FFF8F6] via-[#FFFDF9] to-[#FFF0F4] text-slate-800 flex flex-col items-center justify-center text-center min-h-[124px]">
+                <div className="text-lg mb-0.5">
                   <AppleEmoji emoji="🌹" size={20} />
                 </div>
                 <h4 className="text-xs font-bold text-rose-950">Secret Promise Unlocked!</h4>
-                <p className="font-cursive text-xs text-rose-700 mt-1 leading-snug px-1 break-words">
+                <p className="font-cursive text-xs text-rose-800 mt-1 leading-snug px-1 break-words font-medium">
                   "{themeConfig.scratchSecret}"
                 </p>
 
                 {/* Voucher Code Pill with Copy Action */}
                 <div className="mt-2 flex items-center gap-1">
-                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white border border-rose-200 text-[8.5px] font-mono font-bold text-rose-600 shadow-2xs select-all">
+                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-rose-200 text-[8.5px] font-mono font-bold text-rose-600 shadow-2xs select-all">
                     <span>CODE: {themeConfig.scratchCode}</span>
                   </div>
                   <button
@@ -1004,13 +1006,13 @@ export default function RomancePhoneView({
               )}
             </div>
 
-            {/* Scratch Card Controls */}
+            {/* Scratch Card Action Controls */}
             <div className="mt-2 flex items-center justify-center gap-2">
               {!isScratched ? (
                 <button
                   type="button"
                   onClick={handleInstantReveal}
-                  className="py-1 px-3 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-[10px] font-bold shadow-xs flex items-center gap-1 cursor-pointer active:scale-95"
+                  className="py-1 px-3.5 rounded-full bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 text-white text-[10px] font-bold shadow-xs flex items-center gap-1 cursor-pointer active:scale-95"
                 >
                   <Wand2 className="w-3 h-3" />
                   <span>Instant Reveal ✨</span>
@@ -1019,7 +1021,7 @@ export default function RomancePhoneView({
                 <button
                   type="button"
                   onClick={handleResetScratch}
-                  className="py-1 px-3 rounded-full bg-white border border-rose-200 text-rose-700 text-[10px] font-semibold hover:bg-rose-50 flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
+                  className="py-1 px-3.5 rounded-full bg-white border border-rose-200 text-rose-700 text-[10px] font-semibold hover:bg-rose-50 flex items-center gap-1 cursor-pointer active:scale-95 shadow-2xs"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Scratch Again 🔁</span>

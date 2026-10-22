@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
-import { Heart } from 'lucide-react';
+import { Heart, Sparkles, Quote, Calendar } from 'lucide-react';
 import AmbientParticles from './common/AmbientParticles';
 import AudioPlayer from './common/AudioPlayer';
 import EnvelopeLetter from './common/EnvelopeLetter';
@@ -33,20 +33,37 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
       return {
         id: 'celestial-love',
         isDark: true,
-        bgClass: 'bg-[#0F172A] text-slate-100 selection:bg-indigo-900 selection:text-indigo-100',
+        bgClass: 'bg-[#0A0F1D] text-slate-100 selection:bg-indigo-900 selection:text-indigo-100',
+        bgGradients: 'radial-gradient(at 20% 12%, rgba(99, 102, 241, 0.3) 0px, transparent 55%), radial-gradient(at 85% 15%, rgba(168, 85, 247, 0.28) 0px, transparent 50%), radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.2) 0px, transparent 65%), radial-gradient(at 80% 80%, rgba(139, 92, 246, 0.28) 0px, transparent 55%), radial-gradient(at 15% 90%, rgba(30, 58, 138, 0.35) 0px, transparent 50%)',
+        kicker: '✦ WRITTEN IN THE STARS ✦',
         badgeText: 'Written in the Stars',
         badgeEmoji: '🌌',
-        badgeClass: 'bg-indigo-950/80 text-indigo-300 border border-indigo-500/40 shadow-indigo-950/50 shadow-md',
+        badgeClass: 'bg-indigo-950/80 text-indigo-200 border border-indigo-400/40 shadow-indigo-950/60 shadow-lg backdrop-blur-md',
+        pillClass: 'border-indigo-500/30 bg-slate-900/70 text-indigo-200 shadow-xs',
         headlineColor: 'text-white',
         headlineGradient: 'bg-gradient-to-r from-indigo-200 via-sky-200 to-purple-200 bg-clip-text text-transparent',
         subtitleColor: 'text-indigo-200/80',
+        sectionKickerColor: 'text-indigo-400',
         sectionTitleColor: 'text-white',
         sectionSubtitleColor: 'text-indigo-200/70',
-        cardBg: 'bg-slate-900/85 backdrop-blur-md',
-        cardBorder: 'border border-indigo-500/20 hover:border-indigo-400/50',
-        cardGlow: 'hover:shadow-indigo-500/10 shadow-lg',
-        cardTitleColor: 'text-indigo-200',
+        accentColor: 'text-indigo-400',
+        cardBg: 'bg-slate-900/75 backdrop-blur-md',
+        cardBorder: 'border border-indigo-500/25 hover:border-indigo-400/50',
+        cardGlow: 'hover:shadow-indigo-500/20 shadow-xl shadow-indigo-950/50',
+        cardTitleColor: 'text-indigo-100',
         cardDescColor: 'text-slate-300',
+        cardBadgeClass: 'bg-indigo-950/90 text-indigo-300 border border-indigo-500/30',
+        cardIconBg: 'bg-indigo-950/80 text-indigo-200 border border-indigo-500/30 shadow-indigo-900/30',
+        pedestalBg: 'bg-slate-900/60 border border-indigo-500/25 shadow-2xl shadow-indigo-950/70',
+        quoteBannerClass: 'bg-slate-900/60 border border-indigo-500/25 shadow-xl backdrop-blur-md',
+        quoteTextColor: 'text-indigo-100 font-serif',
+        quoteAuthorColor: 'text-indigo-400/80',
+        dividerBorder: 'border-indigo-500/20',
+        quotes: [
+          { text: "In a universe of billions of galaxies, my heart was always destined to find you.", author: "Cosmic Destiny" },
+          { text: "I have loved the stars too fondly to be ever fearful of the night.", author: "Sarah Williams" },
+          { text: "You are my sun, my moon, and every constellation in my sky.", author: "E.E. Cummings" }
+        ],
         sealType: 'celestial',
         sealEmoji: siteData.letter?.sealEmoji || '🌙',
         polaroidTape: 'blue',
@@ -55,7 +72,8 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
         audioAccent: 'from-indigo-500 to-purple-600',
         scratchTheme: 'celestial',
         quizTheme: 'indigo',
-        buttonClass: 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-indigo-500/30 shadow-lg border border-indigo-400/30',
+        buttonClass: 'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white shadow-xl shadow-indigo-500/40 border border-indigo-400/30',
+        confettiColors: ['#818CF8', '#A855F7', '#60A5FA', '#F472B6', '#38BDF8'],
         loveToastMessages: [
           'Written in the stars forever 🌌💫',
           'Across a thousand lifetimes, I choose you 🌙',
@@ -99,20 +117,37 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
       return {
         id: 'sunset-romance',
         isDark: false,
-        bgClass: 'bg-[#FFFBF5] text-slate-800 selection:bg-amber-100 selection:text-amber-900',
+        bgClass: 'bg-[#FFFDF7] text-slate-800 selection:bg-amber-100 selection:text-amber-900',
+        bgGradients: 'radial-gradient(at 15% 10%, rgba(254, 240, 138, 0.45) 0px, transparent 55%), radial-gradient(at 85% 15%, rgba(253, 186, 116, 0.4) 0px, transparent 50%), radial-gradient(at 50% 50%, rgba(254, 215, 170, 0.35) 0px, transparent 65%), radial-gradient(at 85% 80%, rgba(251, 146, 60, 0.35) 0px, transparent 55%), radial-gradient(at 15% 90%, rgba(254, 243, 199, 0.5) 0px, transparent 50%)',
+        kicker: '✦ A GOLDEN HOUR DEDICATION ✦',
         badgeText: 'Golden Hour Keepsake',
         badgeEmoji: '🌅',
-        badgeClass: 'bg-amber-50 text-amber-700 border border-amber-200/80 shadow-xs',
+        badgeClass: 'bg-amber-50/90 text-amber-800 border border-amber-200/80 shadow-xs backdrop-blur-md',
+        pillClass: 'border-amber-200/80 bg-white/70 text-amber-800 shadow-xs',
         headlineColor: 'text-slate-900',
         headlineGradient: 'bg-gradient-to-r from-amber-700 via-orange-600 to-rose-600 bg-clip-text text-transparent',
         subtitleColor: 'text-slate-600',
+        sectionKickerColor: 'text-amber-600',
         sectionTitleColor: 'text-slate-900',
         sectionSubtitleColor: 'text-slate-500',
-        cardBg: 'bg-white/95 backdrop-blur-xs',
+        accentColor: 'text-amber-600',
+        cardBg: 'bg-white/80 backdrop-blur-md',
         cardBorder: 'border border-amber-100/90 hover:border-amber-300',
-        cardGlow: 'hover:shadow-amber-100/50 shadow-xs hover:shadow-md',
+        cardGlow: 'hover:shadow-amber-500/10 shadow-lg shadow-amber-900/5',
         cardTitleColor: 'text-slate-800',
         cardDescColor: 'text-slate-600',
+        cardBadgeClass: 'bg-amber-50 text-amber-800 border border-amber-200/80',
+        cardIconBg: 'bg-amber-50 text-amber-800 border border-amber-200/60 shadow-amber-900/5',
+        pedestalBg: 'bg-amber-50/50 border border-amber-200/60 shadow-xl shadow-amber-500/5',
+        quoteBannerClass: 'bg-white/75 border border-amber-100 shadow-md backdrop-blur-md',
+        quoteTextColor: 'text-slate-800 font-serif',
+        quoteAuthorColor: 'text-amber-700/80',
+        dividerBorder: 'border-amber-200/60',
+        quotes: [
+          { text: "Whatever our souls are made of, yours and mine are the same.", author: "Emily Brontë" },
+          { text: "Every sunset is sweeter, warmer, and more magical because you are beside me.", author: "Golden Memories" },
+          { text: "You are my sun, my golden hour, and every bright tomorrow.", author: "Forever & Always" }
+        ],
         sealType: 'gold',
         sealEmoji: siteData.letter?.sealEmoji || '✨',
         polaroidTape: 'gold',
@@ -121,7 +156,8 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
         audioAccent: 'from-amber-500 to-rose-400',
         scratchTheme: 'gold',
         quizTheme: 'gold',
-        buttonClass: 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-amber-500/25 shadow-md border border-amber-300/40',
+        buttonClass: 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white shadow-xl shadow-amber-500/25 border border-amber-200/40',
+        confettiColors: ['#F59E0B', '#FBBF24', '#FB7185', '#F97316', '#F43F5E'],
         loveToastMessages: [
           'You are my golden hour! 🌅✨',
           'Every sunset is sweeter with you 🧡',
@@ -165,20 +201,37 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
     return {
       id: 'velvet-romance',
       isDark: false,
-      bgClass: 'bg-[#FFF8F8] text-slate-800 selection:bg-rose-100 selection:text-rose-900',
+      bgClass: 'bg-[#FFF7F8] text-slate-800 selection:bg-rose-100 selection:text-rose-900',
+      bgGradients: 'radial-gradient(at 15% 10%, rgba(254, 205, 211, 0.5) 0px, transparent 55%), radial-gradient(at 85% 15%, rgba(253, 164, 175, 0.4) 0px, transparent 50%), radial-gradient(at 50% 50%, rgba(255, 228, 230, 0.55) 0px, transparent 65%), radial-gradient(at 85% 80%, rgba(254, 205, 211, 0.45) 0px, transparent 55%), radial-gradient(at 15% 90%, rgba(254, 226, 226, 0.5) 0px, transparent 50%)',
+      kicker: '✦ A KEEPSAKE OF ENDLESS LOVE ✦',
       badgeText: 'Forever in My Heart',
       badgeEmoji: '❤️',
-      badgeClass: 'bg-rose-50 text-rose-600 border border-rose-200/80 shadow-xs',
+      badgeClass: 'bg-rose-50/90 text-rose-700 border border-rose-200/80 shadow-xs backdrop-blur-md',
+      pillClass: 'border-rose-200/80 bg-white/70 text-rose-800 shadow-xs',
       headlineColor: 'text-slate-900',
-      headlineGradient: 'bg-gradient-to-r from-rose-700 via-rose-600 to-red-700 bg-clip-text text-transparent',
+      headlineGradient: 'bg-gradient-to-r from-rose-700 via-rose-600 to-red-600 bg-clip-text text-transparent',
       subtitleColor: 'text-slate-600',
+      sectionKickerColor: 'text-rose-600',
       sectionTitleColor: 'text-slate-900',
       sectionSubtitleColor: 'text-slate-500',
-      cardBg: 'bg-white/95 backdrop-blur-xs',
+      accentColor: 'text-rose-600',
+      cardBg: 'bg-white/80 backdrop-blur-md',
       cardBorder: 'border border-rose-100/90 hover:border-rose-300',
-      cardGlow: 'hover:shadow-rose-100/50 shadow-xs hover:shadow-md',
+      cardGlow: 'hover:shadow-rose-500/10 shadow-lg shadow-rose-900/5',
       cardTitleColor: 'text-slate-800',
       cardDescColor: 'text-slate-600',
+      cardBadgeClass: 'bg-rose-50 text-rose-700 border border-rose-200/80',
+      cardIconBg: 'bg-rose-50 text-rose-700 border border-rose-200/60 shadow-rose-900/5',
+      pedestalBg: 'bg-rose-50/50 border border-rose-200/60 shadow-xl shadow-rose-500/5',
+      quoteBannerClass: 'bg-white/75 border border-rose-100 shadow-md backdrop-blur-md',
+      quoteTextColor: 'text-slate-800 font-serif',
+      quoteAuthorColor: 'text-rose-700/80',
+      dividerBorder: 'border-rose-200/60',
+      quotes: [
+        { text: "In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine.", author: "Maya Angelou" },
+        { text: "In a sea of people, my eyes will always search for you.", author: "Forever Yours" },
+        { text: "Every love story is beautiful, but ours is my absolute favorite.", author: "Endless Love" }
+      ],
       sealType: 'rose',
       sealEmoji: siteData.letter?.sealEmoji || '❤️',
       polaroidTape: 'pink',
@@ -187,7 +240,8 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
       audioAccent: 'from-rose-600 to-red-600',
       scratchTheme: 'rose',
       quizTheme: 'rose',
-      buttonClass: 'bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white shadow-rose-500/25 shadow-md border border-rose-300/40',
+      buttonClass: 'bg-gradient-to-r from-rose-600 via-rose-500 to-red-600 hover:from-rose-500 hover:to-red-500 text-white shadow-xl shadow-rose-500/25 border border-rose-300/40',
+      confettiColors: ['#E11D48', '#FB7185', '#F43F5E', '#FDA4AF', '#BE123C'],
       loveToastMessages: [
         'You have my whole heart ❤️',
         'Loving you is effortless 🌹',
@@ -255,6 +309,7 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
   const [loveToast, setLoveToast] = useState(null);
   const [loveCount, setLoveCount] = useState(0);
   const [likedCards, setLikedCards] = useState({});
+  const [floatingHearts, setFloatingHearts] = useState([]);
 
   const handleSendLove = () => {
     soundEffects.playCelebration();
@@ -267,16 +322,31 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
       setLoveToast(null);
     }, 2400);
 
+    // Dynamic mini heart bursts
+    const emojis = isCelestial 
+      ? ['🌌', '✨', '💫', '🌙', '💙', '⭐'] 
+      : (isSunset 
+          ? ['🌅', '✨', '🧡', '💛', '💖', '🥂'] 
+          : ['❤️', '💖', '🌹', '✨', '💕', '🥰']);
+
+    const newBurst = {
+      id: Date.now() + Math.random(),
+      left: (Math.random() - 0.5) * 80,
+      rotation: (Math.random() - 0.5) * 45,
+      emoji: emojis[Math.floor(Math.random() * emojis.length)],
+    };
+
+    setFloatingHearts((prev) => [...prev.slice(-12), newBurst]);
+    setTimeout(() => {
+      setFloatingHearts((prev) => prev.filter((h) => h.id !== newBurst.id));
+    }, 1200);
+
     try {
       confetti({
-        particleCount: 35,
-        spread: 60,
+        particleCount: 45,
+        spread: 65,
         origin: { y: 0.8 },
-        colors: isCelestial 
-          ? ['#818CF8', '#A855F7', '#60A5FA', '#F472B6'] 
-          : (isSunset 
-              ? ['#F59E0B', '#FBBF24', '#FB7185', '#F97316'] 
-              : ['#E11D48', '#FB7185', '#F43F5E', '#FDA4AF'])
+        colors: themeConfig.confettiColors
       });
     } catch {}
   };
@@ -286,9 +356,53 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
     setLikedCards((prev) => ({ ...prev, [idx]: !prev[idx] }));
   };
 
+  const occasionBanner = siteData.occasion || "Celebrating Our Story";
+  const dateBanner = siteData.date || "Forever & Always";
+
   return (
-    <div className={`relative min-h-screen ${themeConfig.bgClass} overflow-x-hidden font-sans selection:backdrop-blur-sm transition-colors duration-500`}>
-      
+    <div 
+      className={`relative min-h-screen ${themeConfig.bgClass} overflow-x-hidden font-sans selection:backdrop-blur-sm transition-colors duration-500`}
+      style={{
+        backgroundImage: themeConfig.bgGradients
+      }}
+    >
+      <style>{`
+        @keyframes floatHeart {
+          0% {
+            transform: translateY(0) scale(0.6) rotate(0deg);
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-90px) scale(1.4) rotate(var(--rot, 15deg));
+            opacity: 0;
+          }
+        }
+        .animate-float-heart {
+          animation: floatHeart 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes shimmerBadge {
+          0%, 100% { opacity: 0.9; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.02); }
+        }
+        .animate-shimmer-badge {
+          animation: shimmerBadge 3s ease-in-out infinite;
+        }
+      `}</style>
+
+      {/* Ambient Aurora / Starlight Glow */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <div 
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[120px] opacity-60 pointer-events-none"
+          style={{
+            background: isCelestial 
+              ? 'radial-gradient(circle, rgba(99,102,241,0.25) 0%, rgba(168,85,247,0.15) 50%, transparent 80%)' 
+              : (isSunset 
+                  ? 'radial-gradient(circle, rgba(251,146,60,0.25) 0%, rgba(245,158,11,0.15) 50%, transparent 80%)' 
+                  : 'radial-gradient(circle, rgba(244,63,94,0.22) 0%, rgba(251,113,133,0.14) 50%, transparent 80%)')
+          }} 
+        />
+      </div>
+
       {/* Floating Ambient Hearts, Petals, or Constellation Stars */}
       <AmbientParticles 
         type={themeConfig.particlePreset} 
@@ -309,10 +423,10 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
       {/* Floating Love Toast Notification */}
       {loveToast && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
-          <div className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold shadow-2xl ${
+          <div className={`flex items-center gap-2.5 px-6 py-3 rounded-full text-xs sm:text-sm font-semibold shadow-2xl backdrop-blur-md ${
             themeConfig.isDark 
-              ? 'bg-indigo-950 text-indigo-100 border border-indigo-400/50 shadow-indigo-950/80' 
-              : 'bg-slate-900 text-white shadow-rose-900/20'
+              ? 'bg-indigo-950/90 text-indigo-100 border border-indigo-400/50 shadow-indigo-950/80' 
+              : 'bg-slate-900/90 text-white shadow-rose-900/20'
           }`}>
             <Heart className="w-4 h-4 text-rose-500 fill-current animate-pulse" />
             <span>{loveToast}</span>
@@ -321,131 +435,249 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
       )}
 
       {/* Hero Section */}
-      <header className="relative z-20 pt-16 sm:pt-24 pb-10 px-4 text-center max-w-3xl mx-auto">
-        {/* Curated Theme Badge */}
-        <div className="inline-flex items-center justify-center mb-4">
-          <div className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-1.5 ${themeConfig.badgeClass}`}>
+      <header className="relative z-20 pt-16 sm:pt-24 pb-12 px-4 text-center max-w-4xl mx-auto">
+        {/* Editorial Romantic Kicker */}
+        <div className={`text-[11px] sm:text-xs font-semibold tracking-widest uppercase mb-3 ${themeConfig.sectionKickerColor}`}>
+          {themeConfig.kicker}
+        </div>
+
+        {/* Curated Theme Keepsake Badge */}
+        <div className="inline-flex items-center justify-center mb-6">
+          <div className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide flex items-center gap-2 animate-shimmer-badge ${themeConfig.badgeClass}`}>
+            <AppleEmoji emoji={themeConfig.badgeEmoji} size={15} />
             <span>{themeConfig.badgeText}</span>
-            <AppleEmoji emoji={themeConfig.badgeEmoji} size={14} />
+            <Sparkles className="w-3.5 h-3.5 opacity-70" />
           </div>
+        </div>
+
+        {/* Recipient Spotlight */}
+        <div className="mb-3">
+          <span className="block font-cursive text-2xl sm:text-4xl text-rose-500/90 mb-1">
+            To my one and only
+          </span>
+          <span className={`font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight block ${themeConfig.headlineGradient} drop-shadow-xs`}>
+            {renderAppleText(recipientName)}
+          </span>
         </div>
 
         {/* Romantic Headline */}
-        <h1 className={`font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.15] ${themeConfig.headlineColor}`}>
-          {renderAppleText(title)}
-        </h1>
+        {title && title.toLowerCase().trim() !== recipientName.toLowerCase().trim() && (
+          <h1 className={`font-serif text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.2] mt-3 mb-4 ${themeConfig.headlineColor}`}>
+            {renderAppleText(title)}
+          </h1>
+        )}
 
         {/* Subtitle */}
-        <p className={`mt-4 text-base sm:text-lg max-w-xl mx-auto font-normal leading-relaxed ${themeConfig.subtitleColor}`}>
+        <p className={`mt-3 text-base sm:text-lg max-w-xl mx-auto font-normal leading-relaxed ${themeConfig.subtitleColor}`}>
           {renderAppleText(subtitle)}
         </p>
 
-        {/* Interactive Shower Love Reaction Button */}
-        <div className="mt-7 flex items-center justify-center gap-3">
-          <button
-            onClick={handleSendLove}
-            className={`group inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer ${themeConfig.buttonClass}`}
-            title="Tap to shower love and send hearts"
-          >
-            <Heart className="w-4 h-4 fill-current group-hover:scale-125 transition-transform" />
-            <span>Shower Love</span>
-            {loveCount > 0 && (
-              <span className="ml-1 px-2 py-0.5 rounded-full bg-white/25 text-[11px] font-mono">
-                {loveCount}
+        {/* Occasion & Date Banner Pill */}
+        <div className={`mt-5 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase backdrop-blur-md shadow-xs border transition-all duration-300 ${themeConfig.pillClass}`}>
+          <Calendar className="w-3.5 h-3.5 opacity-70" />
+          <span>{occasionBanner}</span>
+          <span className="opacity-40">•</span>
+          <span>{dateBanner}</span>
+        </div>
+
+        {/* Interactive Shower Love Reaction Button with Floating Heart Burst */}
+        <div className="mt-8 flex flex-col items-center justify-center gap-3">
+          <div className="relative inline-block">
+            {floatingHearts.map((heart) => (
+              <span
+                key={heart.id}
+                className="absolute pointer-events-none text-2xl select-none animate-float-heart z-30"
+                style={{
+                  left: `calc(50% + ${heart.left}px)`,
+                  bottom: '100%',
+                  '--rot': `${heart.rotation}deg`
+                }}
+              >
+                {heart.emoji}
               </span>
-            )}
-          </button>
+            ))}
+
+            <button
+              onClick={handleSendLove}
+              className={`group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-sm sm:text-base font-semibold transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer ${themeConfig.buttonClass}`}
+              title="Tap to shower love and send hearts"
+            >
+              <Heart className="w-5 h-5 fill-current group-hover:scale-125 transition-transform duration-300 animate-pulse" />
+              <span>Shower Love</span>
+              <Sparkles className="w-4 h-4 opacity-80 group-hover:rotate-45 transition-transform duration-300" />
+              {loveCount > 0 && (
+                <span className="ml-1 px-2.5 py-0.5 rounded-full bg-white/30 text-xs font-mono font-bold shadow-xs">
+                  {loveCount}
+                </span>
+              )}
+            </button>
+          </div>
+          <p className={`text-[11px] sm:text-xs opacity-75 font-medium tracking-wide ${themeConfig.subtitleColor}`}>
+            Tap to send fluttering hearts & celebrate
+          </p>
         </div>
       </header>
 
-      {/* Interactive Sealed Love Letter */}
-      <section className="relative z-20" aria-label="Sealed Love Letter">
-        <EnvelopeLetter
-          to={recipientName}
-          from={senderName}
-          date={siteData.date || "Forever & Always"}
-          letterBody={letterBody}
-          sealType={themeConfig.sealType}
-          sealEmoji={themeConfig.sealEmoji}
-          fontFamily="handwriting"
-          initials={themeConfig.sealEmoji}
-          subtitle="Tap the wax seal to open your personal letter"
-          dark={themeConfig.isDark}
-        />
-      </section>
-
-      {/* "Little Things I Adore About You" Interactive Cards */}
-      <section className="relative z-20 max-w-3xl mx-auto my-14 px-4" aria-label="Reasons Why I Adore You">
+      {/* CHAPTER I: Interactive Sealed Love Letter */}
+      <section className="relative z-20 max-w-4xl mx-auto my-16 px-4" aria-label="Sealed Love Letter">
         <div className="text-center mb-8">
-          <div className={`text-xs font-medium tracking-wide uppercase mb-1.5 ${themeConfig.isDark ? 'text-indigo-400' : (isSunset ? 'text-amber-600' : 'text-rose-600')}`}>
-            From The Heart
+          <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${themeConfig.sectionKickerColor}`}>
+            CHAPTER I • FROM THE HEART
           </div>
-          <h2 className={`font-serif text-2xl sm:text-3xl md:text-4xl font-bold ${themeConfig.sectionTitleColor}`}>
-            {renderAppleText(isSunset ? "Warm Little Things I Adore" : isCelestial ? "Constellations of Why I Love You" : "Little Things I Adore About You")}
+          <h2 className={`font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight ${themeConfig.sectionTitleColor}`}>
+            {renderAppleText(isSunset ? "A Golden Love Letter" : isCelestial ? "A Starlit Love Letter" : "Sealed With Endless Love")}
           </h2>
-          <p className={`text-xs sm:text-sm mt-1 max-w-md mx-auto ${themeConfig.sectionSubtitleColor}`}>
-            Tap any card to save your favorite memory
+          <p className={`text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed ${themeConfig.sectionSubtitleColor}`}>
+            Tap the wax seal to unfold handwritten words meant only for you
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Romantic Pedestal Framing */}
+        <div className={`relative rounded-3xl p-4 sm:p-8 backdrop-blur-md ${themeConfig.pedestalBg} transition-all duration-500`}>
+          <EnvelopeLetter
+            to={recipientName}
+            from={senderName}
+            date={siteData.date || "Forever & Always"}
+            letterBody={letterBody}
+            sealType={themeConfig.sealType}
+            sealEmoji={themeConfig.sealEmoji}
+            fontFamily="handwriting"
+            initials={themeConfig.sealEmoji}
+            subtitle="Tap the wax seal to open your private letter"
+            dark={themeConfig.isDark}
+          />
+        </div>
+      </section>
+
+      {/* Editorial Interlude 1 */}
+      <div className="relative z-20 max-w-2xl mx-auto my-14 px-4 text-center">
+        <div className={`p-6 sm:p-8 rounded-2xl ${themeConfig.quoteBannerClass} relative`}>
+          <Quote className={`w-6 h-6 mx-auto mb-3 opacity-30 ${themeConfig.accentColor}`} />
+          <p className={`text-base sm:text-lg italic leading-relaxed ${themeConfig.quoteTextColor}`}>
+            "{themeConfig.quotes[0].text}"
+          </p>
+          <div className={`mt-3 text-xs tracking-widest uppercase font-semibold ${themeConfig.quoteAuthorColor}`}>
+            — {themeConfig.quotes[0].author}
+          </div>
+        </div>
+      </div>
+
+      {/* CHAPTER II: "Little Things I Adore About You" Interactive Cards */}
+      <section className="relative z-20 max-w-4xl mx-auto my-16 px-4" aria-label="Reasons Why I Adore You">
+        <div className="text-center mb-10">
+          <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${themeConfig.sectionKickerColor}`}>
+            CHAPTER II • THE LITTLE DETAILS
+          </div>
+          <h2 className={`font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight ${themeConfig.sectionTitleColor}`}>
+            {renderAppleText(isSunset ? "Warm Little Things I Adore" : isCelestial ? "Constellations of Why I Love You" : "Little Things I Adore About You")}
+          </h2>
+          <p className={`text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed ${themeConfig.sectionSubtitleColor}`}>
+            Every quiet laugh, gentle touch, and sweet habit that made me fall for you
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {loveReasons.map((item, idx) => {
             const isLiked = !!likedCards[idx];
+            const cardNum = String(idx + 1).padStart(2, '0');
             return (
               <div 
                 key={idx}
                 onClick={() => toggleCardLike(idx)}
-                className={`group relative rounded-2xl p-5 transition-all duration-300 cursor-pointer select-none ${themeConfig.cardBg} ${themeConfig.cardBorder} ${themeConfig.cardGlow} hover:-translate-y-0.5`}
+                className={`group relative rounded-2xl p-6 transition-all duration-300 cursor-pointer select-none ${themeConfig.cardBg} ${themeConfig.cardBorder} ${themeConfig.cardGlow} hover:-translate-y-1`}
               >
-                <div className="flex items-start gap-3.5">
-                  <span className="text-2xl select-none shrink-0 inline-flex items-center group-hover:scale-115 transition-transform">
-                    <AppleEmoji emoji={item.icon || '❤️'} size={26} />
+                {/* Card Top Row: Counter Badge & Adore Button */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded-full ${themeConfig.cardBadgeClass}`}>
+                    #{cardNum}
                   </span>
+                  <div className="flex items-center gap-1.5">
+                    {isLiked && (
+                      <span className="text-[11px] font-semibold text-rose-500 animate-in fade-in duration-200">
+                        Adored
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      className={`p-1.5 rounded-full transition-all duration-200 cursor-pointer ${
+                        isLiked ? 'text-rose-500 scale-110 bg-rose-50/80 shadow-xs' : 'text-slate-400/60 hover:text-rose-500 hover:scale-105'
+                      }`}
+                      aria-label="Adore this reason"
+                    >
+                      <Heart className={`w-4 h-4 ${isLiked ? 'fill-current text-rose-500' : ''}`} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300 ${themeConfig.cardIconBg}`}>
+                    <AppleEmoji emoji={item.icon || '❤️'} size={26} />
+                  </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <h3 className={`text-sm sm:text-base font-semibold leading-snug truncate ${themeConfig.cardTitleColor}`}>
-                        {renderAppleText(item.title)}
-                      </h3>
-                      <button
-                        type="button"
-                        className={`p-1 rounded-full transition-colors ${
-                          isLiked ? 'text-rose-500 scale-110' : 'text-slate-400/60 hover:text-rose-400'
-                        }`}
-                        aria-label="Adore this reason"
-                      >
-                        <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-current' : ''}`} />
-                      </button>
-                    </div>
-                    <p className={`text-xs sm:text-sm mt-1 leading-relaxed ${themeConfig.cardDescColor}`}>
+                    <h3 className={`text-base sm:text-lg font-bold leading-snug ${themeConfig.cardTitleColor}`}>
+                      {renderAppleText(item.title)}
+                    </h3>
+                    <p className={`text-xs sm:text-sm mt-1.5 leading-relaxed ${themeConfig.cardDescColor}`}>
                       {renderAppleText(item.desc)}
                     </p>
                   </div>
                 </div>
-
-                {isLiked && (
-                  <div className="absolute top-2 right-2 flex items-center gap-1 text-[10px] font-semibold text-rose-500 animate-in fade-in duration-200">
-                    <span>Adored</span>
-                  </div>
-                )}
               </div>
             );
           })}
         </div>
       </section>
 
-      {/* Polaroid Memories Carousel / Lightbox Gallery */}
-      <section className="relative z-20" aria-label="Polaroid Memories">
+      {/* Editorial Interlude 2 */}
+      <div className="relative z-20 max-w-2xl mx-auto my-14 px-4 text-center">
+        <div className={`p-6 sm:p-8 rounded-2xl ${themeConfig.quoteBannerClass} relative`}>
+          <Quote className={`w-6 h-6 mx-auto mb-3 opacity-30 ${themeConfig.accentColor}`} />
+          <p className={`text-base sm:text-lg italic leading-relaxed ${themeConfig.quoteTextColor}`}>
+            "{themeConfig.quotes[1].text}"
+          </p>
+          <div className={`mt-3 text-xs tracking-widest uppercase font-semibold ${themeConfig.quoteAuthorColor}`}>
+            — {themeConfig.quotes[1].author}
+          </div>
+        </div>
+      </div>
+
+      {/* CHAPTER III: Polaroid Memories Carousel / Lightbox Gallery */}
+      <section className="relative z-20 max-w-4xl mx-auto my-16 px-4" aria-label="Polaroid Memories">
+        <div className="text-center mb-8">
+          <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${themeConfig.sectionKickerColor}`}>
+            CHAPTER III • TIMELESS MEMORIES
+          </div>
+        </div>
         <PolaroidGallery
           photos={photos}
           title={isSunset ? "Golden Hour Memories" : isCelestial ? "Cosmic Memories of Us" : "Snapshots of Us"}
-          subtitle="Click on any photo to zoom in"
+          subtitle="Click on any photo to zoom in & relive the moment"
           tapeStyle={themeConfig.polaroidTape}
           dark={themeConfig.isDark}
         />
       </section>
 
-      {/* Romantic Cute Quiz */}
-      <section className="relative z-20" aria-label="Cute Quiz">
+      {/* Editorial Interlude 3 */}
+      <div className="relative z-20 max-w-2xl mx-auto my-14 px-4 text-center">
+        <div className={`p-6 sm:p-8 rounded-2xl ${themeConfig.quoteBannerClass} relative`}>
+          <Quote className={`w-6 h-6 mx-auto mb-3 opacity-30 ${themeConfig.accentColor}`} />
+          <p className={`text-base sm:text-lg italic leading-relaxed ${themeConfig.quoteTextColor}`}>
+            "{themeConfig.quotes[2].text}"
+          </p>
+          <div className={`mt-3 text-xs tracking-widest uppercase font-semibold ${themeConfig.quoteAuthorColor}`}>
+            — {themeConfig.quotes[2].author}
+          </div>
+        </div>
+      </div>
+
+      {/* CHAPTER IV: Romantic Cute Quiz */}
+      <section className="relative z-20 max-w-4xl mx-auto my-16 px-4" aria-label="Cute Quiz">
+        <div className="text-center mb-6">
+          <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${themeConfig.sectionKickerColor}`}>
+            CHAPTER IV • A PLAYFUL MOMENT
+          </div>
+        </div>
         <CuteQuiz
           quiz={siteData.quiz}
           theme={themeConfig.quizTheme}
@@ -458,8 +690,13 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
         />
       </section>
 
-      {/* Interactive Scratch-to-Reveal Card */}
-      <section className="relative z-20" aria-label="Scratch Card">
+      {/* CHAPTER V: Interactive Scratch-to-Reveal Card */}
+      <section className="relative z-20 max-w-4xl mx-auto my-16 px-4" aria-label="Scratch Card">
+        <div className="text-center mb-6">
+          <div className={`text-xs font-semibold tracking-widest uppercase mb-2 ${themeConfig.sectionKickerColor}`}>
+            CHAPTER V • A SECRET PROMISE
+          </div>
+        </div>
         <ScratchCard
           scratchData={siteData.scratchCard}
           theme={themeConfig.scratchTheme}
@@ -470,6 +707,25 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hide
           voucherCode={themeConfig.defaultScratch.code}
         />
       </section>
+
+      {/* Closing Keepsake Dedication Card */}
+      <div className="relative z-20 max-w-xl mx-auto my-16 px-4 text-center">
+        <div className={`p-8 sm:p-10 rounded-3xl ${themeConfig.cardBg} ${themeConfig.cardBorder} shadow-2xl relative overflow-hidden backdrop-blur-md`}>
+          <div className="text-2xl mb-3 select-none">❦ ✦ ❦</div>
+          <p className={`text-xs uppercase tracking-widest font-semibold mb-2 ${themeConfig.accentColor}`}>
+            FOREVER & ALWAYS
+          </p>
+          <h3 className={`font-serif text-2xl sm:text-3xl font-bold mb-3 ${themeConfig.sectionTitleColor}`}>
+            Every Chapter Is Sweeter With You
+          </h3>
+          <p className={`text-sm sm:text-base leading-relaxed ${themeConfig.sectionSubtitleColor}`}>
+            This keepsake was crafted with endless love for <span className="font-semibold text-rose-500">{recipientName}</span>, signed with love by <span className="font-semibold font-cursive text-2xl text-rose-600">{senderName}</span>.
+          </p>
+          <div className={`mt-6 pt-4 border-t ${themeConfig.dividerBorder} text-xs font-mono opacity-60`}>
+            {siteData.date || "Timeless • Infinite • Unconditional"}
+          </div>
+        </div>
+      </div>
 
       {/* Keepsake Footer */}
       <TemplateFooter 
