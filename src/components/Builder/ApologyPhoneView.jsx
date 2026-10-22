@@ -497,7 +497,7 @@ export default function ApologyPhoneView({
                   </div>
 
                   {letterBody ? (
-                    <div className="text-[10px] text-emerald-950 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
+                    <div className="text-[10px] text-emerald-950 leading-relaxed max-h-48 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
                       {renderAppleText(letterBody, 10)}
                     </div>
                   ) : null}
