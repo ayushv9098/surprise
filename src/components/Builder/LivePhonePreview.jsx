@@ -803,8 +803,8 @@ export default function LivePhonePreview({ formData = {} }) {
   const isScrapbook =
     !isRomance && (
       occasionCategory === 'scrapbook' ||
-      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories', 'polaroid-scrapbook'].includes(theme.id) ||
-      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories', 'polaroid-scrapbook'].includes(formData.templateId)
+      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(theme.id) ||
+      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId)
     );
 
   const isApology =
