@@ -1,5 +1,63 @@
 [
   {
+    "templateId": "velvet-romance",
+    "category": "romance",
+    "gender": "boy",
+    "recipientName": "Maya",
+    "senderName": "Liam",
+    "occasion": "Happy Anniversary, My Love! ❤️",
+    "subtitle": "Every single second with you is my favorite memory.",
+    "heroPhoto": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Forever & Always With You! ❤️🌹",
+    "photos": [
+      {
+        "id": "vr-p1",
+        "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Forever & Always With You! ❤️🌹",
+        "tag": "Our Beginning"
+      },
+      {
+        "id": "vr-p2",
+        "url": "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+        "caption": "Every laugh is sweeter by your side 🌹",
+        "tag": "Pure Love"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "❤️",
+        "title": "My Whole World",
+        "desc": "The effortless way you make every single day feel warm, magical, and full of peace."
+      },
+      {
+        "icon": "🌹",
+        "title": "Unconditional Grace",
+        "desc": "Your gentle heart and the endless kindness you share with everyone around you."
+      },
+      {
+        "icon": "💍",
+        "title": "Forever Partner",
+        "desc": "Through every twist, journey, and victory, I choose you again and again every day."
+      }
+    ],
+    "letter": {
+      "title": "To My One & Only",
+      "content": "My Love,\n\nLooking back at our journey, every single second with you is my absolute favorite memory. You bring warmth, laughter, and an unspoken comfort into my life that nothing else could ever replace.\n\nThank you for choosing me, for holding my hand through everything, and for filling my heart with pure romance and peace. Here is to our forever.\n\nHappy Anniversary, my soulmate! ❤️🌹",
+      "signOff": "Forever yours,\nLiam ❤️",
+      "sealEmoji": "❤️",
+      "waxColor": "#E11D48"
+    },
+    "songId": "insta-acoustic-romance",
+    "id": "wc-mvjoqoi7-yxh1",
+    "slug": "maya-eq97c",
+    "updatedAt": "2026-10-22T15:17:55.595Z",
+    "createdAt": "2026-10-22T15:17:55.471Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgG4TrsAWgCcB7KBAOwGMIQAaEapCAc1OIE9MQyKa6jVhEqoIxHgCNS3RsQjUAljEUiwAOQRQ6WALIJOCBiADOIscU3aeAGUVbjpasxOLSlHgAkEMGJwAEAIKUlIq4xCYIXPT+ugE2pLgAhP6AJuSA8H-GJgCukmCKYHA6IACi4QGulKxF-mbU7qj+AO4FABb+nKTZ-oom-lABAGYI2BwFEP3QHJwAdMat4qQACq2kYKQ8rWBgMCYYAPT7ihTCJjPZlCbwCCatM-VQ+zCr64QAjACsbwAcbwCcfwATAA2YEAdj+b0IHwAzGCPghvjD-gAGSRggD8CGy6wAvIMOBQwAAyQYFXHUMgwYlNXHfFEo4kARzpKOMzzWpAAwj58u4eAAxDgQcL+YlBOBNAx9ADqbX8AE0uikMoAeDcAnPvsl6kEyYADaoEU6Cw2GIhBgb2M2WIcE2212ByOJwgZwuV0Qt3u5Ce2veX1+AJB4Mh0LhCKRqPRWJxpHxhKQpPJlNI1Np9MZLPpxmYMD5HiwQvkovFgUl0v8crA7SV2RV6Q1xjACFYPAA8tb-AAhNiKEK9lsAX3ohuNODNMEBVptdp2e0Ox2bLvOl2unoePs5fsBILBMOBKLBgIZ72BABZUG9JMDaKfvsDo3iCcQiYmwBSqTTWRnWdneW586U5T+Ig2SsO0vS1E0EAQJAxD+JIASdB2rhiP4DaME2LZYEs1oTAkuAgAOAC6jBXAo9hwAAShANzuLqGAGiAij1ABGSNgURQ8HEFarDUMocHA6CMGIJjUDwAAqCz+BAgxPoULp9FKiFdP0CAANYTCK4gVP2NSoAY-iDNBcDNFEUAxCczEIHAMRUI0gzZHAJmkIM-gwDRtBzEOhosTw6HgBxxQAKo0A0BT-tZ-gAOLEAgtDGCJYlYDWcHCJQ8n+AsURgP4dn+FWmmiEUJh9GpvaoJQCkdCptxRBMLRVtJ5TuBMURdKI1XZF5w5Mb5WCALwbgCxO+x8mCsKopLNllUSMJLpJSAklkKB7RaVw+UtCYYAxAAVl0xCVZwtkddgzHrNE-jIP41CrDqExIblrAIL2uUdc2T2UE12n+PpsyESRIBFNs4iYKA+SjVg4mkLEAStpVYr+LDcCyEw7iQOlXHxIkED0AAOpQeMJKQZVVPBcVqblOV7f4u3WgdMSrTpVQ1HUDTNPK90QQMuWSCYpBwDiEzDKMxDjJMUDTDMioqZIIsk1Kz5VjEIFgbBR2NFQ-hujARMiFd5ByT06VQ1zcCKEZ+WtEg-iUGsrT9tJcBmHrjmNKt-jyNcnl43jklUOT91PldN2VKwkwxIHvGoPbXOWx1VZLWBn1cFW-Zq4ZHCGYoTnRwEWXEDlDXtDAuHu+QVC0C9jTuXFECS544gTBB6z+FTT6rTM3uUN4vgBMEoThJE51c7zjlEhAdb+a4rCUK2sljUW4idREuOUHYWhpJkpE0XAJTi9tig8GxjBSgAHlyfMcDwADEJRvG8AAit6EaR7isGgPC9ptCCEHFXSbcxJAy4CGMEaHgTRqCECgNgXaTJSCKDBIQTgJ9WiWlIvzLCIAKCGEIBAJkfwwRiUYNkGA+lICoECGAHgR4QTvBRIQbc4lPgYDeGCDAHwPgzFPGCN4AAtbM8gWDkMoVgahwJaH0MBIwj4zDWHsM4dwvhA4gA",
+    "template": "velvet-romance",
+    "viewCount": 4,
+    "lastViewedAt": "2026-10-22T15:20:25.662Z"
+  },
+  {
     "templateId": "golden-birthday",
     "category": "birthday",
     "gender": "boy",

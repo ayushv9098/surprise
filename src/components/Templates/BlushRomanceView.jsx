@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import confetti from 'canvas-confetti';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
-import TemplateFooter from './common/TemplateFooter';
 import { soundEffects } from './common/SoundEffects';
 import { getSongById } from '../../data/songs';
 import './common/blush-romance.css';
@@ -401,7 +400,7 @@ function PhotoLightboxModal({
  */
 export default function BlushRomanceView({
   siteData = {},
-  onNavigateCreate,
+  _onNavigateCreate,
   hideAudioPlayer = false,
   _isLiveView = false
 }) {
@@ -1509,8 +1508,6 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         )}
       </main>
 
-      {/* Keepsake Footer */}
-      <TemplateFooter onNavigateCreate={onNavigateCreate} dark={isCelestial} />
     </div>
   );
 }
