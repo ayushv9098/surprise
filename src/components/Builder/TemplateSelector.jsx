@@ -8,7 +8,7 @@ export default function TemplateSelector({
   selectedId,
   selectedCategory = 'birthday',
   selectedGender = 'boy',
-  onSelectCategory,
+  onSelectCategory: _onSelectCategory,
   onSelectGender,
   onSelectTemplate,
 }) {
@@ -21,6 +21,31 @@ export default function TemplateSelector({
   const matchingTemplates = selectedCategory === 'birthday'
     ? categoryTemplates.filter((tmpl) => tmpl.gender === selectedGender)
     : categoryTemplates;
+
+  // Resolve current active category details
+  const currentCategoryObj = CATEGORIES.find((c) => c.id === selectedCategory) || {
+    id: selectedCategory,
+    name:
+      selectedCategory === 'birthday'
+        ? 'Birthday'
+        : selectedCategory === 'romance'
+        ? 'Love & Anniversary'
+        : selectedCategory === 'scrapbook'
+        ? 'Scrapbook'
+        : selectedCategory === 'apology'
+        ? 'Heartfelt Apology'
+        : 'Surprise',
+    emoji:
+      selectedCategory === 'birthday'
+        ? '🎂'
+        : selectedCategory === 'romance'
+        ? '🌸'
+        : selectedCategory === 'scrapbook'
+        ? '📸'
+        : selectedCategory === 'apology'
+        ? '🥺'
+        : '✨',
+  };
 
   const handleGenderToggle = (newGender) => {
     if (onSelectGender) {
@@ -36,35 +61,20 @@ export default function TemplateSelector({
     }
   };
 
-  const handleCategoryClick = (catId) => {
-    if (onSelectCategory) {
-      onSelectCategory(catId);
-    }
-    const catTmpls = typeof getTemplatesByCategory === 'function'
-      ? getTemplatesByCategory(catId)
-      : TEMPLATES.filter((t) => t.category === catId);
-
-    if (catTmpls && catTmpls.length > 0) {
-      const topTmpl = catId === 'birthday'
-        ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
-        : catTmpls[0].id;
-
-      if (topTmpl && onSelectTemplate) {
-        onSelectTemplate(topTmpl);
-      }
-    }
-  };
-
   return (
     <div className="space-y-6">
-      {/* 1) HEADER & GENDER TOGGLE */}
+      {/* 1) HEADER & OCCASION BADGE (Category chosen from Home page) */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-100">
         <div>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200/80 mb-2 shadow-2xs select-none">
+            <AppleEmoji emoji={currentCategoryObj.emoji} size={13} />
+            <span>{currentCategoryObj.name}</span>
+          </div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Choose a Style
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            Pick the aesthetic for your surprise website
+            Pick the aesthetic for your {currentCategoryObj.name.toLowerCase()} surprise website
           </p>
         </div>
 
@@ -107,36 +117,7 @@ export default function TemplateSelector({
         )}
       </div>
 
-      {/* 2) OCCASION NAVIGATION TABS */}
-      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-1">
-        {CATEGORIES.map((cat) => {
-          const isActive = selectedCategory === cat.id;
-          const label =
-            cat.id === 'birthday'
-              ? 'Birthday'
-              : cat.id === 'scrapbook'
-              ? 'Scrapbook'
-              : cat.name;
-
-          return (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => handleCategoryClick(cat.id)}
-              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 shrink-0 cursor-pointer select-none active:scale-95 ${
-                isActive
-                  ? 'bg-[#E8364E] text-white shadow-sm shadow-rose-500/25 ring-2 ring-[#E8364E]/20'
-                  : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-              }`}
-            >
-              <AppleEmoji emoji={cat.emoji} size={15} />
-              <span>{label}</span>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* 3) RECOMMENDED PRO STYLE CARDS GRID */}
+      {/* 2) RECOMMENDED PRO STYLE CARDS GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
         {matchingTemplates.map((tmpl) => {
           const isSelected = selectedId === tmpl.id;
