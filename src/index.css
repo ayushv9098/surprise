@@ -182,9 +182,19 @@
   box-shadow: 0 4px 12px rgba(147, 51, 234, 0.35);
 }
 
+.wax-seal-olive {
+  background: radial-gradient(circle at 35% 35%, #22c55e, #15803d 65%, #14532d 100%);
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.4);
+}
+
 .wax-seal-peach {
   background: radial-gradient(circle at 35% 35%, #fb923c, #ea580c 65%, #9a3412 100%);
   box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+}
+
+.wax-seal-celestial {
+  background: radial-gradient(circle at 35% 35%, #818cf8, #4f46e5 65%, #312e81 100%);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.45);
 }
 
 /* Candle flame animation */

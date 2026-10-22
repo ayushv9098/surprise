@@ -35,7 +35,10 @@ export default function PolaroidGallery({
   title = "Our Favorite Moments Captured",
   subtitle = "Click any photo to step into the memory",
   tapeStyle = "gold", // 'gold', 'pink', 'blue', 'none'
-  rotations = [-2.5, 2, -1.5, 3, -2, 1.5]
+  rotations = [-2.5, 2, -1.5, 3, -2, 1.5],
+  dark = false,
+  titleClassName = '',
+  subtitleClassName = '',
 }) {
   const [activePhotoIndex, setActivePhotoIndex] = useState(null);
 
@@ -95,6 +98,8 @@ export default function PolaroidGallery({
     gold: 'washi-tape',
     pink: 'washi-tape-pink',
     blue: 'washi-tape-blue',
+    cyan: 'bg-cyan-400/80 shadow-[0_1px_4px_rgba(6,182,212,0.4)]',
+    terracotta: 'bg-amber-600/70 shadow-[0_1px_3px_rgba(180,83,9,0.3)]',
     none: 'hidden',
   }[tapeStyle] || 'washi-tape';
 
@@ -102,10 +107,10 @@ export default function PolaroidGallery({
     <section className="w-full max-w-5xl mx-auto my-12 px-4">
       {/* Section Header */}
       <div className="text-center mb-10">
-        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900">
+        <h2 className={`text-2xl sm:text-3xl font-bold ${titleClassName || (dark ? 'text-white' : 'text-slate-900')}`}>
           {title}
         </h2>
-        <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-md mx-auto">
+        <p className={`text-xs sm:text-sm mt-1 max-w-md mx-auto ${subtitleClassName || (dark ? 'text-indigo-200/80' : 'text-slate-500')}`}>
           {subtitle}
         </p>
       </div>

@@ -8,35 +8,38 @@ import {
   Check 
 } from 'lucide-react';
 import MultiSceneBirthdayView from './MultiSceneBirthdayView';
+import HeartfeltApologyView from './HeartfeltApologyView';
+import PolaroidScrapbookView from './PolaroidScrapbookView';
+import BlushRomanceView from './BlushRomanceView';
 import { soundEffects } from './common/SoundEffects';
 
 const TEMPLATES = [
   // Birthday Templates
   { id: 'royal-sapphire', label: 'Royal Sapphire', icon: '👑', component: MultiSceneBirthdayView },
   { id: 'golden-birthday', label: 'Golden Spark', icon: '🎂', component: MultiSceneBirthdayView },
-  { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: MultiSceneBirthdayView },
+  { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: PolaroidScrapbookView },
   { id: 'blush-rose', label: 'Blush Blossom', icon: '🌸', component: MultiSceneBirthdayView },
   { id: 'princess-peach', label: 'Princess Peach', icon: '✨', component: MultiSceneBirthdayView },
   { id: 'lavender-dream', label: 'Lavender Dream', icon: '💜', component: MultiSceneBirthdayView },
 
   // Romance & Anniversary Templates
-  { id: 'velvet-romance', label: 'Velvet Rose', icon: '❤️', component: MultiSceneBirthdayView },
-  { id: 'sunset-romance', label: 'Sunset Glow', icon: '🌅', component: MultiSceneBirthdayView },
-  { id: 'celestial-love', label: 'Celestial Indigo', icon: '🌌', component: MultiSceneBirthdayView },
+  { id: 'velvet-romance', label: 'Velvet Rose', icon: '❤️', component: BlushRomanceView },
+  { id: 'sunset-romance', label: 'Sunset Glow', icon: '🌅', component: BlushRomanceView },
+  { id: 'celestial-love', label: 'Celestial Indigo', icon: '🌌', component: BlushRomanceView },
 
   // Memory Scrapbook Templates
-  { id: 'vintage-kodak', label: 'Vintage Kodak', icon: '📸', component: MultiSceneBirthdayView },
-  { id: 'neon-nostalgia', label: 'Electric Vibes', icon: '⚡', component: MultiSceneBirthdayView },
-  { id: 'cozy-memories', label: 'Cozy Sunset', icon: '☕', component: MultiSceneBirthdayView },
+  { id: 'vintage-kodak', label: 'Vintage Kodak', icon: '📸', component: PolaroidScrapbookView },
+  { id: 'neon-nostalgia', label: 'Electric Vibes', icon: '⚡', component: PolaroidScrapbookView },
+  { id: 'cozy-memories', label: 'Cozy Sunset', icon: '☕', component: PolaroidScrapbookView },
 
   // Heartfelt Apology Templates
-  { id: 'gentle-peace', label: 'Olive Peace', icon: '🕊️', component: MultiSceneBirthdayView },
-  { id: 'sweet-forgive', label: 'Sweet Hugs', icon: '🥺', component: MultiSceneBirthdayView },
-  { id: 'fresh-start', label: 'Sunrise Renewal', icon: '🌤️', component: MultiSceneBirthdayView },
+  { id: 'gentle-peace', label: 'Olive Peace', icon: '🕊️', component: HeartfeltApologyView },
+  { id: 'sweet-forgive', label: 'Sweet Hugs', icon: '🥺', component: HeartfeltApologyView },
+  { id: 'fresh-start', label: 'Sunrise Renewal', icon: '🌤️', component: HeartfeltApologyView },
 
   // Legacy Compatibility
-  { id: 'blush-romance', label: 'Blush Romance', icon: '💖', component: MultiSceneBirthdayView },
-  { id: 'heartfelt-apology', label: 'Heartfelt Apology', icon: '🥺', component: MultiSceneBirthdayView },
+  { id: 'blush-romance', label: 'Blush Romance', icon: '💖', component: BlushRomanceView },
+  { id: 'heartfelt-apology', label: 'Heartfelt Apology', icon: '🥺', component: HeartfeltApologyView },
 ];
 
 export default function TemplateViewer({ 
@@ -53,6 +56,7 @@ export default function TemplateViewer({
     if (raw.includes('velvet')) return 'velvet-romance';
     if (raw.includes('sunset')) return 'sunset-romance';
     if (raw.includes('celestial')) return 'celestial-love';
+    if (raw.includes('blush-romance') || raw === 'blush-romance') return 'blush-romance';
 
     if (raw.includes('kodak')) return 'vintage-kodak';
     if (raw.includes('neon')) return 'neon-nostalgia';

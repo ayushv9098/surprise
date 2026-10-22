@@ -12,8 +12,9 @@ export default function ScratchCard({
   subtitle = "",
   title = "",
   defaultTitle = "",
-  theme = "rose", // 'rose', 'gold', 'lavender'
-  voucherCode = ""
+  theme = "rose", // 'rose', 'gold', 'lavender', 'celestial'
+  voucherCode = "",
+  dark = false
 }) {
   const cardData = scratchCard || scratchData;
   const resolvedTitle = title || defaultTitle || cardData?.title || "Mystery Keepsake Scratch Card";
@@ -48,12 +49,36 @@ export default function ScratchCard({
       grad.addColorStop(0.3, '#f59e0b');
       grad.addColorStop(0.7, '#d97706');
       grad.addColorStop(1, '#fbbf24');
+    } else if (theme === 'celestial' || theme === 'indigo') {
+      grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, '#e0e7ff');
+      grad.addColorStop(0.3, '#818cf8');
+      grad.addColorStop(0.7, '#4338ca');
+      grad.addColorStop(1, '#312e81');
     } else if (theme === 'lavender') {
       grad = ctx.createLinearGradient(0, 0, width, height);
       grad.addColorStop(0, '#f3e8ff');
       grad.addColorStop(0.3, '#c084fc');
       grad.addColorStop(0.7, '#9333ea');
       grad.addColorStop(1, '#e9d5ff');
+    } else if (theme === 'neon' || theme === 'cyan') {
+      grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, '#cffafe');
+      grad.addColorStop(0.3, '#06b6d4');
+      grad.addColorStop(0.7, '#0891b2');
+      grad.addColorStop(1, '#67e8f9');
+    } else if (theme === 'cozy' || theme === 'copper') {
+      grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, '#ffedd5');
+      grad.addColorStop(0.3, '#f97316');
+      grad.addColorStop(0.7, '#c2410c');
+      grad.addColorStop(1, '#fdba74');
+    } else if (theme === 'olive' || theme === 'emerald') {
+      grad = ctx.createLinearGradient(0, 0, width, height);
+      grad.addColorStop(0, '#dcfce7');
+      grad.addColorStop(0.3, '#22c55e');
+      grad.addColorStop(0.7, '#15803d');
+      grad.addColorStop(1, '#86efac');
     } else {
       // Rose gold default
       grad = ctx.createLinearGradient(0, 0, width, height);
@@ -190,18 +215,28 @@ export default function ScratchCard({
   return (
     <div className="w-full max-w-lg mx-auto my-10 px-4">
       {/* Outer Card Wrapper */}
-      <div className="relative glass-card rounded-3xl p-6 sm:p-8 shadow-xl border border-white/80 overflow-hidden text-center">
+      <div className={`relative rounded-3xl p-6 sm:p-8 shadow-xl overflow-hidden text-center ${
+        dark 
+          ? 'bg-slate-900/90 backdrop-blur-md border border-indigo-500/30 shadow-indigo-950/60' 
+          : 'glass-card border border-white/80'
+      }`}>
         
         {/* Header */}
         <div className="mb-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-xs font-semibold text-amber-700 mb-2">
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold mb-2 ${
+            dark 
+              ? 'bg-indigo-950/80 border border-indigo-500/40 text-indigo-300' 
+              : (theme === 'gold' 
+                  ? 'bg-amber-50 border border-amber-200/80 text-amber-700' 
+                  : 'bg-rose-50 border border-rose-200/80 text-rose-700')
+          }`}>
             <AppleEmoji emoji="🎁" size={14} />
             <span>Scratch to Reveal</span>
           </div>
-          <h3 className="font-semibold text-xl sm:text-2xl font-bold text-slate-800">
+          <h3 className={`font-semibold text-xl sm:text-2xl font-bold ${dark ? 'text-white' : 'text-slate-800'}`}>
             {renderAppleText(resolvedTitle)}
           </h3>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className={`text-xs mt-1 ${dark ? 'text-indigo-200/80' : 'text-slate-500'}`}>
             Scratch the foil layer below to unlock your special voucher
           </p>
         </div>
@@ -209,24 +244,42 @@ export default function ScratchCard({
         {/* Scratch Area Container */}
         <div 
           ref={containerRef}
-          className="relative w-full h-48 rounded-2xl overflow-hidden border-2 border-dashed border-rose-200/90 shadow-md bg-white flex items-center justify-center select-none"
+          className={`relative w-full h-48 rounded-2xl overflow-hidden border-2 border-dashed shadow-md flex items-center justify-center select-none ${
+            dark 
+              ? 'border-indigo-500/40 bg-slate-950' 
+              : 'border-rose-200/90 bg-white'
+          }`}
         >
           {/* Secret Hidden Layer (Underneath) */}
-          <div className="absolute inset-0 p-5 flex flex-col items-center justify-center text-center bg-gradient-to-tr from-rose-50 via-pink-50 to-amber-50 z-0">
-            <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center mb-2 shadow-xs">
+          <div className={`absolute inset-0 p-5 flex flex-col items-center justify-center text-center z-0 ${
+            dark 
+              ? 'bg-gradient-to-tr from-slate-950 via-indigo-950/90 to-slate-900' 
+              : 'bg-gradient-to-tr from-rose-50 via-pink-50 to-amber-50'
+          }`}>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 shadow-xs ${
+              dark ? 'bg-indigo-900/60' : 'bg-rose-100'
+            }`}>
               <AppleEmoji emoji="🎁" size={24} className="animate-bounce" />
             </div>
             
-            <p className="font-handwriting text-2xl sm:text-3xl font-bold text-rose-600 leading-tight">
+            <p className={`font-handwriting text-2xl sm:text-3xl font-bold leading-tight ${
+              dark ? 'text-indigo-300' : 'text-rose-600'
+            }`}>
               {renderAppleText(resolvedMessage)}
             </p>
 
-            <p className="text-xs text-slate-500 mt-2 font-medium">
+            <p className={`text-xs mt-2 font-medium ${
+              dark ? 'text-slate-300' : 'text-slate-500'
+            }`}>
               {renderAppleText(resolvedSubtitle)}
             </p>
 
-            <div className="mt-3 inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-white/90 border border-rose-200 text-[11px] font-mono text-slate-600 shadow-xs">
-              <span className="text-rose-500 font-bold">VOUCHER:</span> {resolvedCode}
+            <div className={`mt-3 inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[11px] font-mono shadow-xs ${
+              dark 
+                ? 'bg-slate-800/90 border border-indigo-500/40 text-indigo-200' 
+                : 'bg-white/90 border border-rose-200 text-slate-600'
+            }`}>
+              <span className={`font-bold ${dark ? 'text-indigo-400' : 'text-rose-500'}`}>VOUCHER:</span> {resolvedCode}
             </div>
           </div>
 

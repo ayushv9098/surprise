@@ -31,6 +31,7 @@ const THEMES = {
   'royal-sapphire': {
     id: 'royal-sapphire',
     name: 'Royal Sapphire 👑',
+    category: 'birthday',
     gender: 'boy',
     fontFamily: 'font-cursive',
     ambientEmojis: ['⭐', '🦋', '👑', '🌹', '💫', '🎉', '💙', '✨'],
@@ -75,6 +76,7 @@ const THEMES = {
   'golden-birthday': {
     id: 'golden-birthday',
     name: 'Golden Spark 🎂',
+    category: 'birthday',
     gender: 'boy',
     fontFamily: 'font-cursive',
     ambientEmojis: ['🎂', '✨', '🥂', '💛', '⭐', '🎉', '🌟', '💫'],
@@ -119,6 +121,7 @@ const THEMES = {
   'polaroid-scrapbook': {
     id: 'polaroid-scrapbook',
     name: 'Retro Polaroid 📸',
+    category: 'birthday',
     gender: 'boy',
     fontFamily: 'font-cursive',
     ambientEmojis: ['📸', '⚡', '🔥', '⭐', '✨', '🎉', '💫', '❤️'],
@@ -163,6 +166,7 @@ const THEMES = {
   'blush-rose': {
     id: 'blush-rose',
     name: 'Blush Blossom 🌸',
+    category: 'birthday',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['🌸', '🦋', '👑', '🌹', '💫', '🎉', '💖', '✨'],
@@ -207,24 +211,25 @@ const THEMES = {
   'princess-peach': {
     id: 'princess-peach',
     name: 'Princess Peach ✨',
+    category: 'birthday',
     gender: 'girl',
     fontFamily: 'font-serif',
     ambientEmojis: ['✨', '🍑', '🌟', '🧡', '👑', '🎉', '💫', '🌸'],
     primaryEmoji: '✨',
     containerBgClass: 'bg-gradient-to-b from-[#FFFDF9] via-[#FFF4EB] to-[#FEEAD8]',
     envelopeCelebrationBg: 'bg-gradient-to-b from-amber-950 via-rose-950 to-orange-950',
-    cardClass: 'border border-orange-200/90 bg-white/95 shadow-xl shadow-orange-500/10 rounded-3xl p-5 sm:p-6 w-full text-center relative',
-    subCardClass: 'border border-orange-200/90 bg-white/95 shadow-xl shadow-orange-500/10 rounded-3xl p-5 sm:p-6 w-full max-w-[260px] text-center',
+    cardClass: 'birthday-card-peach p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-peach p-5 sm:p-6 w-full max-w-[260px] text-center',
     headingClass: 'text-orange-950',
     accentTextClass: 'text-orange-600',
     subtitleClass: 'text-orange-900/70',
-    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-peach animate-pulse-glow-peach cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-orange-950 bg-orange-100/80 hover:bg-orange-100 border border-orange-200/80 active:scale-95 cursor-pointer',
     btnActionClass: 'py-2 px-4 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-md shadow-orange-500/30 active:scale-95 transition-all cursor-pointer',
     btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-orange-500 via-rose-500 to-amber-500 shadow-orange-500/30 active:scale-95 cursor-pointer',
     btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-950 bg-orange-100/80 hover:bg-orange-100 border border-orange-200/80 shadow-xs active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-orange-900 bg-amber-100/80 hover:bg-amber-100 border border-amber-200/80 shadow-xs active:scale-95 cursor-pointer',
-    reasonCardClass: 'border border-orange-200/90 bg-white/95 shadow-xs rounded-2xl',
+    reasonCardClass: 'special-reason-card-peach',
     iconBoxClass: 'bg-orange-50 border border-orange-200/80',
     waxColor: '#EA580C',
     sealEmoji: '✨',
@@ -251,24 +256,25 @@ const THEMES = {
   'lavender-dream': {
     id: 'lavender-dream',
     name: 'Lavender Dream 💜',
+    category: 'birthday',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['💜', '🦋', '🌙', '✨', '🔮', '🎉', '💫', '🌸'],
     primaryEmoji: '💜',
     containerBgClass: 'bg-gradient-to-b from-[#FAF5FF] via-[#F3E8FF] to-[#EDE9FE]',
     envelopeCelebrationBg: 'bg-gradient-to-b from-purple-950 via-violet-950 to-indigo-950',
-    cardClass: 'border border-purple-200/90 bg-white/95 shadow-xl shadow-purple-500/10 rounded-3xl p-5 sm:p-6 w-full text-center relative',
-    subCardClass: 'border border-purple-200/90 bg-white/95 shadow-xl shadow-purple-500/10 rounded-3xl p-5 sm:p-6 w-full max-w-[260px] text-center',
+    cardClass: 'birthday-card-lavender p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-lavender p-5 sm:p-6 w-full max-w-[260px] text-center',
     headingClass: 'text-purple-950',
     accentTextClass: 'text-purple-600',
     subtitleClass: 'text-purple-900/70',
-    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-lavender animate-pulse-glow-lavender cursor-pointer',
     btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-purple-950 bg-purple-100/80 hover:bg-purple-100 border border-purple-300/80 active:scale-95 cursor-pointer',
     btnActionClass: 'py-2 px-4 rounded-xl text-white font-bold text-xs bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-md shadow-purple-600/30 active:scale-95 transition-all cursor-pointer',
     btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 shadow-purple-600/30 active:scale-95 cursor-pointer',
     btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-950 bg-purple-100/80 hover:bg-purple-100 border border-purple-200/80 shadow-xs active:scale-95 cursor-pointer',
     btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-900 bg-violet-100/80 hover:bg-violet-100 border border-violet-200/80 shadow-xs active:scale-95 cursor-pointer',
-    reasonCardClass: 'border border-purple-200/90 bg-white/95 shadow-xs rounded-2xl',
+    reasonCardClass: 'special-reason-card-lavender',
     iconBoxClass: 'bg-purple-50 border border-purple-200/80',
     waxColor: '#7C3AED',
     sealEmoji: '💜',
@@ -298,6 +304,7 @@ const THEMES = {
   'velvet-romance': {
     id: 'velvet-romance',
     name: 'Velvet Rose ❤️',
+    category: 'romance',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['❤️', '🌹', '✨', '🍷', '💫', '💖', '💌', '🥀'],
@@ -342,6 +349,7 @@ const THEMES = {
   'sunset-romance': {
     id: 'sunset-romance',
     name: 'Sunset Glow 🌅',
+    category: 'romance',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['🌅', '✨', '🧡', '🌇', '💫', '💛', '💌', '🥂'],
@@ -386,6 +394,7 @@ const THEMES = {
   'celestial-love': {
     id: 'celestial-love',
     name: 'Celestial Indigo 🌌',
+    category: 'romance',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['🌌', '🌙', '⭐', '✨', '💫', '🔮', '💙', '🪐'],
@@ -433,6 +442,7 @@ const THEMES = {
   'vintage-kodak': {
     id: 'vintage-kodak',
     name: 'Vintage Kodak 📸',
+    category: 'scrapbook',
     gender: 'boy',
     fontFamily: 'font-cursive',
     ambientEmojis: ['📸', '⚡', '🎞️', '⭐', '📼', '☕', '🔥', '✨'],
@@ -477,6 +487,7 @@ const THEMES = {
   'neon-nostalgia': {
     id: 'neon-nostalgia',
     name: 'Electric Vibes ⚡',
+    category: 'scrapbook',
     gender: 'boy',
     fontFamily: 'font-cursive',
     ambientEmojis: ['⚡', '🔥', '🩵', '🛹', '✨', '💿', '💫', '🎉'],
@@ -521,6 +532,7 @@ const THEMES = {
   'cozy-memories': {
     id: 'cozy-memories',
     name: 'Cozy Sunset ☕',
+    category: 'scrapbook',
     gender: 'boy',
     fontFamily: 'font-cursive',
     ambientEmojis: ['☕', '🌻', '🍂', '🤎', '✨', '📖', '💫', '🌅'],
@@ -568,6 +580,7 @@ const THEMES = {
   'gentle-peace': {
     id: 'gentle-peace',
     name: 'Olive Peace 🕊️',
+    category: 'apology',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['🕊️', '🌿', '🍃', '💚', '✨', '🤍', '💫', '🌸'],
@@ -612,6 +625,7 @@ const THEMES = {
   'sweet-forgive': {
     id: 'sweet-forgive',
     name: 'Sweet Hugs 🥺',
+    category: 'apology',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['🥺', '💜', '🌸', '🧸', '✨', '💌', '💫', '🤍'],
@@ -656,6 +670,7 @@ const THEMES = {
   'fresh-start': {
     id: 'fresh-start',
     name: 'Sunrise Renewal 🌤️',
+    category: 'apology',
     gender: 'girl',
     fontFamily: 'font-cursive',
     ambientEmojis: ['🌤️', '☀️', '🌻', '💛', '✨', '🌈', '💫', '🌱'],
@@ -699,9 +714,9 @@ const THEMES = {
 };
 
 /**
- * Resolves theme configuration based on templateId and fallback gender
+ * Resolves theme configuration based on templateId, fallback gender, and occasion category
  */
-const resolveTheme = (templateId, gender) => {
+const resolveTheme = (templateId, gender, category) => {
   let targetId = (templateId || '').trim();
   if (targetId === 'blush-romance') targetId = 'velvet-romance';
   if (targetId === 'heartfelt-apology') targetId = 'gentle-peace';
@@ -732,12 +747,17 @@ const resolveTheme = (templateId, gender) => {
   if (targetId.includes('scrapbook') || targetId.includes('retro') || targetId.includes('vintage')) return THEMES['vintage-kodak'];
   if (targetId.includes('apology') || targetId.includes('sorry')) return THEMES['gentle-peace'];
 
+  if (category === 'romance') return THEMES['velvet-romance'];
+  if (category === 'scrapbook') return THEMES['vintage-kodak'];
+  if (category === 'apology') return THEMES['gentle-peace'];
+
   return gender === 'girl' ? THEMES['blush-rose'] : THEMES['royal-sapphire'];
 };
 
 export default function LivePhonePreview({ formData = {} }) {
   const [screen, setScreen] = useState(0); // 0: Cover/Landing, 1: Photo, 2: Mood/Feeling, 3: Reasons, 4: Envelope/Letter
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [apologyForgiveState, setApologyForgiveState] = useState('initial'); // 'initial' | 'begging' | 'begging-2'
 
   // Scoped Confetti Canvas References
   const confettiCanvasRef = useRef(null);
@@ -757,53 +777,112 @@ export default function LivePhonePreview({ formData = {} }) {
     };
   }, []);
 
-  // Reset simulator state immediately whenever user selects another template
+  // Reset simulator state immediately whenever user selects another template or category
   useEffect(() => {
     setScreen(0);
     setEnvelopeOpen(false);
-  }, [formData.templateId]);
+    setApologyForgiveState('initial');
+  }, [formData.templateId, formData.category]);
 
   const template = getTemplateById(formData.templateId || 'royal-sapphire');
-  const theme = resolveTheme(formData.templateId, formData.gender || template?.gender);
+  const occasionCategory =
+    formData.category ||
+    template?.category ||
+    'birthday';
+  const theme = resolveTheme(formData.templateId, formData.gender || template?.gender, occasionCategory);
+
+  const isRomance =
+    occasionCategory === 'romance' ||
+    ['velvet-romance', 'sunset-romance', 'celestial-love'].includes(theme.id) ||
+    ['velvet-romance', 'sunset-romance', 'celestial-love'].includes(formData.templateId);
+
+  const isScrapbook =
+    !isRomance && (
+      occasionCategory === 'scrapbook' ||
+      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(theme.id) ||
+      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId)
+    );
+
+  const isApology =
+    !isRomance && !isScrapbook && (
+      occasionCategory === 'apology' ||
+      ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(theme.id) ||
+      ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId)
+    );
+
+  const isBirthday = !isRomance && !isScrapbook && !isApology;
 
   const isGirl = theme.gender === 'girl';
   const recipientName = formData.recipientName || (isGirl ? 'Sarah' : 'Rohan');
   const senderName = formData.senderName || (isGirl ? 'Elena' : 'Alex');
-  const subtitle = formData.subtitle || template?.defaultSubtitle || 'I have a small surprise for you...';
 
   const rawOccasion = (formData.occasion || '').trim();
   const nameToDisplay = (formData.recipientName || '').trim() || (isGirl ? 'Sarah' : 'Rohan');
   const celebrationEmoji = theme.primaryEmoji;
 
-  // Smart greeting determination
+  // Smart occasion greeting determination
   let line1Text = '';
   let line2Text = '';
 
-  const isRomanceTheme = ['velvet-romance', 'sunset-romance', 'celestial-love'].includes(theme.id);
-  const isScrapbookTheme = ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(theme.id);
-  const isApologyTheme = ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(theme.id);
+  const isDefaultBirthdayOccasion =
+    !rawOccasion ||
+    rawOccasion.toLowerCase().includes('happy birthday') ||
+    rawOccasion.toLowerCase().includes('birthday');
 
-  if (rawOccasion) {
+  if (rawOccasion && (!isDefaultBirthdayOccasion || isBirthday)) {
     if (rawOccasion.includes(',')) {
       const commaIdx = rawOccasion.indexOf(',');
       line1Text = rawOccasion.slice(0, commaIdx + 1).trim();
       const remainder = rawOccasion.slice(commaIdx + 1).trim();
       line2Text = remainder || `${nameToDisplay}! ${celebrationEmoji}`;
     } else {
-      line1Text = `${rawOccasion},`;
-      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
+      if (isRomance) {
+        line1Text = rawOccasion;
+        line2Text = `${nameToDisplay} ❤️`;
+      } else if (isScrapbook) {
+        line1Text = rawOccasion;
+        line2Text = `${nameToDisplay}! 📸`;
+      } else if (isApology) {
+        line1Text = rawOccasion;
+        line2Text = `Dear ${nameToDisplay} 🤍`;
+      } else {
+        line1Text = `${rawOccasion},`;
+        line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
+      }
     }
   } else {
-    if (isRomanceTheme) {
-      line1Text = 'With All My Love,';
-    } else if (isScrapbookTheme) {
-      line1Text = 'Cherished Memories,';
-    } else if (isApologyTheme) {
-      line1Text = 'From My Heart,';
+    if (isRomance) {
+      line1Text = 'To My One & Only,';
+      line2Text = `${nameToDisplay} ❤️`;
+    } else if (isScrapbook) {
+      line1Text = 'The Scrapbook of Us,';
+      line2Text = `${nameToDisplay}! 📸`;
+    } else if (isApology) {
+      line1Text = 'A Sincere Message,';
+      line2Text = `For ${nameToDisplay} 🤍`;
     } else {
       line1Text = 'Happy Birthday,';
+      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     }
-    line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
+  }
+
+  // Dynamic subtitle adapted to occasion
+  let displaySubtitle = (formData.subtitle || '').trim();
+  const isDefaultBirthdaySubtitle =
+    !displaySubtitle ||
+    displaySubtitle === 'I have a small surprise for you...' ||
+    displaySubtitle.toLowerCase().includes('birthday');
+
+  if (!displaySubtitle || (!isBirthday && isDefaultBirthdaySubtitle)) {
+    if (isRomance) {
+      displaySubtitle = template?.defaultSubtitle || 'Every single second with you is my favorite memory.';
+    } else if (isScrapbook) {
+      displaySubtitle = template?.defaultSubtitle || 'Taped forever into the scrapbook of our greatest adventures.';
+    } else if (isApology) {
+      displaySubtitle = template?.defaultSubtitle || 'I made a mistake, and your happiness means everything to me.';
+    } else {
+      displaySubtitle = template?.defaultSubtitle || 'I have a small surprise for you...';
+    }
   }
 
   const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template?.samplePhoto;
@@ -815,50 +894,124 @@ export default function LivePhonePreview({ formData = {} }) {
     'blush-rose': 'Stay Wonderful Always! 🌸✨',
     'princess-peach': 'May All Your Wishes Sparkle! ✨💖',
     'lavender-dream': 'Never Stop Dreaming Beautiful Dreams! 💜🦋',
-    'velvet-romance': 'Forever in My Heart ❤️🌹',
+    'velvet-romance': 'My favorite smile in the world 🌹',
     'sunset-romance': 'Golden Moments With You 🌅✨',
     'celestial-love': 'Written in the Stars 🌌🌙',
-    'vintage-kodak': 'Captured Moments Never Fade 📸🎞️',
+    'vintage-kodak': 'A moment frozen in time 📸',
     'neon-nostalgia': 'Electric Memories & Good Times ⚡🔥',
     'cozy-memories': 'Warm Days & Sweet Conversations ☕🌻',
-    'gentle-peace': 'Peace, Love & Healing 🕊️🌿',
-    'sweet-forgive': 'Sending the Warmest Hugs 🥺💜',
-    'fresh-start': 'Here is to a Fresh Beginning 🌤️🌱',
+    'gentle-peace': 'Cherishing our beautiful bond 🤍',
+    'sweet-forgive': 'Cherishing our beautiful bond 🤍',
+    'fresh-start': 'Cherishing our beautiful bond 🤍',
   };
 
-  const photoCaption =
-    formData.photoCaption ||
-    formData.photos?.[0]?.caption ||
-    defaultCaptions[theme.id] ||
-    (isGirl ? 'Stay Wonderful Always! 🌸✨' : 'Keep Rocking Always! 👑🔥');
+  let photoCaption =
+    (formData.photoCaption || '').trim() ||
+    formData.photos?.[0]?.caption;
+
+  const isDefaultBirthdayCaption =
+    !photoCaption ||
+    photoCaption.includes('Keep Rocking') ||
+    photoCaption.includes('Stay Wonderful') ||
+    photoCaption.includes('Brighter Than Gold') ||
+    photoCaption.includes('King of the Day');
+
+  if (!photoCaption || (!isBirthday && isDefaultBirthdayCaption)) {
+    if (isRomance) {
+      photoCaption = defaultCaptions[theme.id] || 'My favorite smile in the world 🌹';
+    } else if (isScrapbook) {
+      photoCaption = defaultCaptions[theme.id] || 'A moment frozen in time 📸';
+    } else if (isApology) {
+      photoCaption = defaultCaptions[theme.id] || 'Cherishing our beautiful bond 🤍';
+    } else {
+      photoCaption = defaultCaptions[theme.id] || (isGirl ? 'Stay Wonderful Always! 🌸✨' : 'Keep Rocking Always! 👑🔥');
+    }
+  }
+
+  const isDefaultBirthdayReasons =
+    formData.specialReasons &&
+    formData.specialReasons.length === 3 &&
+    (formData.specialReasons[0]?.title === 'Lucky to Have You' ||
+      formData.specialReasons[0]?.title === 'Pure Sunshine');
 
   const specialReasons =
-    formData.specialReasons && formData.specialReasons.length > 0
+    (!isBirthday && isDefaultBirthdayReasons)
+      ? theme.defaultReasons
+      : (formData.specialReasons && formData.specialReasons.length > 0)
       ? formData.specialReasons
-      : formData.reasons && formData.reasons.length > 0
+      : (formData.reasons && formData.reasons.length > 0)
       ? formData.reasons
       : theme.defaultReasons;
 
-  const letterTitle =
+  const defaultLetterTitles = {
+    romance: 'A Love Letter For You 💕',
+    scrapbook: 'A Page From Our Scrapbook 📜',
+    apology: 'A Sincere Peace Offering 🕊️',
+    birthday: 'A Little Note For You',
+  };
+
+  const rawLetterTitle =
     (typeof formData.letter === 'object' ? formData.letter?.title : null) ||
-    formData.letterTitle ||
-    'A Little Note For You';
-  const letterBody =
+    formData.letterTitle;
+
+  const letterTitle =
+    rawLetterTitle && rawLetterTitle !== 'A Little Note For You'
+      ? rawLetterTitle
+      : isRomance
+      ? defaultLetterTitles.romance
+      : isScrapbook
+      ? defaultLetterTitles.scrapbook
+      : isApology
+      ? defaultLetterTitles.apology
+      : defaultLetterTitles.birthday;
+
+  const rawLetterBody =
     (typeof formData.letter === 'object' ? formData.letter?.content : formData.letter) ||
-    formData.letterBody ||
-    theme.defaultLetter(recipientName);
-  const letterSignOff =
+    formData.letterBody;
+
+  const isDefaultBirthdayLetter =
+    rawLetterBody && (
+      rawLetterBody.includes('golden day') ||
+      rawLetterBody.includes('grand achievements') ||
+      rawLetterBody.includes('sweetest dreams') ||
+      rawLetterBody.includes('birthday')
+    );
+
+  const letterBody =
+    (!isBirthday && isDefaultBirthdayLetter)
+      ? theme.defaultLetter(recipientName)
+      : rawLetterBody || theme.defaultLetter(recipientName);
+
+  const rawLetterSignOff =
     (typeof formData.letter === 'object' && formData.letter?.signOff) ||
-    formData.letterSignOff ||
-    theme.defaultSignOff(senderName);
-  const letterSealEmoji =
+    formData.letterSignOff;
+
+  const isDefaultBirthdaySignOff =
+    rawLetterSignOff && (
+      rawLetterSignOff.includes('👑💙') ||
+      rawLetterSignOff.includes('🌸💖') ||
+      (rawLetterSignOff.includes('With love,') && !isRomance)
+    );
+
+  const letterSignOff =
+    (!isBirthday && isDefaultBirthdaySignOff)
+      ? theme.defaultSignOff(senderName)
+      : rawLetterSignOff || theme.defaultSignOff(senderName);
+
+  const rawSealEmoji =
     (typeof formData.letter === 'object' && formData.letter?.sealEmoji) ||
-    formData.sealEmoji ||
-    theme.sealEmoji;
-  const letterWaxColor =
+    formData.sealEmoji;
+
+  const letterSealEmoji =
+    rawSealEmoji && rawSealEmoji !== '👑' && rawSealEmoji !== '🌸' && rawSealEmoji !== '⭐'
+      ? rawSealEmoji
+      : theme.sealEmoji || (isRomance ? '❤️' : isScrapbook ? '⚡' : isApology ? '🕊️' : '🎁');
+
+  const rawWaxColor =
     (typeof formData.letter === 'object' && formData.letter?.waxColor) ||
-    formData.waxColor ||
-    theme.waxColor;
+    formData.waxColor;
+
+  const letterWaxColor = rawWaxColor || theme.waxColor;
 
   // Scoped celebration confetti strictly inside mobile simulator
   const triggerConfetti = () => {
@@ -1055,7 +1208,30 @@ export default function LivePhonePreview({ formData = {} }) {
                 {screen === 0 && (
                   <div className="w-full flex items-center justify-center animate-fade-in-up px-1">
                     <div className={theme.cardClass}>
-                      <div className="mb-3 inline-block animate-bounce">
+                      {/* Occasion / Keepsake Badge */}
+                      {isRomance && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50/90 border border-rose-200/80 text-[11px] font-semibold text-rose-700 mb-2.5 shadow-2xs">
+                          <AppleEmoji emoji="❤️" size={13} />
+                          <span>A Love Letter For You</span>
+                          <AppleEmoji emoji="✨" size={13} />
+                        </div>
+                      )}
+                      {isScrapbook && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50/90 border border-amber-200/80 text-[11px] font-semibold text-amber-800 mb-2.5 shadow-2xs">
+                          <AppleEmoji emoji="📸" size={13} />
+                          <span>The Scrapbook of Us • Vol. 1</span>
+                          <AppleEmoji emoji="⚡" size={13} />
+                        </div>
+                      )}
+                      {isApology && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-[11px] font-semibold text-emerald-800 mb-2.5 shadow-2xs">
+                          <AppleEmoji emoji="🕊️" size={13} />
+                          <span>A Sincere Message From My Heart</span>
+                          <AppleEmoji emoji="🤍" size={13} />
+                        </div>
+                      )}
+
+                      <div className={`mb-2.5 inline-block ${isRomance ? 'animate-pulse' : 'animate-bounce'}`}>
                         <AppleEmoji emoji={theme.primaryEmoji} size={38} />
                       </div>
 
@@ -1067,7 +1243,7 @@ export default function LivePhonePreview({ formData = {} }) {
                       </h1>
 
                       <p className={`mt-3 text-xs sm:text-sm ${theme.subtitleClass} leading-relaxed font-normal`}>
-                        {renderAppleText(subtitle, 12)}
+                        {renderAppleText(displaySubtitle, 12)}
                       </p>
 
                       <div className="mt-5 flex justify-center">
@@ -1076,8 +1252,27 @@ export default function LivePhonePreview({ formData = {} }) {
                           onClick={handleOpenLanding}
                           className={`flex items-center justify-center gap-1.5 ${theme.btnPrimaryClass}`}
                         >
-                          <span>Tap to Open</span>
-                          <AppleEmoji emoji="🎁" size={14} className="ml-1" />
+                          {isRomance ? (
+                            <>
+                              <span>Tap to Unseal My Heart</span>
+                              <AppleEmoji emoji="❤️" size={14} className="ml-1" />
+                            </>
+                          ) : isScrapbook ? (
+                            <>
+                              <span>Tap to Open Journal</span>
+                              <AppleEmoji emoji="📖" size={14} className="ml-1" />
+                            </>
+                          ) : isApology ? (
+                            <>
+                              <span>Tap to Open With Love</span>
+                              <AppleEmoji emoji="💌" size={14} className="ml-1" />
+                            </>
+                          ) : (
+                            <>
+                              <span>Tap to Open</span>
+                              <AppleEmoji emoji="🎁" size={14} className="ml-1" />
+                            </>
+                          )}
                         </button>
                       </div>
                     </div>
@@ -1092,13 +1287,53 @@ export default function LivePhonePreview({ formData = {} }) {
                     <div className="w-full flex flex-col items-center">
                       <div className="flex items-center justify-center gap-1.5 mb-0.5">
                         <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
-                          The Star of the Day
+                          {isRomance
+                            ? 'The One Who Holds My Heart'
+                            : isScrapbook
+                            ? 'A Moment Frozen in Time'
+                            : isApology
+                            ? 'Cherishing Our Bond'
+                            : 'The Star of the Day'}
                         </h2>
-                        <AppleEmoji emoji="🌟" size={18} />
+                        <AppleEmoji
+                          emoji={isRomance ? '🌹' : isScrapbook ? '📸' : isApology ? '🤍' : '🌟'}
+                          size={18}
+                        />
                       </div>
 
                       <div className="relative my-1 mx-auto flex flex-col items-center justify-center">
-                        <div className="polaroid-frame shadow-xl flex flex-col items-center justify-center mx-auto">
+                        {/* Washi tape accent for Scrapbook */}
+                        {isScrapbook && (
+                          <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 w-16 h-4 bg-amber-200/90 border border-amber-300/80 shadow-xs rotate-[-2.5deg] rounded-xs flex items-center justify-center pointer-events-none">
+                            <div className="w-12 border-t border-dashed border-amber-500/40" />
+                          </div>
+                        )}
+
+                        {/* Rose petal pin accent for Romance */}
+                        {isRomance && (
+                          <div className="absolute -top-2.5 -right-2 z-20 w-7 h-7 rounded-full bg-rose-100/95 border border-rose-300/80 flex items-center justify-center shadow-xs pointer-events-none">
+                            <AppleEmoji emoji="🌹" size={14} />
+                          </div>
+                        )}
+
+                        {/* Serene olive leaf accent for Apology */}
+                        {isApology && (
+                          <div className="absolute -top-2.5 -right-2 z-20 w-7 h-7 rounded-full bg-emerald-50/95 border border-emerald-200/80 flex items-center justify-center shadow-xs pointer-events-none">
+                            <AppleEmoji emoji="🌿" size={14} />
+                          </div>
+                        )}
+
+                        <div
+                          className={`polaroid-frame shadow-xl flex flex-col items-center justify-center mx-auto ${
+                            isRomance
+                              ? 'border border-rose-200/70 shadow-rose-900/10'
+                              : isScrapbook
+                              ? 'border border-amber-200/70 shadow-amber-900/10'
+                              : isApology
+                              ? 'border border-emerald-100 shadow-emerald-900/10'
+                              : ''
+                          }`}
+                        >
                           <div className="w-[180px] sm:w-[195px] h-[195px] sm:h-[210px] mx-auto overflow-hidden rounded-[10px] bg-slate-100 shadow-inner relative">
                             <img
                               src={heroPhotoUrl}
@@ -1140,80 +1375,148 @@ export default function LivePhonePreview({ formData = {} }) {
                   <div className="w-full flex flex-col items-center text-center animate-pop-in">
                     <div className={theme.subCardClass}>
                       <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold leading-tight ${theme.headingClass}`}>
-                        {isApologyTheme
-                          ? 'A Heartfelt Question...'
-                          : isRomanceTheme
-                          ? 'How is your heart feeling?'
-                          : isScrapbookTheme
-                          ? 'How is nostalgia hitting?'
+                        {isApology
+                          ? 'Will you forgive me? 🥺'
+                          : isRomance
+                          ? 'How Much I Adore You ✨'
+                          : isScrapbook
+                          ? 'Our Greatest Adventures ⚡'
                           : 'How do you feel today?'}
                       </h2>
                       <p className={`mt-1.5 text-xs ${theme.subtitleClass}`}>
-                        {isApologyTheme
-                          ? 'Pick your mood to open my note 🕊️'
-                          : isRomanceTheme
-                          ? 'Pick your vibe to unlock my heart ✨'
-                          : isScrapbookTheme
-                          ? 'Pick your vibe to flip the album 📸'
+                        {isApology
+                          ? 'Your forgiveness and smile mean the world to me 🤍'
+                          : isRomance
+                          ? 'Pick how your heart beats today 💕'
+                          : isScrapbook
+                          ? 'Select your favorite chapter highlight 🎞️'
                           : 'Pick your vibe to unlock the next chapter ✨'}
                       </p>
 
                       <div className="mt-4 flex flex-col gap-2.5 w-full">
-                        <button
-                          type="button"
-                          onClick={handleChooseFeeling}
-                          className={`w-full flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
-                        >
-                          <span>
-                            {isApologyTheme
-                              ? 'Ready to Talk'
-                              : isRomanceTheme
-                              ? 'So In Love!'
-                              : isScrapbookTheme
-                              ? 'Best Days Ever!'
-                              : 'Super Happy!'}
-                          </span>
-                          <AppleEmoji
-                            emoji={
-                              isApologyTheme
-                                ? '🤍'
-                                : isRomanceTheme
-                                ? '❤️'
-                                : isScrapbookTheme
-                                ? '⚡'
-                                : '🥳'
-                            }
-                            size={15}
-                          />
-                        </button>
+                        {isApology ? (
+                          <>
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
+                            >
+                              <span>Yes, let's make up</span>
+                              <AppleEmoji emoji="❤️" size={15} />
+                            </button>
 
-                        <button
-                          type="button"
-                          onClick={handleChooseFeeling}
-                          className={`w-full flex items-center justify-center gap-2 ${theme.btnMood2Class}`}
-                        >
-                          <span>
-                            {isApologyTheme
-                              ? 'Soft Hug Accepted'
-                              : isRomanceTheme
-                              ? 'Butterflies Always!'
-                              : isScrapbookTheme
-                              ? 'Pure Golden Vibes'
-                              : 'So Excited!'}
-                          </span>
-                          <AppleEmoji
-                            emoji={
-                              isApologyTheme
-                                ? '🥺'
-                                : isRomanceTheme
-                                ? '✨'
-                                : isScrapbookTheme
-                                ? '📸'
-                                : '✨'
-                            }
-                            size={15}
-                          />
-                        </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (apologyForgiveState === 'initial') {
+                                  setApologyForgiveState('begging');
+                                } else if (apologyForgiveState === 'begging') {
+                                  setApologyForgiveState('begging-2');
+                                } else {
+                                  handleChooseFeeling();
+                                }
+                              }}
+                              className={`w-full flex items-center justify-center gap-2 transition-all duration-300 ${theme.btnMood2Class}`}
+                            >
+                              {apologyForgiveState === 'initial' && (
+                                <>
+                                  <span>Still thinking...</span>
+                                  <AppleEmoji emoji="🥺" size={15} />
+                                </>
+                              )}
+                              {apologyForgiveState === 'begging' && (
+                                <>
+                                  <span className="animate-pulse">Pretty please with sugar?</span>
+                                  <AppleEmoji emoji="🍩" size={15} />
+                                </>
+                              )}
+                              {apologyForgiveState === 'begging-2' && (
+                                <>
+                                  <span className="animate-bounce">Sending infinite hugs... please?</span>
+                                  <AppleEmoji emoji="🧸" size={15} />
+                                </>
+                              )}
+                            </button>
+                          </>
+                        ) : isRomance ? (
+                          <>
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
+                            >
+                              <span>More Than Words Can Say</span>
+                              <AppleEmoji emoji="❤️" size={15} />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood2Class}`}
+                            >
+                              <span>Infinity & Beyond</span>
+                              <AppleEmoji emoji="💫" size={15} />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood3Class}`}
+                            >
+                              <span>To the Moon & Back</span>
+                              <AppleEmoji emoji="🌙" size={15} />
+                            </button>
+                          </>
+                        ) : isScrapbook ? (
+                          <>
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
+                            >
+                              <span>Unplanned Roadtrips</span>
+                              <AppleEmoji emoji="🚗" size={15} />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood2Class}`}
+                            >
+                              <span>Endless Late Talks</span>
+                              <AppleEmoji emoji="☕" size={15} />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood3Class}`}
+                            >
+                              <span>Unstoppable Laughs</span>
+                              <AppleEmoji emoji="😂" size={15} />
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood1Class}`}
+                            >
+                              <span>Super Happy!</span>
+                              <AppleEmoji emoji="🥳" size={15} />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={handleChooseFeeling}
+                              className={`w-full flex items-center justify-center gap-2 ${theme.btnMood2Class}`}
+                            >
+                              <span>So Excited!</span>
+                              <AppleEmoji emoji="✨" size={15} />
+                            </button>
+                          </>
+                        )}
 
                         <div className="mt-1">
                           <button
@@ -1230,28 +1533,28 @@ export default function LivePhonePreview({ formData = {} }) {
                 )}
 
                 {/* -------------------------------------------------------- */}
-                {/* SCENE 3: REASONS WHY YOU'RE SPECIAL */}
+                {/* SCENE 3: REASONS / HIGHLIGHTS / PROMISES */}
                 {/* -------------------------------------------------------- */}
                 {screen === 3 && (
                   <div className="w-full flex flex-col items-center text-center space-y-1.5 py-1 max-w-[280px]">
                     <div className="flex items-center justify-center gap-1.5 mb-0.5">
                       <h2 className={`${theme.fontFamily} text-xl sm:text-2xl font-bold ${theme.headingClass}`}>
-                        {isApologyTheme
-                          ? 'Why You Mean So Much'
-                          : isRomanceTheme
-                          ? 'Why I Love You'
-                          : isScrapbookTheme
-                          ? 'Why We Are Unstoppable'
+                        {isApology
+                          ? 'Promises to You'
+                          : isRomance
+                          ? 'Reasons Why I Adore You'
+                          : isScrapbook
+                          ? 'Why This Bond Is For Life'
                           : "Why You're Special"}
                       </h2>
                       <AppleEmoji
                         emoji={
-                          isApologyTheme
-                            ? '🕊️'
-                            : isRomanceTheme
+                          isApology
+                            ? '🌿'
+                            : isRomance
                             ? '❤️'
-                            : isScrapbookTheme
-                            ? '📸'
+                            : isScrapbook
+                            ? '🤙'
                             : '💫'
                         }
                         size={20}
@@ -1329,13 +1632,44 @@ export default function LivePhonePreview({ formData = {} }) {
                             {/* Peeking Letter Card Inside */}
                             <div className={`absolute top-3 left-4 right-4 h-[80px] bg-white rounded-t-xl shadow-md border-t-2 ${theme.envelopePeekingBorder} p-2 transform transition-transform duration-300 group-hover:-translate-y-2`}>
                               <div className={`flex items-center justify-center gap-1 font-bold text-xs ${theme.envelopePeekingText}`}>
-                                <span>Happy Birthday!</span>
-                                <AppleEmoji emoji="🎉" size={13} />
-                                <AppleEmoji emoji={theme.primaryEmoji} size={13} />
-                                <AppleEmoji emoji="✨" size={13} />
+                                {isRomance ? (
+                                  <>
+                                    <span>For My True Love</span>
+                                    <AppleEmoji emoji="❤️" size={13} />
+                                    <AppleEmoji emoji="🌹" size={13} />
+                                    <AppleEmoji emoji="✨" size={13} />
+                                  </>
+                                ) : isScrapbook ? (
+                                  <>
+                                    <span>Memories Taped Forever</span>
+                                    <AppleEmoji emoji="📸" size={13} />
+                                    <AppleEmoji emoji="⚡" size={13} />
+                                    <AppleEmoji emoji="🌻" size={13} />
+                                  </>
+                                ) : isApology ? (
+                                  <>
+                                    <span>A Message of Peace</span>
+                                    <AppleEmoji emoji="🕊️" size={13} />
+                                    <AppleEmoji emoji="🤍" size={13} />
+                                    <AppleEmoji emoji="🌿" size={13} />
+                                  </>
+                                ) : (
+                                  <>
+                                    <span>Happy Birthday!</span>
+                                    <AppleEmoji emoji="🎉" size={13} />
+                                    <AppleEmoji emoji={theme.primaryEmoji} size={13} />
+                                    <AppleEmoji emoji="✨" size={13} />
+                                  </>
+                                )}
                               </div>
                               <div className="mt-1 text-center text-[10px] text-slate-400 font-sans">
-                                A special letter for you...
+                                {isRomance
+                                  ? 'Forever & always in my heart...'
+                                  : isScrapbook
+                                  ? 'A timeless chapter for you...'
+                                  : isApology
+                                  ? 'From my heart to yours...'
+                                  : 'A special letter for you...'}
                               </div>
                             </div>
 
@@ -1360,8 +1694,27 @@ export default function LivePhonePreview({ formData = {} }) {
 
                         {/* Bounce Prompt */}
                         <p className={`mt-3 ${theme.subtitleClass} text-xs font-medium animate-bounce flex items-center gap-1`}>
-                          <span>Tap the wax seal to open!</span>
-                          <AppleEmoji emoji="💌" size={14} />
+                          {isRomance ? (
+                            <>
+                              <span>Tap the wax seal to unseal my heart!</span>
+                              <AppleEmoji emoji="💌" size={14} />
+                            </>
+                          ) : isScrapbook ? (
+                            <>
+                              <span>Tap the wax seal to open the letter!</span>
+                              <AppleEmoji emoji="📜" size={14} />
+                            </>
+                          ) : isApology ? (
+                            <>
+                              <span>Tap the wax seal to read my apology</span>
+                              <AppleEmoji emoji="🕊️" size={14} />
+                            </>
+                          ) : (
+                            <>
+                              <span>Tap the wax seal to open!</span>
+                              <AppleEmoji emoji="💌" size={14} />
+                            </>
+                          )}
                         </p>
 
                         {/* Back Button */}
@@ -1389,7 +1742,10 @@ export default function LivePhonePreview({ formData = {} }) {
                               className={`flex items-center gap-1.5 font-bold text-xs sm:text-sm ${theme.letterHeaderClass}`}
                             >
                               <span className={theme.fontFamily}>{renderAppleText(letterTitle, 14)}</span>
-                              <AppleEmoji emoji="✨" size={13} />
+                              <AppleEmoji
+                                emoji={isRomance ? '❤️' : isScrapbook ? '📸' : isApology ? '🕊️' : '✨'}
+                                size={13}
+                              />
                             </div>
                             <AppleEmoji emoji={theme.primaryEmoji} size={18} />
                           </div>
@@ -1470,6 +1826,7 @@ export default function LivePhonePreview({ formData = {} }) {
                       onClick={() => {
                         setScreen(i);
                         if (i !== 4) setEnvelopeOpen(false);
+                        if (i !== 2) setApologyForgiveState('initial');
                       }}
                       className={`h-1.5 rounded-full transition-all cursor-pointer ${
                         screen === i

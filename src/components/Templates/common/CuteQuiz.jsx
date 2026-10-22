@@ -15,7 +15,9 @@ export default function CuteQuiz({
   ],
   correctIndex = 3,
   rewardText = "You've unlocked 1x Big Warm Hug + Unlimited sweet treats on demand! 🍫🍦",
-  quizTitle = "A Quick Cute Quiz Just for You"
+  quizTitle = "A Quick Cute Quiz Just for You",
+  dark = false,
+  theme = "rose"
 }) {
   const question = quiz?.question || fallbackQuestion;
   const options = quiz?.options || fallbackOptions;
@@ -66,45 +68,63 @@ export default function CuteQuiz({
   return (
     <div className="w-full max-w-xl mx-auto my-10 px-4">
       {/* Quiz Container Box */}
-      <div className="relative glass-card rounded-3xl p-6 sm:p-8 shadow-xl border border-white/80 overflow-hidden">
+      <div className={`relative rounded-3xl p-6 sm:p-8 shadow-xl overflow-hidden ${
+        dark 
+          ? 'bg-slate-900/90 backdrop-blur-md border border-indigo-500/30 shadow-indigo-950/60' 
+          : 'glass-card border border-white/80'
+      }`}>
         
         {/* Decorative corner icon */}
         <div className="text-center mb-6">
-          <div className="text-xs font-medium text-rose-600 mb-2 flex items-center justify-center gap-1.5">
+          <div className={`text-xs font-medium mb-2 flex items-center justify-center gap-1.5 ${
+            dark ? 'text-indigo-400' : (theme === 'gold' ? 'text-amber-600' : 'text-rose-600')
+          }`}>
             <span>Interactive Quiz</span>
             <AppleEmoji emoji="✨" size={14} />
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
+          <h3 className={`text-xl sm:text-2xl font-bold ${dark ? 'text-white' : 'text-slate-900'}`}>
             {renderAppleText(quizTitle)}
           </h3>
-          <p className="text-sm font-medium text-slate-600 mt-2 max-w-md mx-auto">
+          <p className={`text-sm font-medium mt-2 max-w-md mx-auto ${dark ? 'text-indigo-200' : 'text-slate-600'}`}>
             {renderAppleText(question)}
           </p>
         </div>
 
         {/* Victory Celebration State */}
         {isAnswered && isCorrect ? (
-          <div className="relative flex flex-col items-center text-center p-6 rounded-2xl bg-white border border-rose-100 shadow-sm animate-in zoom-in-95 duration-400">
+          <div className={`relative flex flex-col items-center text-center p-6 rounded-2xl shadow-sm animate-in zoom-in-95 duration-400 ${
+            dark 
+              ? 'bg-slate-800/90 border border-indigo-500/40 text-white' 
+              : 'bg-white border border-rose-100'
+          }`}>
             <div className="text-3xl mb-2 flex items-center justify-center">
               <AppleEmoji emoji="🍫" size={40} />
             </div>
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500 text-white text-xs font-semibold mb-2">
+            <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-white text-xs font-semibold mb-2 ${
+              dark ? 'bg-indigo-600' : (theme === 'gold' ? 'bg-amber-500' : 'bg-rose-500')
+            }`}>
               <Sparkles className="w-3.5 h-3.5" />
               <span>Treat Unlocked</span>
             </div>
 
-            <h4 className="text-lg font-bold text-slate-900 mb-1">
+            <h4 className={`text-lg font-bold mb-1 ${dark ? 'text-white' : 'text-slate-900'}`}>
               Correct!
             </h4>
 
-            <p className="font-handwriting text-2xl text-rose-600 max-w-sm mt-2 leading-relaxed">
+            <p className={`font-handwriting text-2xl max-w-sm mt-2 leading-relaxed ${
+              dark ? 'text-indigo-300' : (theme === 'gold' ? 'text-amber-600' : 'text-rose-600')
+            }`}>
               "{renderAppleText(reward)}"
             </p>
 
             <button
               onClick={handleReset}
-              className="mt-6 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-medium text-slate-500 hover:text-slate-800 bg-white border border-slate-200 hover:border-slate-300 transition-colors cursor-pointer"
+              className={`mt-6 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-medium transition-colors cursor-pointer ${
+                dark 
+                  ? 'bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600' 
+                  : 'bg-white border border-slate-200 hover:border-slate-300 text-slate-500 hover:text-slate-800'
+              }`}
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Play Again</span>
@@ -123,15 +143,21 @@ export default function CuteQuiz({
                   onClick={() => handleSelectOption(idx)}
                   className={`w-full text-left p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between group ${
                     isShaking
-                      ? 'border-rose-400 bg-rose-50/80 text-rose-700 animate-shake'
+                      ? (dark ? 'border-rose-500 bg-rose-950/50 text-rose-300 animate-shake' : 'border-rose-400 bg-rose-50/80 text-rose-700 animate-shake')
                       : isSelected && !isCorrect
-                      ? 'border-rose-300 bg-rose-50/50 text-slate-700'
+                      ? (dark ? 'border-rose-400/80 bg-rose-950/30 text-slate-200' : 'border-rose-300 bg-rose-50/50 text-slate-700')
+                      : dark 
+                      ? 'border-indigo-900/60 bg-slate-800/80 hover:bg-slate-750 hover:border-indigo-400 hover:shadow-lg text-slate-100'
                       : 'border-slate-200/80 bg-white/70 hover:bg-white hover:border-rose-300 hover:shadow-md text-slate-700'
                   }`}
                   style={isShaking ? { animation: 'shake 0.4s ease-in-out' } : {}}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-full bg-slate-100 group-hover:bg-rose-100 group-hover:text-rose-600 flex items-center justify-center text-xs font-semibold text-slate-600 transition-colors">
+                    <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold transition-colors ${
+                      dark 
+                        ? 'bg-slate-700 text-indigo-200 group-hover:bg-indigo-600 group-hover:text-white' 
+                        : 'bg-slate-100 group-hover:bg-rose-100 group-hover:text-rose-600 text-slate-600'
+                    }`}>
                       {String.fromCharCode(65 + idx)}
                     </span>
                     <span className="text-sm sm:text-base font-medium">

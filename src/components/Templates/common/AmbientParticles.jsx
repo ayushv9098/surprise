@@ -5,12 +5,16 @@ const PARTICLE_PRESETS = {
   stars: ['✨', '⭐', '🌟', '💫', '🥂', '🎉'],
   petals: ['🌸', '🌺', '🍃', '🌷', '🩰', '✨'],
   lavender: ['💜', '🪻', '🫧', '✨', '🕊️', '🌸'],
+  olive: ['🕊️', '🌿', '🍃', '💚', '✨', '🤍', '💫', '🌱'],
+  sunrise: ['🌤️', '☀️', '🌻', '💛', '✨', '🌈', '💫', '🌱'],
   confetti: ['🎊', '🎉', '🎈', '⭐', '🧁', '✨'],
+  sparks: ['⚡', '✨', '🔥', '💫', '💥', '⭐'],
+  leaves: ['🍂', '🍁', '🍃', '🌻', '☕', '✨'],
 };
 
-export default function AmbientParticles({ type = 'hearts', count = 22 }) {
+export default function AmbientParticles({ type = 'hearts', count = 22, items = null }) {
   const [particles] = useState(() => {
-    const symbols = PARTICLE_PRESETS[type] || PARTICLE_PRESETS.hearts;
+    const symbols = items && items.length > 0 ? items : (PARTICLE_PRESETS[type] || PARTICLE_PRESETS.hearts);
     return Array.from({ length: count }, (_, i) => ({
       id: i,
       char: symbols[i % symbols.length],

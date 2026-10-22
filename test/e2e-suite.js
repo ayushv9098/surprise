@@ -24,7 +24,10 @@ const ALLOWED_HOSTNAMES = new Set([
   'www.w3.org',
   'localhost',
   '127.0.0.1',
-  'emojicdn.elk.sh'
+  'emojicdn.elk.sh',
+  'wishcraft-surprise.vercel.app',
+  'avinfra.vercel.app',
+  'schema.org'
 ]);
 
 async function runE2ESuite() {

@@ -8,10 +8,12 @@ export default function EnvelopeLetter({
   from = "Yours Always",
   date = "Today & Always",
   letterBody = "You are the sweetest part of my everyday life. Thank you for filling my world with so much warmth, laughter, and comfort. Every moment with you is a memory I treasure deeply.",
-  sealType = "rose", // 'rose', 'gold', 'lavender'
+  sealType = "rose", // 'rose', 'gold', 'lavender', 'celestial'
   fontFamily = "handwriting", // 'handwriting' or 'serif'
   initials = "W",
-  subtitle = "A personal letter sealed just for you"
+  subtitle = "A personal letter sealed just for you",
+  sealEmoji = null,
+  dark = false
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpening, setIsOpening] = useState(false);
@@ -38,6 +40,10 @@ export default function EnvelopeLetter({
     rose: 'wax-seal border-2 border-rose-300/40 text-rose-100',
     gold: 'wax-seal-gold border-2 border-amber-200/50 text-amber-100',
     lavender: 'wax-seal-lavender border-2 border-purple-200/50 text-purple-100',
+    olive: 'wax-seal-olive border-2 border-emerald-300/40 text-emerald-100',
+    celestial: 'wax-seal-celestial border-2 border-indigo-300/50 text-indigo-100',
+    peach: 'wax-seal-peach border-2 border-orange-200/50 text-orange-100',
+    neon: 'bg-gradient-to-br from-cyan-400 via-teal-500 to-blue-600 border-2 border-cyan-200/60 text-cyan-50 shadow-[0_0_16px_rgba(6,182,212,0.6)]',
   }[sealType] || 'wax-seal border-2 border-rose-300/40 text-rose-100';
 
   const fontClass = fontFamily === 'handwriting' 
@@ -58,7 +64,13 @@ export default function EnvelopeLetter({
             }`}
           >
             {/* Soft Ambient Glow */}
-            <div className="absolute -inset-4 bg-gradient-to-r from-rose-200/40 via-amber-100/40 to-pink-200/40 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity" />
+            <div className={`absolute -inset-4 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity ${
+              dark 
+                ? 'bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-blue-600/30' 
+                : (sealType === 'gold' 
+                    ? 'bg-gradient-to-r from-amber-300/40 via-orange-200/40 to-amber-200/40' 
+                    : 'bg-gradient-to-r from-rose-200/40 via-amber-100/40 to-pink-200/40')
+            }`} />
 
             {/* Envelope Base Body */}
             <div className="relative rounded-2xl bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EE] to-[#F5ECE0] p-7 sm:p-9 shadow-xl border border-amber-200/60 overflow-hidden">
@@ -94,10 +106,18 @@ export default function EnvelopeLetter({
                 {/* Wax Seal Stamp (The Click Target) */}
                 <div className="relative mt-5 mb-2 flex items-center justify-center">
                   <div className={`w-16 h-16 sm:w-18 sm:h-18 rounded-full flex flex-col items-center justify-center cursor-pointer transition-transform duration-300 group-hover:scale-105 shadow-md ${sealClasses}`}>
-                    <Heart className="w-5 h-5 fill-current opacity-90" />
-                    <span className="text-[10px] font-bold mt-0.5 opacity-90 flex items-center justify-center">
-                      {renderAppleText(initials, 14)}
-                    </span>
+                    {sealEmoji ? (
+                      <span className="text-xl sm:text-2xl select-none leading-none flex items-center justify-center drop-shadow-xs">
+                        {renderAppleText(sealEmoji, 22)}
+                      </span>
+                    ) : (
+                      <>
+                        <Heart className="w-5 h-5 fill-current opacity-90" />
+                        <span className="text-[10px] font-bold mt-0.5 opacity-90 flex items-center justify-center">
+                          {renderAppleText(initials, 14)}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
 
