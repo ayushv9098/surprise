@@ -734,7 +734,7 @@ export const TEMPLATE_PRESETS = {
 // ==========================================
 // --- ALIASES FOR LEGACY PRESETS & THEME IDS ---
 // ==========================================
-TEMPLATE_PRESETS['blush-romance'] = TEMPLATE_PRESETS['blush-rose'];
+TEMPLATE_PRESETS['blush-romance'] = TEMPLATE_PRESETS['velvet-romance'];
 TEMPLATE_PRESETS['heartfelt-apology'] = TEMPLATE_PRESETS['gentle-peace'];
 TEMPLATE_PRESETS['royal'] = TEMPLATE_PRESETS['royal-sapphire'];
 TEMPLATE_PRESETS['gold'] = TEMPLATE_PRESETS['golden-birthday'];

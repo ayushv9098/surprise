@@ -18,11 +18,7 @@ export const CATEGORIES = [
     name: 'Love & Anniversary',
     emoji: '🌸',
     description: 'Anniversaries, crush keepsakes & sweet sealed letters',
-    hasGender: true,
-    defaultTemplates: {
-      boy: 'velvet-romance',
-      girl: 'sunset-romance',
-    },
+    hasGender: false,
     defaultTemplate: 'velvet-romance',
     accent: '#F43F5E',
     tag: 'Romantic',

@@ -26,19 +26,19 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="border-t border-slate-200/70 bg-gradient-to-b from-[#FFFDFB] to-[#FDF8F5] py-7 sm:py-8 text-center px-4 transition-all">
-        <div className="max-w-4xl mx-auto space-y-3">
-          {/* Reassuring Trust Statement */}
-          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
-            Private & ad-free keepsakes. 100% confidential and safe.
+      <footer className="border-t border-slate-200/60 bg-gradient-to-b from-[#FFFDFB] to-[#FAF6F3] py-8 text-center px-4 transition-all">
+        <div className="max-w-3xl mx-auto space-y-3.5">
+          {/* Subtle Reassuring Trust Statement */}
+          <p className="text-xs text-slate-400 tracking-wide font-normal">
+            Private & ad-free keepsakes • 100% confidential and safe
           </p>
 
-          {/* Discreet Legal & Security Links */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs text-slate-500 font-medium">
+          {/* Consistent Legal & Security Links */}
+          <div className="flex items-center justify-center gap-3 text-xs text-slate-500 font-medium">
             <button
               type="button"
               onClick={() => setActiveModal('privacy')}
-              className="hover:text-slate-800 underline-offset-4 hover:underline transition-colors cursor-pointer"
+              className="hover:text-slate-800 transition-colors cursor-pointer"
             >
               Privacy Policy
             </button>
@@ -46,7 +46,7 @@ export default function Footer() {
             <button
               type="button"
               onClick={() => setActiveModal('terms')}
-              className="hover:text-slate-800 underline-offset-4 hover:underline transition-colors cursor-pointer"
+              className="hover:text-slate-800 transition-colors cursor-pointer"
             >
               Terms of Service
             </button>
@@ -54,29 +54,27 @@ export default function Footer() {
             <button
               type="button"
               onClick={() => setActiveModal('security')}
-              className="hover:text-slate-800 underline-offset-4 hover:underline transition-colors cursor-pointer inline-flex items-center gap-1"
+              className="hover:text-slate-800 transition-colors cursor-pointer"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Security Overview</span>
+              Security Overview
             </button>
           </div>
 
-          {/* Copyright & Company Attribution */}
-          <div className="pt-3 border-t border-slate-200/60 flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-3 text-xs text-slate-500 font-medium">
+          {/* Clean Unified Attribution */}
+          <div className="pt-2 text-[11px] text-slate-400 font-normal flex items-center justify-center gap-1.5">
+            <span>© 2026 Wishly</span>
+            <span>•</span>
             <span>
-              © 2026 Built by{' '}
+              Built by{' '}
               <a
                 href="https://avinfra.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-800 hover:text-rose-600 font-semibold underline underline-offset-2 transition-colors inline-flex items-center gap-0.5"
+                className="text-slate-600 hover:text-rose-600 font-medium underline underline-offset-2 transition-colors"
               >
-                <span>AV Infra Tech</span>
-                <span className="text-[10px] text-slate-400 no-underline font-normal">↗</span>
+                AV Infra Tech
               </a>
             </span>
-            <span className="hidden sm:inline text-slate-300">•</span>
-            <span className="text-slate-400">Digital Engineering Studio</span>
           </div>
         </div>
       </footer>

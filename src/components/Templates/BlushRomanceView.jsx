@@ -12,7 +12,7 @@ import { soundEffects } from './common/SoundEffects';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { getSongById } from '../../data/songs';
 
-export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
+export default function BlushRomanceView({ siteData = {}, onNavigateCreate, hideAudioPlayer = false, _isLiveView = false }) {
   const rawTheme = (
     siteData.templateId || 
     siteData.themeId || 
@@ -297,12 +297,14 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
       />
 
       {/* Floating Audio Player */}
-      <AudioPlayer
-        audioUrl={audioUrl}
-        title={audioTitle}
-        theme="romantic"
-        accentColor={themeConfig.audioAccent}
-      />
+      {!hideAudioPlayer && (
+        <AudioPlayer
+          audioUrl={audioUrl}
+          title={audioTitle}
+          theme="romantic"
+          accentColor={themeConfig.audioAccent}
+        />
+      )}
 
       {/* Floating Love Toast Notification */}
       {loveToast && (
@@ -329,7 +331,7 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
         </div>
 
         {/* Romantic Headline */}
-        <h1 className={`text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-tight ${themeConfig.headlineColor}`}>
+        <h1 className={`font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.15] ${themeConfig.headlineColor}`}>
           {renderAppleText(title)}
         </h1>
 
@@ -378,7 +380,7 @@ export default function BlushRomanceView({ siteData = {}, onNavigateCreate }) {
           <div className={`text-xs font-medium tracking-wide uppercase mb-1.5 ${themeConfig.isDark ? 'text-indigo-400' : (isSunset ? 'text-amber-600' : 'text-rose-600')}`}>
             From The Heart
           </div>
-          <h2 className={`text-2xl sm:text-3xl font-bold ${themeConfig.sectionTitleColor}`}>
+          <h2 className={`font-serif text-2xl sm:text-3xl md:text-4xl font-bold ${themeConfig.sectionTitleColor}`}>
             {renderAppleText(isSunset ? "Warm Little Things I Adore" : isCelestial ? "Constellations of Why I Love You" : "Little Things I Adore About You")}
           </h2>
           <p className={`text-xs sm:text-sm mt-1 max-w-md mx-auto ${themeConfig.sectionSubtitleColor}`}>

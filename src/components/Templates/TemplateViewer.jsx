@@ -17,7 +17,7 @@ const TEMPLATES = [
   // Birthday Templates
   { id: 'royal-sapphire', label: 'Royal Sapphire', icon: '👑', component: MultiSceneBirthdayView },
   { id: 'golden-birthday', label: 'Golden Spark', icon: '🎂', component: MultiSceneBirthdayView },
-  { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: PolaroidScrapbookView },
+  { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: MultiSceneBirthdayView },
   { id: 'blush-rose', label: 'Blush Blossom', icon: '🌸', component: MultiSceneBirthdayView },
   { id: 'princess-peach', label: 'Princess Peach', icon: '✨', component: MultiSceneBirthdayView },
   { id: 'lavender-dream', label: 'Lavender Dream', icon: '💜', component: MultiSceneBirthdayView },
@@ -56,7 +56,7 @@ export default function TemplateViewer({
     if (raw.includes('velvet')) return 'velvet-romance';
     if (raw.includes('sunset')) return 'sunset-romance';
     if (raw.includes('celestial')) return 'celestial-love';
-    if (raw.includes('blush-romance') || raw === 'blush-romance') return 'blush-romance';
+    if (raw.includes('blush-romance') || raw === 'blush-romance') return 'velvet-romance';
 
     if (raw.includes('kodak')) return 'vintage-kodak';
     if (raw.includes('neon')) return 'neon-nostalgia';
@@ -86,7 +86,13 @@ export default function TemplateViewer({
   })();
 
   const [selectedOverride, setSelectedOverride] = useState(null);
-  const activeTemplateId = selectedOverride || propTemplateId || (siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire');
+  const activeTemplateId = selectedOverride || propTemplateId || (() => {
+    const cat = (siteData.category || '').toLowerCase();
+    if (cat === 'romance') return 'velvet-romance';
+    if (cat === 'scrapbook') return 'vintage-kodak';
+    if (cat === 'apology') return 'gentle-peace';
+    return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
+  })();
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showCopiedToast, setShowCopiedToast] = useState(false);
 

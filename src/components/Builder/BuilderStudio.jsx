@@ -29,29 +29,32 @@ export default function BuilderStudio({
   const [shareResult, setShareResult] = useState(null);
 
   // Compute resolved initial gender & template
-  const resolvedInitialGender = (() => {
-    if (initialGender && initialGender !== 'boy') {
-      return initialGender;
+  const resolvedInitialTemplateId = (() => {
+    if (initialTemplateId) {
+      const tmpl = getTemplateById(initialTemplateId);
+      if (tmpl) return tmpl.id;
     }
+    return initialGender === 'girl' ? 'blush-rose' : 'royal-sapphire';
+  })();
+
+  const resolvedInitialGender = (() => {
     if (initialTemplateId) {
       const tmpl = getTemplateById(initialTemplateId);
       if (tmpl?.gender) return tmpl.gender;
     }
-    return initialGender || 'boy';
-  })();
-
-  const resolvedInitialTemplateId = (() => {
-    if (initialTemplateId) {
-      const tmpl = getTemplateById(initialTemplateId);
-      if (tmpl && tmpl.gender === resolvedInitialGender) {
-        return tmpl.id;
-      }
-    }
-    return resolvedInitialGender === 'girl' ? 'blush-rose' : 'royal-sapphire';
+    if (initialGender) return initialGender;
+    return 'boy';
   })();
 
   const [selectedGender, setSelectedGender] = useState(resolvedInitialGender);
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'birthday');
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    if (initialCategory) return initialCategory;
+    if (initialTemplateId) {
+      const tmpl = getTemplateById(initialTemplateId);
+      if (tmpl?.category) return tmpl.category;
+    }
+    return 'birthday';
+  });
 
   // Form State
   const [formData, setFormData] = useState(() => {

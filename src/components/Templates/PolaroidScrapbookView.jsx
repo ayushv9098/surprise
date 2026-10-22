@@ -19,7 +19,7 @@ import TemplateFooter from './common/TemplateFooter';
 import { soundEffects } from './common/SoundEffects';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 
-export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate }) {
+export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate, hideAudioPlayer = false, _isLiveView = false }) {
   // Determine template theme variant
   const rawId = (siteData.templateId || siteData.theme || siteData.type || '').toLowerCase();
   const isNeon = rawId.includes('neon') || rawId.includes('nostalgia') || rawId.includes('electric');
@@ -323,12 +323,14 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
       <AmbientParticles type={currentTheme.particlesType} count={24} />
 
       {/* Floating Audio Player */}
-      <AudioPlayer
-        audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
-        title={currentTheme.audioTitle}
-        theme="scrapbook"
-        accentColor={currentTheme.audioAccent}
-      />
+      {!hideAudioPlayer && (
+        <AudioPlayer
+          audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
+          title={currentTheme.audioTitle}
+          theme="scrapbook"
+          accentColor={currentTheme.audioAccent}
+        />
+      )}
 
       {/* Scrapbook Journal Binder Header */}
       <header className="relative z-20 pt-16 sm:pt-24 pb-12 px-4 max-w-4xl mx-auto text-center">
@@ -687,7 +689,7 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate 
       </section>
 
       {/* Keepsake Footer */}
-      <TemplateFooter onCreateClick={onNavigateCreate} />
+      <TemplateFooter onCreateClick={onNavigateCreate} dark={isNeon} />
     </div>
   );
 }

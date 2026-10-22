@@ -164,17 +164,26 @@ export default function App() {
 
   const handleCategoryClick = (cat) => {
     setSelectedCategory(cat.id);
-    if (cat.hasGender) {
+    if (cat.id === 'birthday') {
       setRecipientModalCategory(cat);
     } else {
-      handleNavigate('builder', cat.defaultTemplate, cat.id);
+      const defaultTemplate =
+        cat.id === 'romance'
+          ? 'velvet-romance'
+          : cat.id === 'scrapbook'
+          ? 'vintage-kodak'
+          : cat.id === 'apology'
+          ? 'gentle-peace'
+          : cat.defaultTemplate || 'royal-sapphire';
+      handleNavigate('builder', defaultTemplate, cat.id);
     }
   };
 
-  const handleRecipientSelect = (_gender, templateId) => {
+  const handleRecipientSelect = (gender, templateId) => {
     const categoryId = recipientModalCategory?.id || 'birthday';
+    const finalTemplateId = templateId || (gender === 'girl' ? 'blush-rose' : 'royal-sapphire');
     setRecipientModalCategory(null);
-    handleNavigate('builder', templateId, categoryId);
+    handleNavigate('builder', finalTemplateId, categoryId);
   };
 
   const handleStartCreating = () => {
@@ -285,6 +294,43 @@ export default function App() {
                   className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 active:scale-[0.98] transition-all duration-150 cursor-pointer"
                 >
                   See Example
+                </button>
+              </div>
+
+              {/* Quick interactive previews for all occasions */}
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+                <span className="text-xs text-gray-400 font-medium">Preview live templates:</span>
+                <button
+                  type="button"
+                  onClick={() => handlePreviewPreset('royal-sapphire')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                >
+                  <span>🎂</span>
+                  <span>Birthday</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handlePreviewPreset('velvet-romance')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                >
+                  <span>❤️</span>
+                  <span>Love & Anniversary</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handlePreviewPreset('vintage-kodak')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                >
+                  <span>📸</span>
+                  <span>Scrapbook</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handlePreviewPreset('gentle-peace')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:border-rose-300 hover:text-rose-600 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                >
+                  <span>🕊️</span>
+                  <span>Apology</span>
                 </button>
               </div>
             </section>

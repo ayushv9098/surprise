@@ -287,7 +287,7 @@ const APOLOGY_THEMES = {
   },
 };
 
-export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }) {
+export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate, hideAudioPlayer = false, _isLiveView = false }) {
   // Determine Theme Style
   const activeThemeId = (() => {
     const raw = (siteData.templateId || siteData.theme || siteData.type || '').toLowerCase();
@@ -409,12 +409,14 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate }
       <div className={`absolute top-2/3 -right-20 w-80 h-80 ${themeConfig.glow3} rounded-full blur-3xl pointer-events-none`} />
 
       {/* Floating Audio Player */}
-      <AudioPlayer
-        audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
-        title={siteData.customSongTitle || siteData.music?.title || themeConfig.audioTitle}
-        theme={themeConfig.audioTheme}
-        accentColor={themeConfig.audioAccent}
-      />
+      {!hideAudioPlayer && (
+        <AudioPlayer
+          audioUrl={siteData.songUrl || siteData.customSongUrl || siteData.music?.audioUrl || siteData.audioUrl}
+          title={siteData.customSongTitle || siteData.music?.title || themeConfig.audioTitle}
+          theme={themeConfig.audioTheme}
+          accentColor={themeConfig.audioAccent}
+        />
+      )}
 
       {/* Hero Section */}
       <section className="relative z-20 pt-16 sm:pt-24 pb-8 px-4 text-center max-w-3xl mx-auto">

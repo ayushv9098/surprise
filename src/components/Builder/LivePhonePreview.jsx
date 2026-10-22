@@ -7,9 +7,13 @@ import {
   ChevronRight,
   BookOpen,
   Copy,
+  Sparkles,
 } from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { getTemplateById } from '../../data/templates';
+import RomancePhoneView from './RomancePhoneView';
+import ScrapbookPhoneView from './ScrapbookPhoneView';
+import ApologyPhoneView from './ApologyPhoneView';
 
 // 8 Ambient Floating Apple Emojis Scaled for the Mobile Phone Simulator
 const AMBIENT_EMOJIS_CONFIG = [
@@ -799,15 +803,15 @@ export default function LivePhonePreview({ formData = {} }) {
   const isScrapbook =
     !isRomance && (
       occasionCategory === 'scrapbook' ||
-      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(theme.id) ||
-      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId)
+      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories', 'polaroid-scrapbook'].includes(theme.id) ||
+      ['vintage-kodak', 'neon-nostalgia', 'cozy-memories', 'polaroid-scrapbook'].includes(formData.templateId)
     );
 
   const isApology =
     !isRomance && !isScrapbook && (
       occasionCategory === 'apology' ||
-      ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(theme.id) ||
-      ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId)
+      ['gentle-peace', 'sweet-forgive', 'fresh-start', 'heartfelt-apology'].includes(theme.id) ||
+      ['gentle-peace', 'sweet-forgive', 'fresh-start', 'heartfelt-apology'].includes(formData.templateId)
     );
 
   const isBirthday = !isRomance && !isScrapbook && !isApology;
@@ -1199,9 +1203,31 @@ export default function LivePhonePreview({ formData = {} }) {
               </div>
 
               {/* ========================================================== */}
-              {/* INTERACTIVE 5-SCENE SCREEN BODY */}
+              {/* INTERACTIVE SCREEN BODY: DEDICATED OCCASION EXPERIENCES */}
               {/* ========================================================== */}
-              <div className="flex-1 overflow-y-auto px-3.5 py-2 flex flex-col justify-center items-center text-center custom-scrollbar relative z-20">
+              {isRomance ? (
+                <RomancePhoneView
+                  formData={formData}
+                  theme={theme}
+                  triggerConfetti={triggerConfetti}
+                  onReset={handleResetScreen}
+                />
+              ) : isScrapbook ? (
+                <ScrapbookPhoneView
+                  formData={formData}
+                  theme={theme}
+                  triggerConfetti={triggerConfetti}
+                  onReset={handleResetScreen}
+                />
+              ) : isApology ? (
+                <ApologyPhoneView
+                  formData={formData}
+                  theme={theme}
+                  triggerConfetti={triggerConfetti}
+                  onReset={handleResetScreen}
+                />
+              ) : (
+                <div className="flex-1 overflow-y-auto px-3.5 py-2 flex flex-col justify-center items-center text-center custom-scrollbar relative z-20">
                 {/* -------------------------------------------------------- */}
                 {/* SCENE 0: COVER / LANDING */}
                 {/* -------------------------------------------------------- */}
@@ -1787,7 +1813,8 @@ export default function LivePhonePreview({ formData = {} }) {
                     )}
                   </div>
                 )}
-              </div>
+                </div>
+              )}
 
               {/* ========================================================== */}
               {/* BOTTOM iOS SAFARI ADDRESS BAR & TOOLBAR */}
@@ -1817,26 +1844,35 @@ export default function LivePhonePreview({ formData = {} }) {
                   </button>
                 </div>
 
-                {/* Scene Indicator Dots (0-4) */}
-                <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => {
-                        setScreen(i);
-                        if (i !== 4) setEnvelopeOpen(false);
-                        if (i !== 2) setApologyForgiveState('initial');
-                      }}
-                      className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                        screen === i
-                          ? 'w-4 bg-blue-600 shadow-xs'
-                          : 'w-1.5 bg-slate-400/60 hover:bg-slate-500'
-                      }`}
-                      aria-label={`Go to scene ${i + 1}`}
-                    />
-                  ))}
-                </div>
+                {/* Scene Indicator Dots for Birthday Flow Only */}
+                {isBirthday ? (
+                  <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5">
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => {
+                          setScreen(i);
+                          if (i !== 4) setEnvelopeOpen(false);
+                          if (i !== 2) setApologyForgiveState('initial');
+                        }}
+                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                          screen === i
+                            ? 'w-4 bg-blue-600 shadow-xs'
+                            : 'w-1.5 bg-slate-400/60 hover:bg-slate-500'
+                        }`}
+                        aria-label={`Go to scene ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-1.5 py-0.5 mb-0.5 text-[9px] font-semibold text-slate-500">
+                    <Sparkles className="w-2.5 h-2.5 text-rose-500" />
+                    <span>
+                      {isRomance ? 'Romantic Keepsake Experience ❤️' : isScrapbook ? '35mm Retro Journal 📸' : 'Heartfelt Peace Accord 🕊️'}
+                    </span>
+                  </div>
+                )}
 
                 {/* Safari Bottom 5-Button Toolbar */}
                 <div className="px-5 pt-0.5 pb-1 flex items-center justify-between text-[#007aff]">
@@ -1844,9 +1880,9 @@ export default function LivePhonePreview({ formData = {} }) {
                   <button
                     type="button"
                     onClick={handlePrevScene}
-                    disabled={screen === 0}
+                    disabled={!isBirthday || screen === 0}
                     className={`cursor-pointer transition-opacity ${
-                      screen === 0 ? 'opacity-30' : 'hover:opacity-80 active:scale-95'
+                      !isBirthday || screen === 0 ? 'opacity-30' : 'hover:opacity-80 active:scale-95'
                     }`}
                     title="Previous Scene"
                   >
@@ -1857,9 +1893,9 @@ export default function LivePhonePreview({ formData = {} }) {
                   <button
                     type="button"
                     onClick={handleNextScene}
-                    disabled={screen === 4}
+                    disabled={!isBirthday || screen === 4}
                     className={`cursor-pointer transition-opacity ${
-                      screen === 4 ? 'opacity-30' : 'hover:opacity-80 active:scale-95'
+                      !isBirthday || screen === 4 ? 'opacity-30' : 'hover:opacity-80 active:scale-95'
                     }`}
                     title="Next Scene"
                   >
