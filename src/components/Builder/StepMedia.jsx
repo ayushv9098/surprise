@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
   UploadCloud,
   Play,
@@ -7,38 +7,193 @@ import {
   Check,
   Link as LinkIcon,
   Music,
+  Volume2,
+  AlertCircle,
+  Sparkles,
+  CheckCircle2,
+  RefreshCw,
+  FileAudio,
+  ArrowRight,
 } from 'lucide-react';
 import { SONGS } from '../../data/songs';
 import { getTemplateById } from '../../data/templates';
 import { compressImageFile } from '../../utils/storage';
 import AppleEmoji from '../common/AppleEmoji';
 
+/**
+ * Smart URL Intelligence: detects Instagram, YouTube, Spotify, Google Drive, Dropbox,
+ * and converts or advises the user with zero-friction solutions.
+ */
+const detectUrlType = (rawUrl) => {
+  if (!rawUrl || typeof rawUrl !== 'string') return { type: 'empty' };
+  const url = rawUrl.trim();
+
+  // Instagram: /reel/, /p/, /reels/audio/, /stories/
+  if (/(instagram\.com|instagr\.am)\/(reel|reels|p|stories|tv)\//i.test(url) || /instagram\.com\/reels\/audio\//i.test(url)) {
+    return {
+      type: 'instagram',
+      url,
+      message: "Instagram Reel links cannot be played directly due to Instagram's CORS and privacy restrictions. To use your favorite music with zero hassle:",
+    };
+  }
+
+  // YouTube / YouTube Music
+  if (/(youtube\.com|youtu\.be)\//i.test(url)) {
+    return {
+      type: 'youtube',
+      url,
+      message: "YouTube links are video web pages, not direct audio stream files. Browsers cannot stream them as background music.",
+    };
+  }
+
+  // Spotify
+  if (/spotify\.com\//i.test(url)) {
+    return {
+      type: 'spotify',
+      url,
+      message: "Spotify web links cannot be streamed by web browsers due to digital rights restrictions.",
+    };
+  }
+
+  // Google Drive
+  const gdriveMatch = url.match(/drive\.google\.com\/(?:file\/d\/([a-zA-Z0-9_-]+)|open\?id=([a-zA-Z0-9_-]+)|uc\?.*id=([a-zA-Z0-9_-]+))/i);
+  if (gdriveMatch) {
+    const fileId = gdriveMatch[1] || gdriveMatch[2] || gdriveMatch[3];
+    const convertedUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+    return {
+      type: 'gdrive',
+      originalUrl: url,
+      convertedUrl,
+      fileId,
+      message: 'Google Drive link detected! Converted to direct audio stream URL automatically.',
+    };
+  }
+
+  // Dropbox
+  if (/dropbox\.com\//i.test(url)) {
+    let convertedUrl = url;
+    if (convertedUrl.includes('dl=0')) {
+      convertedUrl = convertedUrl.replace('dl=0', 'raw=1');
+    } else if (convertedUrl.includes('dl=1')) {
+      convertedUrl = convertedUrl.replace('dl=1', 'raw=1');
+    } else if (!convertedUrl.includes('raw=1')) {
+      convertedUrl += (convertedUrl.includes('?') ? '&' : '?') + 'raw=1';
+    }
+    return {
+      type: 'dropbox',
+      originalUrl: url,
+      convertedUrl,
+      message: 'Dropbox link detected! Converted to direct raw audio stream URL automatically.',
+    };
+  }
+
+  return {
+    type: 'direct',
+    convertedUrl: url,
+  };
+};
+
+/**
+ * Real-time Audio Stream Prober
+ * Verifies whether a given URL can actually be streamed as audio by the browser.
+ */
+const probeAudioUrl = (url) => {
+  return new Promise((resolve, reject) => {
+    if (!url) {
+      reject(new Error('Please enter a valid audio URL.'));
+      return;
+    }
+    const audio = new Audio();
+    let settled = false;
+
+    const cleanup = () => {
+      audio.oncanplaythrough = null;
+      audio.onloadeddata = null;
+      audio.onerror = null;
+      audio.src = '';
+    };
+
+    const timeout = setTimeout(() => {
+      if (!settled) {
+        settled = true;
+        cleanup();
+        reject(new Error('Audio stream test timed out. The server may be blocking streaming or slow to respond.'));
+      }
+    }, 6000);
+
+    audio.oncanplaythrough = () => {
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeout);
+        cleanup();
+        resolve(true);
+      }
+    };
+
+    audio.onloadeddata = () => {
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeout);
+        cleanup();
+        resolve(true);
+      }
+    };
+
+    audio.onerror = () => {
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeout);
+        cleanup();
+        reject(new Error('This link is not a playable direct audio stream (MP3/WAV) or is blocked by CORS.'));
+      }
+    };
+
+    try {
+      audio.src = url;
+      audio.load();
+    } catch {
+      if (!settled) {
+        settled = true;
+        clearTimeout(timeout);
+        cleanup();
+        reject(new Error('Invalid audio URL format.'));
+      }
+    }
+  });
+};
+
 export default function StepMedia({ formData, onChange }) {
-  const [isDragging, setIsDragging] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [urlInput, setUrlInput] = useState('');
-  const [showUrlField, setShowUrlField] = useState(false);
+  // Hero Photo states
+  const [isPhotoDragging, setIsPhotoDragging] = useState(false);
+  const [isPhotoProcessing, setIsPhotoProcessing] = useState(false);
+  const [photoUrlInput, setPhotoUrlInput] = useState('');
+  const [showPhotoUrlField, setShowPhotoUrlField] = useState(false);
+  const fileInputRef = useRef(null);
+
+  // Audio Playback & Ref states
   const [playingSongId, setPlayingSongId] = useState(null);
   const audioRef = useRef(null);
-  const fileInputRef = useRef(null);
   const audioFileInputRef = useRef(null);
 
-  // Custom audio states
+  // Custom Audio & Smart URL states
   const hasCustomAudio = formData.songId === 'custom' || Boolean(formData.customSongUrl);
   const [audioTab, setAudioTab] = useState(hasCustomAudio ? 'custom' : 'trending');
   const [customUrlInput, setCustomUrlInput] = useState('');
-  const [audioError, setAudioError] = useState('');
+  const [isAudioDragging, setIsAudioDragging] = useState(false);
   const [isAudioUploading, setIsAudioUploading] = useState(false);
+  const [isTestingAudio, setIsTestingAudio] = useState(false);
+  const [audioError, setAudioError] = useState('');
+  const [urlFeedback, setUrlFeedback] = useState(null); // { type, message, convertedUrl }
 
   const template = getTemplateById(formData.templateId);
   const isBoy = formData.gender === 'boy';
-  const selectedSongId = formData.songId || template.recommendedSongId || 'upbeat-birthday-reel';
+  const selectedSongId = formData.songId || template?.recommendedSongId || 'upbeat-birthday-reel';
 
   // Hero photo can come from formData.heroPhoto or formData.photos[0]?.url
-  const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template.samplePhoto || '';
+  const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template?.samplePhoto || '';
   const photoCaption = formData.photoCaption || (isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸');
 
-  // Cleanup audio preview on unmount
+  // Stop audio on unmount
   useEffect(() => {
     return () => {
       if (audioRef.current) {
@@ -48,25 +203,33 @@ export default function StepMedia({ formData, onChange }) {
     };
   }, []);
 
-  // Toggle live music preview for curated songs
+  // Stop currently playing audio
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    setPlayingSongId(null);
+  }, []);
+
+  // 1-Click Toggle live music preview for curated songs
   const handleTogglePlaySong = (song) => {
     if (!song.audioUrl) {
-      if (audioRef.current) audioRef.current.pause();
-      setPlayingSongId(null);
+      stopAudio();
       handleSelectSong(song);
       return;
     }
 
     if (playingSongId === song.id) {
-      if (audioRef.current) audioRef.current.pause();
-      setPlayingSongId(null);
+      stopAudio();
     } else {
-      if (audioRef.current) audioRef.current.pause();
-      const audio = new Audio(song.audioUrl);
-      audio.volume = 0.6;
+      stopAudio();
+      const primaryUrl = song.audioUrl || song.fallbackUrl;
+      const audio = new Audio(primaryUrl);
+      audio.volume = 0.65;
       audio.onended = () => setPlayingSongId(null);
       audio.onerror = () => {
-        if (song.fallbackUrl) {
+        if (song.fallbackUrl && song.fallbackUrl !== primaryUrl) {
           audio.src = song.fallbackUrl;
           audio.play().catch(() => setPlayingSongId(null));
         } else {
@@ -79,25 +242,53 @@ export default function StepMedia({ formData, onChange }) {
     }
   };
 
+  // 1-Click Select Trending Song
   const handleSelectSong = (song) => {
     setAudioError('');
+    setUrlFeedback(null);
     onChange({
       songId: song.id,
-      songUrl: song.audioUrl,
+      songUrl: song.audioUrl || song.fallbackUrl,
       customSongUrl: '',
       customSongTitle: '',
     });
   };
 
-  // Custom audio handlers
-  const handleAudioFileUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  // Toggle live music preview for custom audio
+  const handleTogglePlayCustom = () => {
+    const customAudioUrl = formData.customSongUrl || formData.songUrl;
+    if (!customAudioUrl) return;
 
+    if (playingSongId === 'custom') {
+      stopAudio();
+    } else {
+      stopAudio();
+      const audio = new Audio(customAudioUrl);
+      audio.volume = 0.7;
+      audio.onended = () => setPlayingSongId(null);
+      audio.onerror = () => {
+        setAudioError('Unable to stream this audio track. Check the file or URL access.');
+        setPlayingSongId(null);
+      };
+      audio.play().then(() => {
+        setPlayingSongId('custom');
+      }).catch(() => {
+        setAudioError('Playback paused by browser policy. Click play once more to listen.');
+        setPlayingSongId(null);
+      });
+      audioRef.current = audio;
+    }
+  };
+
+  // Process custom audio file (from drop or file picker)
+  const processAudioFile = (file) => {
+    if (!file) return;
     setAudioError('');
-    const maxBytes = 5 * 1024 * 1024;
+    setUrlFeedback(null);
+
+    const maxBytes = 10 * 1024 * 1024; // 10MB
     if (file.size > maxBytes) {
-      setAudioError('File size is larger than 5MB. Please choose a smaller audio clip (< 3MB recommended) for faster loading.');
+      setAudioError('Audio file is larger than 10MB. Please pick a smaller clip (< 5MB recommended) for faster loading.');
       return;
     }
 
@@ -106,96 +297,146 @@ export default function StepMedia({ formData, onChange }) {
     reader.onload = (event) => {
       const dataUrl = event.target?.result;
       if (typeof dataUrl === 'string') {
-        const fileName = file.name || 'My Custom Audio';
-        const customTitle = `Custom: ${fileName}`;
-        if (audioRef.current) {
-          audioRef.current.pause();
-          setPlayingSongId(null);
-        }
+        const rawName = file.name ? file.name.replace(/\.[^/.]+$/, '') : 'Custom Audio';
+        const cleanTitle = rawName.length > 32 ? rawName.slice(0, 30) + '...' : rawName;
+        stopAudio();
         onChange({
           songId: 'custom',
           songUrl: dataUrl,
           customSongUrl: dataUrl,
-          customSongTitle: customTitle,
+          customSongTitle: `Audio: ${cleanTitle}`,
+        });
+        setUrlFeedback({
+          type: 'success',
+          message: '✓ Custom audio file uploaded and ready to play!',
         });
       }
       setIsAudioUploading(false);
     };
     reader.onerror = () => {
-      setAudioError('Could not process this audio file. Please try another format (MP3, WAV, M4A) or paste a link.');
+      setAudioError('Could not read this audio file. Please try another format (MP3, WAV, M4A).');
       setIsAudioUploading(false);
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleAudioFileInputChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) processAudioFile(file);
     e.target.value = '';
   };
 
-  const handleApplyCustomAudioUrl = () => {
-    const url = customUrlInput.trim();
-    if (!url) return;
-
+  // Real-time URL input changes with instant intelligence detection
+  const handleCustomUrlChange = (val) => {
+    setCustomUrlInput(val);
     setAudioError('');
-    const rawFileName = url.split('/').pop()?.split('?')[0] || 'Audio Stream';
-    const customTitle = `Link: ${rawFileName.slice(0, 30)}`;
 
-    if (audioRef.current) {
-      audioRef.current.pause();
-      setPlayingSongId(null);
+    if (!val.trim()) {
+      setUrlFeedback(null);
+      return;
     }
 
-    onChange({
-      songId: 'custom',
-      songUrl: url,
-      customSongUrl: url,
-      customSongTitle: customTitle,
-    });
-    setCustomUrlInput('');
+    const detected = detectUrlType(val);
+    if (['instagram', 'youtube', 'spotify', 'gdrive', 'dropbox'].includes(detected.type)) {
+      setUrlFeedback({
+        type: detected.type,
+        message: detected.message,
+        convertedUrl: detected.convertedUrl,
+      });
+    } else if (urlFeedback && ['instagram', 'youtube', 'spotify'].includes(urlFeedback.type)) {
+      setUrlFeedback(null);
+    }
   };
 
-  const handleRemoveCustomAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      setPlayingSongId(null);
+  // Test and apply audio URL with real-time stream probe
+  const handleTestAndApplyAudioUrl = async () => {
+    const rawUrl = customUrlInput.trim();
+    if (!rawUrl) return;
+
+    const detected = detectUrlType(rawUrl);
+
+    // If Instagram, YouTube, or Spotify, show friendly guidance
+    if (detected.type === 'instagram' || detected.type === 'youtube' || detected.type === 'spotify') {
+      setUrlFeedback({
+        type: detected.type,
+        message: detected.message,
+      });
+      return;
     }
+
+    const finalUrl = detected.convertedUrl || rawUrl;
+    setIsTestingAudio(true);
+    setAudioError('');
+    setUrlFeedback({
+      type: 'testing',
+      message: 'Testing audio stream in real-time...',
+    });
+
+    try {
+      await probeAudioUrl(finalUrl);
+
+      // Successfully probed!
+      const rawFileName = finalUrl.split('/').pop()?.split('?')[0] || 'Web Audio';
+      const cleanFileName = rawFileName.length > 30 ? rawFileName.slice(0, 28) + '...' : rawFileName;
+      const customTitle = detected.type === 'gdrive'
+        ? 'Google Drive Audio Stream'
+        : detected.type === 'dropbox'
+        ? 'Dropbox Audio Stream'
+        : `Stream: ${cleanFileName}`;
+
+      stopAudio();
+      onChange({
+        songId: 'custom',
+        songUrl: finalUrl,
+        customSongUrl: finalUrl,
+        customSongTitle: customTitle,
+      });
+
+      setUrlFeedback({
+        type: 'success',
+        message: '✓ Audio link tested and ready to play!',
+      });
+      setCustomUrlInput('');
+    } catch (err) {
+      setUrlFeedback({
+        type: 'failed',
+        message: err.message || 'Unable to stream audio from this link. It might be blocked by CORS or not a direct MP3 stream.',
+      });
+    } finally {
+      setIsTestingAudio(false);
+    }
+  };
+
+  // Remove custom audio and revert to default trending reel
+  const handleRemoveCustomAudio = () => {
+    stopAudio();
     const defaultSong = SONGS[0];
     onChange({
       songId: defaultSong.id,
-      songUrl: defaultSong.audioUrl,
+      songUrl: defaultSong.audioUrl || defaultSong.fallbackUrl,
       customSongUrl: '',
       customSongTitle: '',
     });
     setAudioTab('trending');
+    setUrlFeedback(null);
+    setAudioError('');
   };
 
-  const handleTogglePlayCustom = () => {
-    const customAudioUrl = formData.customSongUrl || formData.songUrl;
-    if (!customAudioUrl) return;
-
-    if (playingSongId === 'custom') {
-      if (audioRef.current) audioRef.current.pause();
-      setPlayingSongId(null);
-    } else {
-      if (audioRef.current) audioRef.current.pause();
-      const audio = new Audio(customAudioUrl);
-      audio.volume = 0.65;
-      audio.onended = () => setPlayingSongId(null);
-      audio.onerror = () => {
-        setAudioError('Unable to play this custom audio track. Please check file format or URL access.');
-        setPlayingSongId(null);
-      };
-      audio.play().then(() => {
-        setPlayingSongId('custom');
-      }).catch(() => {
-        setAudioError('Audio playback was prevented by the browser. Click play again to start.');
-        setPlayingSongId(null);
-      });
-      audioRef.current = audio;
-    }
+  // Instant fallback to trending reels library
+  const handleFallbackToTrending = () => {
+    stopAudio();
+    const recommendedSong = SONGS[0];
+    handleSelectSong(recommendedSong);
+    setAudioTab('trending');
+    setUrlFeedback(null);
+    setAudioError('');
+    setCustomUrlInput('');
   };
 
-  // Upload hero photo file
-  const handleFiles = async (files) => {
+  // Hero Photo file processing
+  const handlePhotoFiles = async (files) => {
     if (!files || files.length === 0) return;
-    setIsProcessing(true);
+    setIsPhotoProcessing(true);
 
     try {
       const file = files[0];
@@ -216,29 +457,29 @@ export default function StepMedia({ formData, onChange }) {
     } catch (err) {
       console.error('Failed to compress hero photo:', err);
     } finally {
-      setIsProcessing(false);
+      setIsPhotoProcessing(false);
     }
   };
 
-  const handleApplyUrl = () => {
-    if (!urlInput.trim()) return;
+  const handleApplyPhotoUrl = () => {
+    if (!photoUrlInput.trim()) return;
     onChange({
-      heroPhoto: urlInput.trim(),
+      heroPhoto: photoUrlInput.trim(),
       photos: [
         {
           id: `hero-${Date.now()}`,
-          url: urlInput.trim(),
+          url: photoUrlInput.trim(),
           caption: photoCaption,
           tag: 'Star Photo',
         },
       ],
     });
-    setUrlInput('');
-    setShowUrlField(false);
+    setPhotoUrlInput('');
+    setShowPhotoUrlField(false);
   };
 
   const handleUseSamplePhoto = () => {
-    const sampleUrl = template.samplePhoto || (isBoy
+    const sampleUrl = template?.samplePhoto || (isBoy
       ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'
       : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80');
 
@@ -280,7 +521,7 @@ export default function StepMedia({ formData, onChange }) {
       <input
         type="file"
         ref={fileInputRef}
-        onChange={(e) => handleFiles(e.target.files)}
+        onChange={(e) => handlePhotoFiles(e.target.files)}
         accept="image/*"
         className="hidden"
       />
@@ -289,12 +530,12 @@ export default function StepMedia({ formData, onChange }) {
       <input
         type="file"
         ref={audioFileInputRef}
-        onChange={handleAudioFileUpload}
+        onChange={handleAudioFileInputChange}
         accept="audio/*"
         className="hidden"
       />
 
-      {/* SECTION 1: HERO PHOTO */}
+      {/* SECTION 1: HERO STAR PHOTO */}
       <div className="space-y-4">
         {/* Header */}
         <div className="border-b border-slate-100 pb-2.5 flex items-center justify-between gap-2">
@@ -315,25 +556,28 @@ export default function StepMedia({ formData, onChange }) {
 
         {/* Hero Photo Preview or Dropzone */}
         {heroPhotoUrl ? (
-          <div className="p-2.5 sm:p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex items-center gap-2.5 sm:gap-4">
+          <div className="p-3 sm:p-3.5 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center gap-3 sm:gap-4 transition-all">
             {/* Thumbnail */}
-            <div className="w-14 h-16 sm:w-18 sm:h-22 rounded-xl border border-slate-200 bg-slate-100 overflow-hidden shrink-0 shadow-xs">
+            <div className="w-16 h-20 sm:w-20 sm:h-24 rounded-xl border border-slate-200 bg-slate-100 overflow-hidden shrink-0 shadow-xs relative group">
               <img
                 src={heroPhotoUrl}
-                alt="Hero"
-                className="w-full h-full object-cover"
+                alt="Star"
+                className="w-full h-full object-cover transition-transform group-hover:scale-105"
               />
             </div>
 
-            {/* Right side */}
+            {/* Right side actions */}
             <div className="flex-1 min-w-0 space-y-1 sm:space-y-1.5">
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-slate-900">
+                <span className="text-xs sm:text-sm font-bold text-slate-900">
                   Photo Added
                 </span>
                 <span className="text-emerald-500 font-bold text-xs">✓</span>
               </div>
-              <div className="flex items-center gap-1.5 sm:gap-2 pt-0.5">
+              <p className="text-[11px] text-slate-500 truncate">
+                Centered automatically for the reveal animation
+              </p>
+              <div className="flex items-center gap-2 pt-1">
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
@@ -356,68 +600,68 @@ export default function StepMedia({ formData, onChange }) {
           <div
             onDrop={(e) => {
               e.preventDefault();
-              setIsDragging(false);
-              if (e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+              setIsPhotoDragging(false);
+              if (e.dataTransfer.files) handlePhotoFiles(e.dataTransfer.files);
             }}
             onDragOver={(e) => {
               e.preventDefault();
-              setIsDragging(true);
+              setIsPhotoDragging(true);
             }}
             onDragLeave={(e) => {
               e.preventDefault();
-              setIsDragging(false);
+              setIsPhotoDragging(false);
             }}
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-2xl p-3.5 sm:p-4 text-center transition-all cursor-pointer ${
-              isDragging
-                ? 'border-rose-500 bg-rose-50/50'
+            className={`border-2 border-dashed rounded-2xl p-4 sm:p-5 text-center transition-all cursor-pointer ${
+              isPhotoDragging
+                ? 'border-rose-500 bg-rose-50/50 scale-[0.99]'
                 : 'border-slate-200 bg-slate-50/50 hover:bg-slate-50 hover:border-slate-300'
             }`}
           >
-            <div className="flex flex-col items-center justify-center space-y-1.5">
-              <div className="w-8 h-8 rounded-xl bg-white shadow-xs flex items-center justify-center text-slate-400 border border-slate-200">
-                {isProcessing ? (
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <div className="w-9 h-9 rounded-xl bg-white shadow-xs flex items-center justify-center text-rose-500 border border-slate-200">
+                {isPhotoProcessing ? (
                   <div className="w-4 h-4 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
                 ) : (
-                  <UploadCloud className="w-4.5 h-4.5 text-rose-500" />
+                  <UploadCloud className="w-5 h-5" />
                 )}
               </div>
               <div>
-                <p className="text-xs font-semibold text-slate-800">
-                  {isProcessing ? 'Optimizing photo...' : 'Click or drag hero photo here'}
+                <p className="text-xs sm:text-sm font-semibold text-slate-800">
+                  {isPhotoProcessing ? 'Optimizing photo...' : 'Click or drag hero photo here'}
                 </p>
-                <p className="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">
-                  PNG, JPG, WEBP • Auto-centered
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  PNG, JPG, WEBP • Auto-centered & optimized
                 </p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Alternate URL Input Toggle */}
+        {/* Alternate Photo URL Input Toggle */}
         <div className="flex items-center justify-between text-xs pt-0.5">
           <button
             type="button"
-            onClick={() => setShowUrlField(!showUrlField)}
+            onClick={() => setShowPhotoUrlField(!showPhotoUrlField)}
             className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-800 font-medium transition-colors cursor-pointer"
           >
             <LinkIcon className="w-3.5 h-3.5" />
-            <span>{showUrlField ? 'Hide URL input' : 'Or paste an image URL'}</span>
+            <span>{showPhotoUrlField ? 'Hide URL input' : 'Or paste an image URL'}</span>
           </button>
         </div>
 
-        {showUrlField && (
+        {showPhotoUrlField && (
           <div className="flex items-center gap-2 p-1.5 rounded-xl border border-slate-200 bg-white">
             <input
               type="url"
-              value={urlInput}
-              onChange={(e) => setUrlInput(e.target.value)}
+              value={photoUrlInput}
+              onChange={(e) => setPhotoUrlInput(e.target.value)}
               placeholder="https://images.unsplash.com/photo-..."
               className="w-full px-3 py-1.5 text-xs text-slate-800 bg-transparent focus:outline-hidden"
             />
             <button
               type="button"
-              onClick={handleApplyUrl}
+              onClick={handleApplyPhotoUrl}
               className="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-rose-500 hover:bg-rose-600 transition-colors cursor-pointer shrink-0"
             >
               Apply
@@ -441,19 +685,20 @@ export default function StepMedia({ formData, onChange }) {
         </div>
       </div>
 
-      {/* SECTION 2: BACKGROUND MUSIC */}
+      {/* SECTION 2: BACKGROUND MUSIC & SMART AUDIO HANDLER */}
       <div className="space-y-3.5 pt-4 border-t border-slate-100">
         <div className="flex items-center justify-between gap-2 pb-0.5">
           <h2 className="text-xs sm:text-base font-bold text-slate-900 flex items-center gap-1.5 truncate">
             <span>3. Background Melody</span>
             <AppleEmoji emoji="🎵" size={15} />
           </h2>
-          <span className="text-[10px] sm:text-xs font-medium text-slate-500 shrink-0">
-            {hasCustomAudio ? 'Custom Active' : 'Auto-plays 🎧'}
+          <span className="text-[10px] sm:text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 shrink-0 flex items-center gap-1">
+            <Volume2 className="w-3 h-3 text-rose-500" />
+            <span>{hasCustomAudio ? 'Custom Track Active' : 'Auto-plays on Reveal'}</span>
           </span>
         </div>
 
-        {/* Tab switcher: Trending Reels vs Custom Upload */}
+        {/* Clear, Zero-Friction Tab Switcher */}
         <div className="grid grid-cols-2 p-1 rounded-2xl bg-slate-100 border border-slate-200/90 shadow-2xs gap-1">
           <button
             type="button"
@@ -461,18 +706,16 @@ export default function StepMedia({ formData, onChange }) {
               setAudioTab('trending');
               setAudioError('');
             }}
-            className={`py-2 px-1 sm:px-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center justify-center gap-1 select-none min-w-0 ${
+            className={`py-2 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none min-w-0 ${
               audioTab === 'trending'
-                ? 'bg-white text-slate-900 shadow-xs border border-slate-200/50'
+                ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
             }`}
           >
+            <AppleEmoji emoji="🎵" size={14} />
             <span className="truncate">
               <span className="sm:hidden">Trending Reels</span>
               <span className="hidden sm:inline">Trending Insta Reels</span>
-            </span>
-            <span className="shrink-0">
-              <AppleEmoji emoji="🎵" size={13} />
             </span>
           </button>
           <button
@@ -481,26 +724,24 @@ export default function StepMedia({ formData, onChange }) {
               setAudioTab('custom');
               setAudioError('');
             }}
-            className={`py-2 px-1 sm:px-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center justify-center gap-1 select-none min-w-0 ${
+            className={`py-2 px-2 sm:px-3 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none min-w-0 ${
               audioTab === 'custom'
-                ? 'bg-white text-rose-600 shadow-xs border border-slate-200/50'
+                ? 'bg-white text-rose-600 shadow-xs border border-slate-200/60'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
             }`}
           >
+            <AppleEmoji emoji="🎧" size={14} />
             <span className="truncate">
-              <span className="sm:hidden">Upload Song</span>
-              <span className="hidden sm:inline">Upload Your Song / MP3</span>
-            </span>
-            <span className="shrink-0">
-              <AppleEmoji emoji="🎧" size={13} />
+              <span className="sm:hidden">Upload / Custom</span>
+              <span className="hidden sm:inline">Upload Song / MP3</span>
             </span>
           </button>
         </div>
 
         {/* Error notification if any */}
         {audioError && (
-          <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/90 text-xs text-amber-800 flex items-start gap-2 shadow-2xs">
-            <span className="shrink-0 mt-0.5">⚠️</span>
+          <div className="p-3 rounded-xl bg-amber-50 border border-amber-200/90 text-xs text-amber-800 flex items-start gap-2 shadow-2xs animate-fadeIn">
+            <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
             <p className="flex-1 font-medium">{audioError}</p>
           </div>
         )}
@@ -509,15 +750,15 @@ export default function StepMedia({ formData, onChange }) {
         {audioTab === 'trending' && (
           <div className="space-y-2.5">
             {hasCustomAudio && (
-              <div className="p-2.5 rounded-xl bg-amber-50/70 border border-amber-200/70 flex items-center justify-between text-xs text-amber-900">
-                <span className="flex items-center gap-1.5 font-medium">
+              <div className="p-2.5 rounded-xl bg-amber-50/80 border border-amber-200/80 flex items-center justify-between text-xs text-amber-900">
+                <span className="flex items-center gap-1.5 font-medium truncate">
                   <AppleEmoji emoji="🎧" size={13} />
-                  <span>Custom track currently active. Select any reel below to switch.</span>
+                  <span className="truncate">Your custom audio track is currently active.</span>
                 </span>
                 <button
                   type="button"
                   onClick={() => setAudioTab('custom')}
-                  className="font-bold underline text-amber-900 hover:text-amber-950 cursor-pointer"
+                  className="font-bold underline text-amber-900 hover:text-amber-950 cursor-pointer shrink-0 ml-2"
                 >
                   View Custom
                 </button>
@@ -535,7 +776,7 @@ export default function StepMedia({ formData, onChange }) {
                     onClick={() => handleSelectSong(song)}
                     className={`flex items-center justify-between p-2.5 sm:p-3 rounded-xl border transition-all cursor-pointer min-w-0 ${
                       isSelected
-                        ? 'border-rose-500 bg-rose-50/40 ring-1 ring-rose-500/20 shadow-2xs'
+                        ? 'border-rose-500 bg-rose-50/50 ring-1 ring-rose-500/30 shadow-2xs'
                         : 'border-slate-200/80 bg-white hover:border-slate-300 hover:bg-slate-50/50'
                     }`}
                   >
@@ -593,22 +834,35 @@ export default function StepMedia({ formData, onChange }) {
                 );
               })}
             </div>
+
+            {/* Switcher callout */}
+            <div className="pt-2 flex items-center justify-between text-xs text-slate-500 px-1">
+              <span>Looking for your own song or reel audio?</span>
+              <button
+                type="button"
+                onClick={() => setAudioTab('custom')}
+                className="font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1 cursor-pointer"
+              >
+                <span>Upload Song</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
           </div>
         )}
 
-        {/* TAB 2: UPLOAD YOUR SONG / MP3 */}
+        {/* TAB 2: UPLOAD YOUR SONG / SMART AUDIO HANDLER */}
         {audioTab === 'custom' && (
           <div className="space-y-3.5">
-            {hasCustomAudio ? (
-              /* Sleek card when custom audio is loaded */
+            {/* If custom audio is already selected/active */}
+            {hasCustomAudio && (
               <div className="p-4 rounded-2xl bg-gradient-to-br from-rose-50/70 via-white to-pink-50/40 border border-rose-200 shadow-xs space-y-3">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 shrink-0">
-                      <span>✓</span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 shrink-0">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                       <span>Custom Audio Active</span>
                     </span>
-                    <span className="text-xs text-slate-500 hidden sm:inline">Will play for recipient</span>
+                    <span className="text-xs text-slate-500 hidden sm:inline">• Plays for recipient</span>
                   </div>
 
                   <button
@@ -621,7 +875,8 @@ export default function StepMedia({ formData, onChange }) {
                   </button>
                 </div>
 
-                <div className="flex items-center gap-2.5 sm:gap-3 bg-white p-2.5 sm:p-3 rounded-xl border border-slate-200 shadow-2xs">
+                {/* Player card */}
+                <div className="flex items-center gap-2.5 sm:gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-2xs">
                   <button
                     type="button"
                     onClick={handleTogglePlayCustom}
@@ -652,7 +907,9 @@ export default function StepMedia({ formData, onChange }) {
                     </div>
                     <p className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 flex items-center gap-1 truncate">
                       <Music className="w-3 h-3 text-rose-500 shrink-0" />
-                      <span className="truncate">{playingSongId === 'custom' ? 'Playing live preview now' : 'Ready to delight your person'}</span>
+                      <span className="truncate">
+                        {playingSongId === 'custom' ? 'Playing live audio preview now' : 'Ready to play in surprise reveal'}
+                      </span>
                     </p>
                   </div>
 
@@ -662,61 +919,260 @@ export default function StepMedia({ formData, onChange }) {
                       onClick={() => audioFileInputRef.current?.click()}
                       className="text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-2.5 sm:px-3 py-1.5 rounded-lg transition-colors cursor-pointer"
                     >
-                      <span className="hidden sm:inline">Change Track</span>
+                      <span className="hidden sm:inline">Change File</span>
                       <span className="sm:hidden">Change</span>
                     </button>
                   </div>
                 </div>
               </div>
-            ) : (
-              /* When no custom audio yet, show upload & URL options */
-              <div className="space-y-3">
-                <div
-                  onClick={() => audioFileInputRef.current?.click()}
-                  className="border-2 border-dashed border-rose-200 hover:border-rose-400 bg-rose-50/30 hover:bg-rose-50/70 rounded-2xl p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 group shadow-2xs"
-                >
-                  <div className="w-11 h-11 rounded-full bg-white shadow-xs border border-rose-200 flex items-center justify-center text-rose-500 group-hover:scale-110 transition-transform">
-                    {isAudioUploading ? (
-                      <div className="w-5 h-5 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <UploadCloud className="w-5 h-5 text-rose-500" />
-                    )}
-                  </div>
-                  <div>
-                    <p className="text-xs sm:text-sm font-bold text-slate-900">
-                      {isAudioUploading ? 'Processing audio track...' : 'Upload Custom MP3 / Audio File'}
-                    </p>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      Supports MP3, WAV, M4A, AAC • Recommended &lt; 3MB for fastest streaming
-                    </p>
-                  </div>
-                </div>
+            )}
 
-                <div className="space-y-1.5 pt-1">
-                  <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
-                    <LinkIcon className="w-3.5 h-3.5 text-slate-400" />
-                    <span>Or paste direct MP3 / Audio Stream URL</span>
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="url"
-                      value={customUrlInput}
-                      onChange={(e) => setCustomUrlInput(e.target.value)}
-                      placeholder="https://cdn.pixabay.com/download/audio/track.mp3"
-                      className="flex-1 px-3.5 py-2 rounded-xl border border-slate-200/90 bg-white text-xs text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
-                    />
-                    <button
-                      type="button"
-                      onClick={handleApplyCustomAudioUrl}
-                      disabled={!customUrlInput.trim()}
-                      className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-rose-500 hover:bg-rose-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer shrink-0 shadow-2xs"
-                    >
-                      Apply
-                    </button>
-                  </div>
+            {/* Zero-friction upload & smart URL input */}
+            <div className="space-y-3">
+              {/* Prominent File Dropzone */}
+              <div
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setIsAudioDragging(false);
+                  if (e.dataTransfer.files?.[0]) processAudioFile(e.dataTransfer.files[0]);
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setIsAudioDragging(true);
+                }}
+                onDragLeave={(e) => {
+                  e.preventDefault();
+                  setIsAudioDragging(false);
+                }}
+                onClick={() => audioFileInputRef.current?.click()}
+                className={`border-2 border-dashed rounded-2xl p-4 sm:p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 group shadow-2xs ${
+                  isAudioDragging
+                    ? 'border-rose-500 bg-rose-50/70 scale-[0.99]'
+                    : 'border-rose-200/90 hover:border-rose-400 bg-rose-50/30 hover:bg-rose-50/60'
+                }`}
+              >
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white shadow-xs border border-rose-200 flex items-center justify-center text-rose-500 group-hover:scale-105 transition-transform">
+                  {isAudioUploading ? (
+                    <div className="w-5 h-5 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <FileAudio className="w-5 h-5 text-rose-500" />
+                  )}
+                </div>
+                <div>
+                  <p className="text-xs sm:text-sm font-bold text-slate-900">
+                    {isAudioUploading ? 'Processing audio track...' : 'Upload Audio from Phone / Laptop (MP3, M4A, WAV)'}
+                  </p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Select any song, voice note, or downloaded reel audio • Instant playback
+                  </p>
                 </div>
               </div>
-            )}
+
+              {/* Divider */}
+              <div className="relative flex py-1 items-center">
+                <div className="grow border-t border-slate-200"></div>
+                <span className="shrink mx-3 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  OR PASTE DIRECT LINK
+                </span>
+                <div className="grow border-t border-slate-200"></div>
+              </div>
+
+              {/* Smart Audio URL Input */}
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-700 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <LinkIcon className="w-3.5 h-3.5 text-slate-400" />
+                    <span>Paste Audio Stream, Drive, or Reel Link</span>
+                  </span>
+                  <span className="text-[10px] text-slate-400">Tested before saving</span>
+                </label>
+
+                <div className="flex items-center gap-2">
+                  <input
+                    type="url"
+                    value={customUrlInput}
+                    onChange={(e) => handleCustomUrlChange(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleTestAndApplyAudioUrl();
+                      }
+                    }}
+                    placeholder="Paste link (Instagram reel, Drive, Dropbox, MP3)..."
+                    className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-xs text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleTestAndApplyAudioUrl}
+                    disabled={!customUrlInput.trim() || isTestingAudio}
+                    className="px-3.5 sm:px-4 py-2.5 rounded-xl text-xs font-bold text-white bg-rose-500 hover:bg-rose-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer shrink-0 shadow-2xs flex items-center gap-1.5"
+                  >
+                    {isTestingAudio ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        <span className="hidden sm:inline">Testing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Test & Apply</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* SMART URL INTELLIGENCE HELPER BOX */}
+              {urlFeedback && (
+                <div className="transition-all animate-fadeIn">
+                  {/* Case 1: Instagram Reel Detected */}
+                  {urlFeedback.type === 'instagram' && (
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 border border-pink-200 text-xs shadow-xs space-y-2.5">
+                      <div className="flex items-start gap-2">
+                        <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+                          <Music className="w-3.5 h-3.5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-bold text-slate-900">
+                            Instagram Reel Link Detected
+                          </h4>
+                          <p className="text-[11px] sm:text-xs text-slate-600 mt-0.5 leading-relaxed">
+                            Instagram Reel links cannot be played directly due to Instagram's CORS and privacy restrictions. To use your favorite music with zero hassle:
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Instant Solution Action Buttons */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={handleFallbackToTrending}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-white text-rose-600 border border-rose-200 hover:bg-rose-50/80 transition-all shadow-2xs cursor-pointer text-center"
+                        >
+                          <Sparkles className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                          <span className="truncate">Choose from Trending Reels Library (Works 100%)</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => audioFileInputRef.current?.click()}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 transition-all shadow-2xs cursor-pointer text-center"
+                        >
+                          <FileAudio className="w-3.5 h-3.5 shrink-0" />
+                          <span className="truncate">Upload MP3 File from Phone or PC</span>
+                        </button>
+                      </div>
+
+                      <p className="text-[10px] sm:text-[11px] text-slate-500 italic pt-0.5">
+                        💡 Tip: If you want this exact reel's sound, download its audio with any free reel audio downloader on your phone, then tap "Upload MP3 File"!
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Case 2: YouTube or Spotify Detected */}
+                  {(urlFeedback.type === 'youtube' || urlFeedback.type === 'spotify') && (
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200 text-xs shadow-xs space-y-2.5">
+                      <div className="flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-bold text-amber-950 capitalize">
+                            {urlFeedback.type} Link Detected
+                          </h4>
+                          <p className="text-[11px] sm:text-xs text-amber-900 mt-0.5 leading-relaxed">
+                            {urlFeedback.message}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={handleFallbackToTrending}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-white text-slate-800 border border-amber-200 hover:bg-amber-100/50 transition-all shadow-2xs cursor-pointer"
+                        >
+                          <Sparkles className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                          <span>Choose from Trending Reels</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => audioFileInputRef.current?.click()}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 transition-all shadow-2xs cursor-pointer"
+                        >
+                          <FileAudio className="w-3.5 h-3.5 shrink-0" />
+                          <span>Upload MP3 File from Phone or PC</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Case 3: Google Drive / Dropbox auto-conversion */}
+                  {(urlFeedback.type === 'gdrive' || urlFeedback.type === 'dropbox') && (
+                    <div className="p-3 rounded-xl bg-sky-50 border border-sky-200 text-xs text-sky-900 flex items-start gap-2 shadow-2xs">
+                      <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <p className="font-semibold">{urlFeedback.message}</p>
+                        <p className="text-[11px] text-sky-700 mt-0.5">
+                          Click "Test & Apply" to verify that file sharing permissions are public.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Case 4: Testing State */}
+                  {urlFeedback.type === 'testing' && (
+                    <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-800 flex items-center gap-2 shadow-2xs">
+                      <div className="w-3.5 h-3.5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin shrink-0" />
+                      <p className="font-semibold">{urlFeedback.message}</p>
+                    </div>
+                  )}
+
+                  {/* Case 5: Success state */}
+                  {urlFeedback.type === 'success' && (
+                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-800 flex items-center gap-2 shadow-2xs">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <p className="font-bold flex-1">{urlFeedback.message}</p>
+                    </div>
+                  )}
+
+                  {/* Case 6: Stream Probe Failed */}
+                  {urlFeedback.type === 'failed' && (
+                    <div className="p-3.5 sm:p-4 rounded-2xl bg-rose-50 border border-rose-200 text-xs shadow-xs space-y-2.5">
+                      <div className="flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-bold text-rose-950">
+                            Audio Stream Test Failed
+                          </h4>
+                          <p className="text-[11px] sm:text-xs text-rose-800 mt-0.5 leading-relaxed">
+                            {urlFeedback.message}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={handleFallbackToTrending}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-white text-rose-700 border border-rose-300 hover:bg-rose-100/50 transition-all shadow-2xs cursor-pointer text-center"
+                        >
+                          <Sparkles className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                          <span className="truncate">Use Trending Reel Instead (Guaranteed)</span>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => audioFileInputRef.current?.click()}
+                          className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-rose-500 text-white hover:bg-rose-600 transition-all shadow-2xs cursor-pointer text-center"
+                        >
+                          <FileAudio className="w-3.5 h-3.5 shrink-0" />
+                          <span className="truncate">Upload MP3 from Phone</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

@@ -22,6 +22,7 @@ const ALLOWED_HOSTNAMES = new Set([
   'fonts.gstatic.com',
   'api.whatsapp.com',
   'www.w3.org',
+  'drive.google.com',
   'localhost',
   '127.0.0.1',
   'emojicdn.elk.sh',

@@ -3,10 +3,10 @@ import { Volume2, VolumeX, Music, Disc3 } from 'lucide-react';
 
 // Curated royalty-free romantic & celebratory background streams (gentle, warm, non-intrusive)
 const DEFAULT_TRACKS = {
-  romantic: 'https://cdn.freesound.org/previews/612/612610_5674468-lq.mp3', // Gentle acoustic/piano
-  birthday: 'https://cdn.freesound.org/previews/530/530415_11861866-lq.mp3', // Uplifting cheerful bells/melody
-  scrapbook: 'https://cdn.freesound.org/previews/612/612610_5674468-lq.mp3', // Nostalgic acoustic
-  apology: 'https://cdn.freesound.org/previews/515/515624_11293774-lq.mp3', // Soft calming piano
+  romantic: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Gentle acoustic/piano
+  birthday: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', // Uplifting cheerful bells/melody
+  scrapbook: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', // Nostalgic acoustic
+  apology: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3', // Soft calming piano
 };
 
 export default function AudioPlayer({ 
@@ -20,13 +20,43 @@ export default function AudioPlayer({
   const [showPrompt, setShowPrompt] = useState(true);
   const audioRef = useRef(null);
 
+  const defaultTrack = DEFAULT_TRACKS[theme] || DEFAULT_TRACKS.romantic;
   const isSilent = audioUrl === '';
-  const resolvedAudioUrl = isSilent ? '' : (audioUrl || DEFAULT_TRACKS[theme] || DEFAULT_TRACKS.romantic);
+
+  const [hasFallenBack, setHasFallenBack] = useState(false);
+  const [prevPropUrl, setPrevPropUrl] = useState(audioUrl);
+
+  // If audioUrl prop changes externally, reset fallback
+  if (audioUrl !== prevPropUrl) {
+    setPrevPropUrl(audioUrl);
+    setHasFallenBack(false);
+  }
+
+  const currentSrc = isSilent ? '' : (hasFallenBack ? defaultTrack : (audioUrl || defaultTrack));
+
+  // Gracefully fall back to default theme track if audio fails to load or play
+  const handleAudioError = () => {
+    if (!hasFallenBack && defaultTrack && currentSrc !== defaultTrack) {
+      console.warn('Custom audio track failed to load, falling back to default theme track:', currentSrc);
+      setHasFallenBack(true);
+      if (audioRef.current) {
+        audioRef.current.src = defaultTrack;
+        audioRef.current.load();
+        if (isPlaying || hasInteracted) {
+          audioRef.current.play()
+            .then(() => setIsPlaying(true))
+            .catch(() => setIsPlaying(false));
+        }
+      }
+    } else {
+      setIsPlaying(false);
+    }
+  };
 
   // Attempt auto-play on first user interaction anywhere on the window
   useEffect(() => {
     const handleFirstUserTap = () => {
-      if (!hasInteracted && audioRef.current && resolvedAudioUrl) {
+      if (!hasInteracted && audioRef.current && currentSrc) {
         setHasInteracted(true);
         audioRef.current.play()
           .then(() => {
@@ -46,12 +76,12 @@ export default function AudioPlayer({
       window.removeEventListener('click', handleFirstUserTap);
       window.removeEventListener('touchstart', handleFirstUserTap);
     };
-  }, [hasInteracted, resolvedAudioUrl]);
+  }, [hasInteracted, currentSrc]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
     setShowPrompt(false);
-    if (!audioRef.current || !resolvedAudioUrl) return;
+    if (!audioRef.current || !currentSrc) return;
 
     if (isPlaying) {
       audioRef.current.pause();
@@ -59,24 +89,30 @@ export default function AudioPlayer({
     } else {
       audioRef.current.play()
         .then(() => setIsPlaying(true))
-        .catch((err) => console.log('Audio playback waiting:', err));
+        .catch((err) => {
+          console.log('Audio playback waiting:', err);
+          handleAudioError();
+        });
     }
   };
 
-  if (isSilent || !resolvedAudioUrl) {
+  if (isSilent || !currentSrc) {
     return null;
   }
+
+  const displayTitle = hasFallenBack ? "Our Keepsake Melody" : title;
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex items-center gap-3">
       {/* Hidden HTML5 Audio Element */}
       <audio
         ref={audioRef}
-        src={resolvedAudioUrl}
+        src={currentSrc}
         loop
         preload="auto"
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
+        onError={handleAudioError}
       />
 
       {/* Gentle floating tooltip prompt */}
@@ -111,7 +147,7 @@ export default function AudioPlayer({
         {/* Title and Animated Audio Bars (hidden on tiny screens) */}
         <div className="hidden sm:flex flex-col text-left">
           <span className="text-[11px] font-semibold text-slate-800 max-w-[120px] truncate leading-tight">
-            {title}
+            {displayTitle}
           </span>
           <span className="text-[9px] font-medium text-slate-400 flex items-center gap-1">
             {isPlaying ? 'Playing melody' : 'Click to play'}
