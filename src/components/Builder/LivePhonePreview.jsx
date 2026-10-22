@@ -7,8 +7,8 @@ import ScrapbookPhoneView from './ScrapbookPhoneView';
 import ApologyPhoneView from './ApologyPhoneView';
 import RomancePhoneView from './RomancePhoneView';
 
-// 8 Ambient Floating Apple Emojis Scaled for the Mobile Phone Simulator
-// Positioned within top 6% to 68% so they never collide with the Safari bottom bar
+// 8 Ambient Floating Apple Emojis Scaled for the Mobile Phone Simulator (strictly for Birthday)
+// Positioned elegantly within top 6% to 68%
 const AMBIENT_EMOJIS_CONFIG = [
   { left: '6%', top: '8%', duration: '7.5s', delay: '0s', size: 16 },
   { left: '86%', top: '6%', duration: '8.4s', delay: '1.2s', size: 15 },
