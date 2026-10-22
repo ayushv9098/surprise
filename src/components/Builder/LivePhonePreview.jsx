@@ -885,7 +885,6 @@ export default function LivePhonePreview({
     setRomanticTab('photos');
     setScrapbookTab('timeline');
     setApologyTab('forgive');
-    setBookmarkSaved(false);
   }, [formData.templateId, formData.category]);
 
   const template = getTemplateById(formData.templateId || 'royal-sapphire');
@@ -1160,20 +1159,6 @@ export default function LivePhonePreview({
     setApologyTab('forgive');
     setApologyForgiveState('initial');
     setResetNonce((prev) => prev + 1);
-  };
-
-  const handlePrevScene = () => {
-    if (screen > 0) {
-      setScreen((prev) => prev - 1);
-      setEnvelopeOpen(false);
-    }
-  };
-
-  const handleNextScene = () => {
-    if (screen < 4) {
-      setScreen((prev) => prev + 1);
-      setEnvelopeOpen(false);
-    }
   };
 
   // Dynamic background styling matching the chosen template

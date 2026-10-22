@@ -296,7 +296,7 @@ export default function ApologyPhoneView({
                 <div className="mt-3 flex items-center justify-center gap-2">
                   <button
                     type="button"
-                    onClick={() => setActiveTab('treaty')}
+                    onClick={() => handleTabSelect('treaty')}
                     className="py-1 px-2.5 rounded-lg bg-emerald-700 text-white text-[10px] font-semibold active:scale-95 cursor-pointer shadow-2xs"
                   >
                     View Peace Accord 📜
