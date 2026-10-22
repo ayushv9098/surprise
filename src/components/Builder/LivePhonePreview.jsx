@@ -761,7 +761,13 @@ const resolveTheme = (templateId, gender, category) => {
 const BASE_WIDTH = 320;
 const BASE_HEIGHT = 650;
 
-export default function LivePhonePreview({ formData = {} }) {
+export default function LivePhonePreview({
+  formData = {},
+  activeSection,
+  previewScreen,
+  openEnvelope,
+  syncNonce,
+}) {
   const [screen, setScreen] = useState(0); // 0: Cover/Landing, 1: Photo, 2: Mood/Feeling, 3: Reasons, 4: Envelope/Letter
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
   const [apologyForgiveState, setApologyForgiveState] = useState('initial'); // 'initial' | 'begging' | 'begging-2'
@@ -819,6 +825,48 @@ export default function LivePhonePreview({ formData = {} }) {
   const [apologyTab, setApologyTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
   const [bookmarkSaved, setBookmarkSaved] = useState(false);
 
+  // Synchronize simulator scene with active form section or focused field
+  useEffect(() => {
+    if (typeof previewScreen === 'number') {
+      setScreen(previewScreen);
+      if (previewScreen === 0 || previewScreen === 1) {
+        setScrapbookTab('timeline');
+        setApologyTab('forgive');
+      } else if (previewScreen === 3) {
+        setScrapbookTab('jokes');
+        setApologyTab('treaty');
+      } else if (previewScreen === 4) {
+        setScrapbookTab('letter');
+        setApologyTab('letter');
+      }
+    }
+  }, [previewScreen, syncNonce]);
+
+  useEffect(() => {
+    if (typeof openEnvelope === 'boolean') {
+      setEnvelopeOpen(openEnvelope);
+    }
+  }, [openEnvelope, syncNonce]);
+
+  useEffect(() => {
+    if (activeSection === 'details') {
+      setScreen(0);
+      setEnvelopeOpen(false);
+      setScrapbookTab('timeline');
+      setApologyTab('forgive');
+    } else if (activeSection === 'media') {
+      setScreen(1);
+      setEnvelopeOpen(false);
+      setScrapbookTab('timeline');
+      setApologyTab('forgive');
+    } else if (activeSection === 'surprises') {
+      setScreen(3);
+      setEnvelopeOpen(false);
+      setScrapbookTab('jokes');
+      setApologyTab('treaty');
+    }
+  }, [activeSection]);
+
   // Reset simulator state immediately whenever user selects another template or category
   useEffect(() => {
     setScreen(0);
@@ -869,6 +917,7 @@ export default function LivePhonePreview({ formData = {} }) {
   const recipientName = formData.recipientName || (isGirl ? 'Sarah' : 'Rohan');
   const senderName = formData.senderName || (isGirl ? 'Elena' : 'Alex');
 
+  const hasExplicitOccasion = formData.occasion !== undefined;
   const rawOccasion = (formData.occasion || '').trim();
   const nameToDisplay = (formData.recipientName || '').trim() || (isGirl ? 'Sarah' : 'Rohan');
   const celebrationEmoji = theme.primaryEmoji;
@@ -882,7 +931,11 @@ export default function LivePhonePreview({ formData = {} }) {
     rawOccasion.toLowerCase().includes('happy birthday') ||
     rawOccasion.toLowerCase().includes('birthday');
 
-  if (rawOccasion && (!isDefaultBirthdayOccasion || isBirthday)) {
+  if (hasExplicitOccasion && rawOccasion === '') {
+    // User explicitly cleared occasion: do NOT force fallback
+    line1Text = '';
+    line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
+  } else if (rawOccasion && (!isDefaultBirthdayOccasion || isBirthday)) {
     if (rawOccasion.includes(',')) {
       const commaIdx = rawOccasion.indexOf(',');
       line1Text = rawOccasion.slice(0, commaIdx + 1).trim();
@@ -919,14 +972,11 @@ export default function LivePhonePreview({ formData = {} }) {
     }
   }
 
-  // Dynamic subtitle adapted to occasion
-  let displaySubtitle = (formData.subtitle || '').trim();
-  const isDefaultBirthdaySubtitle =
-    !displaySubtitle ||
-    displaySubtitle === 'I have a small surprise for you...' ||
-    displaySubtitle.toLowerCase().includes('birthday');
-
-  if (!displaySubtitle || (!isBirthday && isDefaultBirthdaySubtitle)) {
+  // Dynamic subtitle adapted to occasion - Only fallback if undefined!
+  let displaySubtitle = '';
+  if (formData.subtitle !== undefined) {
+    displaySubtitle = (formData.subtitle || '').trim();
+  } else {
     if (isRomance) {
       displaySubtitle = template?.defaultSubtitle || 'Every single second with you is my favorite memory.';
     } else if (isScrapbook) {
@@ -958,18 +1008,13 @@ export default function LivePhonePreview({ formData = {} }) {
     'fresh-start': 'Cherishing our beautiful bond 🤍',
   };
 
-  let photoCaption =
-    (formData.photoCaption || '').trim() ||
-    formData.photos?.[0]?.caption;
-
-  const isDefaultBirthdayCaption =
-    !photoCaption ||
-    photoCaption.includes('Keep Rocking') ||
-    photoCaption.includes('Stay Wonderful') ||
-    photoCaption.includes('Brighter Than Gold') ||
-    photoCaption.includes('King of the Day');
-
-  if (!photoCaption || (!isBirthday && isDefaultBirthdayCaption)) {
+  // Dynamic photo caption - Only fallback if undefined!
+  let photoCaption = '';
+  if (formData.photoCaption !== undefined) {
+    photoCaption = (formData.photoCaption || '').trim();
+  } else if (formData.photos?.[0]?.caption !== undefined) {
+    photoCaption = (formData.photos[0].caption || '').trim();
+  } else {
     if (isRomance) {
       photoCaption = defaultCaptions[theme.id] || 'My favorite smile in the world 🌹';
     } else if (isScrapbook) {
@@ -1018,38 +1063,24 @@ export default function LivePhonePreview({ formData = {} }) {
       ? defaultLetterTitles.apology
       : defaultLetterTitles.birthday;
 
+  // Dynamic letter body & sign-off - Only fallback if undefined!
   const rawLetterBody =
-    (typeof formData.letter === 'object' ? formData.letter?.content : formData.letter) ||
-    formData.letterBody;
+    typeof formData.letter === 'object' && formData.letter !== null && formData.letter.content !== undefined
+      ? formData.letter.content
+      : (typeof formData.letter === 'string' ? formData.letter : formData.letterBody);
 
-  const isDefaultBirthdayLetter =
-    rawLetterBody && (
-      rawLetterBody.includes('golden day') ||
-      rawLetterBody.includes('grand achievements') ||
-      rawLetterBody.includes('sweetest dreams') ||
-      rawLetterBody.includes('birthday')
-    );
-
-  const letterBody =
-    (!isBirthday && isDefaultBirthdayLetter)
-      ? theme.defaultLetter(recipientName)
-      : rawLetterBody || theme.defaultLetter(recipientName);
+  const letterBody = rawLetterBody !== undefined
+    ? rawLetterBody
+    : theme.defaultLetter(recipientName);
 
   const rawLetterSignOff =
-    (typeof formData.letter === 'object' && formData.letter?.signOff) ||
-    formData.letterSignOff;
+    typeof formData.letter === 'object' && formData.letter !== null && formData.letter.signOff !== undefined
+      ? formData.letter.signOff
+      : formData.letterSignOff;
 
-  const isDefaultBirthdaySignOff =
-    rawLetterSignOff && (
-      rawLetterSignOff.includes('👑💙') ||
-      rawLetterSignOff.includes('🌸💖') ||
-      (rawLetterSignOff.includes('With love,') && !isRomance)
-    );
-
-  const letterSignOff =
-    (!isBirthday && isDefaultBirthdaySignOff)
-      ? theme.defaultSignOff(senderName)
-      : rawLetterSignOff || theme.defaultSignOff(senderName);
+  const letterSignOff = rawLetterSignOff !== undefined
+    ? rawLetterSignOff
+    : theme.defaultSignOff(senderName);
 
   const rawSealEmoji =
     (typeof formData.letter === 'object' && formData.letter?.sealEmoji) ||
@@ -1313,6 +1344,7 @@ export default function LivePhonePreview({ formData = {} }) {
                   onReset={handleResetScreen}
                   activeTab={scrapbookTab}
                   onTabChange={setScrapbookTab}
+                  openEnvelope={envelopeOpen}
                 />
               ) : isApology ? (
                 <ApologyPhoneView
@@ -1322,6 +1354,7 @@ export default function LivePhonePreview({ formData = {} }) {
                   onReset={handleResetScreen}
                   activeTab={apologyTab}
                   onTabChange={setApologyTab}
+                  openEnvelope={envelopeOpen}
                 />
               ) : (
                 <div className="flex-1 overflow-y-auto px-3.5 py-2 flex flex-col justify-center items-center text-center custom-scrollbar relative z-20">
@@ -1359,15 +1392,17 @@ export default function LivePhonePreview({ formData = {} }) {
                       </div>
 
                       <h1 className={`${theme.fontFamily} text-2xl sm:text-3xl font-bold leading-tight ${theme.headingClass}`}>
-                        <span>{renderAppleText(line1Text, 24)}</span>
+                        {line1Text ? <span>{renderAppleText(line1Text, 24)}</span> : null}
                         <span className={`block mt-1 ${theme.accentTextClass}`}>
                           {renderAppleText(line2Text, 24)}
                         </span>
                       </h1>
 
-                      <p className={`mt-3 text-xs sm:text-sm ${theme.subtitleClass} leading-relaxed font-normal`}>
-                        {renderAppleText(displaySubtitle, 12)}
-                      </p>
+                      {displaySubtitle ? (
+                        <p className={`mt-3 text-xs sm:text-sm ${theme.subtitleClass} leading-relaxed font-normal`}>
+                          {renderAppleText(displaySubtitle, 12)}
+                        </p>
+                      ) : null}
 
                       <div className="mt-5 flex justify-center">
                         <button
@@ -1464,9 +1499,11 @@ export default function LivePhonePreview({ formData = {} }) {
                               className="w-full h-full object-cover object-center transition-all duration-300"
                             />
                           </div>
-                          <p className={`mt-2.5 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1 max-w-[180px] sm:max-w-[195px] leading-relaxed mx-auto`}>
-                            <span>{renderAppleText(photoCaption, 12)}</span>
-                          </p>
+                          {photoCaption ? (
+                            <p className={`mt-2.5 ${theme.fontFamily} text-xs sm:text-sm text-slate-700 text-center flex items-center justify-center gap-1 max-w-[180px] sm:max-w-[195px] leading-relaxed mx-auto`}>
+                              <span>{renderAppleText(photoCaption, 12)}</span>
+                            </p>
+                          ) : null}
                         </div>
                       </div>
 
@@ -1874,18 +1911,22 @@ export default function LivePhonePreview({ formData = {} }) {
                           </div>
 
                           {/* Letter Body */}
-                          <div className="space-y-2 text-slate-700 text-xs leading-relaxed max-h-40 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
-                            {renderAppleText(letterBody, 11)}
-                          </div>
+                          {letterBody ? (
+                            <div className="space-y-2 text-slate-700 text-xs leading-relaxed max-h-40 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
+                              {renderAppleText(letterBody, 11)}
+                            </div>
+                          ) : null}
 
                           {/* Signature styled in template's font */}
-                          <div className={`pt-2 mt-2 border-t ${theme.letterBorderBottom} text-right`}>
-                            <p
-                              className={`${theme.fontFamily} text-base sm:text-lg font-bold flex items-center justify-end gap-1 whitespace-pre-line ${theme.letterSignOffClass}`}
-                            >
-                              <span>{renderAppleText(letterSignOff, 15)}</span>
-                            </p>
-                          </div>
+                          {letterSignOff ? (
+                            <div className={`pt-2 mt-2 border-t ${theme.letterBorderBottom} text-right`}>
+                              <p
+                                className={`${theme.fontFamily} text-base sm:text-lg font-bold flex items-center justify-end gap-1 whitespace-pre-line ${theme.letterSignOffClass}`}
+                              >
+                                <span>{renderAppleText(letterSignOff, 15)}</span>
+                              </p>
+                            </div>
+                          ) : null}
                         </div>
 
                         {/* Action Buttons Below Open Letter */}

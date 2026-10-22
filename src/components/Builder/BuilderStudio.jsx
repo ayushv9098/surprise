@@ -28,6 +28,36 @@ export default function BuilderStudio({
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareResult, setShareResult] = useState(null);
 
+  // Focus & Section Auto-Sync State for Mobile Simulator
+  const [previewTarget, setPreviewTarget] = useState({ screen: 0, openEnvelope: false, nonce: 0 });
+
+  const syncToPreview = (screen, openEnvelope = false) => {
+    setPreviewTarget({ screen, openEnvelope, nonce: Date.now() });
+  };
+
+  const handleSectionTabClick = (sectionId) => {
+    setFormSection(sectionId);
+    if (sectionId === 'details') {
+      syncToPreview(0, false);
+    } else if (sectionId === 'media') {
+      syncToPreview(1, false);
+    } else if (sectionId === 'surprises') {
+      syncToPreview(3, false);
+    }
+  };
+
+  const handleFocusField = (fieldName) => {
+    if (['recipientName', 'senderName', 'occasion', 'subtitle'].includes(fieldName)) {
+      syncToPreview(0, false);
+    } else if (['heroPhoto', 'photos', 'photoCaption', 'songId', 'customSongUrl'].includes(fieldName)) {
+      syncToPreview(1, false);
+    } else if (fieldName === 'reasons' || fieldName.startsWith('reason')) {
+      syncToPreview(3, false);
+    } else if (['letter', 'letterContent', 'letterSignOff', 'waxSeal'].includes(fieldName) || fieldName.startsWith('letter')) {
+      syncToPreview(4, true);
+    }
+  };
+
   // Compute resolved initial gender & template
   const resolvedInitialTemplateId = (() => {
     if (initialTemplateId) {
@@ -96,6 +126,18 @@ export default function BuilderStudio({
     if (patch.category && patch.category !== selectedCategory) {
       setSelectedCategory(patch.category);
     }
+
+    // Auto-sync preview scene based on edited field
+    if (patch.recipientName !== undefined || patch.senderName !== undefined || patch.occasion !== undefined || patch.subtitle !== undefined) {
+      syncToPreview(0, false);
+    } else if (patch.heroPhoto !== undefined || patch.photoCaption !== undefined || patch.photos !== undefined || patch.songId !== undefined || patch.customSongUrl !== undefined) {
+      syncToPreview(1, false);
+    } else if (patch.specialReasons !== undefined || patch.reasons !== undefined) {
+      syncToPreview(3, false);
+    } else if (patch.letter !== undefined) {
+      syncToPreview(4, true);
+    }
+
     setFormData((prev) => {
       let updatedLetter = prev.letter ? { ...prev.letter } : {};
 
@@ -119,6 +161,7 @@ export default function BuilderStudio({
 
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
+    syncToPreview(0, false);
     const targetTemplateId = gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
     const preset = getPresetForTemplate(targetTemplateId);
     const tmpl = getTemplateById(targetTemplateId);
@@ -141,6 +184,7 @@ export default function BuilderStudio({
   };
 
   const handleTemplateChange = (templateId) => {
+    syncToPreview(0, false);
     const tmpl = getTemplateById(templateId);
     const preset = getPresetForTemplate(templateId);
     if (tmpl.gender && tmpl.gender !== selectedGender) {
@@ -270,7 +314,7 @@ export default function BuilderStudio({
                     <button
                       key={tab.id}
                       type="button"
-                      onClick={() => setFormSection(tab.id)}
+                      onClick={() => handleSectionTabClick(tab.id)}
                       className={`flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs sm:text-sm transition-all cursor-pointer select-none ${
                         isActive
                           ? 'bg-white text-slate-900 shadow-xs font-bold'
@@ -286,20 +330,20 @@ export default function BuilderStudio({
 
               <div className="rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 shadow-xs p-3.5 sm:p-7 space-y-5 sm:space-y-6">
                 {formSection === 'details' && (
-                  <StepDetails formData={formData} onChange={handleUpdateFormData} />
+                  <StepDetails formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />
                 )}
                 {formSection === 'media' && (
-                  <StepMedia formData={formData} onChange={handleUpdateFormData} />
+                  <StepMedia formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />
                 )}
                 {formSection === 'surprises' && (
-                  <StepSurprises formData={formData} onChange={handleUpdateFormData} />
+                  <StepSurprises formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />
                 )}
                 {formSection !== 'surprises' && (
                   <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
                     {formSection === 'details' && (
                       <button
                         type="button"
-                        onClick={() => setFormSection('media')}
+                        onClick={() => handleSectionTabClick('media')}
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
                       >
                         <span>Next: Photo & Song</span>
@@ -309,7 +353,7 @@ export default function BuilderStudio({
                     {formSection === 'media' && (
                       <button
                         type="button"
-                        onClick={() => setFormSection('surprises')}
+                        onClick={() => handleSectionTabClick('surprises')}
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
                       >
                         <span>Next: Reasons & Letter</span>
@@ -328,7 +372,13 @@ export default function BuilderStudio({
           className="shrink-0 flex flex-col items-center justify-center border-l border-slate-100 bg-[#FAFAFA] overflow-hidden"
           style={{ width: '420px' }}
         >
-          <LivePhonePreview formData={formData} />
+          <LivePhonePreview
+            formData={formData}
+            activeSection={formSection}
+            previewScreen={previewTarget.screen}
+            openEnvelope={previewTarget.openEnvelope}
+            syncNonce={previewTarget.nonce}
+          />
         </div>
       </div>
 
@@ -398,7 +448,7 @@ export default function BuilderStudio({
                     <button
                       key={tab.id}
                       type="button"
-                      onClick={() => setFormSection(tab.id)}
+                      onClick={() => handleSectionTabClick(tab.id)}
                       className={`flex-1 inline-flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-xs transition-all cursor-pointer select-none ${
                         isActive
                           ? 'bg-white text-slate-900 shadow-xs font-bold'
@@ -412,18 +462,18 @@ export default function BuilderStudio({
                 })}
               </div>
               <div className="rounded-2xl bg-white border border-slate-200/80 shadow-xs p-3.5 space-y-5">
-                {formSection === 'details' && <StepDetails formData={formData} onChange={handleUpdateFormData} />}
-                {formSection === 'media' && <StepMedia formData={formData} onChange={handleUpdateFormData} />}
-                {formSection === 'surprises' && <StepSurprises formData={formData} onChange={handleUpdateFormData} />}
+                {formSection === 'details' && <StepDetails formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
+                {formSection === 'media' && <StepMedia formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
+                {formSection === 'surprises' && <StepSurprises formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
                 {formSection !== 'surprises' && (
                   <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
                     {formSection === 'details' && (
-                      <button type="button" onClick={() => setFormSection('media')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                      <button type="button" onClick={() => handleSectionTabClick('media')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
                         <span>Next: Photo & Song</span><ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     )}
                     {formSection === 'media' && (
-                      <button type="button" onClick={() => setFormSection('surprises')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                      <button type="button" onClick={() => handleSectionTabClick('surprises')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
                         <span>Next: Reasons & Letter</span><ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     )}
@@ -436,7 +486,13 @@ export default function BuilderStudio({
 
         {/* Mobile phone preview */}
         <div className={`px-4 pt-4 flex justify-center ${activeMobileView === 'editor' ? 'hidden' : 'block'}`}>
-          <LivePhonePreview formData={formData} />
+          <LivePhonePreview
+            formData={formData}
+            activeSection={formSection}
+            previewScreen={previewTarget.screen}
+            openEnvelope={previewTarget.openEnvelope}
+            syncNonce={previewTarget.nonce}
+          />
         </div>
       </div>
 

@@ -170,7 +170,7 @@ const probeAudioUrl = (url) => {
   });
 };
 
-export default function StepMedia({ formData, onChange }) {
+export default function StepMedia({ formData, onChange, onFocusField }) {
   // Hero Photo states
   const [isPhotoDragging, setIsPhotoDragging] = useState(false);
   const [isPhotoProcessing, setIsPhotoProcessing] = useState(false);
@@ -199,7 +199,7 @@ export default function StepMedia({ formData, onChange }) {
 
   // Hero photo can come from formData.heroPhoto or formData.photos[0]?.url
   const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template?.samplePhoto || '';
-  const photoCaption = formData.photoCaption || (isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸');
+  const photoCaption = formData.photoCaption !== undefined ? formData.photoCaption : (isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸');
 
   // Stop audio on unmount
   useEffect(() => {
@@ -252,6 +252,7 @@ export default function StepMedia({ formData, onChange }) {
 
   // 1-Click Select Trending Song
   const handleSelectSong = (song) => {
+    onFocusField?.('songId');
     setAudioError('');
     setUrlFeedback(null);
     if (formData.customSongUrl && typeof formData.customSongUrl === 'string' && formData.customSongUrl.startsWith('blob:')) {
@@ -470,6 +471,7 @@ export default function StepMedia({ formData, onChange }) {
   // Hero Photo file processing
   const handlePhotoFiles = async (files) => {
     if (!files || files.length === 0) return;
+    onFocusField?.('heroPhoto');
     setIsPhotoProcessing(true);
 
     try {
@@ -497,6 +499,7 @@ export default function StepMedia({ formData, onChange }) {
 
   const handleApplyPhotoUrl = () => {
     if (!photoUrlInput.trim()) return;
+    onFocusField?.('heroPhoto');
     onChange({
       heroPhoto: photoUrlInput.trim(),
       photos: [
@@ -513,6 +516,7 @@ export default function StepMedia({ formData, onChange }) {
   };
 
   const handleUseSamplePhoto = () => {
+    onFocusField?.('heroPhoto');
     const sampleUrl = template?.samplePhoto || (isBoy
       ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'
       : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80');
@@ -534,6 +538,7 @@ export default function StepMedia({ formData, onChange }) {
   };
 
   const handleCaptionChange = (val) => {
+    onFocusField?.('photoCaption');
     onChange({
       photoCaption: val,
       photos: formData.photos?.length
@@ -543,6 +548,7 @@ export default function StepMedia({ formData, onChange }) {
   };
 
   const handleRemovePhoto = () => {
+    onFocusField?.('heroPhoto');
     onChange({
       heroPhoto: '',
       photos: [],
@@ -689,6 +695,7 @@ export default function StepMedia({ formData, onChange }) {
             <input
               type="url"
               value={photoUrlInput}
+              onFocus={() => onFocusField?.('heroPhoto')}
               onChange={(e) => setPhotoUrlInput(e.target.value)}
               placeholder="https://images.unsplash.com/photo-..."
               className="w-full px-3 py-1.5 text-xs text-slate-800 bg-transparent focus:outline-hidden"
@@ -712,6 +719,7 @@ export default function StepMedia({ formData, onChange }) {
           <input
             type="text"
             value={photoCaption}
+            onFocus={() => onFocusField?.('photoCaption')}
             onChange={(e) => handleCaptionChange(e.target.value)}
             placeholder={isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸'}
             className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
@@ -978,7 +986,10 @@ export default function StepMedia({ formData, onChange }) {
                   e.preventDefault();
                   setIsAudioDragging(false);
                 }}
-                onClick={() => audioFileInputRef.current?.click()}
+                onClick={() => {
+                  onFocusField?.('songId');
+                  audioFileInputRef.current?.click();
+                }}
                 className={`border-2 border-dashed rounded-2xl p-4 sm:p-5 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-2 group shadow-2xs ${
                   isAudioDragging
                     ? 'border-rose-500 bg-rose-50/70 scale-[0.99]'
@@ -1025,6 +1036,7 @@ export default function StepMedia({ formData, onChange }) {
                   <input
                     type="url"
                     value={customUrlInput}
+                    onFocus={() => onFocusField?.('songId')}
                     onChange={(e) => handleCustomUrlChange(e.target.value)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {

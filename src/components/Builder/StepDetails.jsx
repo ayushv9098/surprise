@@ -1,7 +1,7 @@
 import React from 'react';
 import AppleEmoji from '../common/AppleEmoji';
 
-export default function StepDetails({ formData, onChange }) {
+export default function StepDetails({ formData, onChange, onFocusField }) {
   const isBoy = formData.gender === 'boy';
 
   return (
@@ -26,6 +26,7 @@ export default function StepDetails({ formData, onChange }) {
             <input
               type="text"
               value={formData.recipientName || ''}
+              onFocus={() => onFocusField?.('recipientName')}
               onChange={(e) => onChange({ recipientName: e.target.value })}
               placeholder={isBoy ? 'Rohan' : 'Sarah'}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
@@ -41,6 +42,7 @@ export default function StepDetails({ formData, onChange }) {
             <input
               type="text"
               value={formData.senderName || ''}
+              onFocus={() => onFocusField?.('senderName')}
               onChange={(e) => onChange({ senderName: e.target.value })}
               placeholder={isBoy ? 'Alex' : 'Elena'}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
@@ -59,6 +61,7 @@ export default function StepDetails({ formData, onChange }) {
             <input
               type="text"
               value={formData.occasion || ''}
+              onFocus={() => onFocusField?.('occasion')}
               onChange={(e) => onChange({ occasion: e.target.value })}
               placeholder="e.g. Happy Birthday or Happy 21st Birthday"
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
@@ -75,6 +78,7 @@ export default function StepDetails({ formData, onChange }) {
             <input
               type="text"
               value={formData.subtitle || ''}
+              onFocus={() => onFocusField?.('subtitle')}
               onChange={(e) => onChange({ subtitle: e.target.value })}
               placeholder="e.g. I have a small surprise for you... 🎁"
               maxLength={140}

@@ -20,6 +20,7 @@ export default function ScrapbookPhoneView({
   onReset,
   activeTab: controlledTab,
   onTabChange,
+  openEnvelope: controlledOpenEnvelope,
 }) {
   const [internalTab, setInternalTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
   const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
@@ -36,7 +37,9 @@ export default function ScrapbookPhoneView({
   const [activeChapter, setActiveChapter] = useState(0); // 0, 1, 2
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isScratched, setIsScratched] = useState(false);
-  const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [internalEnvelopeOpen, setInternalEnvelopeOpen] = useState(false);
+  const envelopeOpen = controlledOpenEnvelope !== undefined ? controlledOpenEnvelope : internalEnvelopeOpen;
+  const setEnvelopeOpen = setInternalEnvelopeOpen;
   const [isOpeningEnvelope, setIsOpeningEnvelope] = useState(false);
   const [revealedJokes, setRevealedJokes] = useState({});
 
@@ -57,9 +60,17 @@ export default function ScrapbookPhoneView({
     ? `Thank you for the warm comfort, peaceful talks, and sweet memories we've shared. Sitting together with good coffee and honest conversations is one of life's greatest treasures.\n\nIn a busy and loud world, our time together is always my favorite pause button. You bring so much gentle calm and sweet sunshine to my everyday life.\n\nHere's to many more peaceful, golden afternoons and cherished memories together! 🌻☕`
     : `Looking through all our old photos, I can't help but smile at how much we've lived through together.\n\nFrom our very first awkward conversation to the countless late nights where we talked about everything and nothing. You've made my world softer, warmer, and so much more adventurous.\n\nHere's to all the memories we've pasted into this scrapbook, and to the blank pages waiting for us tomorrow! 📸✨`;
 
-  const letterBody = (typeof formData.letter === 'object' ? formData.letter?.content : formData.letter) || formData.letterBody || defaultLetter;
+  const rawLetterBody = typeof formData.letter === 'object' && formData.letter !== null && formData.letter.content !== undefined
+    ? formData.letter.content
+    : (typeof formData.letter === 'string' ? formData.letter : formData.letterBody);
+  const letterBody = rawLetterBody !== undefined ? rawLetterBody : defaultLetter;
+
   const letterTitle = (typeof formData.letter === 'object' ? formData.letter?.title : null) || formData.letterTitle || 'A Page From Our Scrapbook 📜';
-  const letterSignOff = (typeof formData.letter === 'object' ? formData.letter?.signOff : null) || formData.letterSignOff || `— Always your partner in adventure, ${senderName} 📸`;
+
+  const rawLetterSignOff = typeof formData.letter === 'object' && formData.letter !== null && formData.letter.signOff !== undefined
+    ? formData.letter.signOff
+    : formData.letterSignOff;
+  const letterSignOff = rawLetterSignOff !== undefined ? rawLetterSignOff : `— Always your partner in adventure, ${senderName} 📸`;
 
   // Memory Chapters
   const chapters = [
@@ -183,9 +194,11 @@ export default function ScrapbookPhoneView({
               <span className="text-amber-400"> & </span>
               <span>{senderName}</span>
             </h1>
-            <p className="text-[10px] text-slate-300 italic mt-0.5 line-clamp-1 font-sans">
-              {formData.subtitle || 'Taped forever into the scrapbook of our greatest adventures.'}
-            </p>
+            {(formData.subtitle !== undefined ? formData.subtitle : 'Taped forever into the scrapbook of our greatest adventures.') ? (
+              <p className="text-[10px] text-slate-300 italic mt-0.5 line-clamp-1 font-sans">
+                {formData.subtitle !== undefined ? formData.subtitle : 'Taped forever into the scrapbook of our greatest adventures.'}
+              </p>
+            ) : null}
           </div>
         </div>
 
@@ -576,15 +589,19 @@ export default function ScrapbookPhoneView({
                     <AppleEmoji emoji="📸" size={13} />
                   </div>
 
-                  <div className="text-[10px] text-amber-950 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
-                    {renderAppleText(letterBody, 10)}
-                  </div>
+                  {letterBody ? (
+                    <div className="text-[10px] text-amber-950 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
+                      {renderAppleText(letterBody, 10)}
+                    </div>
+                  ) : null}
 
-                  <div className="pt-1.5 mt-1.5 border-t border-amber-200 text-right">
-                    <span className="text-xs font-bold text-amber-900 font-serif italic">
-                      {letterSignOff}
-                    </span>
-                  </div>
+                  {letterSignOff ? (
+                    <div className="pt-1.5 mt-1.5 border-t border-amber-200 text-right">
+                      <span className="text-xs font-bold text-amber-900 font-serif italic">
+                        {letterSignOff}
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
 
                 <div className="flex items-center gap-2 mt-2">

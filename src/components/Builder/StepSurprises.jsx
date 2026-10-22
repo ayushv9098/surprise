@@ -10,7 +10,7 @@ const WAX_SEALS = [
   { emoji: '💜', color: '#7C3AED', label: 'Lavender Dream' },
 ];
 
-export default function StepSurprises({ formData, onChange }) {
+export default function StepSurprises({ formData, onChange, onFocusField }) {
   const isBoy = formData.gender === 'boy';
 
   // Default 3 reasons
@@ -28,24 +28,32 @@ export default function StepSurprises({ formData, onChange }) {
         { icon: '💖', title: 'Irreplaceable Friend', desc: 'A truly irreplaceable friend whose presence makes everything brighter!' },
       ];
 
-  const letter = formData.letter || {
-    title: 'A Little Note For You',
-    content: isBoy
-      ? `Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`
-      : `My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together. 🌸✨`,
-    signOff: isBoy
-      ? `With all my love & respect,\n${formData.senderName || 'Alex'} 👑`
-      : `Forever & always,\n${formData.senderName || 'Elena'} 🌸`,
-    sealEmoji: isBoy ? '👑' : '🌸',
-    waxColor: isBoy ? '#1D4ED8' : '#E11D48',
+  const letter = {
+    title: formData.letter?.title !== undefined ? formData.letter.title : 'A Little Note For You',
+    content: formData.letter?.content !== undefined
+      ? formData.letter.content
+      : (formData.letter && typeof formData.letter === 'string' ? formData.letter : (
+        isBoy
+          ? `Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`
+          : `My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together. 🌸✨`
+      )),
+    signOff: formData.letter?.signOff !== undefined
+      ? formData.letter.signOff
+      : (isBoy
+        ? `With all my love & respect,\n${formData.senderName || 'Alex'} 👑`
+        : `Forever & always,\n${formData.senderName || 'Elena'} 🌸`),
+    sealEmoji: formData.letter?.sealEmoji || (isBoy ? '👑' : '🌸'),
+    waxColor: formData.letter?.waxColor || (isBoy ? '#1D4ED8' : '#E11D48'),
   };
 
   const updateReason = (index, field, value) => {
+    onFocusField?.('reasons');
     const updated = specialReasons.map((r, i) => (i === index ? { ...r, [field]: value } : r));
     onChange({ specialReasons: updated });
   };
 
   const updateLetter = (patch) => {
+    onFocusField?.('letter');
     onChange({ letter: { ...letter, ...patch } });
   };
 
@@ -89,7 +97,10 @@ export default function StepSurprises({ formData, onChange }) {
                       <button
                         key={em}
                         type="button"
-                        onClick={() => updateReason(idx, 'icon', em)}
+                        onClick={() => {
+                          onFocusField?.('reasons');
+                          updateReason(idx, 'icon', em);
+                        }}
                         title={`Use ${em}`}
                         className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all cursor-pointer ${
                           card.icon === em
@@ -107,6 +118,7 @@ export default function StepSurprises({ formData, onChange }) {
                 <input
                   type="text"
                   value={card.title || ''}
+                  onFocus={() => onFocusField?.('reasons')}
                   onChange={(e) => updateReason(idx, 'title', e.target.value)}
                   placeholder="Reason Title (e.g. Lucky to Have You)"
                   className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
@@ -116,6 +128,7 @@ export default function StepSurprises({ formData, onChange }) {
                 <textarea
                   rows={2}
                   value={card.desc || ''}
+                  onFocus={() => onFocusField?.('reasons')}
                   onChange={(e) => updateReason(idx, 'desc', e.target.value)}
                   placeholder="e.g. Always bringing energy and joy..."
                   className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 placeholder-slate-400 leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all resize-none"
@@ -156,7 +169,10 @@ export default function StepSurprises({ formData, onChange }) {
                   <button
                     key={sIdx}
                     type="button"
-                    onClick={() => updateLetter({ sealEmoji: seal.emoji, waxColor: seal.color })}
+                    onClick={() => {
+                      onFocusField?.('waxSeal');
+                      updateLetter({ sealEmoji: seal.emoji, waxColor: seal.color });
+                    }}
                     title={seal.label}
                     className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all cursor-pointer shadow-xs ${
                       isSelected
@@ -186,6 +202,7 @@ export default function StepSurprises({ formData, onChange }) {
             <textarea
               rows={6}
               value={letter.content || ''}
+              onFocus={() => onFocusField?.('letterContent')}
               onChange={(e) => updateLetter({ content: e.target.value })}
               placeholder="Write your heartfelt note here... Pour your feelings, inside jokes, or sweet memories."
               className="w-full min-h-[145px] sm:min-h-[160px] p-3 sm:p-3.5 rounded-xl sm:rounded-2xl border border-slate-200/90 bg-slate-50/40 hover:bg-white focus:bg-white text-slate-900 placeholder-slate-400 text-xs sm:text-sm leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all resize-none shadow-2xs"
@@ -205,6 +222,7 @@ export default function StepSurprises({ formData, onChange }) {
             <input
               type="text"
               value={letter.signOff || ''}
+              onFocus={() => onFocusField?.('letterSignOff')}
               onChange={(e) => updateLetter({ signOff: e.target.value })}
               placeholder={isBoy ? `With all my love & respect, ${formData.senderName || 'Alex'} 👑` : `Forever & always, ${formData.senderName || 'Elena'} 🌸`}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-slate-50/40 hover:bg-white focus:bg-white text-slate-900 placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all font-sans shadow-2xs"

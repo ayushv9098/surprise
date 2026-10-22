@@ -15,6 +15,7 @@ export default function ApologyPhoneView({
   onReset,
   activeTab: controlledTab,
   onTabChange,
+  openEnvelope: controlledOpenEnvelope,
 }) {
   const [internalTab, setInternalTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
   const activeTab = controlledTab !== undefined ? controlledTab : internalTab;
@@ -29,7 +30,9 @@ export default function ApologyPhoneView({
   };
 
   const [isForgiven, setIsForgiven] = useState(false);
-  const [envelopeOpen, setEnvelopeOpen] = useState(false);
+  const [internalEnvelopeOpen, setInternalEnvelopeOpen] = useState(false);
+  const envelopeOpen = controlledOpenEnvelope !== undefined ? controlledOpenEnvelope : internalEnvelopeOpen;
+  const setEnvelopeOpen = setInternalEnvelopeOpen;
   const [isOpeningEnvelope, setIsOpeningEnvelope] = useState(false);
   const [isTreatySigned, setIsTreatySigned] = useState(false);
 
@@ -61,9 +64,17 @@ export default function ApologyPhoneView({
     ? `Dear ${recipientName},\n\nI want to apologize from the bottom of my heart. I made a mistake, and I take full responsibility for it.\n\nOur bond is too meaningful to let misunderstandings build walls between us. Every new morning is a chance to start fresh, communicate better, and treat each other with pure respect.\n\nLet's turn the page together and start afresh with peace and understanding. 🌅🕊️`
     : `Dear ${recipientName},\n\nI want to apologize sincerely from the deepest corner of my heart. 🕊️🌿\n\nSeeing you hurt breaks my spirit. You mean the world to me, and our bond is too precious to ever put at risk. I deeply regret my thoughtlessness and careless words.\n\nI promise to listen more patiently, communicate more gently, and do better. I hope you can find it in your heart to forgive me so we can heal together peacefully. 🤍`;
 
-  const letterBody = (typeof formData.letter === 'object' ? formData.letter?.content : formData.letter) || formData.letterBody || defaultLetter;
+  const rawLetter = (typeof formData.letter === 'object' && formData.letter !== null && formData.letter.content !== undefined)
+    ? formData.letter.content
+    : (typeof formData.letter === 'string' ? formData.letter : formData.letterBody);
+  const letterBody = rawLetter !== undefined ? rawLetter : defaultLetter;
+
   const letterTitle = (typeof formData.letter === 'object' ? formData.letter?.title : null) || formData.letterTitle || 'A Sincere Peace Offering 🕊️';
-  const letterSignOff = (typeof formData.letter === 'object' ? formData.letter?.signOff : null) || formData.letterSignOff || `— With all my love and regret, ${senderName} 🕊️`;
+
+  const rawSignOff = (typeof formData.letter === 'object' && formData.letter !== null && formData.letter.signOff !== undefined)
+    ? formData.letter.signOff
+    : formData.letterSignOff;
+  const letterSignOff = rawSignOff !== undefined ? rawSignOff : `— With all my love and regret, ${senderName} 🕊️`;
 
   // The 3 Sincere Commitments
   const promisesList = [
@@ -130,9 +141,11 @@ export default function ApologyPhoneView({
             Dear {recipientName}
           </h1>
 
-          <p className="text-[10px] text-emerald-800/90 mt-0.5 font-sans leading-snug line-clamp-2">
-            {formData.subtitle || 'I made a mistake, and your happiness and peace mean everything to me.'}
-          </p>
+          {(formData.subtitle !== undefined ? formData.subtitle : 'I made a mistake, and your happiness and peace mean everything to me.') ? (
+            <p className="text-[10px] text-emerald-800/90 mt-0.5 font-sans leading-snug line-clamp-2">
+              {formData.subtitle !== undefined ? formData.subtitle : 'I made a mistake, and your happiness and peace mean everything to me.'}
+            </p>
+          ) : null}
         </div>
       </div>
 
@@ -477,15 +490,19 @@ export default function ApologyPhoneView({
                     <AppleEmoji emoji="🕊️" size={13} />
                   </div>
 
-                  <div className="text-[10px] text-emerald-950 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
-                    {renderAppleText(letterBody, 10)}
-                  </div>
+                  {letterBody ? (
+                    <div className="text-[10px] text-emerald-950 leading-relaxed max-h-36 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
+                      {renderAppleText(letterBody, 10)}
+                    </div>
+                  ) : null}
 
-                  <div className="pt-1.5 mt-1.5 border-t border-emerald-200 text-right">
-                    <span className="text-xs font-bold text-emerald-900 font-serif italic">
-                      {letterSignOff}
-                    </span>
-                  </div>
+                  {letterSignOff ? (
+                    <div className="pt-1.5 mt-1.5 border-t border-emerald-200 text-right">
+                      <span className="text-xs font-bold text-emerald-900 font-serif italic">
+                        {letterSignOff}
+                      </span>
+                    </div>
+                  ) : null}
                 </div>
 
                 <div className="flex items-center gap-2 mt-2">
