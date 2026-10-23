@@ -11,8 +11,8 @@ const DEFAULT_ROMANCE_PHOTOS = [
   {
     id: 'photo-1',
     url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
-    caption: 'The prettiest smile in the world ✨',
-    tag: 'Favorite Smile 🌸'
+    caption: 'Forever & Always With You!❤️🌹',
+    tag: 'OUR BEGINNING 🌸'
   },
   {
     id: 'photo-2',
@@ -125,7 +125,8 @@ function PhotoLightboxModal({
   currentIndex,
   onClose,
   onNext,
-  onPrev
+  onPrev,
+  isSimulator = false
 }) {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panPos, setPanPos] = useState({ x: 0, y: 0 });
@@ -153,8 +154,11 @@ function PhotoLightboxModal({
   useEffect(() => {
     if (!isOpen) return;
 
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    let prevOverflow = '';
+    if (!isSimulator && typeof document !== 'undefined') {
+      prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+    }
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -174,10 +178,12 @@ function PhotoLightboxModal({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.body.style.overflow = prevOverflow;
+      if (!isSimulator && typeof document !== 'undefined') {
+        document.body.style.overflow = prevOverflow;
+      }
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose, onPrev, onNext]);
+  }, [isOpen, onClose, onPrev, onNext, isSimulator]);
 
   const toggleZoom = useCallback(() => {
     soundEffects.playPop();
@@ -266,7 +272,7 @@ function PhotoLightboxModal({
 
   const isZoomed = zoomLevel > 1;
 
-  return createPortal(
+  const lightboxContent = (
     <div
       className="photo-lightbox-overlay"
       ref={containerRef}
@@ -389,9 +395,14 @@ function PhotoLightboxModal({
           </span>
         </div>
       </footer>
-    </div>,
-    document.body
+    </div>
   );
+
+  if (isSimulator) {
+    return lightboxContent;
+  }
+
+  return createPortal(lightboxContent, document.body);
 }
 
 /**
@@ -402,7 +413,12 @@ export default function BlushRomanceView({
   siteData = {},
   _onNavigateCreate,
   hideAudioPlayer = false,
-  _isLiveView = false
+  _isLiveView = false,
+  isSimulator = false,
+  controlledTab,
+  onTabChange,
+  controlledOpenEnvelope,
+  triggerConfetti: externalTriggerConfetti,
 }) {
   const rawTheme = (
     siteData.templateId || 
@@ -427,16 +443,20 @@ export default function BlushRomanceView({
     : (siteData.heroPhoto
         ? [{
             url: siteData.heroPhoto,
-            caption: siteData.photoCaption || 'Our Favorite Memory ❤️',
-            tag: 'Forever & Always 🌸'
+            caption: siteData.photoCaption || 'Forever & Always With You!❤️🌹',
+            tag: 'OUR BEGINNING 🌸'
           }]
         : DEFAULT_ROMANCE_PHOTOS);
 
   const photos = rawPhotos.map((p, idx) => ({
     id: p.id || `photo-${idx + 1}`,
     url: typeof p === 'string' ? p : p.url,
-    caption: (typeof p === 'object' && p.caption) ? p.caption : 'Special Moments ✨',
-    tag: (typeof p === 'object' && p.tag) ? p.tag : 'Cherished Memory 🌸'
+    caption: (typeof p === 'object' && p.caption)
+      ? p.caption
+      : (siteData.photoCaption || (idx === 0 ? 'Forever & Always With You!❤️🌹' : 'Special Moments ✨')),
+    tag: (typeof p === 'object' && p.tag)
+      ? p.tag
+      : (idx === 0 ? 'OUR BEGINNING 🌸' : 'Cherished Memory 🌸')
   }));
 
   // 2. Letter Resolution
@@ -449,9 +469,14 @@ tu hi bata mujhe is khat me kya likhu main... 😉
 
 — With all my love, always ${senderName} 💖`;
 
-  const letterContent = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter)
-    || siteData.letterBody
-    || defaultLetterText;
+  const rawLetterObj = typeof siteData.letter === 'object' && siteData.letter !== null ? siteData.letter : null;
+  const rawLetterText = rawLetterObj?.content || (typeof siteData.letter === 'string' ? siteData.letter : siteData.letterBody);
+  const letterSignOff = rawLetterObj?.signOff || siteData.letterSignOff;
+  const letterContent = rawLetterText
+    ? (letterSignOff && !rawLetterText.includes('—') && !rawLetterText.includes(senderName)
+        ? `${rawLetterText}\n\n${letterSignOff}`
+        : rawLetterText)
+    : defaultLetterText;
 
   // 3. Audio & Music Player
   const resolvedSong = siteData.songId ? getSongById(siteData.songId, siteData) : null;
@@ -467,12 +492,30 @@ tu hi bata mujhe is khat me kya likhu main... 😉
     || resolvedSong?.title 
     || (siteData.songTitle || `${recipientName}'s Keepsake Melody 🎵`);
 
+  const normalizeTab = (t) => {
+    if (!t) return 'photos';
+    if (t === 'quiz') return 'game';
+    return t;
+  };
+
   // Interactive States
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntroState, setShowIntroState] = useState(true);
+  const showIntro = !isSimulator && showIntroState;
   const [isFadingIntro, setIsFadingIntro] = useState(false);
   const [isIntroCelebrating, setIsIntroCelebrating] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [activeTab, setActiveTab] = useState('photos'); // 'photos' | 'letter' | 'game'
+
+  // Tab State with Controlled Synchronization
+  const [internalTab, setInternalTab] = useState('photos');
+  const activeTab = controlledTab !== undefined ? normalizeTab(controlledTab) : internalTab;
+
+  const handleSelectTab = (tabKey) => {
+    soundEffects.playPop();
+    setInternalTab(tabKey);
+    if (onTabChange) {
+      onTabChange(tabKey === 'game' ? 'quiz' : tabKey);
+    }
+  };
 
   // Tab 1: Photos State
   const [currentPhotoIdx, setCurrentPhotoIdx] = useState(0);
@@ -485,8 +528,9 @@ tu hi bata mujhe is khat me kya likhu main... 😉
   const touchDeltaY = useRef(0);
   const isSwipeNavigating = useRef(false);
 
-  // Tab 2: Letter State
-  const [isLetterOpen, setIsLetterOpen] = useState(false);
+  // Tab 2: Letter State with Controlled Synchronization
+  const [userOpenedLetter, setUserOpenedLetter] = useState(false);
+  const isLetterOpen = Boolean(controlledOpenEnvelope || userOpenedLetter);
 
   // Tab 3: Quiz State (Runaway "No" Button Game!)
   const [gameVictory, setGameVictory] = useState(false);
@@ -554,6 +598,12 @@ tu hi bata mujhe is khat me kya likhu main... 😉
 
   // Multi-directional confetti burst
   const triggerConfettiExplosion = useCallback((xRatio = 0.5, yRatio = 0.5) => {
+    if (externalTriggerConfetti) {
+      try {
+        externalTriggerConfetti();
+      } catch {}
+      return;
+    }
     try {
       confetti({
         particleCount: 85,
@@ -568,9 +618,15 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         startVelocity: 26
       });
     } catch {}
-  }, [isCelestial, isSunset]);
+  }, [isCelestial, isSunset, externalTriggerConfetti]);
 
   const triggerGrandCelebration = useCallback(() => {
+    if (externalTriggerConfetti) {
+      try {
+        externalTriggerConfetti();
+      } catch {}
+      return;
+    }
     try {
       const colors = isCelestial
         ? ['#818CF8', '#A855F7', '#60A5FA', '#F472B6']
@@ -593,7 +649,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         scalar: 1.2
       });
     } catch {}
-  }, [isCelestial]);
+  }, [isCelestial, externalTriggerConfetti]);
 
   // Audio Play / Pause toggle
   const toggleAudio = useCallback((e) => {
@@ -674,7 +730,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
     }, 200);
 
     setTimeout(() => {
-      setShowIntro(false);
+      setShowIntroState(false);
       triggerGrandCelebration();
     }, 550);
   };
@@ -692,8 +748,13 @@ tu hi bata mujhe is khat me kya likhu main... 😉
     let particles = [];
 
     const resize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      if (isSimulator && canvas.parentElement) {
+        width = canvas.width = canvas.parentElement.clientWidth || 320;
+        height = canvas.height = canvas.parentElement.clientHeight || 650;
+      } else {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
     };
 
     const createParticle = () => ({
@@ -745,7 +806,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('resize', resize);
     };
-  }, [isCelestial, isSunset]);
+  }, [isCelestial, isSunset, isSimulator]);
 
   // Tab 1: Photos Navigation
   const totalPhotosCount = photos.length;
@@ -841,7 +902,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
   const currentNoMsg = NO_MESSAGES[noAttempts % NO_MESSAGES.length];
 
   return (
-    <div className={`soft-app ${themeClass}`}>
+    <div className={`soft-app ${themeClass} ${isSimulator ? 'in-phone-simulator romance-phone-simulator' : ''}`}>
       {/* Background Animated Particle Canvas */}
       <canvas ref={canvasRef} className="particle-canvas" aria-hidden="true" />
 
@@ -981,10 +1042,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         <nav className="soft-nav-pills" role="tablist" aria-label="Surprise sections">
           <button
             className={`nav-pill ${activeTab === 'photos' ? 'active' : ''}`}
-            onClick={() => {
-              soundEffects.playPop();
-              setActiveTab('photos');
-            }}
+            onClick={() => handleSelectTab('photos')}
             role="tab"
             aria-selected={activeTab === 'photos'}
             type="button"
@@ -995,10 +1053,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
 
           <button
             className={`nav-pill ${activeTab === 'letter' ? 'active' : ''}`}
-            onClick={() => {
-              soundEffects.playPop();
-              setActiveTab('letter');
-            }}
+            onClick={() => handleSelectTab('letter')}
             role="tab"
             aria-selected={activeTab === 'letter'}
             type="button"
@@ -1009,10 +1064,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
 
           <button
             className={`nav-pill ${activeTab === 'game' ? 'active' : ''}`}
-            onClick={() => {
-              soundEffects.playPop();
-              setActiveTab('game');
-            }}
+            onClick={() => handleSelectTab('game')}
             role="tab"
             aria-selected={activeTab === 'game'}
             type="button"
@@ -1151,9 +1203,9 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                       tabIndex={0}
                       aria-label="Swipe or tap to see next photo"
                     >
-                      <span>{currentPhotoIdx < totalPhotosCount - 1 ? 'Swipe for more' : 'Swipe to replay'}</span>
+                      <span className="whitespace-nowrap">{currentPhotoIdx < totalPhotosCount - 1 ? 'Swipe for more' : 'Swipe to replay'}</span>
                       <span className="opacity-40">•</span>
-                      <span>{currentPhotoIdx + 1}/{totalPhotosCount}</span>
+                      <span className="whitespace-nowrap">{currentPhotoIdx + 1}/{totalPhotosCount}</span>
                     </div>
 
                     {/* Blurred BG and Main Image */}
@@ -1169,10 +1221,10 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                   {/* Polaroid Card Caption */}
                   <div className="memory-card-body">
                     <span className="memory-card-tag">
-                      ✨ {activePhoto.tag}
+                      ✨ {String(activePhoto.tag || 'OUR BEGINNING').replace(/^✨\s*/, '')}
                     </span>
                     <p className="memory-card-caption">
-                      “{renderAppleText(activePhoto.caption, 16)}”
+                      “{renderAppleText(String(activePhoto.caption || '').replace(/^["“”]/, '').replace(/["“”]$/, '').trim(), 16)}”
                     </p>
                   </div>
                 </div>
@@ -1228,6 +1280,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
           onClose={() => setIsLightboxOpen(false)}
           onNext={() => setCurrentPhotoIdx((prev) => (prev + 1) % totalPhotosCount)}
           onPrev={() => setCurrentPhotoIdx((prev) => (prev - 1 + totalPhotosCount) % totalPhotosCount)}
+          isSimulator={isSimulator}
         />
 
         {/* ============================================================
@@ -1280,7 +1333,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                     onClick={(e) => {
                       if (e && e.stopPropagation) e.stopPropagation();
                       soundEffects.playPop();
-                      setIsLetterOpen(false);
+                      setUserOpenedLetter(false);
                     }}
                     type="button"
                   >
@@ -1301,7 +1354,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                   soundEffects.playSealBreak();
                   playCelebrationChime();
                   triggerConfettiExplosion(0.5, 0.45);
-                  setIsLetterOpen(true);
+                  setUserOpenedLetter(true);
                 }}
                 role="button"
                 tabIndex={0}

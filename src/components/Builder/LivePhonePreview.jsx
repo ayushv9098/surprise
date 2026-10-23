@@ -751,8 +751,8 @@ const resolveTheme = (templateId, gender, category) => {
   return gender === 'girl' ? THEMES['blush-rose'] : THEMES['royal-sapphire'];
 };
 
-const BASE_WIDTH = 320;
-const BASE_HEIGHT = 650;
+const BASE_WIDTH = 419;
+const BASE_HEIGHT = 878;
 
 export default function LivePhonePreview({
   formData = {},
@@ -785,12 +785,16 @@ export default function LivePhonePreview({
   const { width: windowWidth, height: windowHeight } = windowDimensions;
 
   const autoScale = useMemo(() => {
-    if (windowWidth < 640) {
-      return Math.min(1.0, Math.max(0.70, +((windowHeight - 160) / BASE_HEIGHT).toFixed(2)));
-    }
-    // Desktop: Top Navbar (56px) + Bottom Bar (72px) + Breathing Margin (32px) = 160px
+    // Desktop: right preview column has fixed width 420px (BuilderStudio.jsx: style={{ width: '420px' }})
+    // Available width inside panel: 420 - 24 = 396px (on mobile layout: windowWidth - 32)
+    const availableWidth = windowWidth < 640 ? windowWidth - 32 : 396;
+    // Available height: windowHeight - 160 (Navbar 56px + Bottom bar 72px + breathing margin 32px)
     const availableHeight = windowHeight - 160;
-    return Math.min(1.0, Math.max(0.50, +(availableHeight / BASE_HEIGHT).toFixed(2)));
+    const scaleX = availableWidth / BASE_WIDTH;
+    const scaleY = availableHeight / BASE_HEIGHT;
+    const fitScale = Math.min(scaleX, scaleY);
+    // Smooth bounded scale so the phone fits comfortably without vertical clipping or horizontal overflow
+    return Math.min(0.92, Math.max(0.55, +fitScale.toFixed(3)));
   }, [windowWidth, windowHeight]);
 
   const effectiveScale = autoScale;
@@ -1192,25 +1196,28 @@ export default function LivePhonePreview({
           {/* =================================================================== */}
           {/* REALISTIC IPHONE 15 / 16 PRO TITANIUM SIMULATOR CHASSIS */}
           {/* =================================================================== */}
-          <div className="relative w-[300px] min-[360px]:w-[320px] h-[650px] flex items-center justify-center">
+          <div
+            className="relative flex items-center justify-center shrink-0"
+            style={{ width: `${BASE_WIDTH}px`, height: `${BASE_HEIGHT}px` }}
+          >
             {/* Physical Hardware Buttons */}
-            <div className="absolute -left-[3.5px] top-[112px] w-[3.5px] h-[22px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[3.5px] top-[148px] w-[3.5px] h-[46px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[3.5px] top-[204px] w-[3.5px] h-[46px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[1.5px] top-[72px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
-            <div className="absolute -left-[1.5px] bottom-[72px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
+            <div className="absolute -left-[3.5px] top-[140px] w-[3.5px] h-[28px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
+            <div className="absolute -left-[3.5px] top-[188px] w-[3.5px] h-[58px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
+            <div className="absolute -left-[3.5px] top-[258px] w-[3.5px] h-[58px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
+            <div className="absolute -left-[1.5px] top-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
+            <div className="absolute -left-[1.5px] bottom-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
 
-            <div className="absolute -right-[3.5px] top-[165px] w-[3.5px] h-[68px] bg-[#434050] rounded-r-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -right-[1.5px] top-[72px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
-            <div className="absolute -right-[1.5px] bottom-[72px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
+            <div className="absolute -right-[3.5px] top-[210px] w-[3.5px] h-[85px] bg-[#434050] rounded-r-[3px] shadow-xs pointer-events-none" />
+            <div className="absolute -right-[1.5px] top-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
+            <div className="absolute -right-[1.5px] bottom-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
 
             {/* Metallic Titanium Outer Rim */}
-            <div className="w-full h-full p-[2.5px] rounded-[50px] bg-gradient-to-b from-[#8a8698] via-[#4b4859] to-[#6b667c] shadow-[0_25px_70px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.15)] flex flex-col">
+            <div className="w-full h-full p-[3px] rounded-[52px] bg-gradient-to-b from-[#8a8698] via-[#4b4859] to-[#6b667c] shadow-[0_25px_70px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.15)] flex flex-col">
               {/* Deep Black Uniform Screen Bezel */}
-              <div className="w-full h-full p-2.5 bg-black rounded-[48px] flex flex-col">
-                {/* Phone Screen Canvas */}
+              <div className="w-full h-full p-[10px] bg-black rounded-[49px] flex flex-col">
+                {/* Phone Screen Canvas (Exact 393px x 852px standard mobile screen) */}
                 <div
-                  className={`relative w-full h-full ${containerBgClass} before:!absolute before:!inset-0 rounded-[38px] overflow-hidden flex flex-col transition-colors duration-500`}
+                  className={`relative w-[393px] h-[852px] ${containerBgClass} before:!absolute before:!inset-0 rounded-[40px] overflow-hidden flex flex-col transition-colors duration-500`}
                 >
               {/* Scoped Confetti Canvas strictly bounded inside the phone frame */}
               <canvas

@@ -1,5 +1,57 @@
 [
   {
+    "templateId": "celestial-love",
+    "category": "romance",
+    "gender": "girl",
+    "recipientName": "Aria",
+    "senderName": "Noah",
+    "occasion": "Written in the Stars 🌌💫",
+    "subtitle": "In a world of eight billion, it was always only you.",
+    "heroPhoto": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Our Love Across the Cosmos! 🌌💫",
+    "photos": [
+      {
+        "id": "cl-p1",
+        "url": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Our Love Across the Cosmos! 🌌💫",
+        "tag": "Infinite Galaxy"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌌",
+        "title": "Cosmic Connection",
+        "desc": "Our souls connected as if we had known each other across a thousand lifetimes."
+      },
+      {
+        "icon": "🌙",
+        "title": "Midnight Peace",
+        "desc": "Whenever the world gets loud, being in your arms feels like stillness under the stars."
+      },
+      {
+        "icon": "💫",
+        "title": "Written Destiny",
+        "desc": "Out of eight billion people on Earth, meeting you was my universe's greatest gift."
+      }
+    ],
+    "letter": {
+      "title": "Written in the Constellations",
+      "content": "My beloved Aria,\n\nThey say the odds of finding your true soulmate are one in a billion. But from the first second our eyes met, I knew our love was written in the stars long before we ever arrived.\n\nThank you for your infinite kindness, your breathtaking grace, and for loving me completely. May our love continue shining brighter than every constellation in the night sky. 🌌💫",
+      "signOff": "Across the stars forever,\nNoah 🌙",
+      "sealEmoji": "🌙",
+      "waxColor": "#4F46E5"
+    },
+    "songId": "indie-acoustic-soul",
+    "id": "wc-mvkjo8sf-h3ub",
+    "slug": "aria-pzqnd",
+    "updatedAt": "2026-10-23T05:43:49.907Z",
+    "createdAt": "2026-10-23T05:43:49.887Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgMYThAZzAEsE4BaOAewDcIQAaHJCAcyoCcBPTEDqqAgB2uRiFYQhqCB16tiHOGI4RsxGMUlgAcgij0sAQQ6kxBSdI679vbVQQALMVWzYEBYlSG8A6ibCQQgAExMFgDhBBAMpgCBwEQYA8G4Aw+4C8G4DVO2YArgBGJGD4vMjBCEEA7pxwqEFUAGZBEMSsDmBBOcRwcJ5CDCGtZe5BZANcCV5wXEFcVFkAdGIR-AAKDlRgVLwtYDAEGAD0e8SCEgSzWUIE8O4Os9gCezCr6+QAjACsLwAcnwCcbz8AFh+ACY3gB2chggBswJe2AAzNgwZ8oagwQB+BBZdYAXlqnEEYAAZLViGAcdh+DAiWUcZ8AAz0okARzp9LEjzWVAAwggYCQvLwAPJZDhBAAytEihkpVAICXCkW5cqgcoAhEk0pkmJz1gRMABtUDEdBYbAUGAvMSipRYLY7faHY6EM4XK4EG53KAPJ5UV4fb5-QEg8GQmFwxHI1EYrG4-EcQkkskUqk0tlM1kMsRufndYWiiVSoIy-jyoKKoLKgiqggalIZMSxVhFISkoRkyIAcTICAAHjwAL4AXSYl1UpDgACUIO4vPqMEaQMQ7t4sClG2TClgq1Bl5WvEJVALvExpARsPmxQQZnAEivD9hINVBsR6mVIg4ENUANZCKhlYIZ2wBwakVMUEFlMtSnCGYCGEaoulqCASH0U4QAHBhjRXXhEkATH2NwKAwQAAWRNdtmlaJYgPoU9CAvLAfAiQ86DFCsKkUaoJDABJqCyVBehyRohFYEJgmmAs4igBIkLwHjiG-SIiA6OBDzLc5LHLCIgiIOI0IwrDBSwBsmHyLcQD8MlAiCAARQgSCEHhaPPfNWjqBomhaNplO6IIYAgKh4EiLwggAUTicJen0ZDQhE8TykGKBJnOYgWPMAByBJWBUFgiCCeRajAeZhyYfAAhkTBQFMoiLLK4JQk0pU50gTokG6fUmBXQIwF4YjJkE6g6GqYxSAYAAdIRxoAFQiSY4MmCsqFQVAxnqNtUBiqYZlYjgskUm9CUiOIgsPUShi8zpulmIIACFsSCWp+CgBr7oUXLzBXaotoaLhCCCfQwF6ZAgl-CAyhqAsBsiAYEjKfwrPqisdPiIJqGEtoIHjKHIggFihg4ExBtmcaps-IRv02rJ7s4CmxVCNsO2B0JUFUghenEsUcmy8JYm-DasogiBengqmxQGjb9CCL1AuargruIhBJi+yHJa8ezdu0hxQg2zmPMgVjSYaFjJhXIg8EQY9TorcjPIIb9Zc1YyQA8VghCFWpal4Es5QVLSkekzgcZkMahDsRwknw0cZzgELVQAK2IHCI5AAZe2VahZCwABiAEADEAShEK3nQ0cvFYNBeCZzRyAg2CSGwchryyJQmBNXgynrqAaG-WOqE+AhanIBx4VyMw4CyZssDiUhyBgAAvZkpGtGBUBYVBDG6rBgXpYEoVeelyGBeFJvpN4MABeEz5+WZvjBAAtbMuYgNeN5ALed73g+j5Ps+L6Ba-PjvuhIAA",
+    "template": "celestial-love",
+    "viewCount": 2,
+    "lastViewedAt": "2026-10-23T05:43:55.048Z"
+  },
+  {
     "templateId": "velvet-romance",
     "category": "romance",
     "gender": "boy",
@@ -54,8 +106,8 @@
     "createdAt": "2026-10-22T15:17:55.471Z",
     "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgG4TrsAWgCcB7KBAOwGMIQAaEapCAc1OIE9MQyKa6jVhEqoIxHgCNS3RsQjUAljEUiwAOQRQ6WALIJOCBiADOIscU3aeAGUVbjpasxOLSlHgAkEMGJwAEAIKUlIq4xCYIXPT+ugE2pLgAhP6AJuSA8H-GJgCukmCKYHA6IACi4QGulKxF-mbU7qj+AO4FABb+nKTZ-oom-lABAGYI2BwFEP3QHJwAdMat4qQACq2kYKQ8rWBgMCYYAPT7ihTCJjPZlCbwCCatM-VQ+zCr64QAjACsbwAcbwCcfwATAA2YEAdj+b0IHwAzGCPghvjD-gAGSRggD8CGy6wAvIMOBQwAAyQYFXHUMgwYlNXHfFEo4kARzpKOMzzWpAAwj58u4eAAxDgQcL+YlBOBNAx9ADqbX8AE0uikMoAeDcAnPvsl6kEyYADaoEU6Cw2GIhBgb2M2WIcE2212ByOJwgZwuV0Qt3u5Ce2veX1+AJB4Mh0LhCKRqPRWJxpHxhKQpPJlNI1Np9MZLPpxmYMD5HiwQvkovFgUl0v8crA7SV2RV6Q1xjACFYPAA8tb-AAhNiKEK9lsAX3ohuNODNMEBVptdp2e0Ox2bLvOl2unoePs5fsBILBMOBKLBgIZ72BABZUG9JMDaKfvsDo3iCcQiYmwBSqTTWRnWdneW586U5T+Ig2SsO0vS1E0EAQJAxD+JIASdB2rhiP4DaME2LZYEs1oTAkuAgAOAC6jBXAo9hwAAShANzuLqGAGiAij1ABGSNgURQ8HEFarDUMocHA6CMGIJjUDwAAqCz+BAgxPoULp9FKiFdP0CAANYTCK4gVP2NSoAY-iDNBcDNFEUAxCczEIHAMRUI0gzZHAJmkIM-gwDRtBzEOhosTw6HgBxxQAKo0A0BT-tZ-gAOLEAgtDGCJYlYDWcHCJQ8n+AsURgP4dn+FWmmiEUJh9GpvaoJQCkdCptxRBMLRVtJ5TuBMURdKI1XZF5w5Mb5WCALwbgCxO+x8mCsKopLNllUSMJLpJSAklkKB7RaVw+UtCYYAxAAVl0xCVZwtkddgzHrNE-jIP41CrDqExIblrAIL2uUdc2T2UE12n+PpsyESRIBFNs4iYKA+SjVg4mkLEAStpVYr+LDcCyEw7iQOlXHxIkED0AAOpQeMJKQZVVPBcVqblOV7f4u3WgdMSrTpVQ1HUDTNPK90QQMuWSCYpBwDiEzDKMxDjJMUDTDMioqZIIsk1Kz5VjEIFgbBR2NFQ-hujARMiFd5ByT06VQ1zcCKEZ+WtEg-iUGsrT9tJcBmHrjmNKt-jyNcnl43jklUOT91PldN2VKwkwxIHvGoPbXOWx1VZLWBn1cFW-Zq4ZHCGYoTnRwEWXEDlDXtDAuHu+QVC0C9jTuXFECS544gTBB6z+FTT6rTM3uUN4vgBMEoThJE51c7zjlEhAdb+a4rCUK2sljUW4idREuOUHYWhpJkpE0XAJTi9tig8GxjBSgAHlyfMcDwADEJRvG8AAit6EaR7isGgPC9ptCCEHFXSbcxJAy4CGMEaHgTRqCECgNgXaTJSCKDBIQTgJ9WiWlIvzLCIAKCGEIBAJkfwwRiUYNkGA+lICoECGAHgR4QTvBRIQbc4lPgYDeGCDAHwPgzFPGCN4AAtbM8gWDkMoVgahwJaH0MBIwj4zDWHsM4dwvhA4gA",
     "template": "velvet-romance",
-    "viewCount": 16,
-    "lastViewedAt": "2026-10-22T16:41:24.099Z"
+    "viewCount": 40,
+    "lastViewedAt": "2026-10-23T07:54:15.143Z"
   },
   {
     "templateId": "golden-birthday",

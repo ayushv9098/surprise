@@ -264,8 +264,15 @@ export default function BuilderStudio({
     }
   };
 
+  const isRomance = formData.category === 'romance' || ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId);
+  const isScrapbook = formData.category === 'scrapbook' || ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId);
+  const isApology = formData.category === 'apology' || ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId);
+  const _isBirthday = !isRomance && !isScrapbook && !isApology;
+
+  const tab1Emoji = isRomance ? '❤️' : isScrapbook ? '📸' : isApology ? '🕊️' : (selectedGender === 'boy' ? '👑' : '🌸');
+
   const FORM_TABS = [
-    { id: 'details', label: '1. Names', shortLabel: '1. Names', emoji: selectedGender === 'boy' ? '👑' : '🌸' },
+    { id: 'details', label: '1. Names', shortLabel: '1. Names', emoji: tab1Emoji },
     { id: 'media', label: '2. Photo & Song', shortLabel: '2. Photo', emoji: '📸' },
     { id: 'surprises', label: '3. Reasons & Letter', shortLabel: '3. Letter', emoji: '💌' },
   ];
@@ -540,7 +547,7 @@ export default function BuilderStudio({
               </div>
             ) : (
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-50/90 border border-rose-200/60 text-xs font-bold text-rose-700 shadow-2xs">
-                <AppleEmoji emoji={selectedGender === 'boy' ? '👑' : '🌸'} size={14} />
+                <AppleEmoji emoji={tab1Emoji} size={14} />
                 <span>Surprise for {formData.recipientName || 'Someone'}</span>
                 <span className="text-rose-400 font-medium">• Step 2/2</span>
               </div>

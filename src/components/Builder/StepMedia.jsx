@@ -195,11 +195,23 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
 
   const template = getTemplateById(formData.templateId);
   const isBoy = formData.gender === 'boy';
+  const isRomance = formData.category === 'romance' || ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId);
+  const isScrapbook = formData.category === 'scrapbook' || ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId);
+  const isApology = formData.category === 'apology' || ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId);
+
+  const defaultPhotoCaption = isRomance
+    ? 'Forever & Always With You! ❤️🌹'
+    : isScrapbook
+    ? 'Moments Captured For Eternity! 📸⚡'
+    : isApology
+    ? 'Our Bond Means Everything to Me! 🕊️🤍'
+    : (isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸');
+
   const selectedSongId = formData.songId || template?.recommendedSongId || 'upbeat-birthday-reel';
 
   // Hero photo can come from formData.heroPhoto or formData.photos[0]?.url
   const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template?.samplePhoto || '';
-  const photoCaption = formData.photoCaption !== undefined ? formData.photoCaption : (isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸');
+  const photoCaption = formData.photoCaption !== undefined ? formData.photoCaption : defaultPhotoCaption;
 
   // Stop audio on unmount
   useEffect(() => {
@@ -521,7 +533,7 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
       ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'
       : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80');
 
-    const sampleCap = isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸';
+    const sampleCap = defaultPhotoCaption;
 
     onChange({
       heroPhoto: sampleUrl,
@@ -721,7 +733,7 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
             value={photoCaption}
             onFocus={() => onFocusField?.('photoCaption')}
             onChange={(e) => handleCaptionChange(e.target.value)}
-            placeholder={isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸'}
+            placeholder={defaultPhotoCaption}
             className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
           />
         </div>

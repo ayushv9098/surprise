@@ -2,9 +2,11 @@ import React from 'react';
 import AppleEmoji from '../common/AppleEmoji';
 
 const WAX_SEALS = [
+  { emoji: '❤️', color: '#E11D48', label: 'Velvet Rose' },
   { emoji: '👑', color: '#1D4ED8', label: 'Royal Sapphire' },
   { emoji: '🌸', color: '#E11D48', label: 'Blush Blossom' },
   { emoji: '⭐', color: '#D97706', label: 'Golden Spark' },
+  { emoji: '🕊️', color: '#15803D', label: 'Gentle Peace' },
   { emoji: '⚡', color: '#78350F', label: 'Retro Polaroid' },
   { emoji: '✨', color: '#EA580C', label: 'Princess Peach' },
   { emoji: '💜', color: '#7C3AED', label: 'Lavender Dream' },
@@ -13,9 +15,40 @@ const WAX_SEALS = [
 export default function StepSurprises({ formData, onChange, onFocusField }) {
   const isBoy = formData.gender === 'boy';
 
-  // Default 3 reasons
-  const specialReasons = formData.specialReasons && formData.specialReasons.length === 3
-    ? formData.specialReasons
+  const isRomance = formData.category === 'romance' || ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId);
+  const isScrapbook = formData.category === 'scrapbook' || ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId);
+  const isApology = formData.category === 'apology' || ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId);
+  const _isBirthday = !isRomance && !isScrapbook && !isApology;
+
+  const reasonsHeading = isRomance
+    ? '1. Three Reasons Why I Choose You'
+    : isScrapbook
+    ? '1. Three Favorite Memories'
+    : isApology
+    ? '1. Three Sincere Promises'
+    : '1. Three "Why You\'re Special" Reasons';
+
+  const reasonsHeadingEmoji = isRomance ? '💖' : isScrapbook ? '📸' : isApology ? '🕊️' : '💫';
+
+  // Default 3 reasons adapted to occasion
+  const defaultSpecialReasons = isRomance
+    ? [
+        { icon: '❤️', title: 'My Whole World', desc: 'The effortless way you make every single day feel warm, magical, and full of peace.' },
+        { icon: '🌹', title: 'Unconditional Grace', desc: 'Your gentle heart and the endless kindness you share with everyone around you.' },
+        { icon: '💍', title: 'Forever Partner', desc: 'Through every twist, journey, and victory, I choose you again and again every day.' },
+      ]
+    : isScrapbook
+    ? [
+        { icon: '📸', title: 'Unfiltered Memories', desc: 'From candid road trips to hilarious mistakes, every memory with you is pure gold.' },
+        { icon: '⚡', title: 'Always in Focus', desc: 'No matter how much time passes, our bond picks right back up without missing a beat.' },
+        { icon: '✨', title: 'Legendary Tales', desc: 'We have built a lifetime of stories that we will still be laughing about fifty years from now!' },
+      ]
+    : isApology
+    ? [
+        { icon: '🕊️', title: 'Honest Heart', desc: 'I acknowledge my mistake completely, without excuses, because you deserve honesty.' },
+        { icon: '🤍', title: 'Cherished Bond', desc: 'Our bond is too precious to ever let misunderstanding or ego stand in the way.' },
+        { icon: '🌿', title: 'Promise of Care', desc: 'I promise to listen more attentively and protect your peace and trust with all my heart.' },
+      ]
     : isBoy
     ? [
         { icon: '💪', title: 'Lucky to Have You', desc: 'So grateful to have a brother like you in my corner every day!' },
@@ -28,22 +61,45 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
         { icon: '💖', title: 'Irreplaceable Friend', desc: 'A truly irreplaceable friend whose presence makes everything brighter!' },
       ];
 
+  const specialReasons = formData.specialReasons && formData.specialReasons.length === 3
+    ? formData.specialReasons
+    : defaultSpecialReasons;
+
+  const defaultLetterContent = isRomance
+    ? `My dearest ${formData.recipientName || 'Love'},\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your smile brightens even my cloudiest days, and your laugh is honestly my favorite sound.\n\nThank you for choosing me, for holding my hand through everything, and for filling my heart with pure romance and peace. Here is to our forever.\n\n— With all my love, always ${formData.senderName || 'Liam'} ❤️`
+    : isScrapbook
+    ? `Dear ${formData.recipientName || 'Alex'},\n\nFlipping through these snapshots and memories reminds me how lucky I am to have you in my life. Through every wild adventure, late-night conversation, and spontaneous trip, you have been my favorite company.\n\nThank you for all the shared laughs and unforgettable chapters. Here is to making a thousand more memories together!\n\n— Besties forever,\n${formData.senderName || 'Sam'} 📸`
+    : isApology
+    ? `Dear ${formData.recipientName || 'Maya'},\n\nI want to apologize from the bottom of my heart. I made a mistake, and knowing that I caused you hurt or disappointment weighs heavily on me.\n\nYour happiness and our bond mean far more to me than being right. I truly value everything we have built, and I hope you can find it in your heart to forgive me. Whenever you are ready, I would love to talk and make things right.\n\n— Truly sorry,\n${formData.senderName || 'Liam'} 🕊️`
+    : isBoy
+    ? `Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`
+    : `My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together. 🌸✨`;
+
+  const defaultSignOff = isRomance
+    ? `Forever yours,\n${formData.senderName || 'Liam'} ❤️`
+    : isScrapbook
+    ? `Besties forever,\n${formData.senderName || 'Alex'} 📸`
+    : isApology
+    ? `With sincere remorse,\n${formData.senderName || 'Liam'} 🕊️`
+    : isBoy
+    ? `With all my love & respect,\n${formData.senderName || 'Alex'} 👑`
+    : `Forever & always,\n${formData.senderName || 'Elena'} 🌸`;
+
+  const defaultSealEmoji = isRomance ? '❤️' : isScrapbook ? '📸' : isApology ? '🕊️' : (isBoy ? '👑' : '🌸');
+  const defaultWaxColor = isRomance ? '#E11D48' : isScrapbook ? '#78350F' : isApology ? '#15803D' : (isBoy ? '#1D4ED8' : '#E11D48');
+
   const letter = {
-    title: formData.letter?.title !== undefined ? formData.letter.title : 'A Little Note For You',
+    title: formData.letter?.title !== undefined ? formData.letter.title : (
+      isRomance ? 'To My One & Only' : isScrapbook ? 'A Keepsake Note' : isApology ? 'A Sincere Note' : 'A Little Note For You'
+    ),
     content: formData.letter?.content !== undefined
       ? formData.letter.content
-      : (formData.letter && typeof formData.letter === 'string' ? formData.letter : (
-        isBoy
-          ? `Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`
-          : `My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together. 🌸✨`
-      )),
+      : (formData.letter && typeof formData.letter === 'string' ? formData.letter : defaultLetterContent),
     signOff: formData.letter?.signOff !== undefined
       ? formData.letter.signOff
-      : (isBoy
-        ? `With all my love & respect,\n${formData.senderName || 'Alex'} 👑`
-        : `Forever & always,\n${formData.senderName || 'Elena'} 🌸`),
-    sealEmoji: formData.letter?.sealEmoji || (isBoy ? '👑' : '🌸'),
-    waxColor: formData.letter?.waxColor || (isBoy ? '#1D4ED8' : '#E11D48'),
+      : defaultSignOff,
+    sealEmoji: formData.letter?.sealEmoji || defaultSealEmoji,
+    waxColor: formData.letter?.waxColor || defaultWaxColor,
   };
 
   const updateReason = (index, field, value) => {
@@ -57,24 +113,59 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
     onChange({ letter: { ...letter, ...patch } });
   };
 
-  const selectedSeal = WAX_SEALS.find((s) => s.emoji === letter.sealEmoji) || WAX_SEALS[0];
+  const selectedSeal = WAX_SEALS.find((s) => s.emoji === letter.sealEmoji) || {
+    emoji: letter.sealEmoji || defaultSealEmoji,
+    color: letter.waxColor || defaultWaxColor,
+    label: 'Wax Seal',
+  };
+
+  const basePalette = isRomance
+    ? ['❤️', '🌹', '💖', '💍', '✨']
+    : isScrapbook
+    ? ['📸', '⚡', '✨', '🌟', '🎞️']
+    : isApology
+    ? ['🕊️', '🤍', '🌿', '🥺', '💜']
+    : isBoy
+    ? ['💪', '⭐', '👑', '⚡', '🔥']
+    : ['🌸', '✨', '💖', '⭐', '🧸'];
+
+  const reasonTitlePlaceholder = isRomance
+    ? 'Reason Title (e.g. My Whole World)'
+    : isScrapbook
+    ? 'Memory Title (e.g. Unfiltered Memories)'
+    : isApology
+    ? 'Promise Title (e.g. Honest Heart)'
+    : (isBoy ? 'Reason Title (e.g. Lucky to Have You)' : 'Reason Title (e.g. Pure Sunshine)');
+
+  const reasonDescPlaceholder = isRomance
+    ? 'e.g. The effortless way you make every single day feel warm...'
+    : isScrapbook
+    ? 'e.g. From candid road trips to hilarious mistakes...'
+    : isApology
+    ? 'e.g. I promise to listen more attentively and protect your peace...'
+    : (isBoy ? 'e.g. Always standing by my side with endless laughs...' : 'e.g. Always bringing energy and joy...');
+
+  const signOffPlaceholder = isRomance
+    ? `Forever yours, ${formData.senderName || 'Liam'} ❤️`
+    : isScrapbook
+    ? `Besties forever, ${formData.senderName || 'Alex'} 📸`
+    : isApology
+    ? `With sincere remorse, ${formData.senderName || 'Liam'} 🕊️`
+    : (isBoy ? `With all my love & respect, ${formData.senderName || 'Alex'} 👑` : `Forever & always, ${formData.senderName || 'Elena'} 🌸`);
 
   return (
     <div className="space-y-7">
-      {/* 1) "WHY YOU'RE SPECIAL" 3 CARDS */}
+      {/* 1) OCCASION-SPECIFIC REASONS / MEMORIES / PROMISES CARDS */}
       <div className="space-y-4">
         <div className="border-b border-slate-100 pb-3">
           <h2 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-1.5 truncate">
-            <span>1. Three "Why You're Special" Reasons</span>
-            <AppleEmoji emoji="💫" size={16} />
+            <span>{reasonsHeading}</span>
+            <AppleEmoji emoji={reasonsHeadingEmoji} size={16} />
           </h2>
         </div>
 
         <div className="space-y-3">
           {specialReasons.map((card, idx) => {
-            const basePalette = isBoy
-              ? ['💪', '⭐', '👑', '⚡', '🔥']
-              : ['🌸', '✨', '💖', '⭐', '🧸'];
             const palette = basePalette.includes(card.icon)
               ? basePalette
               : [card.icon, ...basePalette.slice(0, 4)];
@@ -120,7 +211,7 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
                   value={card.title || ''}
                   onFocus={() => onFocusField?.('reasons')}
                   onChange={(e) => updateReason(idx, 'title', e.target.value)}
-                  placeholder="Reason Title (e.g. Lucky to Have You)"
+                  placeholder={reasonTitlePlaceholder}
                   className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
                 />
 
@@ -130,7 +221,7 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
                   value={card.desc || ''}
                   onFocus={() => onFocusField?.('reasons')}
                   onChange={(e) => updateReason(idx, 'desc', e.target.value)}
-                  placeholder="e.g. Always bringing energy and joy..."
+                  placeholder={reasonDescPlaceholder}
                   className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs text-slate-800 placeholder-slate-400 leading-relaxed focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all resize-none"
                 />
               </div>
@@ -162,7 +253,7 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
                 </span>
               )}
             </div>
-            <div className="grid grid-cols-6 gap-2 sm:gap-3 max-w-sm">
+            <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-2.5 max-w-md">
               {WAX_SEALS.map((seal, sIdx) => {
                 const isSelected = letter.sealEmoji === seal.emoji;
                 return (
@@ -224,7 +315,7 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
               value={letter.signOff || ''}
               onFocus={() => onFocusField?.('letterSignOff')}
               onChange={(e) => updateLetter({ signOff: e.target.value })}
-              placeholder={isBoy ? `With all my love & respect, ${formData.senderName || 'Alex'} 👑` : `Forever & always, ${formData.senderName || 'Elena'} 🌸`}
+              placeholder={signOffPlaceholder}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-slate-50/40 hover:bg-white focus:bg-white text-slate-900 placeholder-slate-400 text-xs sm:text-sm font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-400 transition-all font-sans shadow-2xs"
             />
           </div>

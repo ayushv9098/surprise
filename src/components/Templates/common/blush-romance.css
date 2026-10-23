@@ -974,12 +974,18 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  flex-wrap: nowrap !important;
+  width: max-content !important;
+  max-width: 90% !important;
   gap: 6px;
   padding: 4px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(255, 182, 193, 0.6);
   backdrop-filter: blur(8px);
   color: var(--accent-text, #c23657);
@@ -987,6 +993,7 @@
   font-weight: 700;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
+  line-height: 1.2;
 }
 
 .memory-card-body {
@@ -1825,26 +1832,40 @@
 /* ============================================================
    PHONE SIMULATOR INTEGRATION STYLES (Wishly Live Simulator)
    ============================================================ */
-.romance-phone-simulator {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
+.in-phone-simulator.soft-app,
+.romance-phone-simulator.soft-app {
+  min-height: 100% !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
 }
 
+.in-phone-simulator.soft-app::-webkit-scrollbar,
+.romance-phone-simulator.soft-app::-webkit-scrollbar {
+  width: 4px;
+}
+
+.in-phone-simulator.soft-app::-webkit-scrollbar-thumb,
+.romance-phone-simulator.soft-app::-webkit-scrollbar-thumb {
+  background: rgba(255, 182, 193, 0.4);
+  border-radius: 4px;
+}
+
+.in-phone-simulator .particle-canvas,
 .romance-phone-simulator .particle-canvas {
   position: absolute !important;
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
+  pointer-events: none !important;
   z-index: 1 !important;
 }
 
+.in-phone-simulator .soft-intro-overlay,
 .romance-phone-simulator .soft-intro-overlay {
   position: absolute !important;
   inset: 0 !important;
@@ -1853,147 +1874,407 @@
   padding: 20px 14px 16px !important;
 }
 
+.in-phone-simulator .screen-light-flash,
 .romance-phone-simulator .screen-light-flash {
   position: absolute !important;
   inset: 0 !important;
   z-index: 50 !important;
 }
 
-.romance-phone-simulator .soft-music-pill {
-  position: sticky !important;
-  top: 4px !important;
-  align-self: flex-end !important;
-  margin: 2px 8px 4px auto !important;
-  z-index: 35 !important;
-  transform: scale(0.92);
-}
-
+.in-phone-simulator .soft-main-container,
 .romance-phone-simulator .soft-main-container {
   min-height: auto !important;
-  padding: 4px 10px 14px !important;
-  gap: 10px !important;
+  padding: 56px 16px 24px !important;
+  gap: 12px !important;
+  max-width: 100% !important;
+  flex: 1 !important;
+  box-sizing: border-box !important;
 }
 
+.in-phone-simulator .soft-hero,
 .romance-phone-simulator .soft-hero {
-  padding: 4px 4px 2px !important;
+  padding: 6px 4px 4px !important;
+  gap: 6px !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+.in-phone-simulator .soft-title,
+.romance-phone-simulator .soft-title {
+  font-family: var(--font-serif) !important;
+  font-size: 2.15rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  color: var(--text-dark) !important;
+}
+
+.in-phone-simulator .soft-subtitle,
+.romance-phone-simulator .soft-subtitle {
+  font-size: 0.92rem !important;
+  line-height: 1.45 !important;
+  max-width: 320px !important;
+  margin: 0 auto !important;
+  color: var(--text-muted) !important;
+}
+
+.in-phone-simulator .soft-nav-pills,
+.romance-phone-simulator .soft-nav-pills {
+  display: flex !important;
+  width: 100% !important;
+  max-width: 345px !important;
+  padding: 5px !important;
+  gap: 5px !important;
+  border-radius: 999px !important;
+  margin: 0 auto !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(255, 182, 193, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  box-shadow: 0 4px 18px rgba(255, 182, 193, 0.15) !important;
+}
+
+.in-phone-simulator .nav-pill,
+.romance-phone-simulator .nav-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 7px 14px !important;
+  font-size: 0.84rem !important;
+  font-weight: 700 !important;
+  gap: 6px !important;
+  border-radius: 999px !important;
+}
+
+.in-phone-simulator .soft-card.photo-card-wrapper,
+.romance-phone-simulator .soft-card.photo-card-wrapper {
+  max-width: 350px !important;
+  width: 100% !important;
+  padding: 14px 12px 14px !important;
+  border-radius: 24px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+.in-phone-simulator .soft-card.letter-card-wrapper,
+.romance-phone-simulator .soft-card.letter-card-wrapper,
+.in-phone-simulator .soft-card.quiz-card-wrapper,
+.romance-phone-simulator .soft-card.quiz-card-wrapper {
+  max-width: 350px !important;
+  width: 100% !important;
+  padding: 18px 14px 18px !important;
+  border-radius: 24px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+.in-phone-simulator .memory-deck-wrapper,
+.romance-phone-simulator .memory-deck-wrapper {
+  min-height: 370px !important;
+  padding: 4px 0 !important;
+  width: 100% !important;
+}
+
+.in-phone-simulator .memory-deck-stage,
+.romance-phone-simulator .memory-deck-stage {
+  height: 380px !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+.in-phone-simulator .memory-card,
+.romance-phone-simulator .memory-card {
+  max-width: 326px !important;
+  width: 100% !important;
+  padding: 10px 10px 12px !important;
+  border-radius: 20px !important;
+  box-sizing: border-box !important;
+}
+
+.in-phone-simulator .card-behind-2,
+.romance-phone-simulator .card-behind-2 {
+  transform: translateY(-8px) scale(0.92) !important;
+}
+
+.in-phone-simulator .card-behind-1,
+.romance-phone-simulator .card-behind-1 {
+  transform: translateY(-4px) scale(0.96) !important;
+}
+
+.in-phone-simulator .card-active,
+.romance-phone-simulator .card-active {
+  transform: translateY(0) scale(1) !important;
+}
+
+.in-phone-simulator .memory-card-image-box,
+.romance-phone-simulator .memory-card-image-box {
+  width: 100% !important;
+  height: 270px !important;
+  aspect-ratio: 4 / 5 !important;
+  border-radius: 16px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.in-phone-simulator .memory-card-body,
+.romance-phone-simulator .memory-card-body {
+  padding: 8px 4px 4px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.in-phone-simulator .memory-card-tag,
+.romance-phone-simulator .memory-card-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 3px 10px !important;
+  border-radius: 100px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+}
+
+.in-phone-simulator .memory-card-caption,
+.romance-phone-simulator .memory-card-caption {
+  font-family: var(--font-editorial) !important;
+  font-size: 1.05rem !important;
+  font-style: italic !important;
+  line-height: 1.35 !important;
+  margin: 4px 0 0 !important;
+  color: var(--text-dark) !important;
+  text-align: center !important;
+}
+
+.in-phone-simulator .washi-tape-strip,
+.romance-phone-simulator .washi-tape-strip {
+  position: absolute !important;
+  top: -8px !important;
+  left: 50% !important;
+  transform: translateX(-50%) rotate(-1.5deg) !important;
+  width: 72px !important;
+  height: 18px !important;
+  background: rgba(255, 182, 193, 0.6) !important;
+  border-radius: 2px !important;
+  z-index: 10 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+.in-phone-simulator .photo-card-zoom-btn,
+.romance-phone-simulator .photo-card-zoom-btn {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  color: var(--accent-text, #c23657) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 10 !important;
+}
+
+.in-phone-simulator .polaroid-like-btn,
+.romance-phone-simulator .polaroid-like-btn {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  border: 2px solid rgba(255, 182, 193, 0.9) !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 10 !important;
+}
+
+.in-phone-simulator .photo-swipe-guide-pill,
+.romance-phone-simulator .photo-swipe-guide-pill {
+  position: absolute !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 6px 14px !important;
+  height: auto !important;
+  width: max-content !important;
+  max-width: 90% !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(255, 182, 193, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  color: var(--accent-text, #c23657) !important;
+  font-size: 0.74rem !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
+  flex-wrap: nowrap !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  z-index: 10 !important;
+  cursor: pointer !important;
+}
+
+.in-phone-simulator .soft-music-pill,
+.romance-phone-simulator .soft-music-pill {
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  height: 34px !important;
+  max-width: 220px !important;
+  padding: 4px 10px 4px 6px !important;
+  font-size: 0.74rem !important;
+  z-index: 35 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  border-radius: 999px !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1.2px solid rgba(255, 182, 193, 0.6) !important;
+  box-shadow: 0 4px 16px rgba(247, 141, 167, 0.18) !important;
+}
+
+.in-phone-simulator .music-info,
+.romance-phone-simulator .music-info {
+  max-width: 130px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+
+.in-phone-simulator .music-title,
+.romance-phone-simulator .music-title {
+  font-size: 0.72rem !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.2 !important;
+  font-weight: 600 !important;
+}
+
+.in-phone-simulator .music-disc,
+.romance-phone-simulator .music-disc {
+  width: 22px !important;
+  height: 22px !important;
+  flex-shrink: 0 !important;
+}
+
+.in-phone-simulator .photo-controls-row,
+.romance-phone-simulator .photo-controls-row {
+  margin-top: 14px !important;
+  gap: 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+.in-phone-simulator .tactile-btn.photo-nav-btn,
+.romance-phone-simulator .tactile-btn.photo-nav-btn {
+  padding: 7px 18px !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  min-height: 36px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
   gap: 4px !important;
 }
 
-.romance-phone-simulator .soft-title {
-  font-size: 1.55rem !important;
-}
-
-.romance-phone-simulator .soft-subtitle {
-  font-size: 0.78rem !important;
-  line-height: 1.35 !important;
-}
-
-.romance-phone-simulator .soft-nav-pills {
-  padding: 3px !important;
-  gap: 3px !important;
-}
-
-.romance-phone-simulator .nav-pill {
-  padding: 6px 8px !important;
-  font-size: 0.76rem !important;
-}
-
-.romance-phone-simulator .soft-card {
-  padding: 14px 12px 14px !important;
-  border-radius: 24px !important;
-}
-
-.romance-phone-simulator .memory-deck-stage {
-  height: 290px !important;
-}
-
-.romance-phone-simulator .memory-card {
-  max-width: 230px !important;
-  padding: 8px 8px 10px !important;
-}
-
-.romance-phone-simulator .memory-card-image-box {
-  border-radius: 12px !important;
-}
-
-.romance-phone-simulator .memory-card-body {
-  padding: 6px 4px 2px !important;
-}
-
-.romance-phone-simulator .memory-card-tag {
-  font-size: 0.64rem !important;
-}
-
-.romance-phone-simulator .memory-card-caption {
-  font-size: 0.75rem !important;
-  line-height: 1.3 !important;
-}
-
-.romance-phone-simulator .photo-controls-row {
-  margin-top: 10px !important;
-  gap: 8px !important;
-}
-
-.romance-phone-simulator .photo-nav-btn {
-  min-height: 34px !important;
-  padding: 6px 14px !important;
-  font-size: 0.75rem !important;
-}
-
+.in-phone-simulator .photo-counter-pill,
 .romance-phone-simulator .photo-counter-pill {
-  height: 32px !important;
-  font-size: 0.74rem !important;
+  padding: 5px 16px !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  height: 34px !important;
+  border-radius: 999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
 }
 
+.in-phone-simulator .khat-envelope,
 .romance-phone-simulator .khat-envelope {
-  width: 230px !important;
-  height: 148px !important;
-  border-radius: 18px !important;
-}
-
-.romance-phone-simulator .khat-letter {
-  padding: 14px 12px 12px !important;
+  width: 290px !important;
+  height: 180px !important;
   border-radius: 20px !important;
 }
 
+.in-phone-simulator .khat-letter,
+.romance-phone-simulator .khat-letter {
+  padding: 20px 18px 18px !important;
+  border-radius: 22px !important;
+  max-width: 325px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.in-phone-simulator .khat-line,
 .romance-phone-simulator .khat-line {
-  font-size: 0.76rem !important;
-  line-height: 1.4 !important;
+  font-size: 0.88rem !important;
+  line-height: 1.5 !important;
 }
 
+.in-phone-simulator .khat-signature,
 .romance-phone-simulator .khat-signature {
-  font-size: 0.82rem !important;
-}
-
-.romance-phone-simulator .quiz-heading {
-  font-size: 1.25rem !important;
-}
-
-.romance-phone-simulator .quiz-subtitle {
-  font-size: 0.76rem !important;
-}
-
-.romance-phone-simulator .game-question {
   font-size: 0.95rem !important;
-  margin: 10px 0 14px !important;
 }
 
+.in-phone-simulator .quiz-heading,
+.romance-phone-simulator .quiz-heading {
+  font-size: 1.55rem !important;
+}
+
+.in-phone-simulator .quiz-subtitle,
+.romance-phone-simulator .quiz-subtitle {
+  font-size: 0.88rem !important;
+}
+
+.in-phone-simulator .game-question,
+.romance-phone-simulator .game-question {
+  font-size: 1.05rem !important;
+  margin: 12px 0 16px !important;
+}
+
+.in-phone-simulator .game-yes-btn,
 .romance-phone-simulator .game-yes-btn,
+.in-phone-simulator .game-no-btn,
 .romance-phone-simulator .game-no-btn {
-  min-height: 38px !important;
-  padding: 8px 16px !important;
-  font-size: 0.78rem !important;
+  min-height: 42px !important;
+  padding: 8px 20px !important;
+  font-size: 0.88rem !important;
+  border-radius: 999px !important;
 }
 
+.in-phone-simulator .chocolate-ticket-card,
 .romance-phone-simulator .chocolate-ticket-card {
-  padding: 12px 14px !important;
+  padding: 14px 16px !important;
   border-radius: 16px !important;
+  max-width: 290px !important;
 }
 
+.in-phone-simulator .photo-lightbox-overlay,
 .romance-phone-simulator .photo-lightbox-overlay {
   position: absolute !important;
   inset: 0 !important;
   z-index: 50 !important;
-  border-radius: 38px !important;
+  border-radius: 40px !important;
   overflow: hidden !important;
 }
