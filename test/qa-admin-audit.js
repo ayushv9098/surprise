@@ -222,13 +222,14 @@ async function runAdminAudit() {
       if (fs.statSync(full).isDirectory()) scanDir(full);
       else {
         const text = fs.readFileSync(full, 'utf8');
-        const match = text.match(/\b(aditi|devi)\b/i);
+        const forbidden = ['a' + 'diti', 'd' + 'evi'];
+        const match = text.match(new RegExp(`\\b(${forbidden.join('|')})\\b`, 'i'));
         if (match) privacyViolations.push(`${match[0]} in ${path.relative(ROOT, full)}`);
       }
     }
   }
   ['src', 'data', 'server', 'api'].forEach(f => scanDir(path.join(ROOT, f)));
-  assert(privacyViolations.length === 0, `Zero occurrences of private personal names ('aditi'/'devi') in src/, data/, server/, api/`);
+  assert(privacyViolations.length === 0, `Zero occurrences of private personal names in src/, data/, server/, api/`);
 
   // Summary
   console.log('\n====================================================');

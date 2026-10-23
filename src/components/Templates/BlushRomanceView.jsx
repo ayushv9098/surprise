@@ -492,6 +492,12 @@ tu hi bata mujhe is khat me kya likhu main... 😉
     || resolvedSong?.title 
     || (siteData.songTitle || `${recipientName}'s Keepsake Melody 🎵`);
 
+  // 4. Dynamic Quiz Resolution
+  const quizQuestion = siteData.quizQuestion || siteData.quiz?.question || "Do you like spending time with me?";
+  const quizYesText = siteData.quizYesText || siteData.quiz?.yesText || "YES, VERY MUCH!";
+  const quizTreat = siteData.quizTreat || siteData.quiz?.treat || "Dairy Milk Silk";
+  const quizVictoryNote = siteData.quizVictoryNote || siteData.quiz?.victoryNote || "That means one chocolate / sweet treat is officially pending from my side anytime you want! 🍫😋";
+
   const normalizeTab = (t) => {
     if (!t) return 'photos';
     if (t === 'quiz') return 'game';
@@ -530,7 +536,14 @@ tu hi bata mujhe is khat me kya likhu main... 😉
 
   // Tab 2: Letter State with Controlled Synchronization
   const [userOpenedLetter, setUserOpenedLetter] = useState(false);
-  const isLetterOpen = Boolean(controlledOpenEnvelope || userOpenedLetter);
+
+  useEffect(() => {
+    if (typeof controlledOpenEnvelope === 'boolean') {
+      setUserOpenedLetter(controlledOpenEnvelope);
+    }
+  }, [controlledOpenEnvelope]);
+
+  const isLetterOpen = controlledOpenEnvelope !== undefined ? Boolean(controlledOpenEnvelope) : userOpenedLetter;
 
   // Tab 3: Quiz State (Runaway "No" Button Game!)
   const [gameVictory, setGameVictory] = useState(false);
@@ -1290,9 +1303,9 @@ tu hi bata mujhe is khat me kya likhu main... 😉
           <article className="soft-card letter-card-wrapper">
             <div className="letter-header">
               <div className="card-badge-icon">
-                <AppleEmoji emoji="💌" size={26} />
+                <AppleEmoji emoji={rawLetterObj?.sealEmoji || "💌"} size={26} />
               </div>
-              <h2 className="letter-heading">A Piece of My Heart</h2>
+              <h2 className="letter-heading">{rawLetterObj?.title || siteData.letterTitle || "A Piece of My Heart"}</h2>
               <p className="letter-subtitle">
                 <span>A secret message written just for you</span>
                 <AppleEmoji emoji="🌸" size={15} />
@@ -1303,7 +1316,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
             {isLetterOpen ? (
               <div className="khat-letter">
                 <div className="khat-letter-crest">
-                  <span>✦ FOR MY FAVORITE PERSON ✦</span>
+                  <span>✦ {rawLetterObj?.title ? rawLetterObj.title.toUpperCase() : 'FOR MY FAVORITE PERSON'} ✦</span>
                 </div>
 
                 <div className="khat-letter-body">
@@ -1377,8 +1390,8 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                 <div className="khat-seal-wrapper">
                   <div className="khat-seal-ribbon ribbon-left" aria-hidden="true" />
                   <div className="khat-seal-ribbon ribbon-right" aria-hidden="true" />
-                  <div className="khat-wax-seal">
-                    <AppleEmoji emoji="💌" size={28} />
+                  <div className="khat-wax-seal" style={rawLetterObj?.waxColor ? { backgroundColor: rawLetterObj.waxColor } : {}}>
+                    <AppleEmoji emoji={rawLetterObj?.sealEmoji || "💌"} size={28} />
                   </div>
                 </div>
 
@@ -1424,7 +1437,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
 
                 <div className="victory-love-note">
                   <p className="victory-desc">
-                    That means one chocolate / sweet treat is officially pending from my side anytime you want! 🍫😋
+                    {quizVictoryNote}
                   </p>
                 </div>
 
@@ -1435,7 +1448,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                   </div>
                   <div className="ticket-main-title">
                     <AppleEmoji emoji="🍫" size={22} />
-                    <span>Dairy Milk Silk</span>
+                    <span>{quizTreat}</span>
                   </div>
                   <p className="ticket-subtext">
                     Reserved exclusively for <strong>{recipientName}</strong> 🌸
@@ -1473,7 +1486,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
 
                 <div className="game-container">
                   <p className="game-question">
-                    “Do you like spending time with me?”
+                    “{quizQuestion}”
                     {' '}
                     <AppleEmoji emoji="🌸" size={20} />
                   </p>
@@ -1490,7 +1503,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                           >
                             <span className="tactile-btn-shine" />
                             <span className="tactile-btn-content">
-                              <span>YES, VERY MUCH!</span>
+                              <span>{quizYesText}</span>
                               <AppleEmoji emoji="🥰" size={18} />
                             </span>
                           </button>
@@ -1522,7 +1535,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
                           >
                             <span className="tactile-btn-shine" />
                             <span className="tactile-btn-content">
-                              <span>YES, VERY MUCH!</span>
+                              <span>{quizYesText}</span>
                               <AppleEmoji emoji="🥰" size={18} />
                             </span>
                           </button>

@@ -163,6 +163,13 @@ export default function App() {
   };
 
   const handleCategoryClick = (cat) => {
+    if (cat.comingSoon) {
+      setToast({
+        type: 'info',
+        message: `${cat.name} template is coming soon! Focus on Birthday or Special Someone.`,
+      });
+      return;
+    }
     setSelectedCategory(cat.id);
     if (cat.id === 'birthday') {
       setRecipientModalCategory(cat);
@@ -308,38 +315,61 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat.id}
-                    type="button"
-                    onClick={() => handleCategoryClick(cat)}
-                    className="group bg-white rounded-2xl border border-gray-200/80 p-6 text-left transition-all duration-200 hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between"
-                  >
-                    <div>
-                      {/* Top row: circular/rounded icon container with AppleEmoji and subtle Select -> */}
-                      <div className="flex items-center justify-between mb-5">
-                        <div className="w-13 h-13 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-rose-50/50 group-hover:border-rose-100 transition-all duration-200 shadow-2xs">
-                          <AppleEmoji emoji={cat.emoji} size={28} />
+                {CATEGORIES.map((cat) => {
+                  const isComingSoon = Boolean(cat.comingSoon);
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => handleCategoryClick(cat)}
+                      className={`group bg-white rounded-2xl border border-gray-200/80 p-6 text-left transition-all duration-200 flex flex-col justify-between ${
+                        isComingSoon
+                          ? 'cursor-not-allowed opacity-80 hover:shadow-none hover:border-gray-200 hover:translate-y-0'
+                          : 'hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5 cursor-pointer'
+                      }`}
+                    >
+                      <div>
+                        {/* Top row: circular/rounded icon container with AppleEmoji and subtle Select -> or Coming Soon badge */}
+                        <div className="flex items-center justify-between mb-5">
+                          <div
+                            className={`w-13 h-13 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0 shadow-2xs ${
+                              isComingSoon
+                                ? ''
+                                : 'group-hover:scale-105 group-hover:bg-rose-50/50 group-hover:border-rose-100 transition-all duration-200'
+                            }`}
+                          >
+                            <AppleEmoji emoji={cat.emoji} size={28} />
+                          </div>
+
+                          {isComingSoon ? (
+                            <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 border border-amber-200/80 px-2.5 py-1 rounded-full text-xs font-semibold">
+                              <span>Coming Soon 🚀</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 group-hover:text-rose-600 transition-colors">
+                              <span>Select</span>
+                              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                            </span>
+                          )}
                         </div>
 
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 group-hover:text-rose-600 transition-colors">
-                          <span>Select</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                        </span>
+                        {/* Title */}
+                        <h3
+                          className={`font-bold text-lg text-gray-900 transition-colors ${
+                            isComingSoon ? '' : 'group-hover:text-rose-600'
+                          }`}
+                        >
+                          {cat.name}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="text-sm text-gray-500 mt-1 leading-relaxed">
+                          {cat.description}
+                        </p>
                       </div>
-
-                      {/* Title */}
-                      <h3 className="font-bold text-lg text-gray-900 group-hover:text-rose-600 transition-colors">
-                        {cat.name}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="text-sm text-gray-500 mt-1 leading-relaxed">
-                        {cat.description}
-                      </p>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </section>
 
@@ -385,15 +415,6 @@ export default function App() {
                     Get an instant live link. When they open it, music plays and confetti flies.
                   </p>
                 </div>
-              </div>
-
-              <div className="mt-12 sm:mt-16 text-center">
-                <button
-                  onClick={handleStartCreating}
-                  className="px-7 py-3.5 rounded-xl text-base font-semibold bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-md hover:shadow-lg inline-flex items-center gap-2"
-                >
-                  Start Creating →
-                </button>
               </div>
             </section>
 

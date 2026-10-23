@@ -29,7 +29,7 @@ export default function TemplateSelector({
       selectedCategory === 'birthday'
         ? 'Birthday'
         : selectedCategory === 'romance'
-        ? 'Love & Anniversary'
+        ? 'Special Someone & Connection'
         : selectedCategory === 'scrapbook'
         ? 'Scrapbook'
         : selectedCategory === 'apology'

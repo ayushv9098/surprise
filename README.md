@@ -1,16 +1,16 @@
-# React + Vite
+# surprise
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern, personalized keepsake and surprise website builder. Turn photos, letters, and songs into a heartfelt interactive keepsake website with realistic phone simulation, wax-sealed envelopes, floating memories, and customizable themes.
 
-Currently, two official plugins are available:
+## Features
+- **Occasion Presets**: Birthday Celebrations, Special Someone & Connections, Memory Scrapbooks, and Heartfelt Apologies.
+- **Customizable Templates**: Royal Sapphire, Golden Spark, Retro Polaroid, Blush Blossom, Princess Peach, Lavender Dream, Velvet Rose, Sunset Glow, and Celestial Indigo.
+- **Pixel-Perfect Simulator**: Calibrated mobile preview with Safari chrome, dynamic island music playback, and responsive viewport fitting.
+- **Offline Self-Contained Previews**: All template previews feature embedded photographic design assets.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Tech Stack
+- React 18
+- Vite
+- Tailwind CSS
+- Lucide React
+- Canvas Confetti

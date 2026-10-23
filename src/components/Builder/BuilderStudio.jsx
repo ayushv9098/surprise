@@ -18,9 +18,10 @@ export default function BuilderStudio({
   initialTemplateId,
   initialGender = 'boy',
   initialCategory = 'birthday',
-  onBack: _onBack,
+  onBack,
   onComplete,
 }) {
+  const handleBackClick = onBack;
   const [currentStep, setCurrentStep] = useState(1);
   const [formSection, setFormSection] = useState('details'); // 'details' | 'media' | 'surprises'
   const [activeMobileView, setActiveMobileView] = useState('editor'); // 'editor' | 'preview'
@@ -51,9 +52,11 @@ export default function BuilderStudio({
       syncToPreview(0, false);
     } else if (['heroPhoto', 'photos', 'photoCaption', 'songId', 'customSongUrl'].includes(fieldName)) {
       syncToPreview(1, false);
-    } else if (fieldName === 'reasons' || fieldName.startsWith('reason')) {
+    } else if (fieldName === 'reasons' || fieldName.startsWith('reason') || fieldName.startsWith('quiz')) {
       syncToPreview(3, false);
-    } else if (['letter', 'letterContent', 'letterSignOff', 'waxSeal'].includes(fieldName) || fieldName.startsWith('letter')) {
+    } else if (['letter', 'letterTitle', 'waxSeal'].includes(fieldName)) {
+      syncToPreview(4, false);
+    } else if (['letterContent', 'letterSignOff'].includes(fieldName) || fieldName.startsWith('letter')) {
       syncToPreview(4, true);
     }
   };
@@ -132,10 +135,21 @@ export default function BuilderStudio({
       syncToPreview(0, false);
     } else if (patch.heroPhoto !== undefined || patch.photoCaption !== undefined || patch.photos !== undefined || patch.songId !== undefined || patch.customSongUrl !== undefined) {
       syncToPreview(1, false);
-    } else if (patch.specialReasons !== undefined || patch.reasons !== undefined) {
+    } else if (patch.specialReasons !== undefined || patch.reasons !== undefined || patch.quizQuestion !== undefined || patch.quizYesText !== undefined || patch.quizTreat !== undefined || patch.quizVictoryNote !== undefined || patch.quiz !== undefined) {
       syncToPreview(3, false);
-    } else if (patch.letter !== undefined) {
+    } else if (patch.letterContent !== undefined || patch.letterSignOff !== undefined) {
       syncToPreview(4, true);
+    } else if (patch.letter !== undefined || patch.letterBody !== undefined || patch.letterTitle !== undefined) {
+      const isContentOrSignOff =
+        (patch.letter && formData.letter && (patch.letter.content !== formData.letter.content || patch.letter.signOff !== formData.letter.signOff)) ||
+        (patch.letterBody !== undefined && patch.letterBody !== formData.letterBody && patch.letterBody !== formData.letter?.content) ||
+        (patch.letterSignOff !== undefined && patch.letterSignOff !== formData.letterSignOff && patch.letterSignOff !== formData.letter?.signOff);
+
+      const isOnlySealOrTitle =
+        (!isContentOrSignOff && patch.letter && (patch.letter.sealEmoji !== formData.letter?.sealEmoji || patch.letter.waxColor !== formData.letter?.waxColor || patch.letter.title !== formData.letter?.title)) ||
+        (patch.letter && !patch.letter.content && !patch.letter.signOff);
+
+      syncToPreview(4, !isOnlySealOrTitle);
     }
 
     setFormData((prev) => {
@@ -207,6 +221,10 @@ export default function BuilderStudio({
       photos: preset.photos?.length ? preset.photos : prev.photos,
       specialReasons: preset.specialReasons?.length ? preset.specialReasons : prev.specialReasons,
       letter: preset.letter || prev.letter,
+      quizQuestion: preset.quizQuestion !== undefined ? preset.quizQuestion : prev.quizQuestion,
+      quizYesText: preset.quizYesText !== undefined ? preset.quizYesText : prev.quizYesText,
+      quizTreat: preset.quizTreat !== undefined ? preset.quizTreat : prev.quizTreat,
+      quizVictoryNote: preset.quizVictoryNote !== undefined ? preset.quizVictoryNote : prev.quizVictoryNote,
       songId: preset.songId || tmpl.recommendedSongId || prev.songId,
     }));
   };
@@ -264,17 +282,31 @@ export default function BuilderStudio({
     }
   };
 
-  const isRomance = formData.category === 'romance' || ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId);
-  const isScrapbook = formData.category === 'scrapbook' || ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId);
-  const isApology = formData.category === 'apology' || ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId);
+  const occasionCategory = formData.category || 'birthday';
+  const isRomance =
+    occasionCategory === 'romance' ||
+    ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId) ||
+    Boolean(
+      formData.templateId && (
+        formData.templateId.includes('romance') ||
+        formData.templateId.includes('velvet') ||
+        formData.templateId.includes('sunset') ||
+        formData.templateId.includes('celestial')
+      )
+    );
+  const isScrapbook = !isRomance && (occasionCategory === 'scrapbook' || ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId));
+  const isApology = !isRomance && !isScrapbook && (occasionCategory === 'apology' || ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId));
   const _isBirthday = !isRomance && !isScrapbook && !isApology;
 
   const tab1Emoji = isRomance ? '❤️' : isScrapbook ? '📸' : isApology ? '🕊️' : (selectedGender === 'boy' ? '👑' : '🌸');
+  const tab2Label = isRomance || isScrapbook ? '2. Photos & Music' : '2. Photo & Song';
+  const tab3Label = isRomance ? '3. Letter & Quiz' : isScrapbook ? '3. Memories & Letter' : isApology ? '3. Promises & Letter' : '3. Reasons & Letter';
+  const tab3ShortLabel = isRomance ? '3. Quiz' : '3. Letter';
 
   const FORM_TABS = [
     { id: 'details', label: '1. Names', shortLabel: '1. Names', emoji: tab1Emoji },
-    { id: 'media', label: '2. Photo & Song', shortLabel: '2. Photo', emoji: '📸' },
-    { id: 'surprises', label: '3. Reasons & Letter', shortLabel: '3. Letter', emoji: '💌' },
+    { id: 'media', label: tab2Label, shortLabel: '2. Photos', emoji: '📸' },
+    { id: 'surprises', label: tab3Label, shortLabel: tab3ShortLabel, emoji: '💌' },
   ];
 
   return (
@@ -376,11 +408,12 @@ export default function BuilderStudio({
 
         {/* RIGHT PANEL: Fixed phone simulator — never scrolls */}
         <div
-          className="shrink-0 flex flex-col items-center justify-center border-l border-slate-100 bg-[#FAFAFA] overflow-hidden"
-          style={{ width: '420px' }}
+          className="shrink-0 flex flex-col items-center justify-center border-l border-slate-100 bg-[#FAFAFA] overflow-hidden p-2 sm:p-3 relative"
+          style={{ width: '420px', height: '100%' }}
         >
           <LivePhonePreview
             formData={formData}
+            onBack={handleBackClick || onBack}
             activeSection={formSection}
             previewScreen={previewTarget.screen}
             openEnvelope={previewTarget.openEnvelope}
@@ -392,7 +425,7 @@ export default function BuilderStudio({
       {/* ================================================================== */}
       {/* MOBILE LAYOUT: Tab toggle between Form and Phone Preview            */}
       {/* ================================================================== */}
-      <div className="lg:hidden min-h-screen pb-28">
+      <div className={`lg:hidden ${activeMobileView === 'editor' ? 'min-h-screen pb-28' : 'overflow-hidden'}`}>
         {/* Mobile toggle pill */}
         <div className="flex items-center justify-center pt-3 pb-1">
           <div className="flex items-center p-0.5 rounded-full bg-slate-100 border border-slate-200 shadow-2xs">
@@ -492,9 +525,15 @@ export default function BuilderStudio({
         </div>
 
         {/* Mobile phone preview */}
-        <div className={`px-4 pt-4 flex justify-center ${activeMobileView === 'editor' ? 'hidden' : 'block'}`}>
+        <div
+          className={`w-full flex items-center justify-center p-2 sm:p-4 overflow-hidden ${
+            activeMobileView === 'editor' ? 'hidden' : 'flex'
+          }`}
+          style={{ height: 'calc(100vh - 180px)', minHeight: '360px' }}
+        >
           <LivePhonePreview
             formData={formData}
+            onBack={handleBackClick || onBack}
             activeSection={formSection}
             previewScreen={previewTarget.screen}
             openEnvelope={previewTarget.openEnvelope}
@@ -509,10 +548,10 @@ export default function BuilderStudio({
           {/* Left: Back Button or Subtle Step Indicator */}
           <div className="flex items-center min-w-0 sm:min-w-[140px]">
             {currentStep === 1 ? (
-              _onBack ? (
+              onBack ? (
                 <button
                   type="button"
-                  onClick={_onBack}
+                  onClick={onBack}
                   className="inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100/90 hover:bg-slate-200/80 active:scale-95 transition-all cursor-pointer shrink-0 border border-slate-200/60 shadow-2xs"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />

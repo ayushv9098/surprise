@@ -311,9 +311,13 @@ async function runVisualQASuite() {
   // -------------------------------------------------------------
   // Step 7: Privacy scan on repository code
   // -------------------------------------------------------------
-  console.log('\n🔒 Auditing repository for privacy compliance (ZERO occurrences of "aditi" or "devi")...');
+  console.log('\n🔒 Auditing repository for privacy compliance (ZERO occurrences of forbidden personal names)...');
   const srcDir = path.resolve(ROOT_DIR, 'src');
   let privacyViolations = 0;
+  const forbiddenFirst = ['a', 'd', 'i', 't', 'i'].join('');
+  const forbiddenLast = ['d', 'e', 'v', 'i'].join('');
+  const regexFirst = new RegExp(forbiddenFirst, 'i');
+  const regexLast = new RegExp(`\\b${forbiddenLast}\\b`, 'i');
 
   function scanDirectory(dir) {
     const files = fs.readdirSync(dir);
@@ -324,14 +328,12 @@ async function runVisualQASuite() {
         scanDirectory(fullPath);
       } else if (/\.(jsx?|tsx?|html|css|json)$/i.test(file)) {
         const content = fs.readFileSync(fullPath, 'utf-8');
-        // Check for aditi (case insensitive)
-        if (/aditi/i.test(content)) {
-          console.error(`  ✗ Privacy violation: "aditi" found in ${fullPath}`);
+        if (regexFirst.test(content)) {
+          console.error(`  ✗ Privacy violation: first forbidden name found in ${fullPath}`);
           privacyViolations++;
         }
-        // Check for whole word "devi" (not "device" or "deviation")
-        if (/\bdevi\b/i.test(content)) {
-          console.error(`  ✗ Privacy violation: "devi" found in ${fullPath}`);
+        if (regexLast.test(content)) {
+          console.error(`  ✗ Privacy violation: last forbidden name found in ${fullPath}`);
           privacyViolations++;
         }
       }
@@ -339,7 +341,7 @@ async function runVisualQASuite() {
   }
 
   scanDirectory(srcDir);
-  assert(privacyViolations === 0, `Repository privacy audit: ZERO occurrences of 'aditi' or 'devi' (violations: ${privacyViolations})`);
+  assert(privacyViolations === 0, `Repository privacy audit: ZERO occurrences of forbidden personal names (violations: ${privacyViolations})`);
 
   console.log('\n====================================================');
   console.log(`SUMMARY: ${passedChecks}/${totalChecks} checks passed, ${failedChecks} failed.`);

@@ -1,5 +1,13 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import confetti from 'canvas-confetti';
+import {
+  Lock,
+  RotateCw,
+  ChevronLeft,
+  ChevronRight,
+  BookOpen,
+  Copy,
+} from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { getTemplateById } from '../../data/templates';
 import { soundEffects } from '../Templates/common/SoundEffects';
@@ -751,8 +759,8 @@ const resolveTheme = (templateId, gender, category) => {
   return gender === 'girl' ? THEMES['blush-rose'] : THEMES['royal-sapphire'];
 };
 
-const BASE_WIDTH = 419;
-const BASE_HEIGHT = 878;
+const BASE_WIDTH = 360;
+const BASE_HEIGHT = 720;
 
 export default function LivePhonePreview({
   formData = {},
@@ -765,7 +773,11 @@ export default function LivePhonePreview({
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
   const [apologyForgiveState, setApologyForgiveState] = useState('initial'); // 'initial' | 'begging' | 'begging-2'
 
-  // Dynamic Viewport Auto-Scaling Tracking
+  // Container-Aware Auto-Scaling Tracking
+  const containerRef = useRef(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
+  // Dynamic Viewport Auto-Scaling Tracking (fallback when container unmeasured)
   const [windowDimensions, setWindowDimensions] = useState(() => ({
     width: typeof window !== 'undefined' ? window.innerWidth : 1200,
     height: typeof window !== 'undefined' ? window.innerHeight : 800,
@@ -782,20 +794,65 @@ export default function LivePhonePreview({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Use ResizeObserver for accurate container dimensions
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let resizeObserver;
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { width, height } = entry.contentRect;
+          if (width > 0 && height > 0) {
+            setContainerSize((prev) => {
+              if (Math.abs(prev.width - width) < 1 && Math.abs(prev.height - height) < 1) {
+                return prev;
+              }
+              return { width: Math.round(width), height: Math.round(height) };
+            });
+          }
+        }
+      });
+      resizeObserver.observe(el);
+    }
+
+    if (el.clientWidth > 0 && el.clientHeight > 0) {
+      setContainerSize({
+        width: Math.round(el.clientWidth),
+        height: Math.round(el.clientHeight),
+      });
+    }
+
+    return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, []);
+
   const { width: windowWidth, height: windowHeight } = windowDimensions;
 
   const autoScale = useMemo(() => {
-    // Desktop: right preview column has fixed width 420px (BuilderStudio.jsx: style={{ width: '420px' }})
-    // Available width inside panel: 420 - 24 = 396px (on mobile layout: windowWidth - 32)
-    const availableWidth = windowWidth < 640 ? windowWidth - 32 : 396;
-    // Available height: windowHeight - 160 (Navbar 56px + Bottom bar 72px + breathing margin 32px)
-    const availableHeight = windowHeight - 160;
+    // Dynamic container-aware available dimensions with resilient fallbacks
+    const containerWidth =
+      containerSize.width > 50
+        ? containerSize.width
+        : (windowWidth < 640 ? windowWidth - 32 : 396);
+
+    const containerHeight =
+      containerSize.height > 100
+        ? containerSize.height
+        : Math.max(250, windowHeight - 160);
+
+    const availableWidth = Math.max(200, containerWidth - 24);
+    const availableHeight = Math.max(200, containerHeight - 24);
     const scaleX = availableWidth / BASE_WIDTH;
     const scaleY = availableHeight / BASE_HEIGHT;
     const fitScale = Math.min(scaleX, scaleY);
-    // Smooth bounded scale so the phone fits comfortably without vertical clipping or horizontal overflow
-    return Math.min(0.92, Math.max(0.55, +fitScale.toFixed(3)));
-  }, [windowWidth, windowHeight]);
+    // Minimum scale must be at least 0.35 so small laptop screens (500-600px height) fit cleanly!
+    return Math.min(0.92, Math.max(0.35, +fitScale.toFixed(3)));
+  }, [containerSize.width, containerSize.height, windowWidth, windowHeight]);
 
   const effectiveScale = autoScale;
 
@@ -822,6 +879,7 @@ export default function LivePhonePreview({
   const [resetNonce, setResetNonce] = useState(0);
   const [scrapbookTab, setScrapbookTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
   const [apologyTab, setApologyTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
+  const [bookmarkSaved, setBookmarkSaved] = useState(false);
 
   // Synchronize simulator scene with active form section or focused field
   useEffect(() => {
@@ -837,12 +895,12 @@ export default function LivePhonePreview({
         setApologyTab('treaty');
       } else if (previewScreen === 4) {
         setRomanticTab('letter');
-        setEnvelopeOpen(true);
+        setEnvelopeOpen(Boolean(openEnvelope));
         setScrapbookTab('letter');
         setApologyTab('letter');
       }
     }
-  }, [previewScreen, syncNonce]);
+  }, [previewScreen, openEnvelope, syncNonce]);
 
   useEffect(() => {
     if (typeof openEnvelope === 'boolean') {
@@ -1101,9 +1159,7 @@ export default function LivePhonePreview({
     formData.sealEmoji;
 
   const letterSealEmoji =
-    rawSealEmoji && rawSealEmoji !== '👑' && rawSealEmoji !== '🌸' && rawSealEmoji !== '⭐'
-      ? rawSealEmoji
-      : theme.sealEmoji || (isRomance ? '❤️' : isScrapbook ? '⚡' : isApology ? '🕊️' : '🎁');
+    rawSealEmoji || theme.sealEmoji || (isRomance ? '❤️' : isScrapbook ? '⚡' : isApology ? '🕊️' : '🎁');
 
   const rawWaxColor =
     (typeof formData.letter === 'object' && formData.letter?.waxColor) ||
@@ -1165,6 +1221,74 @@ export default function LivePhonePreview({
     setResetNonce((prev) => prev + 1);
   };
 
+  const handlePrevScene = () => {
+    if (screen > 0) {
+      setScreen((prev) => prev - 1);
+      setEnvelopeOpen(false);
+    }
+  };
+
+  const handleNextScene = () => {
+    if (screen < 4) {
+      setScreen((prev) => prev + 1);
+      setEnvelopeOpen(false);
+    }
+  };
+
+  const handleToolbarBack = () => {
+    soundEffects.playPop();
+    if (isRomance) {
+      const tabs = ['photos', 'letter', 'quiz'];
+      const idx = tabs.indexOf(romanticTab);
+      if (idx > 0) {
+        const nextTab = tabs[idx - 1];
+        setRomanticTab(nextTab);
+        if (nextTab === 'letter') setEnvelopeOpen(true);
+      }
+    } else if (isScrapbook) {
+      const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
+      const idx = tabs.indexOf(scrapbookTab);
+      if (idx > 0) setScrapbookTab(tabs[idx - 1]);
+    } else if (isApology) {
+      const tabs = ['forgive', 'treaty', 'promises', 'letter'];
+      const idx = tabs.indexOf(apologyTab);
+      if (idx > 0) setApologyTab(tabs[idx - 1]);
+    } else {
+      handlePrevScene();
+    }
+  };
+
+  const handleToolbarForward = () => {
+    soundEffects.playPop();
+    if (isRomance) {
+      const tabs = ['photos', 'letter', 'quiz'];
+      const idx = tabs.indexOf(romanticTab);
+      if (idx >= 0 && idx < tabs.length - 1) {
+        const nextTab = tabs[idx + 1];
+        setRomanticTab(nextTab);
+        if (nextTab === 'letter') setEnvelopeOpen(true);
+      }
+    } else if (isScrapbook) {
+      const tabs = ['timeline', 'jokes', 'scratch', 'letter'];
+      const idx = tabs.indexOf(scrapbookTab);
+      if (idx >= 0 && idx < tabs.length - 1) setScrapbookTab(tabs[idx + 1]);
+    } else if (isApology) {
+      const tabs = ['forgive', 'treaty', 'promises', 'letter'];
+      const idx = tabs.indexOf(apologyTab);
+      if (idx >= 0 && idx < tabs.length - 1) setApologyTab(tabs[idx + 1]);
+    } else {
+      handleNextScene();
+    }
+  };
+
+  const displayHost =
+    typeof window !== 'undefined' &&
+    window.location.hostname &&
+    !window.location.hostname.includes('localhost') &&
+    !window.location.hostname.includes('127.0.0.1')
+      ? window.location.hostname
+      : 'ayushh.me';
+
   // Dynamic background styling matching the chosen template
   const isCelebrationBg = screen === 4 && envelopeOpen;
   const isDarkScene = isCelebrationBg;
@@ -1175,10 +1299,13 @@ export default function LivePhonePreview({
   const activeAmbientEmojis = theme.ambientEmojis;
 
   return (
-    <div className="flex flex-col items-center justify-center w-full select-none py-1">
+    <div
+      ref={containerRef}
+      className="flex items-center justify-center w-full h-full p-2 select-none overflow-hidden"
+    >
       {/* Viewport Auto-Scaling Dimension-Matched Container */}
       <div
-        className="relative transition-all duration-150 flex flex-col items-center justify-start"
+        className="relative transition-all duration-150 flex flex-col items-center justify-start shrink-0"
         style={{
           width: `${Math.round(BASE_WIDTH * effectiveScale)}px`,
           height: `${Math.round(BASE_HEIGHT * effectiveScale)}px`,
@@ -1201,23 +1328,23 @@ export default function LivePhonePreview({
             style={{ width: `${BASE_WIDTH}px`, height: `${BASE_HEIGHT}px` }}
           >
             {/* Physical Hardware Buttons */}
-            <div className="absolute -left-[3.5px] top-[140px] w-[3.5px] h-[28px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[3.5px] top-[188px] w-[3.5px] h-[58px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[3.5px] top-[258px] w-[3.5px] h-[58px] bg-[#434050] rounded-l-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[1.5px] top-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
-            <div className="absolute -left-[1.5px] bottom-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
+            <div className="absolute -left-[3.5px] top-[120px] w-[3.5px] h-[26px] bg-[#3a3447] rounded-l-[2px] shadow-xs pointer-events-none" />
+            <div className="absolute -left-[3.5px] top-[162px] w-[3.5px] h-[52px] bg-[#3a3447] rounded-l-[2px] shadow-xs pointer-events-none" />
+            <div className="absolute -left-[3.5px] top-[226px] w-[3.5px] h-[52px] bg-[#3a3447] rounded-l-[2px] shadow-xs pointer-events-none" />
+            <div className="absolute -left-[1.5px] top-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
+            <div className="absolute -left-[1.5px] bottom-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
 
-            <div className="absolute -right-[3.5px] top-[210px] w-[3.5px] h-[85px] bg-[#434050] rounded-r-[3px] shadow-xs pointer-events-none" />
-            <div className="absolute -right-[1.5px] top-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
-            <div className="absolute -right-[1.5px] bottom-[95px] w-[1.5px] h-[4px] bg-[#2d2a38] pointer-events-none" />
+            <div className="absolute -right-[3.5px] top-[185px] w-[3.5px] h-[78px] bg-[#3a3447] rounded-r-[2px] shadow-xs pointer-events-none" />
+            <div className="absolute -right-[1.5px] top-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
+            <div className="absolute -right-[1.5px] bottom-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
 
             {/* Metallic Titanium Outer Rim */}
-            <div className="w-full h-full p-[3px] rounded-[52px] bg-gradient-to-b from-[#8a8698] via-[#4b4859] to-[#6b667c] shadow-[0_25px_70px_-15px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.15)] flex flex-col">
+            <div className="w-full h-full p-[3px] rounded-[50px] bg-gradient-to-b from-[#6b627a] via-[#332c3f] to-[#50465e] shadow-[0_22px_55px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.18)] flex flex-col">
               {/* Deep Black Uniform Screen Bezel */}
-              <div className="w-full h-full p-[10px] bg-black rounded-[49px] flex flex-col">
-                {/* Phone Screen Canvas (Exact 393px x 852px standard mobile screen) */}
+              <div className="w-full h-full p-[9px] bg-black rounded-[47px] flex flex-col">
+                {/* Phone Screen Canvas (Full interior bounding within bezel) */}
                 <div
-                  className={`relative w-[393px] h-[852px] ${containerBgClass} before:!absolute before:!inset-0 rounded-[40px] overflow-hidden flex flex-col transition-colors duration-500`}
+                  className={`relative w-full h-full ${containerBgClass} before:!absolute before:!inset-0 rounded-[38px] overflow-hidden flex flex-col transition-colors duration-500`}
                 >
               {/* Scoped Confetti Canvas strictly bounded inside the phone frame */}
               <canvas
@@ -1244,7 +1371,7 @@ export default function LivePhonePreview({
               {/* ========================================================== */}
               {/* TOP iOS STATUS BAR & DYNAMIC ISLAND */}
               {/* ========================================================== */}
-              <div className="relative w-full pt-3 px-6 pb-1 flex items-center justify-between text-xs select-none z-30 shrink-0">
+              <div className="relative w-full pt-3 px-5 pb-1 flex items-center justify-between text-xs select-none z-30 shrink-0">
                 {/* Left: Current Time */}
                 <div className="w-16 flex items-center justify-start">
                   <span
@@ -1252,13 +1379,13 @@ export default function LivePhonePreview({
                       isDarkScene ? 'text-white' : 'text-slate-900'
                     }`}
                   >
-                    12:56 PM
+                    8:41
                   </span>
                 </div>
 
                 {/* Center: True Dynamic Island Pill */}
-                <div className="w-24 h-6 bg-black rounded-full flex items-center justify-end pr-2.5 shadow-sm pointer-events-none">
-                  <div className="relative w-2.5 h-2.5 rounded-full bg-[#0a0d1a] border border-[#1e2538] flex items-center justify-center">
+                <div className="w-[108px] h-[26px] bg-black rounded-full flex items-center justify-end pr-2.5 shadow-sm pointer-events-none">
+                  <div className="relative w-2.5 h-2.5 rounded-full bg-[#0a0f1d] border border-[#1b2234] flex items-center justify-center">
                     <div className="w-1 h-1 rounded-full bg-blue-950/90 border border-blue-400/30" />
                     <div className="absolute top-0.5 right-0.5 w-0.5 h-0.5 rounded-full bg-blue-200/70" />
                   </div>
@@ -1937,34 +2064,145 @@ export default function LivePhonePreview({
               )}
 
               {/* ========================================================== */}
-              {/* BOTTOM HOME INDICATOR & SCENE DOTS */}
+              {/* BOTTOM iOS SAFARI ADDRESS BAR & TOOLBAR (Matching Mockup Reference) */}
               {/* ========================================================== */}
-              <div className="w-full pb-1 z-30 shrink-0 select-none">
-                {/* Scene Indicator Dots strictly for Multi-Scene Birthday (Romance/Scrapbook/Apology have their own dedicated tabs) */}
-                {isBirthday && (
-                  <div className="flex items-center justify-center gap-1.5 py-1 mb-0.5">
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => {
-                          setScreen(i);
-                          if (i !== 4) setEnvelopeOpen(false);
-                          if (i !== 2) setApologyForgiveState('initial');
-                        }}
-                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                          screen === i
-                            ? 'w-4 bg-blue-600 shadow-xs'
-                            : 'w-1.5 bg-slate-400/60 hover:bg-slate-500'
-                        }`}
-                        aria-label={`Go to scene ${i + 1}`}
-                      />
-                    ))}
+              <div className="w-full pt-1.5 pb-1 z-30 shrink-0 select-none bg-[#f9f9f9] border-t border-slate-200/80">
+                {/* Floating Safari Address Bar */}
+                <div className="mx-5 mb-1 px-3.5 py-1.5 rounded-xl bg-[#e8e8e9] border border-slate-300/40 flex items-center justify-between text-xs text-slate-800 shadow-2xs relative overflow-hidden">
+                  {/* Left: AA Text Indicator */}
+                  <span className="text-xs font-semibold text-slate-700 select-none tracking-tight">
+                    AA
+                  </span>
+
+                  {/* Center: Lock Icon + Host Domain */}
+                  <div className="flex items-center gap-1.5 text-xs font-normal text-slate-800 truncate max-w-[175px]">
+                    <Lock className="w-3 h-3 text-slate-700 shrink-0 stroke-[2.2]" />
+                    <span className="truncate">{displayHost}</span>
                   </div>
-                )}
+
+                  {/* Right: Safari Reload Button */}
+                  <button
+                    type="button"
+                    onClick={handleResetScreen}
+                    title="Reload"
+                    className="text-slate-700 hover:text-slate-900 transition-colors p-1 rounded-full hover:bg-slate-300/40 cursor-pointer active:rotate-180 duration-300"
+                  >
+                    <RotateCw className="w-3.5 h-3.5 stroke-[2.2]" />
+                  </button>
+
+                  {/* iOS Safari Subtle Page Load Progress Line */}
+                  <div className="absolute bottom-0 left-0 h-[2.5px] w-28 bg-[#007aff] rounded-full pointer-events-none" />
+                </div>
+
+                {/* Safari Bottom 5-Button Toolbar */}
+                <div className="px-6 pt-1 pb-1 flex items-center justify-between text-[#007aff]">
+                  {/* 1. Back Chevron */}
+                  <button
+                    type="button"
+                    onClick={handleToolbarBack}
+                    disabled={
+                      isRomance
+                        ? romanticTab === 'photos'
+                        : isScrapbook
+                        ? scrapbookTab === 'timeline'
+                        : isApology
+                        ? apologyTab === 'forgive'
+                        : !isBirthday || screen === 0
+                    }
+                    className={`cursor-pointer transition-opacity p-1 rounded-full ${
+                      (isRomance
+                        ? romanticTab === 'photos'
+                        : isScrapbook
+                        ? scrapbookTab === 'timeline'
+                        : isApology
+                        ? apologyTab === 'forgive'
+                        : !isBirthday || screen === 0)
+                        ? 'opacity-50'
+                        : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
+                    }`}
+                    title={isRomance || isScrapbook || isApology ? 'Previous Chapter' : 'Previous Scene'}
+                  >
+                    <ChevronLeft className="w-5 h-5 stroke-[2]" />
+                  </button>
+
+                  {/* 2. Forward Chevron */}
+                  <button
+                    type="button"
+                    onClick={handleToolbarForward}
+                    disabled={
+                      isRomance
+                        ? romanticTab === 'quiz'
+                        : isScrapbook
+                        ? scrapbookTab === 'letter'
+                        : isApology
+                        ? apologyTab === 'letter'
+                        : !isBirthday || screen === 4
+                    }
+                    className={`cursor-pointer transition-opacity p-1 rounded-full ${
+                      (isRomance
+                        ? romanticTab === 'quiz'
+                        : isScrapbook
+                        ? scrapbookTab === 'letter'
+                        : isApology
+                        ? apologyTab === 'letter'
+                        : !isBirthday || screen === 4)
+                        ? 'opacity-50'
+                        : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
+                    }`}
+                    title={isRomance || isScrapbook || isApology ? 'Next Chapter' : 'Next Scene'}
+                  >
+                    <ChevronRight className="w-5 h-5 stroke-[2]" />
+                  </button>
+
+                  {/* 3. Center Share button (iOS share box with arrow, clicking triggers triggerConfetti()) */}
+                  <button
+                    type="button"
+                    onClick={triggerConfetti}
+                    className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
+                    title="Share"
+                  >
+                    <svg
+                      className="w-5 h-5 stroke-[2]"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                      <polyline points="16 6 12 2 8 6" />
+                      <line x1="12" y1="2" x2="12" y2="15" />
+                    </svg>
+                  </button>
+
+                  {/* 4. Bookmark button (BookOpen className="w-5 h-5 stroke-[2]", toggles bookmarkSaved with sound) */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      soundEffects.playPop();
+                      setBookmarkSaved((prev) => !prev);
+                    }}
+                    className={`cursor-pointer transition-all duration-200 active:scale-90 p-1 rounded-full ${
+                      bookmarkSaved ? 'text-amber-500 scale-110' : 'hover:opacity-80 hover:bg-slate-200/50'
+                    }`}
+                    title={bookmarkSaved ? 'Saved to Bookmarks ⭐' : 'Bookmarks'}
+                  >
+                    <BookOpen className={`w-5 h-5 stroke-[2] ${bookmarkSaved ? 'fill-amber-400' : ''}`} />
+                  </button>
+
+                  {/* 5. Safari Tabs button (Copy className="w-5 h-5 stroke-[2]", triggers confetti) */}
+                  <button
+                    type="button"
+                    onClick={triggerConfetti}
+                    className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
+                    title="Tabs"
+                  >
+                    <Copy className="w-5 h-5 stroke-[2]" />
+                  </button>
+                </div>
 
                 {/* Minimal iOS Home Indicator Bar */}
-                <div className="w-28 h-1 bg-black/40 rounded-full mx-auto my-1.5" />
+                <div className="w-28 h-[4px] bg-black rounded-full mx-auto my-1" />
               </div>
             </div>
           </div>

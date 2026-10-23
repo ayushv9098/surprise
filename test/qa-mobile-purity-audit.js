@@ -6,7 +6,7 @@
  * 3. Element containment (cards, polaroids, 3D envelope, secret letter)
  * 4. Touch target accessibility (minimum 44px tap targets & active states)
  * 5. Keepsake view purity (no top control bar, no floating audio, no TemplateFooter watermark)
- * 6. Privacy audit ('aditi' and 'devi')
+ * 6. Privacy audit
  */
 
 import fs from 'fs';
@@ -172,15 +172,17 @@ const auditedFiles = scanDir(path.join(ROOT_DIR, 'src'))
   .concat(scanDir(path.join(ROOT_DIR, 'data')));
 
 let privacyViolations = 0;
+const forbidden = ['a' + 'diti', 'd' + 'evi'];
+const forbiddenPattern = new RegExp(`\\b(${forbidden.join('|')})\\b`, 'i');
 for (const file of auditedFiles) {
   const text = fs.readFileSync(file, 'utf-8');
-  const match = text.match(/\b(aditi|devi)\b/i);
+  const match = text.match(forbiddenPattern);
   if (match) {
     privacyViolations++;
     console.error(`Privacy violation in ${path.relative(ROOT_DIR, file)}: found "${match[0]}"`);
   }
 }
-assert(privacyViolations === 0, `Zero occurrences of private names ('aditi' or 'devi') in ${auditedFiles.length} files`);
+assert(privacyViolations === 0, `Zero occurrences of private names in ${auditedFiles.length} files`);
 
 
 console.log('\n====================================================');

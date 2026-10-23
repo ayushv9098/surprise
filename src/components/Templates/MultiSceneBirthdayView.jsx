@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { soundEffects } from './common/SoundEffects';
@@ -123,7 +122,7 @@ const DEFAULT_SUNRISE_REASONS = [
 export default function MultiSceneBirthdayView({ 
   siteData = {}, 
   onNavigateCreate: _onNavigateCreate,
-  onBack,
+  onBack: _onBack,
   onNavigate: _onNavigate
 }) {
   const [scene, setScene] = useState(0);
@@ -946,17 +945,6 @@ export default function MultiSceneBirthdayView({
         {scene === 0 && (
           <div className="flex flex-col items-center text-center animate-fade-in-up w-full max-w-[94vw] sm:max-w-md">
             <div className={`${themeTokens.cardClass} px-5 py-8 sm:px-12 sm:py-12 w-full relative`}>
-              {onBack && (
-                <button
-                  type="button"
-                  onClick={onBack}
-                  className="absolute top-3.5 left-3.5 sm:top-4 sm:left-4 inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/90 hover:bg-white text-slate-700 hover:text-slate-950 border border-slate-200/90 shadow-sm text-xs sm:text-sm font-bold cursor-pointer transition-all active:scale-95 z-20"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>Back to Wishly</span>
-                </button>
-              )}
-
               {/* Bouncing Theme Celebration Emoji */}
               <div className="mb-2 sm:mb-3 animate-bounce">
                 <AppleEmoji emoji={celebrationEmoji} size={38} />

@@ -185,7 +185,7 @@ export const TEMPLATES = [
     accentColor: '#E11D48',
     themeClass: 'theme-velvet',
     themeId: 'velvet-romance',
-    gradientBg: 'from-rose-950 via-rose-900 to-red-950',
+    gradientBg: 'from-rose-100 via-pink-50 to-rose-50',
     primaryColor: 'rose',
     previewImage: '/previews/velvet-romance.svg',
     badges: ['Anniversary Pick', 'Timeless Romance'],

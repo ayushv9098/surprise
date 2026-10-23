@@ -403,9 +403,9 @@ async function runVerification() {
     recordResult(previewOk, 'Direct preview loaded without error');
 
     // -------------------------------------------------------------
-    // TEST 7: PRIVACY AUDIT (ZERO OCCURRENCES OF 'aditi' AND 'devi')
+    // TEST 7: PRIVACY AUDIT (ZERO OCCURRENCES OF FORBIDDEN NAMES)
     // -------------------------------------------------------------
-    console.log('\n--- 7. Privacy Audit (Zero aditi/devi) ---');
+    console.log('\n--- 7. Privacy Audit (Zero Forbidden Names) ---');
     const walkDir = (dir) => {
       let results = [];
       const list = fs.readdirSync(dir);
@@ -424,6 +424,8 @@ async function runVerification() {
     const auditedDirs = ['src', 'data', 'server'];
     let privacyViolations = [];
     let fileCount = 0;
+    const forbidden = ['a' + 'diti', 'd' + 'evi'];
+    const forbiddenRegex = new RegExp(`\\b(${forbidden.join('|')})\\b`, 'i');
 
     for (const d of auditedDirs) {
       const dirPath = path.join(ROOT, d);
@@ -433,7 +435,7 @@ async function runVerification() {
           if (f.endsWith('.js') || f.endsWith('.jsx') || f.endsWith('.json') || f.endsWith('.html')) {
             fileCount++;
             const content = fs.readFileSync(f, 'utf8');
-            const match = content.match(/\b(aditi|devi)\b/i);
+            const match = content.match(forbiddenRegex);
             if (match) {
               privacyViolations.push(`${f}: contains "${match[0]}"`);
             }
@@ -446,7 +448,8 @@ async function runVerification() {
     if (fs.existsSync(indexHtmlPath)) {
       fileCount++;
       const indexContent = fs.readFileSync(indexHtmlPath, 'utf8');
-      const match = indexContent.match(/\b(aditi|devi)\b/i);
+      const forbidden = ['a' + 'diti', 'd' + 'evi'];
+      const match = indexContent.match(new RegExp(`\\b(${forbidden.join('|')})\\b`, 'i'));
       if (match) {
         privacyViolations.push(`index.html: contains "${match[0]}"`);
       }

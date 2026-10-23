@@ -53,6 +53,7 @@ async function test() {
     const tabBtns = Array.from(document.querySelectorAll('button'));
     const tab1 = tabBtns.find(b => b.innerText.includes('1. Names'));
     const tab1Text = tab1 ? tab1.innerText.replace(/\s+/g, ' ').trim() : 'missing';
+    const tab1HasHeart = Boolean(tab1?.querySelector('img[alt="❤️"]') || tab1?.innerText.includes('❤️'));
 
     // 2. Section 1 header
     const h2s = Array.from(document.querySelectorAll('h2'));
@@ -76,11 +77,12 @@ async function test() {
     const badge = Array.from(document.querySelectorAll('span, div')).find(el => el.innerText && el.innerText.includes('Step 2/2'));
     const badgeText = badge ? (badge.parentElement?.innerText || badge.innerText).replace(/\s+/g, ' ').trim() : 'missing';
 
-    return { tab1Text, h2Text, recLabelText, occLabelText, occPlaceholder, badgeText };
+    return { tab1Text, tab1HasHeart, h2Text, recLabelText, occLabelText, occPlaceholder, badgeText };
   });
 
   console.log('\n--- LIVE PRODUCTION FORM ADAPTATION CHECKS (STEP 2) ---');
   console.log('Tab 1:', formChecks.tab1Text);
+  console.log('Tab 1 Has Heart:', formChecks.tab1HasHeart);
   console.log('Header:', formChecks.h2Text);
   console.log('Recipient Label:', formChecks.recLabelText);
   console.log('Occasion Label:', formChecks.occLabelText);
@@ -89,7 +91,7 @@ async function test() {
 
   // Assertions for Romance Form
   const isRomanceForm = 
-    formChecks.tab1Text.includes('❤️') &&
+    formChecks.tab1HasHeart &&
     formChecks.h2Text.includes('Romantic Greeting') &&
     formChecks.recLabelText.includes('Partner') &&
     !formChecks.h2Text.includes('👑') &&

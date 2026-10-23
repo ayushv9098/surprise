@@ -20,6 +20,34 @@ import { getTemplateById } from '../../data/templates';
 import { compressImageFile } from '../../utils/storage';
 import AppleEmoji from '../common/AppleEmoji';
 
+// Curated romantic polaroids for fallback & multi-photo memory deck
+const DEFAULT_ROMANCE_PHOTOS = [
+  {
+    id: 'photo-1',
+    url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
+    caption: 'Forever & Always With You!❤️🌹',
+    tag: 'OUR BEGINNING 🌸',
+  },
+  {
+    id: 'photo-2',
+    url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
+    caption: 'Nazrein hataana thoda mushkil hai yahan 😉✨',
+    tag: 'Nazar Na Lage 🧿',
+  },
+  {
+    id: 'photo-3',
+    url: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
+    caption: 'Never a dull moment around you 🕶️💫',
+    tag: 'Memories 📸',
+  },
+  {
+    id: 'photo-4',
+    url: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
+    caption: "Some moments don't need words 💫",
+    tag: 'Holding Hands 🤝',
+  },
+];
+
 /**
  * Smart URL Intelligence: detects Instagram, YouTube, Spotify, Google Drive, Dropbox,
  * and converts or advises the user with zero-friction solutions.
@@ -171,12 +199,16 @@ const probeAudioUrl = (url) => {
 };
 
 export default function StepMedia({ formData, onChange, onFocusField }) {
-  // Hero Photo states
+  // Hero Photo states (Single photo / Birthday)
   const [isPhotoDragging, setIsPhotoDragging] = useState(false);
   const [isPhotoProcessing, setIsPhotoProcessing] = useState(false);
   const [photoUrlInput, setPhotoUrlInput] = useState('');
   const [showPhotoUrlField, setShowPhotoUrlField] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Multi-Photo states (Romance / Scrapbook memory deck)
+  const [activeUploadIndex, setActiveUploadIndex] = useState(null);
+  const multiFileInputRef = useRef(null);
 
   // Audio Playback & Ref states
   const [playingSongId, setPlayingSongId] = useState(null);
@@ -195,9 +227,21 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
 
   const template = getTemplateById(formData.templateId);
   const isBoy = formData.gender === 'boy';
-  const isRomance = formData.category === 'romance' || ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId);
-  const isScrapbook = formData.category === 'scrapbook' || ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId);
-  const isApology = formData.category === 'apology' || ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId);
+  const occasionCategory = formData.category || template?.category || 'birthday';
+  const isRomance =
+    occasionCategory === 'romance' ||
+    ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId) ||
+    Boolean(
+      formData.templateId && (
+        formData.templateId.includes('romance') ||
+        formData.templateId.includes('velvet') ||
+        formData.templateId.includes('sunset') ||
+        formData.templateId.includes('celestial')
+      )
+    );
+  const isScrapbook = !isRomance && (occasionCategory === 'scrapbook' || ['vintage-kodak', 'neon-nostalgia', 'cozy-memories'].includes(formData.templateId));
+  const isApology = !isRomance && !isScrapbook && (occasionCategory === 'apology' || ['gentle-peace', 'sweet-forgive', 'fresh-start'].includes(formData.templateId));
+  const isMultiPhoto = isRomance || isScrapbook;
 
   const defaultPhotoCaption = isRomance
     ? 'Forever & Always With You! ❤️🌹'
@@ -212,6 +256,34 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
   // Hero photo can come from formData.heroPhoto or formData.photos[0]?.url
   const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template?.samplePhoto || '';
   const photoCaption = formData.photoCaption !== undefined ? formData.photoCaption : defaultPhotoCaption;
+
+  // Resolve romance/scrapbook memory deck photos (up to 4 items)
+  const romancePhotos = React.useMemo(() => {
+    if (formData.photos && formData.photos.length > 0) {
+      return formData.photos.map((p, idx) => ({
+        id: p.id || `photo-${idx + 1}`,
+        url: typeof p === 'string' ? p : (p.url || ''),
+        caption: (typeof p === 'object' && p.caption)
+          ? p.caption
+          : (idx === 0 ? (formData.photoCaption || DEFAULT_ROMANCE_PHOTOS[0].caption) : (DEFAULT_ROMANCE_PHOTOS[idx]?.caption || 'Special Memory ✨')),
+        tag: (typeof p === 'object' && p.tag)
+          ? p.tag
+          : (DEFAULT_ROMANCE_PHOTOS[idx]?.tag || `Memory ${idx + 1}`),
+      }));
+    }
+    if (formData.heroPhoto) {
+      return [
+        {
+          id: 'photo-1',
+          url: formData.heroPhoto,
+          caption: formData.photoCaption || DEFAULT_ROMANCE_PHOTOS[0].caption,
+          tag: DEFAULT_ROMANCE_PHOTOS[0].tag,
+        },
+        ...DEFAULT_ROMANCE_PHOTOS.slice(1),
+      ];
+    }
+    return DEFAULT_ROMANCE_PHOTOS;
+  }, [formData.photos, formData.heroPhoto, formData.photoCaption]);
 
   // Stop audio on unmount
   useEffect(() => {
@@ -527,28 +599,6 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
     setShowPhotoUrlField(false);
   };
 
-  const handleUseSamplePhoto = () => {
-    onFocusField?.('heroPhoto');
-    const sampleUrl = template?.samplePhoto || (isBoy
-      ? 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80'
-      : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80');
-
-    const sampleCap = defaultPhotoCaption;
-
-    onChange({
-      heroPhoto: sampleUrl,
-      photoCaption: sampleCap,
-      photos: [
-        {
-          id: `sample-${Date.now()}`,
-          url: sampleUrl,
-          caption: sampleCap,
-          tag: 'The Star',
-        },
-      ],
-    });
-  };
-
   const handleCaptionChange = (val) => {
     onFocusField?.('photoCaption');
     onChange({
@@ -567,13 +617,119 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
     });
   };
 
+  // Multi-photo deck actions for Romance & Scrapbook
+  const updateMultiPhotos = (newPhotos) => {
+    onFocusField?.('photos');
+    onChange({
+      photos: newPhotos,
+      heroPhoto: newPhotos[0]?.url || '',
+      photoCaption: newPhotos[0]?.caption || '',
+    });
+  };
+
+  const handleTriggerUpload = (index) => {
+    setActiveUploadIndex(index);
+    if (multiFileInputRef.current) {
+      multiFileInputRef.current.value = '';
+      multiFileInputRef.current.click();
+    }
+  };
+
+  const handleMultiFileInputChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || activeUploadIndex === null) return;
+    if (!file.type.startsWith('image/')) return;
+    setIsPhotoProcessing(true);
+    try {
+      const compressedDataUrl = await compressImageFile(file, 1400, 1400, 0.88);
+      const newPhotos = romancePhotos.map((p, idx) =>
+        idx === activeUploadIndex ? { ...p, url: compressedDataUrl } : p
+      );
+      updateMultiPhotos(newPhotos);
+    } catch (err) {
+      console.error('Failed to compress image:', err);
+    } finally {
+      setIsPhotoProcessing(false);
+      setActiveUploadIndex(null);
+    }
+  };
+
+  const handleCardDrop = async (e, index) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const file = e.dataTransfer.files?.[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    setIsPhotoProcessing(true);
+    try {
+      const compressedDataUrl = await compressImageFile(file, 1400, 1400, 0.88);
+      const newPhotos = romancePhotos.map((p, idx) =>
+        idx === index ? { ...p, url: compressedDataUrl } : p
+      );
+      updateMultiPhotos(newPhotos);
+    } catch (err) {
+      console.error('Failed to drop-load image:', err);
+    } finally {
+      setIsPhotoProcessing(false);
+    }
+  };
+
+  const handleDeletePhoto = (index) => {
+    if (romancePhotos.length <= 1) return;
+    const newPhotos = romancePhotos.filter((_, idx) => idx !== index);
+    updateMultiPhotos(newPhotos);
+  };
+
+  const handleAddMemoryPhoto = () => {
+    if (romancePhotos.length >= 4) return;
+    const nextIdx = romancePhotos.length;
+    const defaultSample = DEFAULT_ROMANCE_PHOTOS[nextIdx] || {
+      id: `photo-${Date.now()}`,
+      url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
+      caption: 'Cherished Moments Together! 💖',
+      tag: 'Special Memory ✨',
+    };
+    const newPhotos = [
+      ...romancePhotos,
+      {
+        id: `photo-${Date.now()}-${nextIdx}`,
+        url: defaultSample.url,
+        caption: defaultSample.caption,
+        tag: defaultSample.tag,
+      },
+    ];
+    updateMultiPhotos(newPhotos);
+  };
+
+  const handleUpdateTag = (index, tag) => {
+    const newPhotos = romancePhotos.map((p, idx) =>
+      idx === index ? { ...p, tag } : p
+    );
+    updateMultiPhotos(newPhotos);
+  };
+
+  const handleUpdateCaption = (index, caption) => {
+    const newPhotos = romancePhotos.map((p, idx) =>
+      idx === index ? { ...p, caption } : p
+    );
+    updateMultiPhotos(newPhotos);
+  };
+
   return (
     <div className="space-y-6">
-      {/* Hidden File Input for photo uploads */}
+      {/* Hidden File Input for single photo uploads (Birthday) */}
       <input
         type="file"
         ref={fileInputRef}
         onChange={(e) => handlePhotoFiles(e.target.files)}
+        accept="image/*"
+        className="hidden"
+      />
+
+      {/* Hidden File Input for multi-photo deck uploads (Romance/Scrapbook) */}
+      <input
+        type="file"
+        ref={multiFileInputRef}
+        onChange={handleMultiFileInputChange}
         accept="image/*"
         className="hidden"
       />
@@ -587,24 +743,148 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
         className="hidden"
       />
 
-      {/* SECTION 1: HERO STAR PHOTO */}
+      {/* SECTION 1: PHOTO(S) */}
       <div className="space-y-4">
         {/* Header */}
         <div className="border-b border-slate-100 pb-2.5 flex items-center justify-between gap-2">
           <h2 className="text-xs sm:text-base font-bold text-slate-900 flex items-center gap-1.5 truncate">
-            <span>2. Star Photo</span>
+            <span>{isMultiPhoto ? '2. Romantic Memory Deck (Up to 4 Photos)' : '2. Star Photo'}</span>
             <AppleEmoji emoji="📸" size={15} />
           </h2>
-
-          <button
-            type="button"
-            onClick={handleUseSamplePhoto}
-            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors cursor-pointer shadow-2xs shrink-0"
-          >
-            <AppleEmoji emoji="✨" size={12} />
-            <span>Sample Photo</span>
-          </button>
         </div>
+
+        {isMultiPhoto ? (
+          /* Multi-Photo Manager */
+          <div className="space-y-3">
+            <div className="space-y-3">
+              {romancePhotos.map((photo, index) => (
+                <div
+                  key={photo.id || index}
+                  className="p-3.5 sm:p-4 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3 transition-all hover:border-slate-300"
+                >
+                  {/* Header row: Card # / Label + Cover Badge + Delete button */}
+                  <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-slate-900 text-white text-[11px] font-bold flex items-center justify-center shrink-0">
+                        {index + 1}
+                      </span>
+                      <span className="text-xs sm:text-sm font-bold text-slate-900">
+                        {index === 0 ? 'Memory 1 (Cover Polaroid)' : `Memory ${index + 1}`}
+                      </span>
+                      {index === 0 && (
+                        <span className="text-[10px] font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-full border border-rose-200">
+                          Cover Card 🌸
+                        </span>
+                      )}
+                    </div>
+                    {romancePhotos.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeletePhoto(index)}
+                        className="inline-flex items-center gap-1 text-xs text-rose-500 hover:text-rose-600 px-2 py-1 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                        title="Delete this photo card"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span className="text-[11px] font-medium">Delete</span>
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Main body: Left thumbnail, right fields */}
+                  <div className="flex flex-col sm:flex-row items-start gap-3.5">
+                    {/* Polaroid Thumbnail + Single Upload Button */}
+                    <div className="flex sm:flex-col items-center gap-2 shrink-0 w-full sm:w-32">
+                      <div
+                        onClick={() => handleTriggerUpload(index)}
+                        onDrop={(e) => handleCardDrop(e, index)}
+                        onDragOver={(e) => e.preventDefault()}
+                        className="w-20 h-24 sm:w-32 sm:h-32 rounded-xl border-2 border-slate-200 bg-slate-100 overflow-hidden shrink-0 shadow-xs relative group flex items-center justify-center cursor-pointer hover:border-rose-300 transition-colors"
+                        title="Click to upload photo"
+                      >
+                        {photo.url ? (
+                          <img
+                            src={photo.url}
+                            alt={photo.tag || `Memory ${index + 1}`}
+                            className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                          />
+                        ) : (
+                          <span className="text-[11px] text-slate-400 font-medium">No Image</span>
+                        )}
+                        <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <UploadCloud className="w-5 h-5 text-white drop-shadow" />
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleTriggerUpload(index)}
+                        className="w-full min-w-0 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200/80 px-2.5 py-1.5 rounded-xl transition-all cursor-pointer shadow-2xs hover:shadow-xs whitespace-nowrap"
+                      >
+                        <UploadCloud className="w-3.5 h-3.5 shrink-0" />
+                        <span className="whitespace-nowrap">
+                          {photo.url && (photo.url.startsWith('data:') || photo.url.startsWith('blob:'))
+                            ? 'Change Photo'
+                            : 'Upload Photo'}
+                        </span>
+                      </button>
+                    </div>
+
+                    {/* Form Inputs (Tag, Caption) */}
+                    <div className="flex-1 min-w-0 space-y-2.5 w-full">
+                      {/* Tag input */}
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+                          <span>Polaroid Tag / Badge</span>
+                          <AppleEmoji emoji="🏷️" size={12} />
+                        </label>
+                        <input
+                          type="text"
+                          value={photo.tag || ''}
+                          onFocus={() => onFocusField?.('photos')}
+                          onChange={(e) => handleUpdateTag(index, e.target.value)}
+                          placeholder="e.g. OUR BEGINNING 🌸"
+                          className="w-full px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50/40 hover:bg-white focus:bg-white text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all"
+                        />
+                      </div>
+
+                      {/* Caption input */}
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+                          <span>Handwritten Polaroid Caption</span>
+                          <AppleEmoji emoji="✍️" size={12} />
+                        </label>
+                        <input
+                          type="text"
+                          value={photo.caption || ''}
+                          onFocus={() => onFocusField?.('photos')}
+                          onChange={(e) => handleUpdateCaption(index, e.target.value)}
+                          placeholder="e.g. Forever & Always With You! ❤️🌹"
+                          className="w-full px-3 py-2 rounded-xl border border-slate-200 bg-slate-50/40 hover:bg-white focus:bg-white text-xs text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* + Add Memory Photo button if < 4 */}
+            {romancePhotos.length < 4 && (
+              <button
+                type="button"
+                onClick={handleAddMemoryPhoto}
+                className="w-full py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl border border-rose-200/90 hover:border-rose-400 bg-white hover:bg-rose-50/60 shadow-2xs hover:shadow-xs text-rose-600 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer group"
+              >
+                <span className="w-5 h-5 rounded-full bg-rose-100 group-hover:bg-rose-200 text-rose-600 flex items-center justify-center text-xs font-bold transition-colors">
+                  +
+                </span>
+                <span>Add Memory Photo ({romancePhotos.length}/4)</span>
+              </button>
+            )}
+          </div>
+        ) : (
+          /* Single Hero Photo (Birthday) */
+          <>
 
         {/* Hero Photo Preview or Dropzone */}
         {heroPhotoUrl ? (
@@ -737,6 +1017,8 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
             className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
           />
         </div>
+        </>
+        )}
       </div>
 
       {/* SECTION 2: BACKGROUND MUSIC & SMART AUDIO HANDLER */}
