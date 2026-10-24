@@ -2,6 +2,80 @@
   {
     "templateId": "celestial-love",
     "category": "romance",
+    "gender": "boy",
+    "recipientName": "Aria",
+    "senderName": "Noah",
+    "occasion": "Written in the Stars 🌌💫",
+    "subtitle": "In a world of eight billion, it was always only you.",
+    "heroPhoto": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Our Love Across the Cosmos! 🌌💫",
+    "photos": [
+      {
+        "id": "cl-p1",
+        "url": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Our Love Across the Cosmos! 🌌💫",
+        "tag": "Infinite Galaxy 🌌"
+      },
+      {
+        "id": "cl-p2",
+        "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Forever & Always With You! ❤️🌹",
+        "tag": "OUR BEGINNING 🌸"
+      },
+      {
+        "id": "cl-p3",
+        "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        "caption": "Nazrein hataana thoda mushkil hai yahan 😉✨",
+        "tag": "Nazar Na Lage 🧿"
+      },
+      {
+        "id": "cl-p4",
+        "url": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never a dull moment around you 🕶️💫",
+        "tag": "Memories 📸"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌌",
+        "title": "Cosmic Connection",
+        "desc": "Our souls connected as if we had known each other across a thousand lifetimes."
+      },
+      {
+        "icon": "🌙",
+        "title": "Midnight Peace",
+        "desc": "Whenever the world gets loud, being in your arms feels like stillness under the stars."
+      },
+      {
+        "icon": "💫",
+        "title": "Written Destiny",
+        "desc": "Out of eight billion people on Earth, meeting you was my universe's greatest gift."
+      }
+    ],
+    "letter": {
+      "title": "Written in the Constellations",
+      "content": "My beloved Aria,\n\nThey say the odds of finding your true soulmate are one in a billion. But from the first second our eyes met, I knew our love was written in the stars long before we ever arrived.\n\nThank you for your infinite kindness, your breathtaking grace, and for loving me completely. May our love continue shining brighter than every constellation in the night sky. 🌌💫",
+      "signOff": "Across the stars forever,\nNoah 🌙",
+      "sealEmoji": "🌙",
+      "waxColor": "#4F46E5"
+    },
+    "songId": "indie-acoustic-soul",
+    "quizQuestion": "Do you like spending time with me?",
+    "quizYesText": "YES, VERY MUCH!",
+    "quizTreat": "Starbucks Coffee ☕",
+    "quizVictoryNote": "That means a cozy warm coffee date is officially pending from my side anytime you want! ☕✨",
+    "id": "wc-mvmdsta5-ekee",
+    "slug": "aria-s91z4",
+    "updatedAt": "2026-10-24T12:34:57.907Z",
+    "createdAt": "2026-10-24T12:34:57.725Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgMYThAZzAEsE4BaOAewDcIQAaHJCAcyoCcBPTEDqqAgB2uRiFYQhqCB14AjKjyYcI2YjGKSwAOQRR6WAIIdSYgpOkdd+3tqoIAFmKrZsCAsSpDeAdRNhIIQACYmCwBwgggGUwBA4CIMAeDcAYfcBeDcBqnbMAVzkSMHxeZGCEIIB3TjhUIKoAMyCIYlYHMCC5Yjg4TyEGEJbS9yCyfq4ErzguIK4qLIA6MQj+AAUHKjAqXmawGAIMAHpd4kEJAhmsoQJ4dwcZ7AFdmBW18gBGAFZngA4PgE5X74AWb4AJleAHZyKCAGxA57YADM2FBH0hqFBAH4EFk1gBeGqcQRgABkNWIYGx2H4MEJpWxHwADHTCQBHWl0sQPVZUADCCBgJC8vAA8lkOEEADK0SKGClUAgJcKRLmyqCygCESTSmSYHLWBEwAG1QMR0FhsBQYM8xCK4BsAts9gcjoRTudLgRrrcoPdHlQXu8vr8AcCwRDobCEUiUejMTi8RwCcTSeTKdTWYyWfSxG4+V0hSLxZKgtL+HKggqgkqCCqCOqUhkxLFWIUhCShKTIgBxMgIAAeExSIAAvgwjSacOagVaODasJt7ftDghji6Loh3Tc7jrfW9Ps9vsDIZDQd9nuRXnDQa8EB84Xu6XJo1iqLj8UhE2SZVSafT06ys7z+W8LAADFOAgOhRUJIs4GGBIfFJBwggATWmdVABNyQB4P8SQBOfYbJchQAVQAJSCAAhABRDtkG0bRqI7JJAA59ocRxAY1eDNcgYDhKcZxAOcdgXJ0TjOVcrg3L0tz9Z5IVeH5niRWTT0hbBURvOEEAgOE5CBDEnxfeM3xJD8U2-BlmT-Jhs0A2wEAALxUUIggcJAEGEEpwioVASigLJ3QAa3aJyEGISZHGEIJUkASD3AApyPCmywXRbLiIJdHFJdIkAPg3AH-d5jR3Y81-h420tgEx10uE101w9TcfT9IEgTpS9-khb5L1PdTDwBGptJqSFnl02NXyJIzkyoL803MzNLIA3MEvAmRBiCVAsg6IIVX0IQWjiaYpEmaYIsAN12MPrJhG14ABZaBOE0BJUkAD52hwAXSYC5VFIOAiIgdwvD1DBDVY24gJAAdTtJAosErKBiGwCsvCEVRrKYaQCGwPNRQIaY4ASQH4ewSAqgGYg6lKSJnKqPyhCoUpgi+7BENWBZBhlUt3JWXzhCqToaggEh9BOXKAYFLBEkATH2GzBgwQHO402yaFpFlp+gkcIVGsB8CJ4YgssIjKCoqgkMAEmoLJUB6OQGiEVgQmCKZ8ziKAEm5vAjeIPzIiIdo4Hh0szksbX3dieI5mHI1Ad4E7wAl3x-ECIIABFCBIIQlBAZHVZAYUWlqepGmaVpPa6IIYAgMb8GqYJyLicIen0HnQit22ygGKAJjOYgIPMAByBJWBUFgiCCVgibAYPnpAfAAhkTBQDycGQD8UlY8c8slXOSAOiQLo9UsrxAjAC6JnN6g6CqYxSAYAAdIQr4AFQiCYCAQCZy081BRjqVtUHrvb8zADgsndpjAkkQ4iRC8JERyJQ2gdC6DMMiWIgg1H4FAf2iDiDxBaOYQGVRpiiggFwQga0eY9GQEECmEBSjVHzMfSI-QEilBjpIa2qCiBxCNl4K25s4y0MiPNUUcQTAnxmFfW+zkhB+R-ogzgP9RShFbO2MhoRUDewID0W2oo5B93CLEAKltB4cAQLgHoHMpGimPt-fQQRPTwB5ngLgcDzpPyoWYwsgMk4AKCO6UI39NG50gKKcI4U+ETEBkQPAiBALMPLLLPOBA-L2I1BHDwrAhCChqDUXgxZZTyh1qw+Ipi+GXyEHYRwSQxYvS+nAciKoABWxBeCizEP0HsSpqCyCwAAYn+MBZq5FXjMRABjS2aBeBKM0OQQx0wPbYHIBjFaYgmRZGILZAAigAj2QsQBxyoJIzobtPHFykN-XmtCEJELRAspZtkkKEBvhAHs+8sBIXIlEHoAA1ciREkJBHOgRLkAAJVUlzlk3y0bwGIcQ5BZGwH5BISp0kQEiIAVDJgW2TedDNY3A7CQF4HfJARDhAJBKLcWyEx+jxisbUJ2S0WAhHfiSNQZBxhFwsN-JBAg1oP2NCA5OJzJH9E2uqJFsUmBsSwKUGZUAaBQDfrEV45AIBuyVoMuAWR4ogDiKQWZJ5bKFSYFkGAXl8aGEeSABqQJIQvDpOQIE-wb7PCBBgOE-wMBghmKCEEAAtLMWiICoBNbwc1lrnjWttfax1zrXWgndV6ocQA",
+    "template": "celestial-love",
+    "viewCount": 10,
+    "lastViewedAt": "2026-10-24T12:49:36.500Z"
+  },
+  {
+    "templateId": "celestial-love",
+    "category": "romance",
     "gender": "girl",
     "recipientName": "Aria",
     "senderName": "Noah",
