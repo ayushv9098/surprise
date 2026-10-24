@@ -1,0 +1,54 @@
+import React from 'react';
+
+/**
+ * DearlyLogo - Standalone minimalist vector logo mark for Dearly.
+ * Represents an architectural keepsake letter with an inner micro-heart fold.
+ * Transparent background - no dark box, no emojis.
+ */
+export default function DearlyLogo({ size = 26, className = '' }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`shrink-0 select-none ${className}`}
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="dearly-envelope-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#FB7185" />
+          <stop offset="45%" stopColor="#E11D48" />
+          <stop offset="100%" stopColor="#BE123C" />
+        </linearGradient>
+      </defs>
+
+      {/* Keepsake envelope card silhouette */}
+      <rect
+        x="4"
+        y="6"
+        width="24"
+        height="20"
+        rx="4.5"
+        stroke="url(#dearly-envelope-grad)"
+        strokeWidth="2.4"
+      />
+
+      {/* Diagonal envelope fold line */}
+      <path
+        d="M5.5 8.2L14.6 16.3C15.4 17 16.6 17 17.4 16.3L26.5 8.2"
+        stroke="url(#dearly-envelope-grad)"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      {/* Micro Keepsake Heart Seal in center */}
+      <path
+        d="M16 14.2C15.1 13.1 13.4 13.4 13.4 14.8C13.4 16.6 16 18.7 16 18.7C16 18.7 18.6 16.6 18.6 14.8C18.6 13.4 16.9 13.1 16 14.2Z"
+        fill="url(#dearly-envelope-grad)"
+      />
+    </svg>
+  );
+}
