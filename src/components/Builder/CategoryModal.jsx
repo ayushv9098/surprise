@@ -49,7 +49,7 @@ export default function CategoryModal({
       aria-labelledby="category-modal-title"
     >
       <div
-        className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-gray-100 p-5 sm:p-7 transform transition-all animate-in fade-in zoom-in-95 duration-200 max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-gray-100 p-4 sm:p-6 transform transition-all animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -57,98 +57,129 @@ export default function CategoryModal({
           type="button"
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-4 right-4 sm:top-5 sm:right-5 p-1.5 sm:p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-all cursor-pointer"
+          className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 p-1.5 sm:p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-all cursor-pointer"
         >
           <X className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
         {/* Category Pill / Badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-600 text-xs font-semibold mb-2 sm:mb-3">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 text-[11px] sm:text-xs font-semibold mb-2">
+          <Sparkles className="w-3.5 h-3.5 text-rose-500" />
           <span>Choose an Occasion</span>
         </div>
 
         {/* Modal Header */}
         <h3
           id="category-modal-title"
-          className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight leading-tight"
+          className="text-lg sm:text-2xl font-bold text-gray-900 tracking-tight leading-tight"
         >
           What are you celebrating?
         </h3>
-        <p className="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
-          Pick an occasion to customize your personalized keepsake surprises.
+        <p className="text-xs sm:text-sm text-gray-500 mt-0.5 sm:mt-1 leading-relaxed">
+          Pick an occasion to get started.
         </p>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-5">
+        {/* 2x2 Categories Grid (Compact & Fits on Mobile with ZERO Scroll) */}
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3.5 mt-3.5 sm:mt-5">
           {categories.map((cat) => {
             const isComingSoon = Boolean(cat.comingSoon);
+            const isRomance = cat.id === 'romance';
+
+            // Simple, normal, clear subtitles
+            const simpleDesc =
+              cat.id === 'birthday'
+                ? 'Wishes, cake & celebrations'
+                : cat.id === 'romance'
+                ? 'Romantic letters & keepsakes'
+                : cat.id === 'scrapbook'
+                ? 'Photos & favorite memories'
+                : cat.id === 'apology'
+                ? 'Sweet apologies & peace notes'
+                : cat.description;
 
             return (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => handleCardClick(cat)}
-                className={`group relative p-4 sm:p-5 rounded-2xl border-2 text-left transition-all duration-200 flex flex-col justify-between ${
+                className={`group relative p-2.5 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between cursor-pointer min-h-[118px] sm:min-h-[134px] ${
                   isComingSoon
-                    ? 'border-gray-200/70 bg-gray-50/70 cursor-pointer hover:border-gray-300'
-                    : 'border-slate-200/90 hover:border-rose-400 bg-white hover:bg-gradient-to-br hover:from-rose-50/50 hover:to-pink-50/30 cursor-pointer shadow-xs hover:shadow-md'
+                    ? 'border-gray-200/80 bg-gray-50/60 hover:bg-gray-100/70 hover:border-gray-300'
+                    : isRomance
+                    ? 'border-slate-200 hover:border-pink-400 bg-white hover:bg-gradient-to-br hover:from-pink-50/50 hover:to-rose-50/30 shadow-xs hover:shadow-sm'
+                    : 'border-slate-200 hover:border-rose-400 bg-white hover:bg-gradient-to-br hover:from-rose-50/50 hover:to-pink-50/30 shadow-xs hover:shadow-sm'
                 }`}
               >
                 <div>
-                  {/* Top row: Emoji & Tag / Badge */}
-                  <div className="flex items-center justify-between mb-3">
+                  {/* Top row: Emoji & Tag */}
+                  <div className="flex items-center justify-between mb-2">
                     <div
-                      className={`w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 shadow-2xs border ${
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 border transition-transform duration-200 ${
                         isComingSoon
-                          ? 'bg-gray-100 border-gray-200/60'
-                          : 'bg-rose-50/70 border-rose-100 group-hover:scale-105 group-hover:bg-rose-100/70 transition-all duration-200'
+                          ? 'bg-gray-100/90 border-gray-200/60'
+                          : isRomance
+                          ? 'bg-pink-50 border-pink-100 group-hover:scale-105'
+                          : 'bg-rose-50 border-rose-100 group-hover:scale-105'
                       }`}
                     >
-                      <AppleEmoji emoji={cat.emoji} size={24} />
+                      <AppleEmoji emoji={cat.emoji} size={20} />
                     </div>
 
                     {isComingSoon ? (
-                      <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 border border-amber-200/80 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">
-                        <span>Coming Soon 🚀</span>
+                      <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200/70">
+                        Soon
                       </span>
                     ) : cat.tag ? (
-                      <span className="inline-flex items-center gap-1 bg-rose-50 text-rose-600 border border-rose-100 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">
-                        <span>{cat.tag}</span>
+                      <span
+                        className={`inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-full text-[10px] font-bold border ${
+                          isRomance
+                            ? 'bg-pink-50 text-pink-600 border-pink-100'
+                            : 'bg-rose-50 text-rose-600 border-rose-100'
+                        }`}
+                      >
+                        {cat.tag}
                       </span>
                     ) : null}
                   </div>
 
                   {/* Title */}
                   <h4
-                    className={`font-bold text-sm sm:text-base leading-snug transition-colors ${
+                    className={`font-bold text-xs sm:text-sm leading-snug transition-colors line-clamp-1 ${
                       isComingSoon
                         ? 'text-gray-700'
+                        : isRomance
+                        ? 'text-gray-900 group-hover:text-pink-600'
                         : 'text-gray-900 group-hover:text-rose-600'
                     }`}
                   >
                     {cat.name}
                   </h4>
 
-                  {/* Description */}
-                  <p className="text-xs text-gray-500 mt-1 leading-relaxed line-clamp-2">
-                    {cat.description}
+                  {/* Normal Short Subtitle */}
+                  <p className="text-[10px] sm:text-[11px] text-gray-500 mt-0.5 leading-tight line-clamp-1">
+                    {simpleDesc}
                   </p>
                 </div>
 
                 {/* Bottom Row */}
-                <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs font-semibold">
+                <div className="mt-2 pt-1.5 border-t border-gray-100 flex items-center justify-between text-[10px] sm:text-[11px] font-semibold">
                   <span
                     className={
                       isComingSoon
                         ? 'text-gray-400'
+                        : isRomance
+                        ? 'text-pink-600 group-hover:text-pink-700'
                         : 'text-rose-600 group-hover:text-rose-700'
                     }
                   >
                     {isComingSoon ? 'Coming Soon' : 'Select'}
                   </span>
                   {!isComingSoon && (
-                    <ArrowRight className="w-3.5 h-3.5 text-rose-600 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight
+                      className={`w-3 h-3 transition-transform group-hover:translate-x-0.5 ${
+                        isRomance ? 'text-pink-600' : 'text-rose-600'
+                      }`}
+                    />
                   )}
                 </div>
               </button>
