@@ -75,15 +75,15 @@ const DURATION_OPTIONS = [
   { value: null, label: 'Full', display: '∞' },
 ];
 
-export default function AudioTrimmer({
+function AudioTrimmerComponent({
   formData,
   onChange,
   onPreviewPlay,
   isParentPlaying = false,
 }) {
   const song = useMemo(
-    () => getSongById(formData.songId, formData),
-    [formData.songId, formData.customSongUrl, formData.songUrl, formData.customSongTitle]
+    () => getSongById(formData?.songId, formData),
+    [formData?.songId, formData?.customSongUrl, formData?.songUrl, formData?.customSongTitle]
   );
 
   const audioUrl = song?.audioUrl || song?.fallbackUrl || formData?.customSongUrl || formData?.songUrl || '';
@@ -120,34 +120,46 @@ export default function AudioTrimmer({
   }, [detectedDuration, song?.durationSeconds, song?.id]);
 
   // Duration selection: null = full song, otherwise 15, 30, 60
-  const rawDuration = formData.audioDuration !== undefined ? formData.audioDuration : 30;
+  const rawDuration = formData?.audioDuration !== undefined ? formData.audioDuration : 30;
   const isFullSong = rawDuration === null || rawDuration === 0 || rawDuration === 'full';
   const effectiveDuration = isFullSong ? totalDuration : Math.min(Number(rawDuration) || 30, totalDuration);
 
   // Maximum valid starting second so snippet never extends beyond the song end
   const maxStartTime = isFullSong ? 0 : Math.max(0, totalDuration - effectiveDuration);
 
-  // Resolved start and end times
-  const rawStartTime = Number(formData.audioStartTime || 0);
-  const startTime = Math.min(Math.max(0, rawStartTime), maxStartTime);
-  const endTime = isFullSong ? totalDuration : Math.min(totalDuration, startTime + effectiveDuration);
+  // Prop-based start time
+  const propStartTime = Number(formData?.audioStartTime || 0);
 
-  // Generate unique wave bars for current song (48 bars)
-  const waveBars = useMemo(() => generateWaveHeights(song.id || song.title || 'default'), [song.id, song.title]);
+  // Local visual start time state for 60-120fps buttery smooth scrubbing without parent re-renders
+  const [visualStartTime, setVisualStartTime] = useState(propStartTime);
+  const visualStartTimeRef = useRef(propStartTime);
 
-  // Hook / Chorus metadata
-  const resolvedHookStartTime = song?.hookStartTime ?? DEFAULT_HOOKS[song?.id]?.hookStartTime;
-  const resolvedHookTitle = song?.hookTitle || DEFAULT_HOOKS[song?.id]?.hookTitle;
-  const hasHook = resolvedHookStartTime !== undefined && resolvedHookStartTime !== null && Boolean(resolvedHookTitle);
-  const isAtHook = hasHook && Math.abs(startTime - resolvedHookStartTime) <= 1;
-
-  // Hook position on global timeline & waveform bars
-  const hookPercent = totalDuration > 0 && hasHook ? (resolvedHookStartTime / totalDuration) * 100 : 0;
-  const hookBarIndex = hasHook && totalDuration > 0 ? Math.round((resolvedHookStartTime / totalDuration) * (waveBars.length - 1)) : -1;
-
-  // Waveform track scrubbing & dragging state
-  const trackRef = useRef(null);
+  // Active drag flags (refs + state for reactive styles)
   const [isDragging, setIsDragging] = useState(false);
+  const isDraggingRef = useRef(false);
+
+  const [isTopDragging, setIsTopDragging] = useState(false);
+  const isTopDraggingRef = useRef(false);
+
+  // Sync visual start time from props ONLY when user is NOT actively dragging
+  useEffect(() => {
+    if (!isDraggingRef.current && !isTopDraggingRef.current) {
+      const clamped = Math.min(Math.max(0, propStartTime), maxStartTime);
+      setVisualStartTime(clamped);
+      visualStartTimeRef.current = clamped;
+    }
+  }, [propStartTime, maxStartTime]);
+
+  // Start & End times used for all visual rendering
+  const currentStartTime = Math.min(Math.max(0, visualStartTime), maxStartTime);
+  const currentEndTime = isFullSong ? totalDuration : Math.min(totalDuration, currentStartTime + effectiveDuration);
+
+  // Animation frame identifiers to prevent micro-stutter
+  const rafIdRef = useRef(null);
+  const topRafIdRef = useRef(null);
+
+  // Waveform track scrubbing refs
+  const trackRef = useRef(null);
   const dragInfoRef = useRef({
     pointerX: 0,
     initialStartTime: 0,
@@ -156,15 +168,25 @@ export default function AudioTrimmer({
     availableSlidePx: 1,
   });
 
-  // Top overview track scrubbing state
+  // Top overview track scrubbing refs
   const topTrackRef = useRef(null);
-  const [isTopDragging, setIsTopDragging] = useState(false);
   const topDragInfoRef = useRef({ pointerX: 0, initialStartTime: 0, rectWidth: 1 });
 
   // Audio preview playback state
   const audioPlayerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [playheadTime, setPlayheadTime] = useState(startTime);
+  const [playheadTime, setPlayheadTime] = useState(currentStartTime);
+
+  // Synchronous refs for audio preview loop so event listeners never need to be re-bound
+  const startTimeRef = useRef(currentStartTime);
+  const endTimeRef = useRef(currentEndTime);
+  const isFullSongRef = useRef(isFullSong);
+
+  useEffect(() => {
+    startTimeRef.current = currentStartTime;
+    endTimeRef.current = currentEndTime;
+    isFullSongRef.current = isFullSong;
+  });
 
   // Stop preview if parent plays song preview in song card
   useEffect(() => {
@@ -176,9 +198,11 @@ export default function AudioTrimmer({
     }
   }, [isParentPlaying, isPlaying]);
 
-  // Cleanup audio preview on unmount
+  // Cleanup audio preview & pending rAFs on unmount
   useEffect(() => {
     return () => {
+      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
+      if (topRafIdRef.current) cancelAnimationFrame(topRafIdRef.current);
       if (audioPlayerRef.current) {
         audioPlayerRef.current.pause();
         audioPlayerRef.current = null;
@@ -191,13 +215,13 @@ export default function AudioTrimmer({
     if (audioPlayerRef.current) {
       audioPlayerRef.current.pause();
       audioPlayerRef.current.src = audioUrl;
-      audioPlayerRef.current.currentTime = startTime;
+      audioPlayerRef.current.currentTime = currentStartTime;
       setIsPlaying(false);
-      setPlayheadTime(startTime);
+      setPlayheadTime(currentStartTime);
     }
   }, [audioUrl]);
 
-  // Hook up audio player event listeners for real-time playhead movement & loop
+  // Real-time playhead movement & loop attached ONCE per audioUrl (no tearing down on drag)
   useEffect(() => {
     const audio = audioPlayerRef.current;
     if (!audio) return;
@@ -206,21 +230,24 @@ export default function AudioTrimmer({
       const cur = audio.currentTime;
       setPlayheadTime(cur);
 
-      // Loop back to startTime when snippet finishes
-      if (!isFullSong) {
-        if (cur >= endTime || cur < startTime - 0.5) {
-          audio.currentTime = startTime;
+      // Loop back to snippet start when boundary is reached
+      if (!isFullSongRef.current) {
+        const s = startTimeRef.current;
+        const e = endTimeRef.current;
+        if (cur >= e || cur < s - 0.5) {
+          audio.currentTime = s;
           audio.play().catch(() => {});
         }
       }
     };
 
     const handleEnded = () => {
-      if (isFullSong) {
+      if (isFullSongRef.current) {
         setIsPlaying(false);
         setPlayheadTime(0);
       } else {
-        audio.currentTime = startTime;
+        const s = startTimeRef.current;
+        audio.currentTime = s;
         audio.play().catch(() => {});
       }
     };
@@ -232,10 +259,10 @@ export default function AudioTrimmer({
       audio.removeEventListener('timeupdate', handleTimeUpdate);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [startTime, endTime, isFullSong]);
+  }, [audioUrl]);
 
-  // Update start time and notify parent
-  const commitStartTime = useCallback(
+  // Commit final start time to parent and seek audio once (called on pointerup or button clicks)
+  const commitFinalStartTime = useCallback(
     (newStart) => {
       const clamped = Math.min(Math.max(0, newStart), maxStartTime);
       onChange?.({
@@ -250,6 +277,19 @@ export default function AudioTrimmer({
     },
     [maxStartTime, rawDuration, onChange]
   );
+
+  // Generate unique wave bars for current song (48 bars)
+  const waveBars = useMemo(() => generateWaveHeights(song.id || song.title || 'default'), [song.id, song.title]);
+
+  // Hook / Chorus metadata
+  const resolvedHookStartTime = song?.hookStartTime ?? DEFAULT_HOOKS[song?.id]?.hookStartTime;
+  const resolvedHookTitle = song?.hookTitle || DEFAULT_HOOKS[song?.id]?.hookTitle;
+  const hasHook = resolvedHookStartTime !== undefined && resolvedHookStartTime !== null && Boolean(resolvedHookTitle);
+  const isAtHook = hasHook && Math.abs(currentStartTime - resolvedHookStartTime) <= 1;
+
+  // Hook position on global timeline & waveform bars
+  const hookPercent = totalDuration > 0 && hasHook ? (resolvedHookStartTime / totalDuration) * 100 : 0;
+  const hookBarIndex = hasHook && totalDuration > 0 ? Math.round((resolvedHookStartTime / totalDuration) * (waveBars.length - 1)) : -1;
 
   // Toggle preview play / pause
   const togglePlayPreview = () => {
@@ -270,8 +310,8 @@ export default function AudioTrimmer({
       }
 
       const audio = audioPlayerRef.current;
-      audio.currentTime = startTime;
-      setPlayheadTime(startTime);
+      audio.currentTime = currentStartTime;
+      setPlayheadTime(currentStartTime);
 
       audio
         .play()
@@ -289,7 +329,10 @@ export default function AudioTrimmer({
   const handleSelectDuration = (val) => {
     const newEffectiveDuration = val === null ? totalDuration : Math.min(val, totalDuration);
     const newMaxStart = val === null ? 0 : Math.max(0, totalDuration - newEffectiveDuration);
-    const clampedStart = Math.min(startTime, newMaxStart);
+    const clampedStart = Math.min(currentStartTime, newMaxStart);
+
+    visualStartTimeRef.current = clampedStart;
+    setVisualStartTime(clampedStart);
 
     onChange?.({
       audioStartTime: clampedStart,
@@ -322,6 +365,9 @@ export default function AudioTrimmer({
     if (!hasHook) return;
     const targetStart = Math.min(resolvedHookStartTime, maxStartTime);
 
+    visualStartTimeRef.current = targetStart;
+    setVisualStartTime(targetStart);
+
     onChange?.({
       audioStartTime: targetStart,
       audioDuration: rawDuration,
@@ -347,11 +393,13 @@ export default function AudioTrimmer({
 
   // Reset to 0:00
   const handleResetToStart = () => {
-    commitStartTime(0);
+    visualStartTimeRef.current = 0;
+    setVisualStartTime(0);
+    commitFinalStartTime(0);
   };
 
   // Geometry calculations for Top Overview Line
-  const topStartPercent = totalDuration > 0 ? (startTime / totalDuration) * 100 : 0;
+  const topStartPercent = totalDuration > 0 ? (currentStartTime / totalDuration) * 100 : 0;
   const topWidthPercent = isFullSong ? 100 : totalDuration > 0 ? (effectiveDuration / totalDuration) * 100 : 100;
 
   // Geometry calculations for Bottom Waveform Floating White Box
@@ -359,12 +407,12 @@ export default function AudioTrimmer({
     ? 100
     : Math.max(22, Math.min(75, (effectiveDuration / totalDuration) * 100));
   const availableSlidePercent = 100 - windowWidthPercent;
-  const visualStartPercent = maxStartTime > 0 ? (startTime / maxStartTime) * availableSlidePercent : 0;
+  const visualStartPercent = maxStartTime > 0 ? (currentStartTime / maxStartTime) * availableSlidePercent : 0;
 
   // Playhead progress within snippet (0% to 100%)
   const playheadProgress =
     isPlaying && effectiveDuration > 0
-      ? Math.max(0, Math.min(1, (playheadTime - startTime) / effectiveDuration))
+      ? Math.max(0, Math.min(1, (playheadTime - currentStartTime) / effectiveDuration))
       : 0;
 
   // Waveform Pointer Drag Handlers
@@ -379,15 +427,16 @@ export default function AudioTrimmer({
 
     const isInsideBox = clickX >= currentBoxLeftPx && clickX <= currentBoxLeftPx + boxWidthPx;
 
-    let initialStart = startTime;
+    let initialStart = visualStartTimeRef.current;
 
     if (!isInsideBox) {
       // Clicked outside box: center the white box at the clicked position
       const desiredLeftPx = clickX - boxWidthPx / 2;
       const clampedLeftPx = Math.max(0, Math.min(availableSlidePx, desiredLeftPx));
       const newStart = availableSlidePx > 0 ? Math.round((clampedLeftPx / availableSlidePx) * maxStartTime) : 0;
-      commitStartTime(newStart);
       initialStart = newStart;
+      visualStartTimeRef.current = newStart;
+      setVisualStartTime(newStart);
     }
 
     dragInfoRef.current = {
@@ -398,6 +447,7 @@ export default function AudioTrimmer({
       availableSlidePx,
     };
 
+    isDraggingRef.current = true;
     setIsDragging(true);
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
@@ -405,7 +455,7 @@ export default function AudioTrimmer({
   };
 
   const handlePointerMove = (e) => {
-    if (!isDragging || !trackRef.current || isFullSong || maxStartTime <= 0) return;
+    if (!isDraggingRef.current || !trackRef.current || isFullSong || maxStartTime <= 0) return;
     const deltaX = e.clientX - dragInfoRef.current.pointerX;
     const availableSlidePx = dragInfoRef.current.availableSlidePx;
     if (availableSlidePx <= 0) return;
@@ -415,15 +465,32 @@ export default function AudioTrimmer({
       maxStartTime,
       Math.max(0, Math.round(dragInfoRef.current.initialStartTime + deltaTime))
     );
-    commitStartTime(newStart);
+
+    if (newStart !== visualStartTimeRef.current) {
+      visualStartTimeRef.current = newStart;
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+      rafIdRef.current = requestAnimationFrame(() => {
+        setVisualStartTime(newStart);
+      });
+    }
   };
 
   const handlePointerUp = (e) => {
-    if (isDragging) {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
       setIsDragging(false);
       try {
         e.currentTarget.releasePointerCapture(e.pointerId);
       } catch (_) {}
+
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+      const finalStart = visualStartTimeRef.current;
+      setVisualStartTime(finalStart);
+      commitFinalStartTime(finalStart);
     }
   };
 
@@ -435,12 +502,15 @@ export default function AudioTrimmer({
     const targetCenterTime = clickRatio * totalDuration;
     const targetStart = Math.min(maxStartTime, Math.max(0, Math.round(targetCenterTime - effectiveDuration / 2)));
 
-    commitStartTime(targetStart);
+    visualStartTimeRef.current = targetStart;
+    setVisualStartTime(targetStart);
+
     topDragInfoRef.current = {
       pointerX: e.clientX,
       initialStartTime: targetStart,
       rectWidth: rect.width,
     };
+    isTopDraggingRef.current = true;
     setIsTopDragging(true);
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
@@ -448,22 +518,39 @@ export default function AudioTrimmer({
   };
 
   const handleTopPointerMove = (e) => {
-    if (!isTopDragging || !topTrackRef.current || isFullSong || maxStartTime <= 0) return;
+    if (!isTopDraggingRef.current || !topTrackRef.current || isFullSong || maxStartTime <= 0) return;
     const deltaX = e.clientX - topDragInfoRef.current.pointerX;
     const deltaTime = (deltaX / topDragInfoRef.current.rectWidth) * totalDuration;
     const newStart = Math.min(
       maxStartTime,
       Math.max(0, Math.round(topDragInfoRef.current.initialStartTime + deltaTime))
     );
-    commitStartTime(newStart);
+
+    if (newStart !== visualStartTimeRef.current) {
+      visualStartTimeRef.current = newStart;
+      if (topRafIdRef.current) {
+        cancelAnimationFrame(topRafIdRef.current);
+      }
+      topRafIdRef.current = requestAnimationFrame(() => {
+        setVisualStartTime(newStart);
+      });
+    }
   };
 
   const handleTopPointerUp = (e) => {
-    if (isTopDragging) {
+    if (isTopDraggingRef.current) {
+      isTopDraggingRef.current = false;
       setIsTopDragging(false);
       try {
         e.currentTarget.releasePointerCapture(e.pointerId);
       } catch (_) {}
+
+      if (topRafIdRef.current) {
+        cancelAnimationFrame(topRafIdRef.current);
+      }
+      const finalStart = visualStartTimeRef.current;
+      setVisualStartTime(finalStart);
+      commitFinalStartTime(finalStart);
     }
   };
 
@@ -538,7 +625,9 @@ export default function AudioTrimmer({
               left: `${topStartPercent}%`,
               width: `${topWidthPercent}%`,
             }}
-            className="h-full bg-white rounded-full pointer-events-none transition-all duration-75"
+            className={`h-full bg-white rounded-full pointer-events-none ${
+              isTopDragging || isDragging ? 'transition-none' : 'transition-all duration-75'
+            }`}
           />
 
           {/* Pink/Magenta Beat/Hook Dot Marker */}
@@ -677,13 +766,13 @@ export default function AudioTrimmer({
         {/* Left: Timestamp */}
         <div className="flex items-center gap-1.5 min-w-0 shrink">
           <span className="text-white font-bold text-xs shrink-0 font-mono tracking-tight">
-            {formatTime(startTime)} - {formatTime(endTime)}
+            {formatTime(currentStartTime)} - {formatTime(currentEndTime)}
           </span>
           <span className="text-white/30 shrink-0">•</span>
           <span className="text-white/60 text-[11px] truncate shrink-0">
             {isFullSong ? 'Full Song' : `${effectiveDuration}s`}
           </span>
-          {startTime > 0 && (
+          {currentStartTime > 0 && (
             <button
               type="button"
               onClick={handleResetToStart}
@@ -723,3 +812,22 @@ export default function AudioTrimmer({
     </div>
   );
 }
+
+/**
+ * Custom memo comparator: only re-render AudioTrimmer when audio-relevant properties change
+ */
+function areEqual(prevProps, nextProps) {
+  return (
+    prevProps.isParentPlaying === nextProps.isParentPlaying &&
+    prevProps.formData?.songId === nextProps.formData?.songId &&
+    prevProps.formData?.customSongUrl === nextProps.formData?.customSongUrl &&
+    prevProps.formData?.songUrl === nextProps.formData?.songUrl &&
+    prevProps.formData?.customSongTitle === nextProps.formData?.customSongTitle &&
+    prevProps.formData?.audioStartTime === nextProps.formData?.audioStartTime &&
+    prevProps.formData?.audioDuration === nextProps.formData?.audioDuration &&
+    prevProps.onChange === nextProps.onChange &&
+    prevProps.onPreviewPlay === nextProps.onPreviewPlay
+  );
+}
+
+export default React.memo(AudioTrimmerComponent, areEqual);
