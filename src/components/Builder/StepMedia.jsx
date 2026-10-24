@@ -1296,8 +1296,9 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
               </div>
             )}
 
-            {/* Zero-friction upload & smart URL input */}
-            <div className="space-y-3">
+            {/* Zero-friction upload & smart URL input (Hidden when song is already added) */}
+            {!hasCustomAudio && (
+              <div className="space-y-3">
               {/* Prominent File Dropzone */}
               <div
                 onDrop={(e) => {
@@ -1546,6 +1547,7 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
                 </div>
               )}
             </div>
+            )}
           </div>
         )}
       </div>
