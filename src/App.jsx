@@ -10,6 +10,7 @@ import { BuilderStudio, RecipientModal, CategoryModal } from './components/Build
 import { TemplateViewer } from './components/Templates';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import DearlyLogo from './components/common/DearlyLogo';
 import AppleEmoji from './components/common/AppleEmoji';
 import { CATEGORIES } from './data/categories';
 import { getPresetForTemplate } from './data/samplePresets';
@@ -244,7 +245,9 @@ export default function App() {
   if (isLoadingSite) {
     return (
       <div className="min-h-screen bg-[#FFFDFB] flex flex-col items-center justify-center p-6 text-center">
-        <div className="mb-6 text-4xl">✨</div>
+        <div className="mb-6 flex items-center justify-center">
+          <DearlyLogo size={44} className="animate-pulse" />
+        </div>
         <h2 className="font-bold text-2xl text-gray-800 mb-2">
           Unwrapping Your Surprise...
         </h2>

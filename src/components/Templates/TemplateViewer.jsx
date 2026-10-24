@@ -235,7 +235,7 @@ export default function TemplateViewer({
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-top-4 duration-300">
           <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs sm:text-sm font-medium shadow-xl">
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>Keepsake link copied to clipboard! Ready to send ✨</span>
+            <span>Keepsake link copied to clipboard! Ready to send.</span>
           </div>
         </div>
       )}

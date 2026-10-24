@@ -1,5 +1,62 @@
 [
   {
+    "templateId": "blush-rose",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday, Sunshine! 🌸",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Stay Wonderful Always! 🌸✨",
+    "photos": [
+      {
+        "id": "blush-p1",
+        "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        "caption": "Stay Wonderful Always! 🌸✨",
+        "tag": "Birthday Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌸",
+        "title": "Pure Sunshine",
+        "desc": "The effortless way you turn every ordinary moment into joy!"
+      },
+      {
+        "icon": "✨",
+        "title": "Gentle Soul",
+        "desc": "The quiet kindness and sparkling positivity you share with everyone!"
+      },
+      {
+        "icon": "💖",
+        "title": "Irreplaceable",
+        "desc": "A truly irreplaceable friend whose presence makes everything brighter!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together.\n\nForever & always,\nElena 💖",
+      "signOff": "Forever & always,\nElena 🌸",
+      "sealEmoji": "🌸",
+      "waxColor": "#E11D48"
+    },
+    "songId": "custom",
+    "audioStartTime": 59,
+    "audioDuration": 60,
+    "songUrl": "blob:http://localhost:5174/7274ac29-9caa-41ca-bcb2-cbd40b2dc0c3",
+    "customSongUrl": "blob:http://localhost:5174/7274ac29-9caa-41ca-bcb2-cbd40b2dc0c3",
+    "customSongTitle": "Audio: Atif_Aslam_-_Hona_Tha_Pyaar_Bo...",
+    "id": "wc-mvmh3ki3-3ua0",
+    "slug": "sarah-egmc7",
+    "updatedAt": "2026-10-24T14:07:18.456Z",
+    "createdAt": "2026-10-24T14:07:18.411Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgEZwK4DOAFgLQBOA9gRCADQgDGSEA5hWQJ6Y4CWZYRVAi70WEAHaoIZbiz5w6IMhAY8YPCWAByCKDSwBlBGQRFF1SdJ17uAUTgSEiigyYEeFcdwASCGDA4AAgAhPgEhDlpAgzxxYh5xCABCQMAeDcAOffM8bDAeMAduZECiBAA3CECEQIIoBDg4arwyGDIeakCAM3ZAjgo8ADpBxSJpCgAFIgowCm4iMDAYAgwAemWeWrECftiCeARifoYKKGWYSemSAEYAVgBmABZrgCYADgB2e8u3t+uSO4BOf73BAANn+Qgg2AA-Ag8NMALxdMi1MAAMg6eXhDEoMFRAHd4S8AAxE1EAR0JRMUZymFAAwn5cp5uAYwMJAgB1TxSMgdPANACCcDxwgIKQygApyannKiYADaoB46CwuEIpBgl0UTQUWDmCyWq3WCE22ziewORxONIuNwez3en2+vwBQNB4IQkJhcIoiPYKPRmOxFFxBOJpIpxMUTBgTK8hjZQS5ll5-MCQpFHDFaXSUvobJY3FC-EE7NZxhAAF8ALr0XYqHh1ABKEH2ngI8sVRzjIAyily+X0IDGTQqMTiRASNHoUgIDG4ABURoEIB0kQOCARAhmen1AmAmuJl+VOIF2KgEsYglBjppAglpoEAFYUDhJSu0TvMrC58B5ApYABxTQHGiPoFGnCBZwXJcyTwDQwECABrBJUESDdKkkaoYGMRC4ASFhAhgKg8h4Uo8iCXo8GqEplC3PIiCPaRekSN8Kw-EAeC7bhAF4NwA0nb7P9B2QMhlD2BgW1wKcQBnOcsAFPcyH5II+FExBxIQSTOlaCRUC3SZ2haSCJHEwJakQyDGM4AR8MCbBWhYOZpFYmsQAceZpEwUB+3-EB5IAGTyAdAi0KYKgAMW6ABNPoo08SBxDAbgAFkgikYxIIQowTCIWgAB1xHysLKCgPcl2vPQEp3KjNGkCBdKgII8I6CAojPC8TwiTdsBUXQKliJExHmDSQIQVBygSkctkCaKmiQlC0M3DF6k3CBjyCShjiiBBMMoshAkQPAHLvTdJjQ-IryCDoynYPIKgIPpJH6fL8sXbbEKqzpukmOBz3EAiGuKbbdLxEZD2sv7N0GwIGBKKZOIw3SkUqYVRSQ8QKDxGzJjxPcKFMhBzNMu6oB4EDMYEJ9CAQzwKjgCgKEQ-pAl8fwgiLcJ2QBgg8QgCAEI6bTMMAFAJilq47ccqUzSbwzxTPYO6dj5zdpkGkYyCegrxAi5Rj0CVFkYzAg8vEexHECPjzB4FhxAAeVXbhtdW6Q9YN0VjdN8Qql7WsWzgWxr0fHhuG9kARQADzpCg6ZkLAAGJbEuS4ABF7hed8QHuv60G4BgqeORRYXPCgy34ed1n0a5-noQuPCTpokA8OMQSJWtPBYABVMgdRwOnsAwPUYBWZY6aYOB9LADBri+e5ljeJ4PgQBgnn+Eh-iYBASE+JgSGwBhsCeEg99Qe4iX31AGCJBhbijPOoAMNvO+73AKD7geh5Hupx8n6fZ-n4El5XmvBAG8t4b13vvQ+2Bj6nyeOfS+196C5wINMO+bcy4Dm4AKPARcMBplyB0AA+gKAgiAoAEJIAQ7wngEAENegQsYHBgFkAIcECggx+iKCVNwPEDASBQFKFAIgtxkK3BILcPACAqS1nwAWLABBjCmBIKwKADA3hahgEISAqABSJSwE8IkTwQRXCJCQJ49x5yXHuBgIkbwMCXBeP0T4lwABaUZlDMG0bokA+jDHGNMeYyx1jbH2McYnVxFYgA",
+    "template": "blush-rose",
+    "viewCount": 6,
+    "lastViewedAt": "2026-10-24T14:54:10.522Z"
+  },
+  {
     "templateId": "royal-sapphire",
     "category": "birthday",
     "gender": "boy",
@@ -172,8 +229,8 @@
     "createdAt": "2026-10-24T12:34:57.725Z",
     "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgMYThAZzAEsE4BaOAewDcIQAaHJCAcyoCcBPTEDqqAgB2uRiFYQhqCB14AjKjyYcI2YjGKSwAOQRR6WAIIdSYgpOkdd+3tqoIAFmKrZsCAsSpDeAdRNhIIQACYmCwBwgggGUwBA4CIMAeDcAYfcBeDcBqnbMAVzkSMHxeZGCEIIB3TjhUIKoAMyCIYlYHMCC5Yjg4TyEGEJbS9yCyfq4ErzguIK4qLIA6MQj+AAUHKjAqXmawGAIMAHpd4kEJAhmsoQJ4dwcZ7AFdmBW18gBGAFZngA4PgE5X74AWb4AJleAHZyKCAGxA57YADM2FBH0hqFBAH4EFk1gBeGqcQRgABkNWIYGx2H4MEJpWxHwADHTCQBHWl0sQPVZUADCCBgJC8vAA8lkOEEADK0SKGClUAgJcKRLmyqCygCESTSmSYHLWBEwAG1QMR0FhsBQYM8xCK4BsAts9gcjoRTudLgRrrcoPdHlQXu8vr8AcCwRDobCEUiUejMTi8RwCcTSeTKdTWYyWfSxG4+V0hSLxZKgtL+HKggqgkqCCqCOqUhkxLFWIUhCShKTIgBxMgIAAeExSIAAvgwjSacOagVaODasJt7ftDghji6Loh3Tc7jrfW9Ps9vsDIZDQd9nuRXnDQa8EB84Xu6XJo1iqLj8UhE2SZVSafT06ys7z+W8LAADFOAgOhRUJIs4GGBIfFJBwggATWmdVABNyQB4P8SQBOfYbJchQAVQAJSCAAhABRDtkG0bRqI7JJAA59ocRxAY1eDNcgYDhKcZxAOcdgXJ0TjOVcrg3L0tz9Z5IVeH5niRWTT0hbBURvOEEAgOE5CBDEnxfeM3xJD8U2-BlmT-Jhs0A2wEAALxUUIggcJAEGEEpwioVASigLJ3QAa3aJyEGISZHGEIJUkASD3AApyPCmywXRbLiIJdHFJdIkAPg3AH-d5jR3Y81-h420tgEx10uE101w9TcfT9IEgTpS9-khb5L1PdTDwBGptJqSFnl02NXyJIzkyoL803MzNLIA3MEvAmRBiCVAsg6IIVX0IQWjiaYpEmaYIsAN12MPrJhG14ABZaBOE0BJUkAD52hwAXSYC5VFIOAiIgdwvD1DBDVY24gJAAdTtJAosErKBiGwCsvCEVRrKYaQCGwPNRQIaY4ASQH4ewSAqgGYg6lKSJnKqPyhCoUpgi+7BENWBZBhlUt3JWXzhCqToaggEh9BOXKAYFLBEkATH2GzBgwQHO402yaFpFlp+gkcIVGsB8CJ4YgssIjKCoqgkMAEmoLJUB6OQGiEVgQmCKZ8ziKAEm5vAjeIPzIiIdo4Hh0szksbX3dieI5mHI1Ad4E7wAl3x-ECIIABFCBIIQlBAZHVZAYUWlqepGmaVpPa6IIYAgMb8GqYJyLicIen0HnQit22ygGKAJjOYgIPMAByBJWBUFgiCCVgibAYPnpAfAAhkTBQDycGQD8UlY8c8slXOSAOiQLo9UsrxAjAC6JnN6g6CqYxSAYAAdIQr4AFQiCYCAQCZy081BRjqVtUHrvb8zADgsndpjAkkQ4iRC8JERyJQ2gdC6DMMiWIgg1H4FAf2iDiDxBaOYQGVRpiiggFwQga0eY9GQEECmEBSjVHzMfSI-QEilBjpIa2qCiBxCNl4K25s4y0MiPNUUcQTAnxmFfW+zkhB+R-ogzgP9RShFbO2MhoRUDewID0W2oo5B93CLEAKltB4cAQLgHoHMpGimPt-fQQRPTwB5ngLgcDzpPyoWYwsgMk4AKCO6UI39NG50gKKcI4U+ETEBkQPAiBALMPLLLPOBA-L2I1BHDwrAhCChqDUXgxZZTyh1qw+Ipi+GXyEHYRwSQxYvS+nAciKoABWxBeCizEP0HsSpqCyCwAAYn+MBZq5FXjMRABjS2aBeBKM0OQQx0wPbYHIBjFaYgmRZGILZAAigAj2QsQBxyoJIzobtPHFykN-XmtCEJELRAspZtkkKEBvhAHs+8sBIXIlEHoAA1ciREkJBHOgRLkAAJVUlzlk3y0bwGIcQ5BZGwH5BISp0kQEiIAVDJgW2TedDNY3A7CQF4HfJARDhAJBKLcWyEx+jxisbUJ2S0WAhHfiSNQZBxhFwsN-JBAg1oP2NCA5OJzJH9E2uqJFsUmBsSwKUGZUAaBQDfrEV45AIBuyVoMuAWR4ogDiKQWZJ5bKFSYFkGAXl8aGEeSABqQJIQvDpOQIE-wb7PCBBgOE-wMBghmKCEEAAtLMWiICoBNbwc1lrnjWttfax1zrXWgndV6ocQA",
     "template": "celestial-love",
-    "viewCount": 10,
-    "lastViewedAt": "2026-10-24T12:49:36.500Z"
+    "viewCount": 14,
+    "lastViewedAt": "2026-10-24T15:56:22.075Z"
   },
   {
     "templateId": "celestial-love",

@@ -1,0 +1,111 @@
+{
+  "timestamp": "2026-10-24T11:13:05.185Z",
+  "viewportsTested": [
+    "1280x800",
+    "1280x551"
+  ],
+  "checks": [
+    {
+      "name": "Royal Sapphire Template Card Found and Active",
+      "pass": true,
+      "details": {
+        "found": true,
+        "isSelected": true
+      }
+    },
+    {
+      "name": "Card Container has Soft Light Background (no dark navy)",
+      "pass": true,
+      "details": "relative aspect-[4/3] w-full rounded-lg sm:rounded-xl overflow-hidden border border-slate-200/80 shadow-2xs bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50"
+    },
+    {
+      "name": "SVG Graphic Soft Light Aesthetic (#f8fbff / #e8f2fe, 0 #091024)",
+      "pass": true,
+      "details": {
+        "hasSoftCanvasGrad": true,
+        "hasDarkNavyStops": false
+      }
+    },
+    {
+      "name": "SVG Graphic Delicate Blue Border (stroke=\"#bfdbfe\")",
+      "pass": true,
+      "details": {
+        "cardBorderStroke": true
+      }
+    },
+    {
+      "name": "SVG Graphic Embedded Polaroid Photo Intact & Crystal Clear",
+      "pass": true,
+      "details": {
+        "hasPolaroidImage": true
+      }
+    },
+    {
+      "name": "Titanium Chassis & Bezel 100% Pixel-Perfect",
+      "pass": true,
+      "details": {
+        "rim": true,
+        "buttons": 4,
+        "rect": {
+          "x": 919,
+          "y": 89,
+          "width": 304,
+          "height": 608
+        }
+      }
+    },
+    {
+      "name": "Safari Address Bar \"ayushh.me\" with Lock Icon Untouched",
+      "pass": true,
+      "details": {
+        "domain": true,
+        "lock": true
+      }
+    },
+    {
+      "name": "Scene Navigation Chevrons Functional and Visible",
+      "pass": true,
+      "details": {
+        "left": true,
+        "right": true
+      }
+    },
+    {
+      "name": "Ambient Floating Emojis Untouched (8 items)",
+      "pass": true,
+      "details": {
+        "count": 8
+      }
+    },
+    {
+      "name": "Phone Simulator Background Matches Royal Sapphire Soft Aesthetic",
+      "pass": true,
+      "details": {
+        "hasSoftAesthetic": true
+      }
+    },
+    {
+      "name": "Zero Layout Regressions on User Laptop (1280x551 Viewport)",
+      "pass": true,
+      "details": {
+        "found": true,
+        "viewportHeight": 551,
+        "viewportWidth": 1280,
+        "simulatorY": 89,
+        "simulatorHeight": 359,
+        "simulatorBottom": 448,
+        "fitsWithoutClipping": true,
+        "leftPanelVisible": true,
+        "simulatorVisible": true
+      }
+    }
+  ],
+  "screenshots": {
+    "desktopOverview": "test/qa-studio-desktop-1280x800.png",
+    "templateGrid": "test/qa-template-grid.png",
+    "royalSapphireCard": "test/qa-royal-sapphire-card.png",
+    "phoneSimulator": "test/qa-phone-simulator.png",
+    "laptop551": "test/qa-studio-laptop-1280x551.png"
+  },
+  "allPassed": true
+}
