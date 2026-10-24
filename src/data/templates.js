@@ -26,7 +26,7 @@ export const TEMPLATES = [
     waxColor: '#1D4ED8',
     waxEmoji: '👑',
     features: ['Star of the Day Polaroid', 'Mood Check Interaction', '3 Why You\'re Special Reasons', '3D Animated Envelope'],
-    recommendedSongId: 'upbeat-birthday-reel',
+    recommendedSongId: 'baar-baar-din-ye-aaye',
     samplePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -53,7 +53,7 @@ export const TEMPLATES = [
     waxColor: '#D97706',
     waxEmoji: '⭐',
     features: ['Star of the Day Polaroid', 'Celebration Mood Check', '3 Golden Reasons', '3D Wax Seal Envelope'],
-    recommendedSongId: 'upbeat-birthday-reel',
+    recommendedSongId: 'baar-baar-din-ye-aaye',
     samplePhoto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -80,7 +80,7 @@ export const TEMPLATES = [
     waxColor: '#E11D48',
     waxEmoji: '⚡',
     features: ['Retro Polaroid Memory', 'Sunset Mood Check', '3 Brotherhood Reasons', '3D Wax Seal Envelope'],
-    recommendedSongId: 'bollywood-lofi-chill',
+    recommendedSongId: 'baar-baar-din-ye-aaye',
     samplePhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
   },
 
@@ -111,7 +111,7 @@ export const TEMPLATES = [
     waxColor: '#E11D48',
     waxEmoji: '🌸',
     features: ['Star of the Day Polaroid', 'Mood Check Interaction', '3 Why You\'re Special Reasons', 'Wax Sealed Letter'],
-    recommendedSongId: 'insta-acoustic-romance',
+    recommendedSongId: 'baar-baar-din-ye-aaye',
     samplePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -138,7 +138,7 @@ export const TEMPLATES = [
     waxColor: '#EA580C',
     waxEmoji: '✨',
     features: ['Warm Peach Glow', 'Floating Sparkles', 'Memory Gallery', 'Gentle Melody'],
-    recommendedSongId: 'insta-acoustic-romance',
+    recommendedSongId: 'baar-baar-din-ye-aaye',
     samplePhoto: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -165,7 +165,7 @@ export const TEMPLATES = [
     waxColor: '#7C3AED',
     waxEmoji: '💜',
     features: ['Floating Butterflies', 'Emotional Envelope', 'Lilac Pastel Glow', 'Soft Guitar Melodies'],
-    recommendedSongId: 'indie-acoustic-soul',
+    recommendedSongId: 'baar-baar-din-ye-aaye',
     samplePhoto: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
   },
 
@@ -196,7 +196,7 @@ export const TEMPLATES = [
     waxColor: '#E11D48',
     waxEmoji: '❤️',
     features: ['Heart Wax Seal Envelope', 'Romantic Polaroid Memory', '3 Reasons Why I Adore You', 'Candlelit Rose Chimes'],
-    recommendedSongId: 'insta-acoustic-romance',
+    recommendedSongId: 'kesariya',
     samplePhoto: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -223,7 +223,7 @@ export const TEMPLATES = [
     waxColor: '#D97706',
     waxEmoji: '✨',
     features: ['Sunset Golden Glow', 'Golden Hour Memory Polaroid', '3 Tender Promises', 'Sparkling Keepsake Note'],
-    recommendedSongId: 'insta-acoustic-romance',
+    recommendedSongId: 'raataan-lambiyan',
     samplePhoto: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -249,7 +249,7 @@ export const TEMPLATES = [
     waxColor: '#4F46E5',
     waxEmoji: '🌙',
     features: ['Midnight Starry Sky', 'Cosmic Polaroid Starlight', '3 Constellation Reasons', 'Silver Moon Wax Seal'],
-    recommendedSongId: 'indie-acoustic-soul',
+    recommendedSongId: 'tum-hi-ho',
     samplePhoto: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
   },
 
@@ -279,7 +279,7 @@ export const TEMPLATES = [
     waxColor: '#B45309',
     waxEmoji: '⚡',
     features: ['Retro Film Border', 'Polaroid Scrapbook Stack', '3 Unforgettable Adventures', 'Wax Sealed Time Capsule'],
-    recommendedSongId: 'bollywood-lofi-chill',
+    recommendedSongId: 'pehla-nasha',
     samplePhoto: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -305,7 +305,7 @@ export const TEMPLATES = [
     waxColor: '#0F766E',
     waxEmoji: '🔥',
     features: ['Electric Teal Glow', 'Roadtrip Polaroid', '3 Wild Reasons', 'Lightning Bolt Wax Seal'],
-    recommendedSongId: 'bollywood-lofi-chill',
+    recommendedSongId: 'ilahi',
     samplePhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -331,7 +331,7 @@ export const TEMPLATES = [
     waxColor: '#C2410C',
     waxEmoji: '🌻',
     features: ['Warm Terracotta Palette', 'Cozy Café Polaroid', '3 Cherished Memory Chapters', 'Sunflower Wax Seal'],
-    recommendedSongId: 'indie-acoustic-soul',
+    recommendedSongId: 'apna-bana-le',
     samplePhoto: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80',
   },
 
@@ -361,7 +361,7 @@ export const TEMPLATES = [
     waxColor: '#15803D',
     waxEmoji: '🕊️',
     features: ['Olive Branch Serenity', 'Shared Smile Polaroid', '3 Honest Promises to Make It Right', 'Dove Wax Seal Letter'],
-    recommendedSongId: 'indie-acoustic-soul',
+    recommendedSongId: 'tum-hi-ho',
     samplePhoto: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -387,7 +387,7 @@ export const TEMPLATES = [
     waxColor: '#7C3AED',
     waxEmoji: '💜',
     features: ['Teddy Bear Hugs', 'Sweetest Memory Polaroid', '3 Reasons Why You Mean The World', 'Pastel Purple Wax Letter'],
-    recommendedSongId: 'indie-acoustic-soul',
+    recommendedSongId: 'apna-bana-le',
     samplePhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
   },
   {
@@ -413,7 +413,7 @@ export const TEMPLATES = [
     waxColor: '#D97706',
     waxEmoji: '🌤️',
     features: ['Morning Sunrise Radiance', 'New Leaf Memory Polaroid', '3 Hopes for Our Tomorrow', 'Sunrise Seal Letter'],
-    recommendedSongId: 'indie-acoustic-soul',
+    recommendedSongId: 'pehla-nasha',
     samplePhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
   },
 ];

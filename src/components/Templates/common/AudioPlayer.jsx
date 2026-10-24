@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX, Music, Disc3 } from 'lucide-react';
 
-// Curated royalty-free romantic & celebratory background streams (gentle, warm, non-intrusive)
+// Curated real Indian romantic & celebratory background tracks
 const DEFAULT_TRACKS = {
-  romantic: 'https://cdn.freesound.org/previews/612/612610_5674468-lq.mp3', // Gentle acoustic strings (107 KB)
-  birthday: 'https://cdn.freesound.org/previews/541/541177_5479102-lq.mp3', // Uplifting cheerful celebration melody (222 KB)
-  scrapbook: 'https://cdn.freesound.org/previews/535/535105_11203376-lq.mp3', // Nostalgic acoustic guitar (167 KB)
-  apology: 'https://cdn.freesound.org/previews/266/266449_3598127-lq.mp3', // Soft calming piano (149 KB)
+  romantic: '/audio/kesariya.mp3',
+  birthday: '/audio/baar-baar-din-ye-aaye.mp3',
+  scrapbook: '/audio/pehla-nasha.mp3',
+  apology: '/audio/tum-hi-ho.mp3',
 };
 
 export default function AudioPlayer({ 

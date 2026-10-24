@@ -27,3 +27,4 @@ dist-ssr
 test/*.png
 .vercel
 .env*
+media/

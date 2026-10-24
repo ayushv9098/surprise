@@ -121,7 +121,7 @@ export default function BuilderStudio({
         { icon: '👑', title: 'Irreplaceable', desc: 'No one can ever match your incredible spirit and heart. A true champion!' },
       ]),
       letter: preset.letter || {},
-      songId: preset.songId || tmpl.recommendedSongId || (resolvedInitialGender === 'girl' ? 'insta-acoustic-romance' : 'upbeat-birthday-reel'),
+      songId: preset.songId || tmpl.recommendedSongId || (resolvedInitialGender === 'girl' ? 'kesariya' : 'baar-baar-din-ye-aaye'),
     };
   });
 

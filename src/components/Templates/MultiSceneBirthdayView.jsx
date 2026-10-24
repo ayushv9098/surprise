@@ -788,7 +788,7 @@ export default function MultiSceneBirthdayView({
        siteData.audioUrl || 
        siteData.music?.audioUrl || 
        (siteData.songId ? getSongById(siteData.songId, siteData)?.audioUrl : null) ||
-       'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=acoustic-guitar-love-story-112345.mp3');
+       '/audio/baar-baar-din-ye-aaye.mp3');
 
   // Multi-angle Confetti Cannon helper from reference site
   const triggerConfettiCannon = () => {

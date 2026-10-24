@@ -6,7 +6,7 @@ import {
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
-import { BuilderStudio, RecipientModal } from './components/Builder';
+import { BuilderStudio, RecipientModal, CategoryModal } from './components/Builder';
 import { TemplateViewer } from './components/Templates';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import ErrorBoundary from './components/common/ErrorBoundary';
@@ -26,6 +26,9 @@ export default function App() {
       ) {
         return 'admin';
       }
+      if (searchParams.get('view') === 'builder') {
+        return 'builder';
+      }
     }
     return 'home';
   });
@@ -36,6 +39,7 @@ export default function App() {
   const [isLoadingSite, setIsLoadingSite] = useState(false);
   const [toast, setToast] = useState(null);
   const [recipientModalCategory, setRecipientModalCategory] = useState(null);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
   const handleNavigate = (view, templateId = null, categoryId = null) => {
     if (templateId) {
@@ -193,9 +197,26 @@ export default function App() {
     handleNavigate('builder', finalTemplateId, categoryId);
   };
 
+  const handleCategoryModalSelect = (cat) => {
+    setIsCategoryModalOpen(false);
+    setSelectedCategory(cat.id);
+    if (cat.id === 'birthday') {
+      setRecipientModalCategory(cat);
+    } else {
+      const defaultTemplate =
+        cat.id === 'romance'
+          ? 'velvet-romance'
+          : cat.id === 'scrapbook'
+          ? 'vintage-kodak'
+          : cat.id === 'apology'
+          ? 'gentle-peace'
+          : cat.defaultTemplate || 'royal-sapphire';
+      handleNavigate('builder', defaultTemplate, cat.id);
+    }
+  };
+
   const handleStartCreating = () => {
-    const birthdayCategory = CATEGORIES.find((c) => c.id === 'birthday') || CATEGORIES[0];
-    setRecipientModalCategory(birthdayCategory);
+    setIsCategoryModalOpen(true);
   };
 
   // Loading state while loading a shared surprise site
@@ -429,6 +450,21 @@ export default function App() {
         category={recipientModalCategory}
         onSelect={handleRecipientSelect}
         onClose={() => setRecipientModalCategory(null)}
+        onBack={() => {
+          setRecipientModalCategory(null);
+          setIsCategoryModalOpen(true);
+        }}
+      />
+      <CategoryModal
+        isOpen={isCategoryModalOpen}
+        onSelectCategory={handleCategoryModalSelect}
+        onComingSoon={(cat) => {
+          setToast({
+            type: 'info',
+            message: `${cat.name} template is coming soon! Focus on Birthday or Special Someone.`,
+          });
+        }}
+        onClose={() => setIsCategoryModalOpen(false)}
       />
       <Toast toast={toast} onClose={() => setToast(null)} />
       {import.meta.env.DEV && <Agentation />}

@@ -251,7 +251,7 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
     ? 'Our Bond Means Everything to Me! 🕊️🤍'
     : (isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸');
 
-  const selectedSongId = formData.songId || template?.recommendedSongId || 'upbeat-birthday-reel';
+  const selectedSongId = formData.songId || template?.recommendedSongId || 'baar-baar-din-ye-aaye';
 
   // Hero photo can come from formData.heroPhoto or formData.photos[0]?.url
   const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template?.samplePhoto || '';
@@ -1050,8 +1050,8 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
           >
             <AppleEmoji emoji="🎵" size={14} />
             <span className="truncate">
-              <span className="sm:hidden">Trending Reels</span>
-              <span className="hidden sm:inline">Trending Insta Reels</span>
+              <span className="sm:hidden">Indian Songs</span>
+              <span className="hidden sm:inline">Popular Indian Songs</span>
             </span>
           </button>
           <button
@@ -1151,10 +1151,15 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
                           )}
                         </div>
                         <div className="flex items-center gap-1.5 mt-0.5 min-w-0">
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 truncate max-w-full">
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 truncate shrink-0">
                             <AppleEmoji emoji={song.emoji} size={10} />
-                            <span className="truncate">{song.category}</span>
+                            <span>{song.category}</span>
                           </span>
+                          {song.artist && song.category !== 'Silent' && (
+                            <span className="text-[10px] text-slate-400 truncate">
+                              {song.artist}
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>

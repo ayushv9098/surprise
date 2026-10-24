@@ -6,5 +6,6 @@ export { default as StepSurprises } from './StepSurprises';
 export { default as LivePhonePreview } from './LivePhonePreview';
 export { default as ShareModal } from './ShareModal';
 export { default as RecipientModal } from './RecipientModal';
+export { default as CategoryModal } from './CategoryModal';
 
 export { default } from './BuilderStudio';
