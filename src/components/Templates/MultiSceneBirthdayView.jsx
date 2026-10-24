@@ -790,6 +790,19 @@ export default function MultiSceneBirthdayView({
        (siteData.songId ? getSongById(siteData.songId, siteData)?.audioUrl : null) ||
        '/audio/baar-baar-din-ye-aaye.mp3');
 
+  // Instagram Story-style Audio Snippet Start & Duration Resolution
+  const audioStartTime = Math.max(0, Number(
+    siteData.audioStartTime ??
+    siteData.songStartTime ??
+    siteData.songTrimStart ??
+    0
+  ) || 0);
+
+  const rawAudioDuration = siteData.audioDuration ?? siteData.songDuration ?? siteData.songTrimDuration ?? null;
+  const audioDuration = rawAudioDuration !== null && rawAudioDuration !== undefined && !isNaN(Number(rawAudioDuration)) && Number(rawAudioDuration) > 0
+    ? Number(rawAudioDuration)
+    : null;
+
   // Multi-angle Confetti Cannon helper from reference site
   const triggerConfettiCannon = () => {
     const colors = themeTokens.confettiColors;
@@ -850,9 +863,38 @@ export default function MultiSceneBirthdayView({
     soundEffects.playCelebration();
     triggerConfettiCannon();
     if (audioRef.current && audioUrl && !isPlaying) {
-      audioRef.current.play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {});
+      const audio = audioRef.current;
+      if (audioStartTime > 0) {
+        try {
+          audio.currentTime = audioStartTime;
+        } catch (_) {}
+      }
+      try {
+        audio.volume = 0;
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              setIsPlaying(true);
+              let currentVol = 0;
+              const targetVol = 0.8;
+              const volInterval = setInterval(() => {
+                if (audio) {
+                  currentVol = Math.min(targetVol, currentVol + 0.08);
+                  audio.volume = Number(currentVol.toFixed(2));
+                  if (currentVol >= targetVol) clearInterval(volInterval);
+                } else {
+                  clearInterval(volInterval);
+                }
+              }, 60);
+            })
+            .catch(() => {
+              setIsPlaying(false);
+            });
+        }
+      } catch (_) {
+        audio.play().then(() => setIsPlaying(true)).catch(() => {});
+      }
     }
     setScene(1);
   };
@@ -913,6 +955,23 @@ export default function MultiSceneBirthdayView({
           src={audioUrl}
           loop
           preload="auto"
+          onLoadedMetadata={() => {
+            if (audioRef.current && audioStartTime > 0) {
+              try {
+                audioRef.current.currentTime = audioStartTime;
+              } catch (_) {}
+            }
+          }}
+          onTimeUpdate={() => {
+            if (!audioRef.current) return;
+            const cur = audioRef.current.currentTime;
+            if (audioDuration && audioDuration > 0) {
+              const endTime = audioStartTime + audioDuration;
+              if (cur >= endTime || cur < audioStartTime - 0.5) {
+                audioRef.current.currentTime = audioStartTime;
+              }
+            }
+          }}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
         />

@@ -415,6 +415,8 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate, 
           title={siteData.customSongTitle || siteData.music?.title || themeConfig.audioTitle}
           theme={themeConfig.audioTheme}
           accentColor={themeConfig.audioAccent}
+          startTime={siteData.audioStartTime || siteData.songStartTime || siteData.songTrimStart || 0}
+          duration={siteData.audioDuration || siteData.songDuration || siteData.songTrimDuration || null}
         />
       )}
 

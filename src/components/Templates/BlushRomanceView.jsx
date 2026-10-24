@@ -492,6 +492,19 @@ tu hi bata mujhe is khat me kya likhu main... 😉
     || resolvedSong?.title 
     || (siteData.songTitle || `${recipientName}'s Keepsake Melody 🎵`);
 
+  // Instagram Story-style Audio Snippet Start & Duration Resolution
+  const audioStartTime = Math.max(0, Number(
+    siteData.audioStartTime ??
+    siteData.songStartTime ??
+    siteData.songTrimStart ??
+    0
+  ) || 0);
+
+  const rawAudioDuration = siteData.audioDuration ?? siteData.songDuration ?? siteData.songTrimDuration ?? null;
+  const audioDuration = rawAudioDuration !== null && rawAudioDuration !== undefined && !isNaN(Number(rawAudioDuration)) && Number(rawAudioDuration) > 0
+    ? Number(rawAudioDuration)
+    : null;
+
   // 4. Dynamic Quiz Resolution
   const quizQuestion = siteData.quizQuestion || siteData.quiz?.question || "Do you like spending time with me?";
   const quizYesText = siteData.quizYesText || siteData.quiz?.yesText || "YES, VERY MUCH!";
@@ -679,6 +692,16 @@ tu hi bata mujhe is khat me kya likhu main... 😉
       audio.pause();
       setIsPlayingAudio(false);
     } else {
+      const cur = audio.currentTime;
+      if (audioDuration && audioDuration > 0) {
+        const endTime = audioStartTime + audioDuration;
+        if (cur < audioStartTime || cur >= endTime) {
+          audio.currentTime = audioStartTime;
+        }
+      } else if (audioStartTime > 0 && cur < audioStartTime) {
+        audio.currentTime = audioStartTime;
+      }
+
       if (audio.volume < 0.2) audio.volume = 0.7;
       audio.play().then(() => {
         setIsPlayingAudio(true);
@@ -687,7 +710,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         setIsPlayingAudio(false);
       });
     }
-  }, [isPlayingAudio]);
+  }, [isPlayingAudio, audioStartTime, audioDuration]);
 
   // Intro "Tap to Open Surprise 🌸" handler
   const handleOpenSurprise = (e) => {
@@ -715,6 +738,11 @@ tu hi bata mujhe is khat me kya likhu main... 😉
     const audio = audioRef.current;
     if (audio) {
       try {
+        if (audioStartTime > 0) {
+          try {
+            audio.currentTime = audioStartTime;
+          } catch (_) {}
+        }
         audio.volume = 0;
         const playPromise = audio.play();
         if (playPromise !== undefined) {
@@ -925,6 +953,23 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         src={audioUrl}
         loop
         preload="auto"
+        onLoadedMetadata={() => {
+          if (audioRef.current && audioStartTime > 0) {
+            try {
+              audioRef.current.currentTime = audioStartTime;
+            } catch (_) {}
+          }
+        }}
+        onTimeUpdate={() => {
+          if (!audioRef.current) return;
+          const cur = audioRef.current.currentTime;
+          if (audioDuration && audioDuration > 0) {
+            const endTime = audioStartTime + audioDuration;
+            if (cur >= endTime || cur < audioStartTime - 0.5) {
+              audioRef.current.currentTime = audioStartTime;
+            }
+          }
+        }}
         onPlay={() => setIsPlayingAudio(true)}
         onPause={() => setIsPlayingAudio(false)}
       />

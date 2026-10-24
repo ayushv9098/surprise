@@ -329,6 +329,8 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate,
           title={currentTheme.audioTitle}
           theme="scrapbook"
           accentColor={currentTheme.audioAccent}
+          startTime={siteData.audioStartTime || siteData.songStartTime || siteData.songTrimStart || 0}
+          duration={siteData.audioDuration || siteData.songDuration || siteData.songTrimDuration || null}
         />
       )}
 

@@ -89,6 +89,8 @@ export default function GoldenBirthdayView({ siteData = {}, onNavigateCreate }) 
         title={siteData.customSongTitle || siteData.music?.title || "Golden Birthday Celebration"}
         theme="birthday"
         accentColor="from-amber-500 to-yellow-500"
+        startTime={siteData.audioStartTime || siteData.songStartTime || siteData.songTrimStart || 0}
+        duration={siteData.audioDuration || siteData.songDuration || siteData.songTrimDuration || null}
       />
 
       {/* Hero Section */}

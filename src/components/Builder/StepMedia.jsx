@@ -15,10 +15,11 @@ import {
   FileAudio,
   ArrowRight,
 } from 'lucide-react';
-import { SONGS } from '../../data/songs';
+import { SONGS, getSongById } from '../../data/songs';
 import { getTemplateById } from '../../data/templates';
 import { compressImageFile } from '../../utils/storage';
 import AppleEmoji from '../common/AppleEmoji';
+import AudioTrimmer from './AudioTrimmer';
 
 // Curated romantic polaroids for fallback & multi-photo memory deck
 const DEFAULT_ROMANCE_PHOTOS = [
@@ -251,7 +252,8 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
     ? 'Our Bond Means Everything to Me! 🕊️🤍'
     : (isBoy ? 'Keep Rocking Always! 👑' : 'Stay Wonderful Always! 🌸');
 
-  const selectedSongId = formData.songId || template?.recommendedSongId || 'baar-baar-din-ye-aaye';
+  const currentSong = getSongById(formData.songId, formData);
+  const selectedSongId = currentSong?.id || template?.recommendedSongId || 'baar-baar-din-ye-aaye';
 
   // Hero photo can come from formData.heroPhoto or formData.photos[0]?.url
   const heroPhotoUrl = formData.heroPhoto || formData.photos?.[0]?.url || template?.samplePhoto || '';
@@ -352,6 +354,8 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
       customSongUrl: '',
       customSongTitle: '',
       customAudioBlob: null,
+      audioStartTime: song.hookStartTime ?? 0,
+      audioDuration: formData.audioDuration !== undefined ? formData.audioDuration : 30,
     });
   };
 
@@ -1176,6 +1180,18 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
               })}
             </div>
 
+            {/* Instagram Story Audio Trimmer */}
+            {selectedSongId !== 'silent-mode' && (
+              <div className="pt-2">
+                <AudioTrimmer
+                  formData={formData}
+                  onChange={onChange}
+                  onPreviewPlay={stopAudio}
+                  isParentPlaying={Boolean(playingSongId)}
+                />
+              </div>
+            )}
+
             {/* Switcher callout */}
             <div className="pt-2 flex items-center justify-between text-xs text-slate-500 px-1">
               <span>Looking for your own song or reel audio?</span>
@@ -1265,6 +1281,18 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
                     </button>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* Instagram Story Audio Trimmer for Custom Audio */}
+            {hasCustomAudio && (
+              <div className="pt-1">
+                <AudioTrimmer
+                  formData={formData}
+                  onChange={onChange}
+                  onPreviewPlay={stopAudio}
+                  isParentPlaying={Boolean(playingSongId)}
+                />
               </div>
             )}
 

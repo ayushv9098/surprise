@@ -1,5 +1,107 @@
 [
   {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday to the King! 👑",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvmfk1in-ux28",
+    "slug": "rohan-rsg0q",
+    "updatedAt": "2026-10-24T13:24:07.755Z",
+    "createdAt": "2026-10-24T13:24:07.727Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgE4HsCeCcAtAM4IwwAWAlthCADQgDGSEA5rtvpiAEZ0wVVAl7MOEAHaoI2PvwJMcEFjRg1pYAHIIoDLACVcVBFOWlps7Lv18AgnAgAPZbhZtSNXOawAJChh8AAIAISERMWCwXGiqCGCAaRopDgBCYMBeDcBFHYsAV34wGjAnPmRg0wA3BIRg0igiODq87BhsGktggDNuYPxcPIA6YeV4vAAFKlwYviowMBhSDAB6ZZoGyVJBvKlSeARSKkGWXChl6mncYgBGAFYABgB2e-uAZgAma6+ANgBOYnuCGuqFQj3e7wAHF13qgAPwIPIxAC8PWwDTAADIusUkSw8DAMQB3JEQl4YgCOJPuyguMQAwhQij4+IkIBAYMFjCwANYpDjBRyEsSkDI5TKAUl2aVMYqRMABtUA0dBYPCEEgwa7KFpwWbzRYrNYbCBbHZ7RCHY6nc7Sq53J4vD5fa5-AFAkFgyHQuEI5Go9FYnF43AE4mk+4UqnKNgwJm+ECs9mc9y81ICuBC-AirLZCXKMAIDh8AAq8WCAGV8-IAL4AXWYe1UNCIhggBx8sowCpANBOccygCqdvPFUpYAAyeR5IRiwQC1WCAE0BspZKQWHwy7EONh2F08k1p1UasF+HhhHJgnAaNyEv08sEUsEoCETtgpOeINUeMFRPg0iAq4wiq9nwgAK1EOJQGCAgrCsEJZyAwzArmuWDQZmdT5jIfLHiET51EqCSEsUVDBFYTikKQF4IhwVAUWYqDBJIUh5CkCSkHklDcGAf4AUBzJYDk4EjiAyDYPQ+wsK2-ClIhxrISA2ixD4CRsFIJGfo+SAsMRt7YPeUh4hAqA0FJrEaO0YDBHRFSttgYCDAK0TYHkymmLA3hSNxdYgE48xyJgoBFBBDjBKOxQQcECmQMEABivSLnkUY+JAUhgHwASUCE4S2ZEITGKYHkADpSEV8XHu0qakLEUATsR0hyBw+CMOh9CpMITVWYxzFvhUgQseRenTmeF40NUFG4F0alyP03UIHgOz0be9klmY3J9AM3S9PwEBYZV+hKcE5QqZZ6YwXAuC4Kt7HRLEVlgE5pAWTsvZGbGjT4IMRVFQAslEwgdH0NllVht7HfupZblZCBaZo1T6ClpBNVwuD0fERBtZZMjBAAVgQu5NFApxaBRIMrnI1T2QmHKHCkWGXtelnBCm6TZoAFOQWDQHBSAA8l0XR8AA6kRoOPiEZ1zhiwT0A2LBgIwRWOC42YWK2cAAKIE1jNB8AJzBCs4dK4Gd8hYAAxNcAAiAAsqvmxC-71j4HBoHw7FbUgxCCNlP7EPQEA6swSp8ISLDEFAlRQF03LXCkxB5M4kIWHAeSFiqJhmD7pAcPc5JajAoiQKg9ipVg7z3O83w3PcxDvJbRbXK8GA1xgTyDGCjwAFpRvQ7CF8XICl+XlfV7X9eN5bzePK37wd-+QA",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday to the King! 👑",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvmfjpbk-8fhd",
+    "slug": "rohan-5ha4o",
+    "updatedAt": "2026-10-24T13:23:51.977Z",
+    "createdAt": "2026-10-24T13:23:51.920Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgE4HsCeCcAtAM4IwwAWAlthCADQgDGSEA5rtvpiAEZ0wVVAl7MOEAHaoI2PvwJMcEFjRg1pYAHIIoDLACVcVBFOWlps7Lv18AgnAgAPZbhZtSNXOawAJChh8AAIAISERMWCwXGiqCGCAaRopDgBCYMBeDcBFHYsAV34wGjAnPmRg0wA3BIRg0igiODq87BhsGktggDNuYPxcPIA6YeV4vAAFKlwYviowMBhSDAB6ZZoGyVJBvKlSeARSKkGWXChl6mncYgBGAFYABgB2e-uAZgAma6+ANgBOYnuCGuqFQj3e7wAHF13qgAPwIPIxAC8PWwDTAADIusUkSw8DAMQB3JEQl4YgCOJPuyguMQAwhQij4+IkIBAYMFjCwANYpDjBRyEsSkDI5TKAUl2aVMYqRMABtUA0dBYPCEEgwa7KFpwWbzRYrNYbCBbHZ7RCHY6nc7Sq53J4vD5fa5-AFAkFgyHQuEI5Go9FYnF43AE4mk+4UqnKNgwJm+ECs9mc9y81ICuBC-AirLZCXKMAIDh8AAq8WCAGV8-IAL4AXWYe1UNCIhggBx8sowCpANBOccygCqdvPFUpYAAyeR5IRiwQC1WCAE0BspZKQWHwy7EONh2F08k1p1UasF+HhhHJgnAaNyEv08sEUsEoCETtgpOeINUeMFRPg0iAq4wiq9nwgAK1EOJQGCAgrCsEJZyAwzArmuWDQZmdT5jIfLHiET51EqCSEsUVDBFYTikKQF4IhwVAUWYqDBJIUh5CkCSkHklDcGAf4AUBzJYDk4EjiAyDYPQ+wsK2-ClIhxrISA2ixD4CRsFIJGfo+SAsMRt7YPeUh4hAqA0FJrEaO0YDBHRFSttgYCDAK0TYHkymmLA3hSNxdYgE48xyJgoBFBBDjBKOxQQcECmQMEABivSLnkUY+JAUhgHwASUCE4S2ZEITGKYHkADpSEV8XHu0qakLEUATsR0hyBw+CMOh9CpMITVWYxzFvhUgQseRenTmeF40NUFG4F0alyP03UIHgOz0be9klmY3J9AM3S9PwEBYZV+hKcE5QqZZ6YwXAuC4Kt7HRLEVlgE5pAWTsvZGbGjT4IMRVFQAslEwgdH0NllVht7HfupZblZCBaZo1T6ClpBNVwuD0fERBtZZMjBAAVgQu5NFApxaBRIMrnI1T2QmHKHCkWGXtelnBCm6TZoAFOQWDQHBSAA8l0XR8AA6kRoOPiEZ1zhiwT0A2LBgIwRWOC42YWK2cAAKIE1jNB8AJzBCs4dK4Gd8hYAAxNcAAiAAsqvmxC-71j4HBoHw7FbUgxCCNlP7EPQEA6swSp8ISLDEFAlRQF0WMwPw3LEFCIgWHAeSFiqJhmMQtymJbuBajAoiQKg9ipVg7z3O83w3PcxDvJbRbXK8GDvA3tzXIMvylwAWlG9DsIXxcgKX5eV9Xtf143zet+39xd1WQA",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
     "templateId": "celestial-love",
     "category": "romance",
     "gender": "boy",

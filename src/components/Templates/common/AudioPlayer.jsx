@@ -13,13 +13,24 @@ export default function AudioPlayer({
   audioUrl, 
   title = "Our Keepsake Melody", 
   theme = "romantic",
-  accentColor = "from-rose-500 to-pink-500" 
+  accentColor = "from-rose-500 to-pink-500",
+  startTime = 0,
+  audioStartTime,
+  duration = null,
+  audioDuration,
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [showPrompt, setShowPrompt] = useState(true);
   const audioRef = useRef(null);
   const hasRetriedRef = useRef(false);
+
+  // Resolve start time & snippet duration from either prop naming convention
+  const resolvedStartTime = Math.max(0, Number(startTime ?? audioStartTime ?? 0) || 0);
+  const rawDuration = duration !== null && duration !== undefined ? duration : audioDuration;
+  const resolvedDuration = rawDuration !== null && rawDuration !== undefined && !isNaN(Number(rawDuration)) && Number(rawDuration) > 0
+    ? Number(rawDuration)
+    : null;
 
   const defaultTrack = DEFAULT_TRACKS[theme] || DEFAULT_TRACKS.romantic;
   const isSilent = audioUrl === '';
@@ -39,6 +50,37 @@ export default function AudioPlayer({
 
   const currentSrc = isSilent ? '' : (hasFallenBack ? defaultTrack : (audioUrl || defaultTrack));
 
+  // Sync seek position when start time or track changes
+  useEffect(() => {
+    if (audioRef.current && resolvedStartTime >= 0) {
+      try {
+        if (Math.abs(audioRef.current.currentTime - resolvedStartTime) > 0.5) {
+          audioRef.current.currentTime = resolvedStartTime;
+        }
+      } catch (_) {}
+    }
+  }, [resolvedStartTime, currentSrc]);
+
+  // Handle loop within snippet window
+  const handleTimeUpdate = () => {
+    if (!audioRef.current) return;
+    const cur = audioRef.current.currentTime;
+    if (resolvedDuration && resolvedDuration > 0) {
+      const endTime = resolvedStartTime + resolvedDuration;
+      if (cur >= endTime || cur < resolvedStartTime - 0.5) {
+        audioRef.current.currentTime = resolvedStartTime;
+      }
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (audioRef.current && resolvedStartTime > 0) {
+      try {
+        audioRef.current.currentTime = resolvedStartTime;
+      } catch (_) {}
+    }
+  };
+
   // Gracefully fall back to default theme track if audio fails to load or play (at most once)
   const handleAudioError = () => {
     if (!hasRetriedRef.current && !hasFallenBack && defaultTrack && currentSrc !== defaultTrack) {
@@ -49,6 +91,11 @@ export default function AudioPlayer({
         audioRef.current.src = defaultTrack;
         audioRef.current.load();
         if (isPlaying || hasInteracted) {
+          if (resolvedStartTime > 0) {
+            try {
+              audioRef.current.currentTime = resolvedStartTime;
+            } catch (_) {}
+          }
           audioRef.current.play()
             .then(() => setIsPlaying(true))
             .catch(() => setIsPlaying(false));
@@ -65,6 +112,11 @@ export default function AudioPlayer({
     const handleFirstUserTap = () => {
       if (!hasInteracted && audioRef.current && currentSrc) {
         setHasInteracted(true);
+        if (resolvedStartTime > 0) {
+          try {
+            audioRef.current.currentTime = resolvedStartTime;
+          } catch (_) {}
+        }
         audioRef.current.play()
           .then(() => {
             setIsPlaying(true);
@@ -83,7 +135,7 @@ export default function AudioPlayer({
       window.removeEventListener('click', handleFirstUserTap);
       window.removeEventListener('touchstart', handleFirstUserTap);
     };
-  }, [hasInteracted, currentSrc]);
+  }, [hasInteracted, currentSrc, resolvedStartTime]);
 
   const togglePlay = (e) => {
     e.stopPropagation();
@@ -94,6 +146,16 @@ export default function AudioPlayer({
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
+      const cur = audioRef.current.currentTime;
+      if (resolvedDuration && resolvedDuration > 0) {
+        const endTime = resolvedStartTime + resolvedDuration;
+        if (cur < resolvedStartTime || cur >= endTime) {
+          audioRef.current.currentTime = resolvedStartTime;
+        }
+      } else if (resolvedStartTime > 0 && cur < resolvedStartTime) {
+        audioRef.current.currentTime = resolvedStartTime;
+      }
+
       audioRef.current.play()
         .then(() => setIsPlaying(true))
         .catch((err) => {
@@ -117,6 +179,8 @@ export default function AudioPlayer({
         src={currentSrc}
         loop
         preload="auto"
+        onLoadedMetadata={handleLoadedMetadata}
+        onTimeUpdate={handleTimeUpdate}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onError={handleAudioError}
