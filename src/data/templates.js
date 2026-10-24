@@ -15,7 +15,7 @@ export const TEMPLATES = [
     accentColor: '#1D4ED8',
     themeClass: 'theme-royal',
     themeId: 'royal',
-    gradientBg: 'from-blue-900 via-blue-800 to-indigo-950',
+    gradientBg: 'from-blue-50 via-sky-50 to-indigo-50',
     primaryColor: 'blue',
     previewImage: '/previews/royal-sapphire.svg',
     badges: ['Multi-Scene Hit', 'Royal Favorite'],

@@ -11,21 +11,21 @@ const configs = [
     id: 'royal-sapphire',
     canvasBg: {
       stops: [
-        { offset: '0%', color: '#091024' },
-        { offset: '40%', color: '#0f172a' },
-        { offset: '80%', color: '#172554' },
-        { offset: '100%', color: '#1e3a8a' }
+        { offset: '0%', color: '#f8fbff' },
+        { offset: '35%', color: '#e8f2fe' },
+        { offset: '70%', color: '#deecff' },
+        { offset: '100%', color: '#eff6ff' }
       ]
     },
-    canvasGlow: { color: '#3b82f6', opacity: '0.35' },
+    canvasGlow: { color: '#93c5fd', opacity: '0.45' },
     cardBg: {
       stops: [
         { offset: '0%', color: '#ffffff', opacity: '0.98' },
-        { offset: '100%', color: '#f0f7ff', opacity: '0.94' }
+        { offset: '100%', color: '#f8fbff', opacity: '0.95' }
       ]
     },
     cardBorder: '#bfdbfe',
-    cardShadowColor: '#020617',
+    cardShadowColor: '#1e3a8a',
     dots: ['#93c5fd', '#60a5fa', '#3b82f6'],
     badge: {
       bg: '#ffffff',
@@ -37,7 +37,7 @@ const configs = [
     polaroid: {
       bg: '#ffffff',
       border: '#bfdbfe',
-      shadowColor: '#020617',
+      shadowColor: '#1e3a8a',
       tapeColor: '#60a5fa',
       overlayColor: '#1d4ed8',
       overlayOpacity: '0.06',
@@ -82,13 +82,13 @@ const configs = [
       emoji: '👑'
     },
     ambient: [
-      { type: 'circle', cx: 30, cy: 35, r: 2.5, fill: '#60a5fa', opacity: 0.65 },
-      { type: 'circle', cx: 370, cy: 45, r: 3, fill: '#93c5fd', opacity: 0.7 },
-      { type: 'circle', cx: 20, cy: 245, r: 2, fill: '#3b82f6', opacity: 0.6 },
-      { type: 'circle', cx: 380, cy: 235, r: 2.5, fill: '#93c5fd', opacity: 0.65 },
-      { type: 'text', x: 22, y: 155, text: '⭐', size: 14, opacity: 0.8 },
-      { type: 'text', x: 366, y: 120, text: '👑', size: 15, opacity: 0.85 },
-      { type: 'text', x: 364, y: 270, text: '✨', size: 15, opacity: 0.8 }
+      { type: 'circle', cx: 30, cy: 35, r: 2.5, fill: '#3b82f6', opacity: 0.65 },
+      { type: 'circle', cx: 370, cy: 45, r: 3, fill: '#f59e0b', opacity: 0.7 },
+      { type: 'circle', cx: 20, cy: 245, r: 2, fill: '#2563eb', opacity: 0.6 },
+      { type: 'circle', cx: 380, cy: 235, r: 2.5, fill: '#fbbf24', opacity: 0.7 },
+      { type: 'text', x: 22, y: 155, text: '⭐', size: 14, opacity: 0.85 },
+      { type: 'text', x: 366, y: 120, text: '👑', size: 15, opacity: 0.9 },
+      { type: 'text', x: 364, y: 270, text: '✨', size: 15, opacity: 0.85 }
     ]
   },
 
