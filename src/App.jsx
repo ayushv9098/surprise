@@ -261,14 +261,10 @@ export default function App() {
 
   // Full Screen Live Keepsake Viewer
   if (currentView === 'viewer' && siteData) {
-    const isSharedKeepsake = Boolean(
-      typeof window !== 'undefined' && (
-        new URLSearchParams(window.location.search).get('v') ||
-        new URLSearchParams(window.location.search).get('slug') ||
-        new URLSearchParams(window.location.search).get('d')
-      )
-    );
-    const isLiveView = !isPreviewMode && isSharedKeepsake;
+    // When isPreviewMode is false, this is a real published surprise website for a recipient (/s/:slug, ?v=, ?d=, etc.).
+    // Real websites must NEVER show "Back to Dearly" or template switcher chips.
+    // Those controls belong strictly to "See Example" / preview exploration mode.
+    const isLiveView = !isPreviewMode;
 
     return (
       <>
@@ -276,6 +272,7 @@ export default function App() {
           <TemplateViewer
             siteData={siteData}
             isLiveView={isLiveView}
+            showTemplateSwitcher={Boolean(isPreviewMode)}
             onBack={() => handleNavigate('home')}
             onNavigate={handleNavigate}
           />

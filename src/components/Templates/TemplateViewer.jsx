@@ -159,7 +159,7 @@ export default function TemplateViewer({
         >
           {/* Left Side: Back / Brand Pill */}
           <div className="flex items-center gap-2 pointer-events-auto">
-            {onBack && (
+            {!isLiveView && onBack && (
               <button
                 onClick={onBack}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-slate-800 hover:text-slate-950 backdrop-blur-md shadow-md border border-slate-200/90 text-xs sm:text-sm font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer pointer-events-auto"
@@ -170,7 +170,7 @@ export default function TemplateViewer({
             )}
 
             {/* Quick Template Switcher (Visible in preview / demo mode) */}
-            {showTemplateSwitcher && (
+            {!isLiveView && showTemplateSwitcher && (
               <div className="hidden md:flex items-center gap-1 p-1 rounded-full bg-white/85 backdrop-blur-md border border-slate-200/80 shadow-md overflow-x-auto max-w-md lg:max-w-xl">
                 {TEMPLATES.map((t) => (
                   <button
