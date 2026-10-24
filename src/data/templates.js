@@ -238,7 +238,7 @@ export const TEMPLATES = [
     accentColor: '#4F46E5',
     themeClass: 'theme-celestial',
     themeId: 'celestial-love',
-    gradientBg: 'from-slate-950 via-indigo-950 to-blue-950',
+    gradientBg: 'from-blue-50 via-indigo-50 to-purple-50',
     primaryColor: 'indigo',
     previewImage: '/previews/celestial-love.svg',
     badges: ['Cosmic Romance', 'Written in Stars'],

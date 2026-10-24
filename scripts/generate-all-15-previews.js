@@ -715,21 +715,21 @@ const configs = [
     id: 'celestial-love',
     canvasBg: {
       stops: [
-        { offset: '0%', color: '#090d16' },
-        { offset: '40%', color: '#0f172a' },
-        { offset: '80%', color: '#1e1b4b' },
-        { offset: '100%', color: '#312e81' }
+        { offset: '0%', color: '#f8faff' },
+        { offset: '35%', color: '#eef2ff' },
+        { offset: '70%', color: '#e0e7ff' },
+        { offset: '100%', color: '#f5f3ff' }
       ]
     },
-    canvasGlow: { color: '#6366f1', opacity: '0.35' },
+    canvasGlow: { color: '#818cf8', opacity: '0.35' },
     cardBg: {
       stops: [
         { offset: '0%', color: '#ffffff', opacity: '0.98' },
-        { offset: '100%', color: '#f5f3ff', opacity: '0.94' }
+        { offset: '100%', color: '#f8faff', opacity: '0.95' }
       ]
     },
     cardBorder: '#c7d2fe',
-    cardShadowColor: '#1e1b4b',
+    cardShadowColor: '#4338ca',
     dots: ['#a5b4fc', '#818cf8', '#6366f1'],
     badge: {
       bg: '#ffffff',

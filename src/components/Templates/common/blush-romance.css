@@ -58,22 +58,22 @@
 
 /* Theme 3: Celestial Love */
 .blush-theme-celestial {
-  --app-bg: linear-gradient(140deg, #070a14 0%, #0c1427 30%, #151a36 60%, #0a0f1d 100%);
-  --intro-bg: linear-gradient(145deg, #060913 0%, #0f172a 40%, #1e1b4b 75%, #0a0f1d 100%);
-  --primary-gradient: linear-gradient(#a5b4fc 0%, #6366f1 55%, #4f46e5 100%);
-  --primary-shadow-color: #312e81;
-  --primary-glow: rgba(99, 102, 241, 0.45);
-  --card-bg: linear-gradient(rgba(15, 23, 42, 0.92) 0%, rgba(30, 27, 75, 0.85) 100%);
-  --card-border: rgba(129, 140, 248, 0.35);
-  --card-shadow: rgba(99, 102, 241, 0.25);
-  --text-dark: #f8fafc;
-  --text-muted: #c7d2fe;
-  --text-soft: #a5b4fc;
-  --accent-pill: rgba(30, 27, 75, 0.8);
-  --accent-text: #a5b4fc;
-  --envelope-bg: linear-gradient(155deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-  --envelope-border: rgba(129, 140, 248, 0.5);
-  --envelope-seal-grad: radial-gradient(circle at 35% 32%, #818cf8 0%, #4f46e5 50%, #312e81 100%);
+  --app-bg: linear-gradient(140deg, #f8faff 0%, #eff4ff 25%, #e0e7ff 50%, #f1f5f9 75%, #ffffff 100%);
+  --intro-bg: linear-gradient(145deg, #f8faff 0%, #eef2ff 35%, #e0e7ff 70%, #f8faff 100%);
+  --primary-gradient: linear-gradient(#818cf8 0%, #6366f1 55%, #4f46e5 100%);
+  --primary-shadow-color: #4338ca;
+  --primary-glow: rgba(99, 102, 241, 0.35);
+  --card-bg: linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 255, 0.90) 100%);
+  --card-border: rgba(199, 210, 254, 0.65);
+  --card-shadow: rgba(99, 102, 241, 0.12);
+  --text-dark: #1e1b4b;
+  --text-muted: #4338ca;
+  --text-soft: #6366f1;
+  --accent-pill: #eef2ff;
+  --accent-text: #4f46e5;
+  --envelope-bg: linear-gradient(155deg, #ffffff 0%, #f8faff 45%, #e0e7ff 100%);
+  --envelope-border: rgba(165, 180, 252, 0.6);
+  --envelope-seal-grad: radial-gradient(circle at 35% 32%, #818cf8 0%, #6366f1 50%, #4338ca 100%);
 }
 
 /* Base Canvas & Container */
@@ -346,14 +346,14 @@
 }
 
 .blush-theme-celestial .tactile-btn-secondary {
-  color: #f8fafc;
-  background: linear-gradient(#1e1b4b 0%, #0f172a 100%);
-  border-color: rgba(129, 140, 248, 0.4);
+  color: #312e81;
+  background: linear-gradient(#ffffff 0%, #f8faff 100%);
+  border-color: rgba(165, 180, 252, 0.6);
   box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.2),
-    inset 0 -2px rgba(0, 0, 0, 0.3),
-    0 4px #1e1b4b,
-    0 8px 18px rgba(99, 102, 241, 0.25);
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -2px rgba(165, 180, 252, 0.2),
+    0 4px #c7d2fe,
+    0 8px 18px rgba(99, 102, 241, 0.12);
 }
 
 .tactile-btn-secondary:hover {
@@ -442,9 +442,9 @@
 }
 
 .blush-theme-celestial .soft-music-pill {
-  background: rgba(15, 23, 42, 0.88);
-  border-color: rgba(129, 140, 248, 0.4);
-  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(165, 180, 252, 0.5);
+  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .soft-music-pill.pill-hidden {
@@ -687,8 +687,9 @@
 }
 
 .blush-theme-celestial .soft-nav-pills {
-  background: rgba(15, 23, 42, 0.75);
-  border-color: rgba(129, 140, 248, 0.3);
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(199, 210, 254, 0.5);
+  box-shadow: 0 4px 16px rgba(99, 102, 241, 0.1);
 }
 
 .nav-pill {
@@ -725,9 +726,9 @@
 }
 
 .blush-theme-celestial .nav-pill.active {
-  background: #1e1b4b;
-  color: #a5b4fc;
-  box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+  background: #ffffff;
+  color: #4f46e5;
+  box-shadow: 0 3px 12px rgba(99, 102, 241, 0.25);
 }
 
 /* Soft Cards */
@@ -803,9 +804,9 @@
 }
 
 .blush-theme-celestial .memory-card {
-  background: #0f172a;
-  border-color: rgba(129, 140, 248, 0.3);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+  background: #ffffff;
+  border-color: rgba(199, 210, 254, 0.6);
+  box-shadow: 0 18px 44px rgba(79, 70, 229, 0.12);
 }
 
 .memory-card.card-active {
@@ -1479,9 +1480,9 @@
 }
 
 .blush-theme-celestial .khat-letter {
-  background: #0f172a;
-  border-color: rgba(129, 140, 248, 0.35);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  background: #ffffff;
+  border-color: rgba(199, 210, 254, 0.6);
+  box-shadow: 0 12px 30px rgba(79, 70, 229, 0.12);
 }
 
 @keyframes letterAppear {
@@ -1722,8 +1723,8 @@
 }
 
 .blush-theme-celestial .victory-love-note {
-  background: rgba(15, 23, 42, 0.75);
-  border-color: rgba(129, 140, 248, 0.3);
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(199, 210, 254, 0.5);
 }
 
 .victory-desc {
