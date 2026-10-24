@@ -23,7 +23,7 @@ export default function TemplateFooter({ onCreateClick, onNavigateCreate, dark =
           }`}
         >
           <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-          <span>Made with <span className={`font-bold ${dark ? 'text-indigo-400' : 'text-rose-600'}`}>Wishly</span> • Create yours free</span>
+          <span>Made with <span className={`font-bold ${dark ? 'text-indigo-400' : 'text-rose-600'}`}>Dearly</span> • Create yours free</span>
         </a>
 
         <p className={`text-[11px] mt-2 ${dark ? 'text-slate-500' : 'text-slate-400'}`}>

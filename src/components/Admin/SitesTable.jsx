@@ -73,11 +73,11 @@ export default function SitesTable({
   const paginatedSites = sites.slice(startIndex, endIndex);
 
   const handleCopy = (slug) => {
-    const url = `${window.location.origin}/?v=${encodeURIComponent(slug)}`;
+    const url = `${window.location.origin}/s/${encodeURIComponent(slug)}`;
     navigator.clipboard.writeText(url);
     setCopiedSlug(slug);
     if (onToast) {
-      onToast({ type: 'success', message: `Copied link for /?v=${slug}` });
+      onToast({ type: 'success', message: `Copied link for /s/${slug}` });
     }
     setTimeout(() => {
       setCopiedSlug(null);
@@ -162,7 +162,7 @@ export default function SitesTable({
             {paginatedSites.map((site) => {
               const templateKey = site.template || site.templateId || 'blush-romance';
               const isCopied = copiedSlug === site.slug;
-              const directViewUrl = `${window.location.origin}/?v=${encodeURIComponent(site.slug)}`;
+              const directViewUrl = `${window.location.origin}/s/${encodeURIComponent(site.slug)}`;
 
               return (
                 <tr
@@ -287,7 +287,7 @@ export default function SitesTable({
           <span className="hidden sm:inline text-slate-300">•</span>
           <span className="hidden sm:flex items-center gap-1 text-slate-400">
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Wishly Cloud Data</span>
+            <span>Dearly Cloud Data</span>
           </span>
         </div>
 

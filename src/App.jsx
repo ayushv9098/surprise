@@ -29,6 +29,18 @@ export default function App() {
       if (searchParams.get('view') === 'builder') {
         return 'builder';
       }
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+      const isPathSlug = (pathSegments.length === 2 && pathSegments[0] === 's') || (pathSegments.length === 1 && pathSegments[0] !== 'admin');
+      if (
+        isPathSlug ||
+        searchParams.get('v') ||
+        searchParams.get('id') ||
+        searchParams.get('slug') ||
+        searchParams.get('d') ||
+        searchParams.get('preview')
+      ) {
+        return 'viewer';
+      }
     }
     return 'home';
   });
@@ -71,10 +83,17 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Check URL on load for direct surprise links (?v=slug, ?d=compressed, ?view=admin, /admin, etc.)
+  // Check URL on load for direct surprise links (/s/slug, ?v=slug, ?d=compressed, ?view=admin, /admin, etc.)
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
-    const slug = searchParams.get('v') || searchParams.get('id') || searchParams.get('slug');
+    const pathSegments = typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean) : [];
+    let pathSlug = null;
+    if (pathSegments.length === 2 && pathSegments[0] === 's') {
+      pathSlug = pathSegments[1];
+    } else if (pathSegments.length === 1 && pathSegments[0] !== 'admin') {
+      pathSlug = pathSegments[0];
+    }
+    const slug = pathSlug || searchParams.get('v') || searchParams.get('id') || searchParams.get('slug');
     const compressedData = searchParams.get('d');
     const viewParam = searchParams.get('view');
     const previewTemplate = searchParams.get('preview');
@@ -130,6 +149,8 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       const searchParams = new URLSearchParams(window.location.search);
+      const pathSegments = typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean) : [];
+      const hasPathSlug = (pathSegments.length === 2 && pathSegments[0] === 's') || (pathSegments.length === 1 && pathSegments[0] !== 'admin');
       if (
         searchParams.get('view') === 'admin' ||
         window.location.pathname.toLowerCase() === '/admin'
@@ -141,7 +162,7 @@ export default function App() {
         setSiteData({ ...preset, templateId: previewTpl });
         setIsPreviewMode(true);
         setCurrentView('viewer');
-      } else if (searchParams.get('v') || searchParams.get('id') || searchParams.get('slug') || searchParams.get('d')) {
+      } else if (hasPathSlug || searchParams.get('v') || searchParams.get('id') || searchParams.get('slug') || searchParams.get('d')) {
         // Keepsake view
       } else {
         // Browser back button was pressed from a preview or other view:

@@ -228,12 +228,12 @@ export const saveSurprise = async (payload = {}) => {
     const cleanPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
     const baseUrl = `${cleanOrigin}${cleanPath}`.replace(/\/+$/, '/');
 
-    // Construct shareUrl: clean short URL when saved to API, or fallback to standalone &d=
+    // Construct shareUrl: clean short /s/slug URL when saved to API, or fallback to standalone /s/slug?d=
     let shareUrl = '';
     if (savedToApi) {
-      shareUrl = `${baseUrl}?v=${encodeURIComponent(savedSlug)}`;
+      shareUrl = `${cleanOrigin}/s/${encodeURIComponent(savedSlug)}`;
     } else {
-      shareUrl = `${baseUrl}?v=${encodeURIComponent(slug)}&d=${compressedHash}`;
+      shareUrl = `${cleanOrigin}/s/${encodeURIComponent(slug)}?d=${compressedHash}`;
     }
 
     // 3. Persist in localStorage with guarded try-catch
@@ -268,7 +268,7 @@ export const saveSurprise = async (payload = {}) => {
       success: true,
       id: fallbackId,
       slug: fallbackSlug,
-      shareUrl: `${origin}${pathname}?v=${encodeURIComponent(fallbackSlug)}`,
+      shareUrl: `${origin}/s/${encodeURIComponent(fallbackSlug)}`,
       compressedHash: '',
       savedToApi: false,
       data: payload || {},
@@ -314,13 +314,23 @@ export const loadSurprise = async (slugOrHash) => {
     }
   }
 
-  // If targetSlug is missing, try reading from window.location.search in browser
-  if (!targetSlug && typeof window !== 'undefined' && window.location?.search) {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      targetSlug = params.get('v') || params.get('id') || params.get('slug');
-    } catch {
-      // fallback
+  // If targetSlug is missing, try reading from window.location.pathname or search in browser
+  if (!targetSlug && typeof window !== 'undefined') {
+    if (window.location?.pathname) {
+      const parts = window.location.pathname.split('/').filter(Boolean);
+      if (parts.length === 2 && parts[0] === 's') {
+        targetSlug = parts[1];
+      } else if (parts.length === 1 && parts[0] !== 'admin') {
+        targetSlug = parts[0];
+      }
+    }
+    if (!targetSlug && window.location?.search) {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        targetSlug = params.get('v') || params.get('id') || params.get('slug');
+      } catch {
+        // fallback
+      }
     }
   }
 

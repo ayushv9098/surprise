@@ -31,7 +31,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
 
   const shareUrl = shareResult?.shareUrl || (
     shareResult?.slug
-      ? `${typeof window !== 'undefined' ? window.location.origin : ''}/?v=${encodeURIComponent(shareResult.slug)}`
+      ? `${typeof window !== 'undefined' ? window.location.origin : ''}/s/${encodeURIComponent(shareResult.slug)}`
       : (typeof window !== 'undefined' ? window.location.href : '')
   );
   const recipientName = formData?.recipientName || 'Someone special';

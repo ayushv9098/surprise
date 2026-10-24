@@ -62,7 +62,7 @@ export default function Footer() {
 
           {/* Clean Unified Attribution */}
           <div className="pt-2 text-[11px] text-slate-400 font-normal flex items-center justify-center gap-1.5">
-            <span>© 2026 Wishly</span>
+            <span>© 2026 Dearly</span>
             <span>•</span>
             <span>
               Built by{' '}
@@ -157,7 +157,7 @@ export default function Footer() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-slate-900 block mb-0.5">100% Private & Ad-Free</strong>
-                      Wishly does not run advertisements, does not sell your data, and does not share your keepsake cards with third parties.
+                      Dearly does not run advertisements, does not sell your data, and does not share your keepsake cards with third parties.
                     </div>
                   </div>
 
@@ -165,7 +165,7 @@ export default function Footer() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-slate-900 block mb-0.5">No Sensitive Financial Credentials</strong>
-                      Wishly never asks for passwords, payment card details, bank logins, or sensitive personal IDs.
+                      Dearly never asks for passwords, payment card details, bank logins, or sensitive personal IDs.
                     </div>
                   </div>
 
@@ -214,7 +214,7 @@ export default function Footer() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-slate-900 block mb-0.5">Free Personal Use</strong>
-                      Wishly is completely free to create and share heartfelt surprise websites for personal occasions like birthdays, anniversaries, and notes of appreciation.
+                      Dearly is completely free to create and share heartfelt surprise websites for personal occasions like birthdays, anniversaries, and notes of appreciation.
                     </div>
                   </div>
 
@@ -254,7 +254,7 @@ export default function Footer() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-slate-900 block mb-0.5">Enterprise Transport Encryption</strong>
-                      Every connection to Wishly uses modern TLS/HTTPS encryption to protect transmitted messages and photos from eavesdropping.
+                      Every connection to Dearly uses modern TLS/HTTPS encryption to protect transmitted messages and photos from eavesdropping.
                     </div>
                   </div>
 
@@ -270,7 +270,7 @@ export default function Footer() {
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-slate-900 block mb-0.5">No Adware, Phishing, or Malware</strong>
-                      Wishly is a clean, benign application without third-party ad scripts, crypto miners, or telemetry trackers.
+                      Dearly is a clean, benign application without third-party ad scripts, crypto miners, or telemetry trackers.
                     </div>
                   </div>
 
