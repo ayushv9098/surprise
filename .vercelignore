@@ -1,0 +1,9 @@
+test/
+scripts/
+*.mp4
+*.png
+*.jpg
+*.jpeg
+.git
+.github
+node_modules
