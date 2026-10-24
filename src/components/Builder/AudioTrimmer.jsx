@@ -471,20 +471,39 @@ export default function AudioTrimmer({
   const currentDurationLabel = isFullSong ? '∞' : effectiveDuration;
 
   return (
-    <div className="rounded-2xl bg-[#16181d] sm:bg-[#121316] text-white border border-white/10 p-3.5 sm:p-4 shadow-xl select-none space-y-3.5 transition-all animate-fadeIn">
-      {/* Visual Sub-header / Song Context */}
-      <div className="flex items-center justify-between text-xs text-white/60 px-0.5">
+    <div className="rounded-2xl bg-[#16181d] bg-gradient-to-b from-[#1c1d24] via-[#16171d] to-[#121318] border border-white/12 p-3.5 sm:p-4 shadow-xl text-white select-none space-y-3.5 transition-all animate-fadeIn">
+      {/* Visual Sub-header / Song Context & Chorus Hook Jump */}
+      <div className="flex items-center justify-between text-xs text-white/60 px-0.5 gap-2">
         <div className="flex items-center gap-1.5 min-w-0">
-          <div className="w-5 h-5 rounded-md bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center shrink-0">
+          <div className="w-5 h-5 rounded-md bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center shrink-0 shadow-xs">
             <Music className="w-3 h-3 text-white" />
           </div>
           <span className="font-semibold text-white/90 text-xs truncate">
             {song?.title ? `${song.title}${song.artist ? ` • ${song.artist}` : ''}` : 'Song Snippet'}
           </span>
         </div>
-        <div className="text-[11px] text-white/50 shrink-0 font-medium">
-          Instagram Story Cropper
-        </div>
+
+        {hasHook ? (
+          <button
+            type="button"
+            onClick={handleJumpToHook}
+            title={`Jump directly to Chorus: "${resolvedHookTitle}" (${formatTime(resolvedHookStartTime)})`}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-all cursor-pointer active:scale-95 shrink-0 ${
+              isAtHook
+                ? 'bg-rose-500/25 text-rose-300 border border-rose-500/40 shadow-xs'
+                : 'bg-white/8 hover:bg-white/12 text-white/80 hover:text-white border border-white/10'
+            }`}
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0 shadow-xs animate-pulse" />
+            <span className="truncate max-w-[120px] sm:max-w-[160px]">Chorus</span>
+            <span className="text-white/40 font-mono text-[10px]">{formatTime(resolvedHookStartTime)}</span>
+            {isAtHook && <Check className="w-2.5 h-2.5 text-rose-400 stroke-[3]" />}
+          </button>
+        ) : (
+          <div className="text-[11px] text-white/40 shrink-0 font-medium">
+            Story Cropper
+          </div>
+        )}
       </div>
 
       {/* TOP ROW: Duration Badge, Mini Timeline Track, Play Button */}
@@ -494,7 +513,7 @@ export default function AudioTrimmer({
           type="button"
           onClick={handleCycleDuration}
           title={`Snippet Duration: ${isFullSong ? 'Full Song' : `${effectiveDuration}s`} (Tap to cycle: 15s → 30s → 60s → Full)`}
-          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/60 hover:border-white text-white text-xs font-bold flex items-center justify-center transition-all cursor-pointer active:scale-95 shrink-0 bg-transparent hover:bg-white/10"
+          className="w-8 h-8 rounded-full border border-white/50 hover:border-white text-white font-bold text-xs bg-white/5 flex items-center justify-center transition-all cursor-pointer active:scale-95 shrink-0"
         >
           {isFullSong ? (
             <span className="text-base leading-none">∞</span>
@@ -511,7 +530,7 @@ export default function AudioTrimmer({
           onPointerUp={handleTopPointerUp}
           onPointerCancel={handleTopPointerUp}
           title="Overview timeline (Click or drag to position clip)"
-          className="h-[2px] sm:h-[3px] bg-white/20 rounded-full relative flex-1 mx-3 sm:mx-4 flex items-center cursor-pointer select-none touch-none"
+          className="h-1 bg-white/20 rounded-full relative flex-1 mx-2.5 sm:mx-3 flex items-center cursor-pointer select-none touch-none"
         >
           {/* Highlighted White Segment representing Selected Clip Window */}
           <div
@@ -532,7 +551,7 @@ export default function AudioTrimmer({
               }}
               style={{ left: `${Math.min(98, Math.max(2, hookPercent))}%` }}
               title={`✨ Jump to Chorus: "${resolvedHookTitle}" (${formatTime(resolvedHookStartTime)})`}
-              className="absolute -translate-x-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-rose-500 border border-white shadow-xs cursor-pointer hover:scale-125 transition-transform z-20 group"
+              className="absolute -translate-x-1/2 w-2.5 h-2.5 bg-rose-500 border border-white rounded-full shadow-xs cursor-pointer hover:scale-125 transition-transform z-20 group"
             >
               <span className="sr-only">Jump to Chorus</span>
             </button>
@@ -552,12 +571,12 @@ export default function AudioTrimmer({
           type="button"
           onClick={togglePlayPreview}
           title={isPlaying ? 'Pause snippet preview' : 'Play cropped snippet preview'}
-          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-black flex items-center justify-center shadow hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
+          className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer shrink-0"
         >
           {isPlaying ? (
-            <Pause className="w-4 h-4 fill-black text-black" />
+            <Pause className="w-3.5 h-3.5 fill-black text-black" />
           ) : (
-            <Play className="w-4 h-4 fill-black text-black ml-0.5" />
+            <Play className="w-3.5 h-3.5 fill-black text-black ml-0.5" />
           )}
         </button>
       </div>
@@ -570,15 +589,15 @@ export default function AudioTrimmer({
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          className={`relative h-18 sm:h-20 w-full rounded-2xl bg-black/40 border border-white/5 overflow-hidden select-none touch-none flex items-center px-2 cursor-ew-resize group transition-all ${
-            isDragging ? 'ring-1 ring-white/30' : 'hover:border-white/15'
+          className={`relative h-18 sm:h-20 w-full rounded-xl bg-black/60 border border-white/10 overflow-hidden select-none touch-none flex items-center px-2 cursor-ew-resize group transition-all ${
+            isDragging ? 'ring-1 ring-white/30' : 'hover:border-white/20'
           }`}
           title={isFullSong ? 'Full song active' : 'Drag white card or tap waveform tape to adjust clip start'}
         >
           {/* Background Ambient Glow */}
           <div className="absolute inset-0 bg-radial from-rose-500/5 via-transparent to-transparent pointer-events-none" />
 
-          {/* Background Waveform Bars Tape (Outside active window: muted translucent white/gray) */}
+          {/* Background Waveform Bars Tape (Outside active window: clean silver/white bars) */}
           <div className="relative w-full h-full flex items-center justify-between gap-[2px] sm:gap-1 px-1 z-0 pointer-events-none">
             {waveBars.map((height, i) => {
               const isHookBar = hasHook && i === hookBarIndex;
@@ -589,7 +608,7 @@ export default function AudioTrimmer({
                     className={`w-1 rounded-full transition-all duration-150 ${
                       isHookBar
                         ? 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.9)]'
-                        : 'bg-white/25 sm:bg-white/30'
+                        : 'bg-white/35 hover:bg-white/50'
                     }`}
                   />
                 </div>
@@ -607,7 +626,7 @@ export default function AudioTrimmer({
           >
             {/* White Rounded Rectangular Card */}
             <div className="w-full h-full bg-white rounded-xl shadow-lg border border-white/90 relative overflow-hidden flex items-center">
-              {/* Inside White Box: Waveform Bars (medium/light gray, aligned with background) */}
+              {/* Inside White Box: Waveform Bars (crisp light/slate gray) */}
               <div
                 style={{
                   position: 'absolute',
@@ -625,7 +644,7 @@ export default function AudioTrimmer({
                       <div
                         style={{ height: `${height}%` }}
                         className={`w-1 rounded-full ${
-                          isHookBar ? 'bg-rose-500 shadow-xs' : 'bg-neutral-300 sm:bg-slate-400'
+                          isHookBar ? 'bg-rose-500 shadow-xs' : 'bg-slate-300'
                         }`}
                       />
                     </div>
@@ -637,9 +656,9 @@ export default function AudioTrimmer({
               {isPlaying && (
                 <div
                   style={{ left: `${playheadProgress * 100}%` }}
-                  className="absolute top-0 bottom-0 w-0.5 bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.9)] z-20 pointer-events-none"
+                  className="absolute top-0 bottom-0 w-0.5 bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)] z-20 pointer-events-none"
                 >
-                  <div className="absolute -top-0.5 -left-1 w-2.5 h-2.5 rounded-full bg-rose-500 border border-white shadow-xs" />
+                  <div className="absolute top-0.5 -left-1 w-2.5 h-2.5 rounded-full bg-rose-500 border border-white shadow-xs" />
                 </div>
               )}
             </div>
@@ -653,57 +672,31 @@ export default function AudioTrimmer({
         </div>
       </div>
 
-      {/* MINIMALIST DETAILS: Timestamps, Chorus Quick Jump, and Duration Pills */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-white/70 select-none">
-        {/* Left: Timestamp indicator */}
-        <div className="flex items-center gap-1.5 font-medium">
-          <span className="text-white font-semibold">
+      {/* BOTTOM ROW: Timestamp on Left, Seconds Pills Segmented Group on Right (Rock-Solid, Never Wraps) */}
+      <div className="flex items-center justify-between gap-2 pt-1 text-xs text-white/70 select-none">
+        {/* Left: Timestamp */}
+        <div className="flex items-center gap-1.5 min-w-0 shrink">
+          <span className="text-white font-bold text-xs shrink-0 font-mono tracking-tight">
             {formatTime(startTime)} - {formatTime(endTime)}
           </span>
-          <span className="text-white/30">•</span>
-          <span className="text-white/60">
-            {isFullSong ? 'Full Song' : `${effectiveDuration}s clip`}
+          <span className="text-white/30 shrink-0">•</span>
+          <span className="text-white/60 text-[11px] truncate shrink-0">
+            {isFullSong ? 'Full Song' : `${effectiveDuration}s`}
           </span>
-
           {startTime > 0 && (
             <button
               type="button"
               onClick={handleResetToStart}
               title="Reset start time to 0:00"
-              className="ml-1 inline-flex items-center gap-1 text-[11px] text-white/40 hover:text-white transition-colors cursor-pointer"
+              className="ml-1 text-white/40 hover:text-white transition-colors cursor-pointer shrink-0"
             >
               <RotateCcw className="w-3 h-3" />
-              <span>Reset</span>
             </button>
           )}
         </div>
 
-        {/* Center / Right: 1-Click Chorus / Hook Jump */}
-        {hasHook && (
-          <button
-            type="button"
-            onClick={handleJumpToHook}
-            title={`Jump directly to Chorus: "${resolvedHookTitle}" (${formatTime(resolvedHookStartTime)})`}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer active:scale-95 ${
-              isAtHook
-                ? 'bg-rose-500/25 text-rose-300 border border-rose-500/40 shadow-xs'
-                : 'bg-white/5 hover:bg-white/10 text-white/80 hover:text-white border border-white/10'
-            }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-rose-500 shrink-0 shadow-xs animate-pulse" />
-            <span className="truncate max-w-[130px] sm:max-w-[180px]">
-              Chorus: "{resolvedHookTitle}"
-            </span>
-            <span className="text-white/40 font-mono text-[10px]">
-              {formatTime(resolvedHookStartTime)}
-            </span>
-            {isAtHook && <Check className="w-3 h-3 text-rose-400 stroke-[3]" />}
-          </button>
-        )}
-
-        {/* Right: Quick Duration Chips */}
-        <div className="flex items-center gap-1 ml-auto sm:ml-0">
-          <span className="text-[10px] text-white/40 mr-1 hidden sm:inline">Clip:</span>
+        {/* Right: Seconds Duration Chips (Segmented Pill Group that never breaks) */}
+        <div className="flex items-center bg-white/8 p-0.5 rounded-lg border border-white/10 shrink-0">
           {DURATION_OPTIONS.map((opt) => {
             const isSelected =
               opt.value === null
@@ -715,10 +708,10 @@ export default function AudioTrimmer({
                 key={opt.label}
                 type="button"
                 onClick={() => handleSelectDuration(opt.value)}
-                className={`px-2 py-0.5 rounded-lg text-[11px] font-bold transition-all cursor-pointer select-none ${
+                className={`px-2 py-0.5 rounded-md text-[11px] font-bold transition-all cursor-pointer select-none whitespace-nowrap ${
                   isSelected
                     ? 'bg-white text-black shadow-xs font-black'
-                    : 'bg-white/5 hover:bg-white/10 text-white/60 hover:text-white border border-white/10'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {opt.label}
