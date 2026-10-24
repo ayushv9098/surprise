@@ -6,97 +6,54 @@ const CHROME_PATH = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrom
 const ROOT = 'D:\\avprojects\\surprise-builder';
 const PUBLIC_DIR = path.join(ROOT, 'public');
 
-// Concept A: Quiet Luxury Obsidian & Champagne Gold Architectural Keepsake Ribbon 'D'
-const SVG_CONTENT = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+/**
+ * Dearly Keepsake Envelope with Heart Fold SVG Geometry
+ * Extracted directly from src/components/common/DearlyLogo.jsx
+ *
+ * Color palette:
+ * - #FB7185 (Rose 400 - bright coral highlights)
+ * - #F43F5E (Rose 500 - vibrant core contrast)
+ * - #E11D48 (Rose 600 - brand signature crimson-rose)
+ * - #BE123C (Rose 700 - rich deep anchor)
+ *
+ * Optimized for high contrast & razor-sharp legibility on both
+ * Dark Mode (#202124 / #000000) and Light Mode (#FFFFFF / #DEE1E6) browser tabs.
+ */
+const SVG_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
   <defs>
-    <!-- Deep Obsidian Midnight Foundation -->
-    <linearGradient id="obsidian-bg-a" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#14151C" />
-      <stop offset="50%" stop-color="#0E0F14" />
-      <stop offset="100%" stop-color="#07080B" />
+    <linearGradient id="dearly-envelope-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB7185" />
+      <stop offset="40%" stop-color="#F43F5E" />
+      <stop offset="75%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#BE123C" />
     </linearGradient>
-
-    <!-- Champagne Gold Perimeter Rim -->
-    <linearGradient id="gold-rim-a" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FBF4E8" stop-opacity="0.45" />
-      <stop offset="45%" stop-color="#DDB97A" stop-opacity="0.25" />
-      <stop offset="100%" stop-color="#936F35" stop-opacity="0.10" />
-    </linearGradient>
-
-    <!-- Top-down subtle specular lighting (Apple-grade) -->
-    <linearGradient id="specular-a" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.08" />
-      <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.02" />
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
-    </linearGradient>
-
-    <!-- Champagne Gold Metallic Gradients -->
-    <linearGradient id="gold-ribbon-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFDF7" />
-      <stop offset="22%" stop-color="#F4DEB8" />
-      <stop offset="60%" stop-color="#DCB879" />
-      <stop offset="100%" stop-color="#A8803E" />
-    </linearGradient>
-
-    <linearGradient id="gold-facet-shimmer" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.32" />
-      <stop offset="50%" stop-color="#F4DEB8" stop-opacity="0.15" />
-      <stop offset="100%" stop-color="#DCB879" stop-opacity="0" />
-    </linearGradient>
-
-    <!-- Subtle ambient gold warmth -->
-    <radialGradient id="center-gold-glow" cx="50%" cy="50%" r="48%">
-      <stop offset="0%" stop-color="#DDB97A" stop-opacity="0.15" />
-      <stop offset="60%" stop-color="#DDB97A" stop-opacity="0.03" />
-      <stop offset="100%" stop-color="#0E0F14" stop-opacity="0" />
-    </radialGradient>
   </defs>
 
-  <!-- Obsidian Squircle Foundation -->
-  <rect width="512" height="512" rx="116" fill="url(#obsidian-bg-a)" />
-  <rect width="512" height="512" rx="116" fill="url(#specular-a)" />
-  <rect width="504" height="504" x="4" y="4" rx="112" fill="none" stroke="url(#gold-rim-a)" stroke-width="3" />
+  <!-- Keepsake envelope card silhouette -->
+  <rect
+    x="4"
+    y="6"
+    width="24"
+    height="20"
+    rx="4.5"
+    stroke="url(#dearly-envelope-grad)"
+    stroke-width="2.6"
+  />
 
-  <!-- Ambient Gold Atmosphere -->
-  <circle cx="256" cy="256" r="170" fill="url(#center-gold-glow)" />
+  <!-- Diagonal envelope fold line -->
+  <path
+    d="M5.5 8.2L14.6 16.3C15.4 17 16.6 17 17.4 16.3L26.5 8.2"
+    stroke="url(#dearly-envelope-grad)"
+    stroke-width="2.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 
-  <!-- Architectural Ribbon Monogram 'D' / Origami Keepsake Fold -->
-  <g id="icon-concept-a">
-    <!-- Left Pillar Stem -->
-    <rect x="138" y="134" width="46" height="244" rx="23" fill="url(#gold-ribbon-primary)" />
-
-    <!-- Continuous Ribbon Arch (Golden Ratio Curvature) -->
-    <path
-      d="M 161 157
-         C 256 157, 350 197, 350 256
-         C 350 315, 256 355, 161 355"
-      fill="none"
-      stroke="url(#gold-ribbon-primary)"
-      stroke-width="46"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-
-    <!-- Origami Ribbon Fold Facet (Lustrous Architectural Bevel) -->
-    <path
-      d="M 184 157
-         C 246 157, 304 195, 304 256
-         L 230 256
-         C 204 256, 184 236, 184 210 Z"
-      fill="url(#gold-facet-shimmer)"
-    />
-
-    <!-- Crown Specular Catchlight -->
-    <path
-      d="M 198 157
-         C 260 157, 314 184, 330 220"
-      fill="none"
-      stroke="#FFFDF9"
-      stroke-width="6"
-      stroke-linecap="round"
-      opacity="0.85"
-    />
-  </g>
+  <!-- Micro Keepsake Heart Seal in center -->
+  <path
+    d="M16 14.2C15.1 13.1 13.4 13.4 13.4 14.8C13.4 16.6 16 18.7 16 18.7C16 18.7 18.6 16.6 18.6 14.8C18.6 13.4 16.9 13.1 16 14.2Z"
+    fill="url(#dearly-envelope-grad)"
+  />
 </svg>`;
 
 // Standard ICO format builder wrapping PNG data
@@ -130,10 +87,10 @@ function createIcoFromPngs(pngBuffers) {
 }
 
 async function generate() {
-  console.log('Writing public/favicon.svg...');
-  fs.writeFileSync(path.join(PUBLIC_DIR, 'favicon.svg'), SVG_CONTENT, 'utf8');
+  console.log('1. Writing public/favicon.svg (Dearly Keepsake Envelope with Heart Fold)...');
+  fs.writeFileSync(path.join(PUBLIC_DIR, 'favicon.svg'), SVG_FAVICON.trim(), 'utf8');
 
-  console.log('Writing public/site.webmanifest...');
+  console.log('2. Writing public/site.webmanifest (theme_color: #E11D48)...');
   const manifest = {
     name: 'Dearly — Keepsake & Surprise Websites',
     short_name: 'Dearly',
@@ -142,8 +99,8 @@ async function generate() {
     id: '/',
     display: 'standalone',
     orientation: 'portrait',
-    background_color: '#0E0F14',
-    theme_color: '#14151C',
+    background_color: '#FFFDFB',
+    theme_color: '#E11D48',
     icons: [
       {
         src: '/favicon-16x16.png',
@@ -176,7 +133,7 @@ async function generate() {
   };
   fs.writeFileSync(path.join(PUBLIC_DIR, 'site.webmanifest'), JSON.stringify(manifest, null, 2), 'utf8');
 
-  console.log('Launching Puppeteer to render pixel-perfect PNG assets...');
+  console.log('3. Launching Chrome Puppeteer to render pixel-perfect rasterized favicon assets...');
   const browser = await puppeteer.launch({
     headless: 'new',
     executablePath: CHROME_PATH,
@@ -184,7 +141,9 @@ async function generate() {
   });
 
   const page = await browser.newPage();
-  const html = `<!DOCTYPE html>
+
+  // Tab Favicons (Transparent background: 16x16, 32x32, 48x48)
+  const tabFaviconHtml = `<!DOCTYPE html>
 <html>
 <head>
   <style>
@@ -196,46 +155,90 @@ async function generate() {
 </head>
 <body>
   <div id="container">
-    ${SVG_CONTENT}
+    ${SVG_FAVICON}
   </div>
 </body>
 </html>`;
 
-  await page.setContent(html, { waitUntil: 'load' });
+  await page.setContent(tabFaviconHtml, { waitUntil: 'load' });
 
-  const targets = [
+  const tabTargets = [
     { size: 16, file: 'favicon-16x16.png' },
     { size: 32, file: 'favicon-32x32.png' },
     { size: 48, file: 'favicon-48x48.png' },
-    { size: 180, file: 'apple-touch-icon.png' },
-    { size: 192, file: 'android-chrome-192x192.png' },
-    { size: 512, file: 'android-chrome-512x512.png' },
   ];
 
   const pngBuffers = [];
 
-  for (const { size, file } of targets) {
+  for (const { size, file } of tabTargets) {
     await page.setViewport({ width: size, height: size, deviceScaleFactor: 1 });
     const buffer = await page.screenshot({
       omitBackground: true,
       clip: { x: 0, y: 0, width: size, height: size }
     });
     fs.writeFileSync(path.join(PUBLIC_DIR, file), buffer);
-    console.log(`  ✓ Generated public/${file} (${size}x${size})`);
-
-    if (size === 16 || size === 32 || size === 48) {
-      pngBuffers.push({ width: size, height: size, buffer });
-    }
+    console.log(`  ✓ Generated public/${file} (${size}x${size}, transparent)`);
+    pngBuffers.push({ width: size, height: size, buffer });
   }
 
-  // Create favicon.ico
-  console.log('Generating public/favicon.ico with 16, 32, 48px icons...');
+  // App Icons (Opaque background for iOS / Android Home Screen & PWA Maskable Compliance)
+  const appIconHtml = `<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 78%;
+      height: 78%;
+    }
+    svg { display: block; width: 100%; height: 100%; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    ${SVG_FAVICON}
+  </div>
+</body>
+</html>`;
+
+  await page.setContent(appIconHtml, { waitUntil: 'load' });
+
+  const appTargets = [
+    { size: 180, file: 'apple-touch-icon.png' },
+    { size: 192, file: 'android-chrome-192x192.png' },
+    { size: 512, file: 'android-chrome-512x512.png' },
+  ];
+
+  for (const { size, file } of appTargets) {
+    await page.setViewport({ width: size, height: size, deviceScaleFactor: 1 });
+    const buffer = await page.screenshot({
+      omitBackground: false,
+      clip: { x: 0, y: 0, width: size, height: size }
+    });
+    fs.writeFileSync(path.join(PUBLIC_DIR, file), buffer);
+    console.log(`  ✓ Generated public/${file} (${size}x${size}, app standard)`);
+  }
+
+  // Create favicon.ico (multi-resolution ICO combining 16, 32, 48px)
+  console.log('4. Generating public/favicon.ico (16, 32, 48px)...');
   const icoBuffer = createIcoFromPngs(pngBuffers);
   fs.writeFileSync(path.join(PUBLIC_DIR, 'favicon.ico'), icoBuffer);
   console.log('  ✓ Generated public/favicon.ico');
 
   await browser.close();
-  console.log('\nAll luxury favicon and webmanifest assets successfully generated!');
+  console.log('\nAll Dearly Keepsake Envelope favicon & manifest assets generated with 0 errors!');
 }
 
 generate().catch(err => {

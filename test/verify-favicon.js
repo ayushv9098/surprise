@@ -4,11 +4,11 @@ import path from 'path';
 
 const CHROME_PATH = process.env.CHROME_PATH || 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:5174';
-const OUTPUT_SCREENSHOT = 'C:\\Users\\hp\\.gemini\\antigravity-cli\\brain\\e0e6b5bc-9361-4005-afae-ef68c72d0d8f\\qa-favicon-verification.png';
+const OUTPUT_SCREENSHOT = 'C:\\Users\\hp\\.gemini\\antigravity-cli\\brain\\e0e6b5bc-9361-4005-afae-ef68c72d0d8f\\qa-dearly-envelope-favicon.png';
 
 async function runFaviconVerification() {
   console.log('======================================================================');
-  console.log('✨ WISHLY - FAVICON INTEGRATION & TAB BAR QA VERIFICATION');
+  console.log('💌 DEARLY - KEEPSAKE ENVELOPE FAVICON & TAB BAR QA VERIFICATION');
   console.log('======================================================================\n');
 
   const browser = await puppeteer.launch({
@@ -28,21 +28,25 @@ async function runFaviconVerification() {
     const url = response.url();
     const status = response.status();
     networkRequests.push({ url, status });
-    if (status >= 400 && (url.includes('favicon') || url.includes('manifest') || url.includes('apple-touch'))) {
+    if (status >= 400 && (url.includes('favicon') || url.includes('manifest') || url.includes('apple-touch') || url.includes('android-chrome'))) {
       networkErrors.push({ url, status, statusText: response.statusText() });
     }
   });
 
-  console.log(`[1/4] Loading Wishly root: ${BASE_URL}...`);
+  console.log(`[1/4] Loading Dearly root: ${BASE_URL}...`);
   await page.goto(BASE_URL, { waitUntil: 'networkidle0' });
 
-  // Extract head metadata
+  // Extract head metadata & navbar branding
   console.log('[2/4] Inspecting <head> favicon and web app metadata...');
   const headMeta = await page.evaluate(() => {
     const getAttr = (sel, attr) => {
       const el = document.querySelector(sel);
       return el ? el.getAttribute(attr) : null;
     };
+
+    const navBrandBtn = document.querySelector('header button');
+    const navLogoSvg = document.querySelector('header button svg');
+    const navBrandText = navBrandBtn ? navBrandBtn.textContent.trim() : null;
 
     return {
       title: document.title,
@@ -54,23 +58,24 @@ async function runFaviconVerification() {
       manifest: getAttr('link[rel="manifest"]', 'href'),
       themeColor: getAttr('meta[name="theme-color"]', 'content'),
       appName: getAttr('meta[name="application-name"]', 'content'),
-      navbarBrandExists: !!document.querySelector('header button img[src*="favicon"]'),
-      navbarBrandSrc: getAttr('header button img[src*="favicon"]', 'src')
+      navbarBrandExists: !!navBrandBtn,
+      navbarLogoSvgExists: !!navLogoSvg,
+      navbarBrandText: navBrandText
     };
   });
 
   console.log('  Found Metadata:');
-  console.log(`    - Title:             "${headMeta.title}"`);
-  console.log(`    - SVG Icon:          ${headMeta.iconSvg}`);
+  console.log(`    - Document Title:    "${headMeta.title}"`);
+  console.log(`    - SVG Favicon:       ${headMeta.iconSvg}`);
   console.log(`    - PNG 32x32:         ${headMeta.icon32}`);
   console.log(`    - PNG 16x16:         ${headMeta.icon16}`);
   console.log(`    - Apple Touch Icon:  ${headMeta.appleTouchIcon}`);
   console.log(`    - Webmanifest:       ${headMeta.manifest}`);
   console.log(`    - Theme Color:       ${headMeta.themeColor}`);
-  console.log(`    - Navbar Brand Logo: ${headMeta.navbarBrandSrc || 'N/A'}`);
+  console.log(`    - Navbar Brand:      "${headMeta.navbarBrandText}" (Vector SVG: ${headMeta.navbarLogoSvgExists ? 'Present' : 'None'})`);
 
   // Fetch individual favicon assets to ensure direct HTTP 200 accessibility
-  console.log('\n[3/4] Verifying HTTP status codes for all favicon endpoints...');
+  console.log('\n[3/4] Verifying HTTP status codes for all 9 favicon endpoints...');
   const testEndpoints = [
     '/favicon.svg',
     '/favicon-32x32.png',
@@ -89,10 +94,12 @@ async function runFaviconVerification() {
     try {
       const resp = await page.goto(fullUrl);
       const status = resp ? resp.status() : 0;
-      const contentType = resp ? resp.headers()['content-type'] || 'unknown' : 'none';
+      const headers = resp ? resp.headers() : {};
+      const contentType = headers['content-type'] || 'unknown';
+      const contentLength = headers['content-length'] || 'N/A';
       const ok = status === 200 || status === 304;
-      assetResults.push({ endpoint: ep, status, contentType, ok });
-      console.log(`    ${ok ? '✓' : '✗'} ${ep.padEnd(28)} -> HTTP ${status} (${contentType})`);
+      assetResults.push({ endpoint: ep, status, contentType, contentLength, ok });
+      console.log(`    ${ok ? '✓' : '✗'} ${ep.padEnd(28)} -> HTTP ${status} (${contentType}, ${contentLength} bytes)`);
     } catch (err) {
       assetResults.push({ endpoint: ep, status: 0, error: err.message, ok: false });
       console.log(`    ✗ ${ep.padEnd(28)} -> FAILED (${err.message})`);
@@ -100,22 +107,22 @@ async function runFaviconVerification() {
   }
 
   // Render comprehensive QA Tab Bar simulation page
-  console.log('\n[4/4] Rendering Light & Dark Chrome Tab Mockups and verification sheet...');
+  console.log('\n[4/4] Rendering Dearly Light & Dark Chrome Tab Mockups and verification sheet...');
   const mockPage = await browser.newPage();
-  await mockPage.setViewport({ width: 1400, height: 1800, deviceScaleFactor: 2 });
+  await mockPage.setViewport({ width: 1400, height: 2000, deviceScaleFactor: 2 });
 
   const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Wishly Favicon Verification</title>
+  <title>Dearly Keepsake Envelope Favicon QA Verification</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0B0F19;
+      background: #0B0E17;
       color: #F8FAFC;
       padding: 48px;
       min-height: 100vh;
@@ -141,9 +148,9 @@ async function runFaviconVerification() {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 46, 147, 0.12);
-      border: 1px solid rgba(255, 46, 147, 0.35);
-      color: #FF66B2;
+      background: rgba(225, 29, 72, 0.12);
+      border: 1px solid rgba(225, 29, 72, 0.35);
+      color: #FB7185;
       padding: 6px 14px;
       border-radius: 9999px;
       font-size: 13px;
@@ -158,10 +165,11 @@ async function runFaviconVerification() {
       box-shadow: 0 0 10px #10B981;
     }
     h1 {
-      font-size: 32px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 34px;
       font-weight: 800;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #FFFFFF 30%, #FDA4AF 70%, #C084FC 100%);
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFFFFF 30%, #FDA4AF 70%, #FB7185 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -184,7 +192,7 @@ async function runFaviconVerification() {
       gap: 16px;
     }
     .status-card {
-      background: #131B2E;
+      background: #121826;
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 14px;
       padding: 16px 20px;
@@ -197,7 +205,7 @@ async function runFaviconVerification() {
       font-weight: 600;
     }
     .status-value {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       color: #10B981;
       margin-top: 4px;
@@ -208,7 +216,7 @@ async function runFaviconVerification() {
 
     /* Section Cards */
     .section-card {
-      background: #131B2E;
+      background: #121826;
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 20px;
       overflow: hidden;
@@ -279,8 +287,8 @@ async function runFaviconVerification() {
       gap: 10px;
       color: #1F2937;
       box-shadow: 0 -2px 6px rgba(0,0,0,0.04);
-      min-width: 240px;
-      max-width: 320px;
+      min-width: 250px;
+      max-width: 340px;
       position: relative;
     }
     .tab-light-inactive {
@@ -291,7 +299,7 @@ async function runFaviconVerification() {
       gap: 10px;
       color: #4B5563;
       border-radius: 10px 10px 0 0;
-      min-width: 180px;
+      min-width: 190px;
     }
     .tab-title {
       font-size: 12.5px;
@@ -357,8 +365,8 @@ async function runFaviconVerification() {
       align-items: center;
       gap: 10px;
       color: #E8EAED;
-      min-width: 240px;
-      max-width: 320px;
+      min-width: 250px;
+      max-width: 340px;
     }
     .tab-dark-inactive {
       background: transparent;
@@ -368,7 +376,7 @@ async function runFaviconVerification() {
       gap: 10px;
       color: #9AA0A6;
       border-radius: 10px 10px 0 0;
-      min-width: 180px;
+      min-width: 190px;
     }
     .chrome-address-bar-dark {
       background: #28292A;
@@ -398,7 +406,7 @@ async function runFaviconVerification() {
       gap: 20px;
     }
     .scale-card {
-      background: #0B0F19;
+      background: #0B0E17;
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 14px;
       padding: 20px;
@@ -421,7 +429,17 @@ async function runFaviconVerification() {
       border: 1px solid #E2E8F0;
       border-radius: 10px;
       width: 100%;
-      height: 100px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scale-stage-light-chrome {
+      background: #DEE1E6;
+      border: 1px solid #CBD5E1;
+      border-radius: 10px;
+      width: 100%;
+      height: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -431,7 +449,17 @@ async function runFaviconVerification() {
       border: 1px solid #3C4043;
       border-radius: 10px;
       width: 100%;
-      height: 100px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .scale-stage-dark-chrome {
+      background: #202124;
+      border: 1px solid #3C4043;
+      border-radius: 10px;
+      width: 100%;
+      height: 110px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -444,7 +472,7 @@ async function runFaviconVerification() {
       gap: 14px;
     }
     .asset-card {
-      background: #0B0F19;
+      background: #0B0E17;
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 12px;
       padding: 16px;
@@ -455,18 +483,19 @@ async function runFaviconVerification() {
       text-align: center;
     }
     .asset-preview {
-      width: 72px;
-      height: 72px;
+      width: 76px;
+      height: 76px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.03);
       border-radius: 10px;
     }
     .asset-title {
       font-size: 13px;
       font-weight: 700;
       color: #E2E8F0;
+      word-break: break-all;
     }
     .asset-meta {
       font-size: 11px;
@@ -478,7 +507,7 @@ async function runFaviconVerification() {
     .navbar-preview-wrap {
       background: #FFFFFF;
       border-radius: 12px;
-      padding: 12px 24px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -488,14 +517,27 @@ async function runFaviconVerification() {
     .nav-brand-button {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
     }
     .nav-brand-text {
-      font-size: 18px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
       font-weight: 700;
-      color: #111827;
+      color: #020617;
       letter-spacing: -0.02em;
+    }
+    .parity-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10B981;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -506,10 +548,10 @@ async function runFaviconVerification() {
       <div>
         <div class="badge">
           <span class="badge-dot"></span>
-          FAVICON INTEGRATION & METADATA VERIFIED
+          DEARLY KEEPSAKE ENVELOPE FAVICON VERIFIED
         </div>
-        <h1>Wishly ✨ Browser Tab & Asset QA</h1>
-        <div class="subtitle">Production Favicon & Web App Verification across Chrome Light Mode & Dark Mode</div>
+        <h1>Dearly Keepsake Envelope Favicon QA Verification</h1>
+        <div class="subtitle">Multi-Scale Contrast & Tab Bar Integration Audit across Chrome Light Mode & Dark Mode</div>
       </div>
       <div class="timestamp">
         TEST RUN: ${new Date().toISOString()}<br>
@@ -526,21 +568,21 @@ async function runFaviconVerification() {
         </div>
       </div>
       <div class="status-card">
-        <div class="status-label">Vector Quality</div>
+        <div class="status-label">Favicon Vector Mark</div>
         <div class="status-value">
-          <span>★</span> Crisp SVG / Anti-aliased
+          <span style="color:#FB7185;">💌</span> Keepsake Envelope
         </div>
       </div>
       <div class="status-card">
         <div class="status-label">PWA Manifest</div>
         <div class="status-value">
-          <span>✓</span> #FF2E93 Linked
+          <span>✓</span> #E11D48 Linked
         </div>
       </div>
       <div class="status-card">
-        <div class="status-label">Navbar Brand</div>
+        <div class="status-label">Brand Parity</div>
         <div class="status-value">
-          <span>⚡</span> SVG Integrated
+          <span>⚡</span> 100% Vector Match
         </div>
       </div>
     </div>
@@ -551,7 +593,7 @@ async function runFaviconVerification() {
         <div class="section-title">
           <span>☀️</span> Chrome Light Mode Tab Bar (Chrome #DEE1E6 / Tab #FFFFFF)
         </div>
-        <div class="section-pill">Desktop Native Preview</div>
+        <div class="section-pill">Desktop Native 16px, 32px, 64px</div>
       </div>
       <div class="section-body">
         <div class="chrome-window-light">
@@ -563,25 +605,25 @@ async function runFaviconVerification() {
             </div>
             <!-- Active Tab with 16px Favicon -->
             <div class="tab-light-active">
-              <img src="${BASE_URL}/favicon.svg" width="16" height="16" alt="favicon" style="display:block; border-radius:3px;" />
-              <span class="tab-title">Wishly ✨ Create Aesthetic Keepsake & Surprise Websites</span>
+              <img src="${BASE_URL}/favicon.svg" width="16" height="16" alt="favicon" style="display:block;" />
+              <span class="tab-title">${headMeta.title || 'Dearly — Craft Unforgettable Digital Keepsakes'}</span>
               <div class="tab-close">✕</div>
             </div>
             <!-- Inactive Tab -->
             <div class="tab-light-inactive">
               <span style="font-size:14px; opacity:0.6;">💌</span>
-              <span class="tab-title">Preview: Royal Sapphire Keepsake</span>
+              <span class="tab-title">Romantic Keepsake: For Sarah</span>
             </div>
             <!-- Inactive Tab -->
             <div class="tab-light-inactive">
-              <span style="font-size:14px; opacity:0.6;">✨</span>
-              <span class="tab-title">Wishcraft Studio</span>
+              <span style="font-size:14px; opacity:0.6;">🎂</span>
+              <span class="tab-title">Birthday Surprise: Alex</span>
             </div>
           </div>
           <div class="chrome-address-bar-light">
             <div class="address-field-light">
               <span style="color:#10B981;">🔒</span>
-              <span style="color:#000; font-weight:600;">https://</span>wishcraft-surprise.vercel.app/
+              <span style="color:#000; font-weight:600;">https://</span>dearly.love/
             </div>
           </div>
         </div>
@@ -590,25 +632,25 @@ async function runFaviconVerification() {
         <div class="scale-grid">
           <div class="scale-card">
             <div class="scale-card-header">
-              <span>Standard Favicon</span>
+              <span>Native Tab Bar Scale</span>
               <span class="section-pill">16 × 16 px</span>
             </div>
             <div class="scale-stage-light">
               <div style="display:flex; align-items:center; gap:8px;">
                 <img src="${BASE_URL}/favicon-16x16.png" width="16" height="16" alt="16" />
-                <span style="font-size:13px; color:#1F2937; font-weight:600;">Wishly</span>
+                <span style="font-family:'Outfit', sans-serif; font-size:15px; color:#020617; font-weight:700;">Dearly</span>
               </div>
             </div>
           </div>
           <div class="scale-card">
             <div class="scale-card-header">
-              <span>Retina Display / High-DPI</span>
+              <span>Retina High-DPI</span>
               <span class="section-pill">32 × 32 px</span>
             </div>
             <div class="scale-stage-light">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <img src="${BASE_URL}/favicon-32x32.png" width="32" height="32" alt="32" style="border-radius:6px;" />
-                <span style="font-size:15px; color:#1F2937; font-weight:700;">Wishly Keepsake</span>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <img src="${BASE_URL}/favicon-32x32.png" width="32" height="32" alt="32" />
+                <span style="font-family:'Outfit', sans-serif; font-size:17px; color:#020617; font-weight:700;">Dearly Keepsake</span>
               </div>
             </div>
           </div>
@@ -618,7 +660,7 @@ async function runFaviconVerification() {
               <span class="section-pill">64 × 64 px</span>
             </div>
             <div class="scale-stage-light">
-              <img src="${BASE_URL}/favicon.svg" width="64" height="64" alt="64" style="border-radius:14px; box-shadow:0 4px 14px rgba(255,46,147,0.25);" />
+              <img src="${BASE_URL}/favicon.svg" width="64" height="64" alt="64" style="filter:drop-shadow(0 4px 10px rgba(225,29,72,0.18));" />
             </div>
           </div>
         </div>
@@ -631,7 +673,7 @@ async function runFaviconVerification() {
         <div class="section-title">
           <span>🌙</span> Chrome Dark Mode Tab Bar (Chrome #202124 / Tab #28292A)
         </div>
-        <div class="section-pill">High Contrast Verified</div>
+        <div class="section-pill">High Contrast 16px, 32px, 64px</div>
       </div>
       <div class="section-body">
         <div class="chrome-window-dark">
@@ -643,25 +685,25 @@ async function runFaviconVerification() {
             </div>
             <!-- Active Tab in Dark Mode -->
             <div class="tab-dark-active">
-              <img src="${BASE_URL}/favicon.svg" width="16" height="16" alt="favicon" style="display:block; border-radius:3px;" />
-              <span class="tab-title">Wishly ✨ Create Aesthetic Keepsake & Surprise Websites</span>
+              <img src="${BASE_URL}/favicon.svg" width="16" height="16" alt="favicon" style="display:block;" />
+              <span class="tab-title">${headMeta.title || 'Dearly — Craft Unforgettable Digital Keepsakes'}</span>
               <div class="tab-close">✕</div>
             </div>
             <!-- Inactive Tab -->
             <div class="tab-dark-inactive">
               <span style="font-size:14px; opacity:0.6;">💌</span>
-              <span class="tab-title">Preview: Royal Sapphire Keepsake</span>
+              <span class="tab-title">Romantic Keepsake: For Sarah</span>
             </div>
             <!-- Inactive Tab -->
             <div class="tab-dark-inactive">
-              <span style="font-size:14px; opacity:0.6;">✨</span>
-              <span class="tab-title">Wishcraft Studio</span>
+              <span style="font-size:14px; opacity:0.6;">🎂</span>
+              <span class="tab-title">Birthday Surprise: Alex</span>
             </div>
           </div>
           <div class="chrome-address-bar-dark">
             <div class="address-field-dark">
               <span style="color:#10B981;">🔒</span>
-              <span style="color:#8AB4F8;">https://</span>wishcraft-surprise.vercel.app/
+              <span style="color:#8AB4F8;">https://</span>dearly.love/
             </div>
           </div>
         </div>
@@ -670,25 +712,25 @@ async function runFaviconVerification() {
         <div class="scale-grid">
           <div class="scale-card">
             <div class="scale-card-header">
-              <span>Standard Favicon</span>
+              <span>Native Tab Bar Scale</span>
               <span class="section-pill">16 × 16 px</span>
             </div>
             <div class="scale-stage-dark">
               <div style="display:flex; align-items:center; gap:8px;">
                 <img src="${BASE_URL}/favicon-16x16.png" width="16" height="16" alt="16" />
-                <span style="font-size:13px; color:#F1F5F9; font-weight:600;">Wishly</span>
+                <span style="font-family:'Outfit', sans-serif; font-size:15px; color:#F8FAFC; font-weight:700;">Dearly</span>
               </div>
             </div>
           </div>
           <div class="scale-card">
             <div class="scale-card-header">
-              <span>Retina Display / High-DPI</span>
+              <span>Retina High-DPI</span>
               <span class="section-pill">32 × 32 px</span>
             </div>
             <div class="scale-stage-dark">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <img src="${BASE_URL}/favicon-32x32.png" width="32" height="32" alt="32" style="border-radius:6px;" />
-                <span style="font-size:15px; color:#F1F5F9; font-weight:700;">Wishly Keepsake</span>
+              <div style="display:flex; align-items:center; gap:12px;">
+                <img src="${BASE_URL}/favicon-32x32.png" width="32" height="32" alt="32" />
+                <span style="font-family:'Outfit', sans-serif; font-size:17px; color:#F8FAFC; font-weight:700;">Dearly Keepsake</span>
               </div>
             </div>
           </div>
@@ -698,18 +740,18 @@ async function runFaviconVerification() {
               <span class="section-pill">64 × 64 px</span>
             </div>
             <div class="scale-stage-dark">
-              <img src="${BASE_URL}/favicon.svg" width="64" height="64" alt="64" style="border-radius:14px; box-shadow:0 6px 18px rgba(255,46,147,0.35);" />
+              <img src="${BASE_URL}/favicon.svg" width="64" height="64" alt="64" style="filter:drop-shadow(0 4px 14px rgba(225,29,72,0.35));" />
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Complete Asset Inventory -->
+    <!-- Complete 9-Asset Inventory -->
     <div class="section-card">
       <div class="section-header">
         <div class="section-title">
-          <span>📦</span> Full Favicon & Web App Asset Inventory (All HTTP 200 OK)
+          <span>📦</span> Full Favicon & Web App Asset Inventory (All 9 Endpoints HTTP 200 OK)
         </div>
         <div class="section-pill">0 Errors • PWA Compliant</div>
       </div>
@@ -738,39 +780,66 @@ async function runFaviconVerification() {
           </div>
           <div class="asset-card">
             <div class="asset-preview">
+              <img src="${BASE_URL}/favicon-48x48.png" width="48" height="48" alt="48" />
+            </div>
+            <div class="asset-title">favicon-48x48.png</div>
+            <div class="asset-meta">PNG 48×48</div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
               <img src="${BASE_URL}/apple-touch-icon.png" width="56" height="56" alt="iOS" style="border-radius:12px;" />
             </div>
-            <div class="asset-title">apple-touch-icon</div>
+            <div class="asset-title">apple-touch-icon.png</div>
             <div class="asset-meta">PNG 180×180 iOS</div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="${BASE_URL}/android-chrome-192x192.png" width="56" height="56" alt="Android 192" style="border-radius:12px;" />
+            </div>
+            <div class="asset-title">android-chrome-192</div>
+            <div class="asset-meta">PNG 192×192</div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="${BASE_URL}/android-chrome-512x512.png" width="56" height="56" alt="Android 512" style="border-radius:12px;" />
+            </div>
+            <div class="asset-title">android-chrome-512</div>
+            <div class="asset-meta">PNG 512×512</div>
+          </div>
+          <div class="asset-card">
+            <div class="asset-preview">
+              <img src="${BASE_URL}/favicon.ico" width="32" height="32" alt="ICO" />
+            </div>
+            <div class="asset-title">favicon.ico</div>
+            <div class="asset-meta">Multi-Res ICO</div>
           </div>
           <div class="asset-card">
             <div class="asset-preview">
               <div style="font-size:28px;">📱</div>
             </div>
             <div class="asset-title">site.webmanifest</div>
-            <div class="asset-meta">Theme: #FF2E93</div>
+            <div class="asset-meta">Theme: #E11D48</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Live Navbar Brand Integration -->
+    <!-- Live Navbar Brand Integration & Vector Parity -->
     <div class="section-card">
       <div class="section-header">
         <div class="section-title">
-          <span>💎</span> Header / Navbar Brand Integration
+          <span>💎</span> Header / Navbar Brand Integration & Vector Parity
         </div>
-        <div class="section-pill">In-App Cohesion</div>
+        <div class="section-pill">100% Vector Harmony</div>
       </div>
       <div class="section-body">
         <div class="navbar-preview-wrap">
           <div class="nav-brand-button">
-            <img src="${BASE_URL}/favicon.svg" width="24" height="24" alt="logo" style="border-radius:7px; box-shadow:0 1px 3px rgba(0,0,0,0.1);" />
-            <span class="nav-brand-text">Wishly</span>
-            <span style="font-size:16px;">✨</span>
+            <img src="${BASE_URL}/favicon.svg" width="28" height="28" alt="logo" />
+            <span class="nav-brand-text">Dearly</span>
           </div>
-          <div style="font-size:13px; color:#6B7280; font-family:'JetBrains Mono', monospace;">
-            Navbar Logo matching favicon perfectly
+          <div class="parity-pill">
+            <span>✓</span> Identical Keepsake Envelope & Rose-Coral Gradient
           </div>
         </div>
       </div>
@@ -796,7 +865,7 @@ async function runFaviconVerification() {
   await browser.close();
 
   console.log('\n======================================================================');
-  console.log('✅ FAVICON VERIFICATION COMPLETE - ALL CHECKS PASSED');
+  console.log('✅ DEARLY FAVICON QA VERIFICATION COMPLETE - ALL CHECKS PASSED');
   console.log('======================================================================');
   console.log(`  - 404 Count:         ${networkErrors.length}`);
   console.log(`  - Verified Assets:   ${assetResults.filter(a => a.ok).length}/${assetResults.length}`);

@@ -1,91 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
   <defs>
-    <!-- Deep Obsidian Midnight Foundation -->
-    <linearGradient id="obsidian-bg-a" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#14151C" />
-      <stop offset="50%" stop-color="#0E0F14" />
-      <stop offset="100%" stop-color="#07080B" />
+    <linearGradient id="dearly-envelope-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB7185" />
+      <stop offset="40%" stop-color="#F43F5E" />
+      <stop offset="75%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#BE123C" />
     </linearGradient>
-
-    <!-- Champagne Gold Perimeter Rim -->
-    <linearGradient id="gold-rim-a" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FBF4E8" stop-opacity="0.45" />
-      <stop offset="45%" stop-color="#DDB97A" stop-opacity="0.25" />
-      <stop offset="100%" stop-color="#936F35" stop-opacity="0.10" />
-    </linearGradient>
-
-    <!-- Top-down subtle specular lighting (Apple-grade) -->
-    <linearGradient id="specular-a" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.08" />
-      <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.02" />
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0" />
-    </linearGradient>
-
-    <!-- Champagne Gold Metallic Gradients -->
-    <linearGradient id="gold-ribbon-primary" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFDF7" />
-      <stop offset="22%" stop-color="#F4DEB8" />
-      <stop offset="60%" stop-color="#DCB879" />
-      <stop offset="100%" stop-color="#A8803E" />
-    </linearGradient>
-
-    <linearGradient id="gold-facet-shimmer" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.32" />
-      <stop offset="50%" stop-color="#F4DEB8" stop-opacity="0.15" />
-      <stop offset="100%" stop-color="#DCB879" stop-opacity="0" />
-    </linearGradient>
-
-    <!-- Subtle ambient gold warmth -->
-    <radialGradient id="center-gold-glow" cx="50%" cy="50%" r="48%">
-      <stop offset="0%" stop-color="#DDB97A" stop-opacity="0.15" />
-      <stop offset="60%" stop-color="#DDB97A" stop-opacity="0.03" />
-      <stop offset="100%" stop-color="#0E0F14" stop-opacity="0" />
-    </radialGradient>
   </defs>
 
-  <!-- Obsidian Squircle Foundation -->
-  <rect width="512" height="512" rx="116" fill="url(#obsidian-bg-a)" />
-  <rect width="512" height="512" rx="116" fill="url(#specular-a)" />
-  <rect width="504" height="504" x="4" y="4" rx="112" fill="none" stroke="url(#gold-rim-a)" stroke-width="3" />
+  <!-- Keepsake envelope card silhouette -->
+  <rect
+    x="4"
+    y="6"
+    width="24"
+    height="20"
+    rx="4.5"
+    stroke="url(#dearly-envelope-grad)"
+    stroke-width="2.6"
+  />
 
-  <!-- Ambient Gold Atmosphere -->
-  <circle cx="256" cy="256" r="170" fill="url(#center-gold-glow)" />
+  <!-- Diagonal envelope fold line -->
+  <path
+    d="M5.5 8.2L14.6 16.3C15.4 17 16.6 17 17.4 16.3L26.5 8.2"
+    stroke="url(#dearly-envelope-grad)"
+    stroke-width="2.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 
-  <!-- Architectural Ribbon Monogram 'D' / Origami Keepsake Fold -->
-  <g id="icon-concept-a">
-    <!-- Left Pillar Stem -->
-    <rect x="138" y="134" width="46" height="244" rx="23" fill="url(#gold-ribbon-primary)" />
-
-    <!-- Continuous Ribbon Arch (Golden Ratio Curvature) -->
-    <path
-      d="M 161 157
-         C 256 157, 350 197, 350 256
-         C 350 315, 256 355, 161 355"
-      fill="none"
-      stroke="url(#gold-ribbon-primary)"
-      stroke-width="46"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-
-    <!-- Origami Ribbon Fold Facet (Lustrous Architectural Bevel) -->
-    <path
-      d="M 184 157
-         C 246 157, 304 195, 304 256
-         L 230 256
-         C 204 256, 184 236, 184 210 Z"
-      fill="url(#gold-facet-shimmer)"
-    />
-
-    <!-- Crown Specular Catchlight -->
-    <path
-      d="M 198 157
-         C 260 157, 314 184, 330 220"
-      fill="none"
-      stroke="#FFFDF9"
-      stroke-width="6"
-      stroke-linecap="round"
-      opacity="0.85"
-    />
-  </g>
+  <!-- Micro Keepsake Heart Seal in center -->
+  <path
+    d="M16 14.2C15.1 13.1 13.4 13.4 13.4 14.8C13.4 16.6 16 18.7 16 18.7C16 18.7 18.6 16.6 18.6 14.8C18.6 13.4 16.9 13.1 16 14.2Z"
+    fill="url(#dearly-envelope-grad)"
+  />
 </svg>
