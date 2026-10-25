@@ -300,17 +300,6 @@ export default function Footer() {
                     </p>
                   </div>
                 </div>
-
-                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <div className="min-w-0 flex-1">
-                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Responsible Vulnerability Disclosure</strong>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
-                      Security questions or disclosures may be reported to{' '}
-                      <span className="font-mono text-emerald-700 font-semibold break-all">security@avinfratech.com</span> in accordance with RFC 9116.
-                    </p>
-                  </div>
-                </div>
               </div>
             )}
 
