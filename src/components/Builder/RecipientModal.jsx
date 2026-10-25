@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, ArrowRight, ArrowLeft } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
 import AppleEmoji from '../common/AppleEmoji';
 
 export default function RecipientModal({
@@ -79,20 +79,8 @@ export default function RecipientModal({
           <X className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
-        {/* Navigation & Category Pill */}
+        {/* Occasion Category Pill */}
         <div className="flex items-center gap-2 mb-2 sm:mb-3">
-          {onBack && (
-            <button
-              type="button"
-              onClick={onBack}
-              aria-label="Back to occasions"
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100/90 hover:bg-gray-200 text-gray-600 hover:text-gray-900 text-xs font-medium transition-colors cursor-pointer"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back</span>
-            </button>
-          )}
-
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100/90 text-gray-700 text-xs font-medium">
             <AppleEmoji emoji={category.emoji} size={15} />
             <span>{category.name}</span>
