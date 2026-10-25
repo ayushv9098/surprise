@@ -295,6 +295,19 @@
   inset: 0;
 }
 
+.bg-soft-aesthetic-emerald {
+  background: linear-gradient(150deg, #ffffff 0%, #f0fdf4 35%, #d1fae5 70%, #ffffff 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-emerald:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(5, 150, 105, 0.15), transparent 45%), radial-gradient(circle at 80% 25%, rgba(16, 185, 129, 0.12), transparent 50%), radial-gradient(circle at 50% 85%, rgba(209, 250, 229, 0.35), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
 /* Romance Themes */
 .bg-soft-aesthetic-velvet {
   background: linear-gradient(150deg, #fff1f2 0%, #ffe4e6 35%, #fecdd3 70%, #fff5f5 100%);
@@ -499,6 +512,20 @@
   inset: 0;
 }
 
+.bg-envelope-celebration-emerald {
+  background: linear-gradient(150deg, #022c22 0%, #064e3b 45%, #065f46 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-emerald:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(5, 150, 105, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
 /* Romance Envelope Celebrations */
 .bg-envelope-celebration-velvet {
   background: linear-gradient(150deg, #4c0519 0%, #881337 45%, #1c050c 100%);
@@ -689,6 +716,16 @@
   box-shadow: 0 16px 36px -10px rgba(225, 29, 72, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
+.birthday-card-emerald {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(5, 150, 105, 0.3);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(5, 150, 105, 0.14), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
 /* Romance Cards */
 .birthday-card-velvet {
   -webkit-backdrop-filter: blur(20px);
@@ -789,6 +826,7 @@
   .birthday-card-lavender,
   .birthday-card-gold,
   .birthday-card-polaroid,
+  .birthday-card-emerald,
   .birthday-card-velvet,
   .birthday-card-sunset,
   .birthday-card-celestial,
@@ -960,6 +998,29 @@
   box-shadow: 0 14px 30px -4px rgba(225, 29, 72, 0.45);
 }
 .btn-primary-polaroid:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-emerald {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #059669 0%, #047857 50%, #065f46 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(5, 150, 105, 0.35);
+}
+.btn-primary-emerald:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 50%, #064e3b 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(5, 150, 105, 0.45);
+}
+.btn-primary-emerald:active {
   transform: translateY(0) scale(0.98);
 }
 
@@ -1310,6 +1371,30 @@
   box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
 }
 .btn-secondary-polaroid:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-emerald {
+  color: #065f46 !important;
+  cursor: pointer;
+  background: #ecfdf5;
+  border: 1px solid rgba(167, 243, 208, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(5, 150, 105, 0.08);
+}
+.btn-secondary-emerald:hover {
+  background: #d1fae5;
+  color: #064e3b !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(5, 150, 105, 0.15);
+}
+.btn-secondary-emerald:active {
   transform: translateY(0) scale(0.98);
 }
 
@@ -1682,6 +1767,22 @@
   box-shadow: 0 14px 28px -6px rgba(225, 29, 72, 0.16);
 }
 
+.special-reason-card-emerald {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(167, 243, 208, 0.8);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(5, 150, 105, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-emerald:hover {
+  background: #ffffff;
+  border-color: rgba(5, 150, 105, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(5, 150, 105, 0.16);
+}
+
 /* Romance Special Reason Cards */
 .special-reason-card-velvet {
   -webkit-backdrop-filter: blur(16px);
@@ -1857,6 +1958,10 @@
   0%, 100% { box-shadow: 0 10px 24px -4px rgba(225, 29, 72, 0.35); }
   50% { box-shadow: 0 12px 32px 0 rgba(225, 29, 72, 0.6), 0 0 24px rgba(251, 113, 133, 0.35); }
 }
+@keyframes pulseGlowEmerald {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(5, 150, 105, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(5, 150, 105, 0.6), 0 0 24px rgba(16, 185, 129, 0.4); }
+}
 
 @keyframes pulseGlowVelvet {
   0%, 100% { box-shadow: 0 10px 24px -4px rgba(225, 29, 72, 0.35); }
@@ -1931,6 +2036,7 @@
 .animate-pulse-glow-lavender { animation: 2.4s ease-in-out infinite pulseGlowLavender; }
 .animate-pulse-glow-gold { animation: 2.4s ease-in-out infinite pulseGlowGold; }
 .animate-pulse-glow-polaroid { animation: 2.4s ease-in-out infinite pulseGlowPolaroid; }
+.animate-pulse-glow-emerald { animation: 2.4s ease-in-out infinite pulseGlowEmerald; }
 .animate-pulse-glow-velvet { animation: 2.4s ease-in-out infinite pulseGlowVelvet; }
 .animate-pulse-glow-sunset { animation: 2.4s ease-in-out infinite pulseGlowSunset; }
 .animate-pulse-glow-celestial { animation: 2.4s ease-in-out infinite pulseGlowCelestial; }

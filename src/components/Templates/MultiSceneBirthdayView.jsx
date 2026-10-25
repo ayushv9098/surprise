@@ -6,24 +6,30 @@ import { getSongById } from '../../data/songs';
 
 // 18 Ambient floating Apple emoji configurations calibrated for each distinct theme
 const FLOATING_EMOJIS_DEF = [
-  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '💜', gold: '⭐', polaroid: '📸', left: '4%', top: '8%', size: 24, dur: '7s', del: '0s' },
-  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '⚡', left: '10%', top: '45%', size: 26, dur: '8.5s', del: '1.2s' },
-  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '🔥', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
-  { boy: '🌹', girl: '🌹', peach: '🧡', lavender: '🌸', gold: '🎂', polaroid: '⭐', left: '8%', top: '78%', size: 24, dur: '7.5s', del: '2s' },
-  { boy: '💫', girl: '💫', peach: '💫', lavender: '💫', gold: '💫', polaroid: '✨', left: '88%', top: '52%', size: 22, dur: '8s', del: '0.8s' },
-  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', polaroid: '❤️', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
-  { boy: '💙', girl: '💖', peach: '🌟', lavender: '💜', gold: '💛', polaroid: '💫', left: '80%', top: '82%', size: 22, dur: '7s', del: '1s' },
-  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '🎉', left: '48%', top: '6%', size: 22, dur: '6.5s', del: '2.3s' },
-  { boy: '🔥', girl: '🎀', peach: '🍰', lavender: '🌙', gold: '🔥', polaroid: '📸', left: '70%', top: '36%', size: 22, dur: '8s', del: '1.1s' },
-  { boy: '🏆', girl: '🍰', peach: '⭐', lavender: '🍰', gold: '🏆', polaroid: '⚡', left: '16%', top: '92%', size: 24, dur: '8.5s', del: '0.4s' },
-  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', polaroid: '⭐', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
-  { boy: '🎊', girl: '🧸', peach: '🎊', lavender: '🧸', gold: '🎊', polaroid: '⭐', left: '38%', top: '89%', size: 24, dur: '9s', del: '1.7s' },
-  { boy: '⚡', girl: '🍓', peach: '🧡', lavender: '🍓', gold: '⚡', polaroid: '✨', left: '58%', top: '72%', size: 20, dur: '7.5s', del: '2.1s' },
-  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', polaroid: '🔥', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
-  { boy: '🧿', girl: '🌈', peach: '🌈', lavender: '🌈', gold: '🧿', polaroid: '💫', left: '32%', top: '50%', size: 24, dur: '7s', del: '1.3s' },
-  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '🎉', left: '74%', top: '94%', size: 26, dur: '8s', del: '2.6s' },
-  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '📸', left: '6%', top: '32%', size: 20, dur: '8.2s', del: '0.3s' },
-  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '⚡', left: '52%', top: '20%', size: 26, dur: '6.8s', del: '1.6s' },
+  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '💜', gold: '⭐', polaroid: '📸', emerald: '🌿', left: '4%', top: '8%', size: 24, dur: '7s', del: '0s' },
+  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '⚡', emerald: '👑', left: '10%', top: '45%', size: 26, dur: '8.5s', del: '1.2s' },
+  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '🔥', emerald: '⭐', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
+  { boy: '🌹', girl: '🌹', peach: '🧡', lavender: '🌸', gold: '🎂', polaroid: '⭐', emerald: '💚', left: '8%', top: '78%', size: 24, dur: '7.5s', del: '2s' },
+  { boy: '💫', girl: '💫', peach: '💫', lavender: '💫', gold: '💫', polaroid: '✨', emerald: '✨', left: '88%', top: '52%', size: 22, dur: '8s', del: '0.8s' },
+  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', polaroid: '❤️', emerald: '🎉', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
+  { boy: '💙', girl: '💖', peach: '🌟', lavender: '💜', gold: '💛', polaroid: '💫', emerald: '🥂', left: '80%', top: '82%', size: 22, dur: '7s', del: '1s' },
+  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '🎉', emerald: '🔥', left: '48%', top: '6%', size: 22, dur: '6.5s', del: '2.3s' },
+  { boy: '🔥', girl: '🎀', peach: '🍰', lavender: '🌙', gold: '🔥', polaroid: '📸', emerald: '🌿', left: '70%', top: '36%', size: 22, dur: '8s', del: '1.1s' },
+  { boy: '🏆', girl: '🍰', peach: '⭐', lavender: '🍰', gold: '🏆', polaroid: '⚡', emerald: '👑', left: '16%', top: '92%', size: 24, dur: '8.5s', del: '0.4s' },
+  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', polaroid: '⭐', emerald: '⭐', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
+  { boy: '🎊', girl: '🧸', peach: '🎊', lavender: '🧸', gold: '🎊', polaroid: '⭐', emerald: '💚', left: '38%', top: '89%', size: 24, dur: '9s', del: '1.7s' },
+  { boy: '⚡', girl: '🍓', peach: '🧡', lavender: '🍓', gold: '⚡', polaroid: '✨', emerald: '✨', left: '58%', top: '72%', size: 20, dur: '7.5s', del: '2.1s' },
+  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', polaroid: '🔥', emerald: '🎉', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
+  { boy: '🧿', girl: '🌈', peach: '🌈', lavender: '🌈', gold: '🧿', polaroid: '💫', emerald: '🥂', left: '32%', top: '50%', size: 24, dur: '7s', del: '1.3s' },
+  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '🎉', emerald: '🔥', left: '74%', top: '94%', size: 26, dur: '8s', del: '2.6s' },
+  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '📸', emerald: '🌿', left: '6%', top: '32%', size: 20, dur: '8.2s', del: '0.3s' },
+  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '⚡', emerald: '👑', left: '52%', top: '20%', size: 26, dur: '6.8s', del: '1.6s' },
+];
+
+const DEFAULT_EMERALD_REASONS = [
+  { icon: '🌿', title: 'Regal Presence', desc: 'A rare and distinguished energy that commands respect and inspires everyone around!' },
+  { icon: '⭐', title: 'Boundless Ambition', desc: 'Relentless drive, golden wisdom, and the courage to turn big dreams into reality!' },
+  { icon: '👑', title: 'Loyal & Irreplaceable', desc: 'A true brother and legend whose loyalty and greatness shine like pure emerald!' },
 ];
 
 const DEFAULT_BOY_REASONS = [
@@ -153,8 +159,9 @@ export default function MultiSceneBirthdayView({
   const isPeach = !isSunrise && templateId.includes('peach');
   const isLavender = !isForgive && templateId.includes('lavender');
   const isGold = templateId.includes('gold');
-  const isBlush = !isVelvet && !isPeach && !isLavender && !isGold && !isPolaroid && (templateId.includes('rose') || templateId.includes('blush') || siteData.gender === 'girl');
-  const isRoyal = !isVelvet && !isSunset && !isCelestial && !isVintage && !isNeon && !isCozy && !isPeace && !isForgive && !isSunrise && !isPeach && !isLavender && !isGold && !isPolaroid && !isBlush;
+  const isEmerald = templateId.includes('emerald') || templateId.includes('jade');
+  const isBlush = !isVelvet && !isPeach && !isLavender && !isGold && !isEmerald && !isPolaroid && (templateId.includes('rose') || templateId.includes('blush') || siteData.gender === 'girl');
+  const isRoyal = !isVelvet && !isSunset && !isCelestial && !isVintage && !isNeon && !isCozy && !isPeace && !isForgive && !isSunrise && !isPeach && !isLavender && !isGold && !isPolaroid && !isEmerald && !isBlush;
 
   const isRomanceCategory = isVelvet || isSunset || isCelestial;
   const isScrapbookCategory = isVintage || isNeon || isCozy || isPolaroid;
@@ -558,7 +565,37 @@ export default function MultiSceneBirthdayView({
       };
     }
 
-    // 14. Blush Blossom (Birthday)
+    // 14. Emerald Luxe (Birthday)
+    if (isEmerald) {
+      return {
+        celebrationEmoji: '🌿',
+        headingColorClass: 'text-emerald-950',
+        headingAccentClass: 'text-emerald-600',
+        cardClass: 'birthday-card-emerald',
+        reasonCardClass: 'special-reason-card-emerald',
+        reasonIconBgClass: 'bg-emerald-50 border border-emerald-200/80',
+        reasonTitleClass: 'text-emerald-950',
+        primaryBtnClass: 'btn-primary-emerald',
+        secondaryBtnClass: 'btn-secondary-emerald',
+        coverBtnGradient: 'bg-gradient-to-r from-[#059669] via-[#047857] to-[#065f46] hover:from-[#047857] hover:to-[#064e3b] shadow-emerald-600/35 hover:shadow-emerald-600/50 animate-pulse-glow-emerald',
+        envelopeBgGradient: 'bg-gradient-to-br from-emerald-700 via-emerald-800 to-emerald-950 border-emerald-400/40',
+        envelopeShading: 'bg-emerald-950/60',
+        envelopeCardBorder: 'border-emerald-200',
+        envelopeCardTitle: 'text-emerald-900',
+        envelopeFolds: { fold1: '#064e3b', fold2: '#047857', fold3: '#059669' },
+        defaultWaxColor: '#059669',
+        defaultSealEmoji: '🌿',
+        openLetterBorder: 'border-emerald-200/90',
+        openLetterHeader: 'text-emerald-950',
+        signatureColorClass: 'text-emerald-800',
+        bgContainerOpen: 'bg-envelope-celebration-emerald',
+        bgContainerClosed: 'bg-soft-aesthetic-emerald',
+        confettiColors: ['#059669', '#10b981', '#34d399', '#f59e0b', '#ffffff', '#a7f3d0'],
+        defaultSignOffEmoji: '🌿👑',
+      };
+    }
+
+    // 15. Blush Blossom (Birthday)
     if (isBlush) {
       return {
         celebrationEmoji: '🌸',
@@ -637,10 +674,13 @@ export default function MultiSceneBirthdayView({
     ? ['🥺', '💜', '🌸', '🧸', '✨', '💌', '💫', '🤍']
     : isSunrise
     ? ['🌤️', '☀️', '🌻', '💛', '✨', '🌈', '💫', '🌱']
+    : isEmerald
+    ? ['🌿', '👑', '⭐', '💚', '✨', '🎉', '🥂', '🔥']
     : null;
 
   const getFloatingEmoji = (e, index = 0) => {
     if (themeFloatingEmojis) return themeFloatingEmojis[index % themeFloatingEmojis.length];
+    if (isEmerald) return e.emerald || '🌿';
     if (isPolaroid) return e.polaroid || '📸';
     if (isPeach) return e.peach || e.girl;
     if (isLavender) return e.lavender || e.girl;
@@ -701,6 +741,7 @@ export default function MultiSceneBirthdayView({
     if (isPeace) return "Peace, Love & Healing 🕊️🌿";
     if (isForgive) return "Sending the Warmest Hugs 🥺💜";
     if (isSunrise) return "Here is to a Fresh Beginning 🌤️🌱";
+    if (isEmerald) return "May your future be as rich & radiant as emerald! 🌿👑";
     if (isPeach) return "Shining with Pure Warmth & Grace! ✨🍑";
     if (isLavender) return "Dreamy, Radiant & Magical Always! 💜✨";
     if (isGold) return "Golden Spark & Boundless Joy! 🎂✨";
@@ -727,15 +768,17 @@ export default function MultiSceneBirthdayView({
     ? DEFAULT_FORGIVE_REASONS
     : isSunrise
     ? DEFAULT_SUNRISE_REASONS
-    : (isPeach 
-      ? DEFAULT_PEACH_REASONS 
-      : (isLavender 
-        ? DEFAULT_LAVENDER_REASONS 
-        : (isGold 
-          ? DEFAULT_GOLD_REASONS 
-          : (isPolaroid
-            ? DEFAULT_POLAROID_REASONS
-            : (isBlush ? DEFAULT_GIRL_REASONS : DEFAULT_BOY_REASONS)))));
+    : (isEmerald
+      ? DEFAULT_EMERALD_REASONS
+      : (isPeach 
+        ? DEFAULT_PEACH_REASONS 
+        : (isLavender 
+          ? DEFAULT_LAVENDER_REASONS 
+          : (isGold 
+            ? DEFAULT_GOLD_REASONS 
+            : (isPolaroid
+              ? DEFAULT_POLAROID_REASONS
+              : (isBlush ? DEFAULT_GIRL_REASONS : DEFAULT_BOY_REASONS))))));
 
   const reasons = siteData.reasons || 
                   siteData.specialReasons || 
@@ -761,17 +804,19 @@ export default function MultiSceneBirthdayView({
     ? `Dear ${recipientName},\n\nI am so genuinely sorry for my mistake. Nothing feels right without your sweet smile, laughter, and warmth around. 🥺💜\n\nI value our connection more than words can say. Sending you the warmest hug and hoping we can smile together again soon.`
     : isSunrise
     ? `Dear ${recipientName},\n\nEvery sunrise is a chance to heal, learn, and grow closer. I am so sorry for where things went wrong between us. 🌤️🌱\n\nOur bond means everything to me, and I promise to cherish and protect it with greater care. Here's to hope, renewal, and a brighter tomorrow together.`
-    : (isPeach
-      ? `Happy Birthday, ${recipientName}!\n\nYou bring a radiant warmth, golden sunshine, and beautiful energy wherever you go. Your smile lights up every room, and you make every ordinary day feel like something magical.\n\nMay this year unfold with sweet laughter, wonderful new adventures, and all the happiest moments your heart can hold. Stay glorious! ✨🍑`
-      : (isLavender
-        ? `Happy Birthday, ${recipientName}!\n\nYou possess such a dreamy spirit, creative wonder, and comforting kindness. Being in your presence feels like a breath of fresh lilac and pure calm.\n\nMay this year grant you your most cherished wishes, endless inspiration, and moments full of starlight and joy. Keep dreaming wonderfully! 💜✨`
-        : (isGold
-          ? `Happy Birthday, ${recipientName}!\n\nToday we celebrate a heart of pure gold. Your generosity, infectious laughter, and bright spirit illuminate the paths of everyone around you.\n\nMay your year ahead be crowned with grand triumphs, blissful memories, and radiant good health! 🎂✨`
-          : (isPolaroid
-            ? `Happy Birthday, ${recipientName}!\n\nLooking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. You bring unmatched loyalty, real energy, and genuine warmth into every day.\n\nMay this year bring you all the grand achievements, unforgettable memories, and boundless happiness you deserve. Keep rocking, brother! 📸⚡`
-            : (isBlush
-              ? `Happy Birthday, ${recipientName}!\n\nYou bring so much elegance, warmth, and sparkling wonder wherever you go. Your kind soul touches everyone you meet, and you make ordinary days feel truly unforgettable.\n\nMay this year bring you all the sweetest dreams, vibrant laughter, and boundless happiness you deserve so deeply.`
-              : `Happy Birthday, ${recipientName}!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`)))));
+    : (isEmerald
+      ? `Happy Birthday, ${recipientName}!\n\nToday we celebrate a true legend. Your presence carries a rare greatness, unshakable loyalty, and quiet wisdom that elevates everyone around you.\n\nMay this year grant you monumental victories, boundless prosperity, and cherished moments of deep happiness. Keep conquering, king! 🌿👑`
+      : (isPeach
+        ? `Happy Birthday, ${recipientName}!\n\nYou bring a radiant warmth, golden sunshine, and beautiful energy wherever you go. Your smile lights up every room, and you make every ordinary day feel like something magical.\n\nMay this year unfold with sweet laughter, wonderful new adventures, and all the happiest moments your heart can hold. Stay glorious! ✨🍑`
+        : (isLavender
+          ? `Happy Birthday, ${recipientName}!\n\nYou possess such a dreamy spirit, creative wonder, and comforting kindness. Being in your presence feels like a breath of fresh lilac and pure calm.\n\nMay this year grant you your most cherished wishes, endless inspiration, and moments full of starlight and joy. Keep dreaming wonderfully! 💜✨`
+          : (isGold
+            ? `Happy Birthday, ${recipientName}!\n\nToday we celebrate a heart of pure gold. Your generosity, infectious laughter, and bright spirit illuminate the paths of everyone around you.\n\nMay your year ahead be crowned with grand triumphs, blissful memories, and radiant good health! 🎂✨`
+            : (isPolaroid
+              ? `Happy Birthday, ${recipientName}!\n\nLooking back at every snapshot, adventure, and late-night laugh, I'm so grateful for our brotherhood and all the memories we share. You bring unmatched loyalty, real energy, and genuine warmth into every day.\n\nMay this year bring you all the grand achievements, unforgettable memories, and boundless happiness you deserve. Keep rocking, brother! 📸⚡`
+              : (isBlush
+                ? `Happy Birthday, ${recipientName}!\n\nYou bring so much elegance, warmth, and sparkling wonder wherever you go. Your kind soul touches everyone you meet, and you make ordinary days feel truly unforgettable.\n\nMay this year bring you all the sweetest dreams, vibrant laughter, and boundless happiness you deserve so deeply.`
+                : `Happy Birthday, ${recipientName}!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`))))));
 
   const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || 
                      siteData.letterBody || 

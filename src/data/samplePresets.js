@@ -167,6 +167,52 @@ export const TEMPLATE_PRESETS = {
     songId: 'bollywood-lofi-chill',
   },
 
+  'emerald-luxe': {
+    name: 'Emerald Luxe',
+    themeId: 'emerald',
+    category: 'birthday',
+    gender: 'boy',
+    recipientName: 'Kabir',
+    senderName: 'Alex',
+    occasion: 'Happy Birthday to the Legend! 🌿✨',
+    subtitle: 'Wishing you boundless greatness, prosperity & joy.',
+    heroPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
+    photoCaption: 'May your future be as rich & radiant as emerald! 👑✨',
+    photos: [
+      {
+        id: 'emerald-p1',
+        url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
+        caption: 'Radiant confidence & timeless strength! 🌿✨',
+        tag: 'The Legend',
+      },
+    ],
+    specialReasons: [
+      {
+        icon: '🌿',
+        title: 'Boundless Wisdom',
+        desc: 'You inspire everyone with your grounded poise, calm leadership, and golden guidance!',
+      },
+      {
+        icon: '👑',
+        title: 'True Legend',
+        desc: 'Walking with strength and honour, conquering every milestone with radiant grace!',
+      },
+      {
+        icon: '💎',
+        title: 'Rare as Emerald',
+        desc: 'Loyal, resilient, and brilliant — your character is a treasure beyond measure!',
+      },
+    ],
+    letter: {
+      title: 'A Royal Keepsake For You',
+      content: `Happy Birthday Kabir! 🌿✨\n\nMay your year be as rich, vibrant, and prosperous as emerald. You carry yourself with unmatched poise, dignity, and a heart of pure gold.\n\nThank you for being someone we can always rely on and celebrate with pride. Here is to health, boundless greatness, and monumental success ahead!\n\nKeep shining like the legend you are! 👑✨`,
+      signOff: 'With royal warmth & respect,\nAlex 🌿👑',
+      sealEmoji: '🌿',
+      waxColor: '#059669',
+    },
+    songId: 'baar-baar-din-ye-aaye',
+  },
+
   // ==========================================
   // --- BIRTHDAY PRESETS (GIRL) ---
   // ==========================================
@@ -799,6 +845,9 @@ TEMPLATE_PRESETS['heartfelt-apology'] = TEMPLATE_PRESETS['gentle-peace'];
 TEMPLATE_PRESETS['royal'] = TEMPLATE_PRESETS['royal-sapphire'];
 TEMPLATE_PRESETS['gold'] = TEMPLATE_PRESETS['golden-birthday'];
 TEMPLATE_PRESETS['polaroid'] = TEMPLATE_PRESETS['polaroid-scrapbook'];
+TEMPLATE_PRESETS['emerald'] = TEMPLATE_PRESETS['emerald-luxe'];
+TEMPLATE_PRESETS['emerald-luxe'] = TEMPLATE_PRESETS['emerald-luxe'];
+TEMPLATE_PRESETS['jade'] = TEMPLATE_PRESETS['emerald-luxe'];
 TEMPLATE_PRESETS['blush'] = TEMPLATE_PRESETS['blush-rose'];
 TEMPLATE_PRESETS['peach'] = TEMPLATE_PRESETS['princess-peach'];
 TEMPLATE_PRESETS['lavender'] = TEMPLATE_PRESETS['lavender-dream'];

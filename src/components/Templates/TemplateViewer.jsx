@@ -18,6 +18,7 @@ const TEMPLATES = [
   { id: 'royal-sapphire', label: 'Royal Sapphire', icon: '👑', component: MultiSceneBirthdayView },
   { id: 'golden-birthday', label: 'Golden Spark', icon: '🎂', component: MultiSceneBirthdayView },
   { id: 'polaroid-scrapbook', label: 'Retro Polaroid', icon: '📸', component: MultiSceneBirthdayView },
+  { id: 'emerald-luxe', label: 'Emerald Luxe', icon: '🌿', component: MultiSceneBirthdayView },
   { id: 'blush-rose', label: 'Blush Blossom', icon: '🌸', component: MultiSceneBirthdayView },
   { id: 'princess-peach', label: 'Princess Peach', icon: '✨', component: MultiSceneBirthdayView },
   { id: 'lavender-dream', label: 'Lavender Dream', icon: '💜', component: MultiSceneBirthdayView },
@@ -71,6 +72,7 @@ export default function TemplateViewer({
     if (raw.includes('multiscene') || raw.includes('multi-scene')) return siteData.gender === 'girl' ? 'blush-rose' : 'royal-sapphire';
     if (raw.includes('gold') || raw === 'golden-birthday' || raw === 'golden') return 'golden-birthday';
     if (raw.includes('polaroid')) return 'polaroid-scrapbook';
+    if (raw.includes('emerald') || raw.includes('jade')) return 'emerald-luxe';
     if (raw.includes('rose') || raw.includes('blush-rose')) return 'blush-rose';
     if (raw.includes('peach')) return 'princess-peach';
     if (raw.includes('lavender')) return 'lavender-dream';

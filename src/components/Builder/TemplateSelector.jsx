@@ -114,7 +114,9 @@ export default function TemplateSelector({
       </div>
 
       {/* 2) RECOMMENDED PRO STYLE CARDS GRID */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
+      <div className={`grid gap-2.5 sm:gap-3.5 ${
+        matchingTemplates.length === 4 ? 'grid-cols-2' : 'grid-cols-2 sm:grid-cols-3'
+      }`}>
         {matchingTemplates.map((tmpl) => {
           const isSelected = selectedId === tmpl.id;
           const cleanTitle = (tmpl.name || '').replace(/\p{Extended_Pictographic}/gu, '').trim();
