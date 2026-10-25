@@ -2259,3 +2259,13 @@
 .animate-fade-in-up,
 .animate-fade-in-up-smooth { animation: 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards fadeInUpSmooth; }
 
+/* Utility to hide scrollbars while retaining scroll functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+

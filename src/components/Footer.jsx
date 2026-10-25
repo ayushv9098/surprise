@@ -1,6 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { X, ShieldCheck, Lock, FileText, CheckCircle2 } from 'lucide-react';
 
+const MODAL_CONFIG = {
+  privacy: {
+    title: 'Privacy & Trust',
+    subtitle: 'Your memories are strictly private and personal',
+    icon: Lock,
+    badgeColor: 'bg-rose-50 text-rose-600 border-rose-200/60',
+  },
+  terms: {
+    title: 'Terms of Service',
+    subtitle: 'Simple, fair usage rules for everyone',
+    icon: FileText,
+    badgeColor: 'bg-amber-50 text-amber-600 border-amber-200/60',
+  },
+  security: {
+    title: 'Security Overview',
+    subtitle: 'Verified safe by AV Infra Tech',
+    icon: ShieldCheck,
+    badgeColor: 'bg-emerald-50 text-emerald-600 border-emerald-200/60',
+  },
+};
+
 export default function Footer() {
   const [activeModal, setActiveModal] = useState(null);
 
@@ -23,6 +44,9 @@ export default function Footer() {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [activeModal]);
+
+  const activeTabInfo = activeModal ? MODAL_CONFIG[activeModal] || MODAL_CONFIG.privacy : null;
+  const TabIcon = activeTabInfo?.icon;
 
   return (
     <>
@@ -80,7 +104,7 @@ export default function Footer() {
       </footer>
 
       {/* Trust & Legal Modal */}
-      {activeModal && (
+      {activeModal && activeTabInfo && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/40 backdrop-blur-sm transition-opacity"
           onClick={() => setActiveModal(null)}
@@ -88,28 +112,43 @@ export default function Footer() {
           aria-modal="true"
         >
           <div
-            className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-100 p-5 sm:p-7 max-h-[90vh] overflow-y-auto transform transition-all animate-in fade-in zoom-in-95"
+            className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-100 p-4 sm:p-6 max-h-[85vh] overflow-y-auto transform transition-all animate-in fade-in zoom-in-95 mx-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setActiveModal(null)}
-              aria-label="Close modal"
-              className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-all cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {/* Modal Top Header Row: Icon + Title + Close Button */}
+            <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-slate-100">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${activeTabInfo.badgeColor}`}>
+                  <TabIcon className="w-4 h-4" />
+                </div>
+                <div className="min-w-0">
+                  <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-tight truncate">
+                    {activeTabInfo.title}
+                  </h3>
+                  <p className="text-[11px] sm:text-xs text-slate-400 truncate">
+                    {activeTabInfo.subtitle}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveModal(null)}
+                aria-label="Close modal"
+                className="p-2 -mr-1 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-all cursor-pointer shrink-0"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-            {/* Modal Navigation Tabs */}
-            <div className="flex items-center gap-2 mb-6 border-b border-slate-100 pb-3">
+            {/* Pill Navigation Bar */}
+            <div className="my-3.5 flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               <button
                 type="button"
                 onClick={() => setActiveModal('privacy')}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   activeModal === 'privacy'
-                    ? 'bg-rose-50 text-rose-700 border border-rose-200/80 shadow-2xs'
-                    : 'text-slate-500 hover:bg-slate-100'
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
+                    : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
                 Privacy Policy
@@ -117,10 +156,10 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => setActiveModal('terms')}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                   activeModal === 'terms'
-                    ? 'bg-rose-50 text-rose-700 border border-rose-200/80 shadow-2xs'
-                    : 'text-slate-500 hover:bg-slate-100'
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
+                    : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
                 Terms of Service
@@ -128,166 +167,152 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => setActiveModal('security')}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer inline-flex items-center gap-1 ${
+                className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer inline-flex items-center gap-1.5 ${
                   activeModal === 'security'
-                    ? 'bg-rose-50 text-rose-700 border border-rose-200/80 shadow-2xs'
-                    : 'text-slate-500 hover:bg-slate-100'
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
+                    : 'text-slate-500 hover:text-slate-800'
                 }`}
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Security Overview</span>
               </button>
             </div>
 
             {/* Modal Tab Content */}
             {activeModal === 'privacy' && (
-              <div className="space-y-4 text-left">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-rose-50 border border-rose-200/60 flex items-center justify-center text-rose-600">
-                    <Lock className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight">Privacy Policy</h3>
-                    <p className="text-xs text-slate-400">Your memories are strictly private and personal</p>
+              <div className="space-y-3 text-left">
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">100% Private & Ad-Free</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
+                      Dearly does not run advertisements, does not sell your data, and does not share your keepsake cards with third parties.
+                    </p>
                   </div>
                 </div>
 
-                <div className="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed pt-2">
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">100% Private & Ad-Free</strong>
-                      Dearly does not run advertisements, does not sell your data, and does not share your keepsake cards with third parties.
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">No Sensitive Financial Credentials</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">No Sensitive Financial Credentials</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       Dearly never asks for passwords, payment card details, bank logins, or sensitive personal IDs.
-                    </div>
+                    </p>
                   </div>
+                </div>
 
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Confidential Link Sharing</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Confidential Link Sharing</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       Your crafted surprise cards are accessible only via the direct shareable URL you send to your recipient.
-                    </div>
+                    </p>
                   </div>
+                </div>
 
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Built & Maintained by AV Infra Tech</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Built & Maintained by AV Infra Tech</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       All data storage and application infrastructure are secured by{' '}
                       <a
                         href="https://avinfra.vercel.app/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-rose-600 hover:underline font-semibold"
+                        className="text-rose-600 hover:underline font-semibold break-words"
                       >
                         AV Infra Tech — Digital Engineering Studio
                       </a>{' '}
                       adhering to modern enterprise cloud security standards.
-                    </div>
+                    </p>
                   </div>
                 </div>
               </div>
             )}
 
             {activeModal === 'terms' && (
-              <div className="space-y-4 text-left">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200/60 flex items-center justify-center text-amber-600">
-                    <FileText className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight">Terms of Service</h3>
-                    <p className="text-xs text-slate-400">Simple, fair usage rules for everyone</p>
+              <div className="space-y-3 text-left">
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Free Personal Use</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
+                      Dearly is completely free to create and share heartfelt surprise websites for personal occasions like birthdays, anniversaries, and notes of appreciation.
+                    </p>
                   </div>
                 </div>
 
-                <div className="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed pt-2">
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Free Personal Use</strong>
-                      Dearly is completely free to create and share heartfelt surprise websites for personal occasions like birthdays, anniversaries, and notes of appreciation.
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Respectful Content Standards</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Respectful Content Standards</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       Users agree not to publish hateful, harassing, deceptive, or harmful material. AV Infra Tech reserves the right to remove non-compliant content.
-                    </div>
+                    </p>
                   </div>
+                </div>
 
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Reliable Service</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Reliable Service</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       We strive to ensure continuous availability so your recipients can open their keepsakes whenever they choose.
-                    </div>
+                    </p>
                   </div>
                 </div>
               </div>
             )}
 
             {activeModal === 'security' && (
-              <div className="space-y-4 text-left">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-600">
-                    <ShieldCheck className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 leading-tight">Security & Verification</h3>
-                    <p className="text-xs text-slate-400">Verified safe by AV Infra Tech</p>
+              <div className="space-y-3 text-left">
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Enterprise Transport Encryption</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
+                      Every connection to Dearly uses modern TLS/HTTPS encryption to protect transmitted messages and photos from eavesdropping.
+                    </p>
                   </div>
                 </div>
 
-                <div className="space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed pt-2">
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Enterprise Transport Encryption</strong>
-                      Every connection to Dearly uses modern TLS/HTTPS encryption to protect transmitted messages and photos from eavesdropping.
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Strict HTTP Security Headers</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Strict HTTP Security Headers</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       Configured with nosniff, sameorigin framing, referrer policies, and disabled device permissions (camera, microphone, geolocation).
-                    </div>
+                    </p>
                   </div>
+                </div>
 
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">No Adware, Phishing, or Malware</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">No Adware, Phishing, or Malware</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       Dearly is a clean, benign application without third-party ad scripts, crypto miners, or telemetry trackers.
-                    </div>
+                    </p>
                   </div>
+                </div>
 
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="text-slate-900 block mb-0.5">Responsible Vulnerability Disclosure</strong>
+                <div className="flex items-start gap-3 p-3 sm:p-4 rounded-2xl bg-slate-50/70 border border-slate-100/80 break-words">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <div className="min-w-0 flex-1">
+                    <strong className="text-slate-900 block mb-0.5 text-xs sm:text-sm font-semibold">Responsible Vulnerability Disclosure</strong>
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed break-words">
                       Security questions or disclosures may be reported to{' '}
-                      <span className="font-mono text-emerald-700 font-semibold">security@avinfratech.com</span> in accordance with RFC 9116.
-                    </div>
+                      <span className="font-mono text-emerald-700 font-semibold break-all">security@avinfratech.com</span> in accordance with RFC 9116.
+                    </p>
                   </div>
                 </div>
               </div>
             )}
 
             {/* Modal Bottom Close */}
-            <div className="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+            <div className="mt-5 pt-3.5 border-t border-slate-100 flex justify-end">
               <button
                 type="button"
                 onClick={() => setActiveModal(null)}
