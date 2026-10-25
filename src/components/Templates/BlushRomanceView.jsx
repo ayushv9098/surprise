@@ -430,9 +430,12 @@ export default function BlushRomanceView({
 
   const isSunset = rawTheme.includes('sunset');
   const isCelestial = rawTheme.includes('celestial');
+  const isAmethyst = rawTheme.includes('amethyst') || rawTheme.includes('violet') || (rawTheme.includes('purple') && !rawTheme.includes('lavender'));
   const themeClass = isCelestial 
     ? 'blush-theme-celestial' 
-    : (isSunset ? 'blush-theme-sunset' : 'blush-theme-velvet');
+    : (isAmethyst 
+        ? 'blush-theme-amethyst' 
+        : (isSunset ? 'blush-theme-sunset' : 'blush-theme-velvet'));
 
   const recipientName = (siteData.recipientName || 'My Love').trim();
   const senderName = (siteData.senderName || 'Your Favorite Person').trim();
@@ -637,14 +640,16 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         origin: { x: Math.max(0.1, Math.min(0.9, xRatio)), y: Math.max(0.1, Math.min(0.9, yRatio)) },
         colors: isCelestial 
           ? ['#818CF8', '#A855F7', '#60A5FA', '#F472B6', '#38BDF8']
-          : (isSunset 
-              ? ['#F59E0B', '#FBBF24', '#FB7185', '#F97316', '#F43F5E']
-              : ['#FF1493', '#FF69B4', '#FFB6C1', '#FF6B81', '#FFFFFF']),
+          : (isAmethyst
+              ? ['#C084FC', '#A855F7', '#7C3AED', '#E879F9', '#DDD6FE', '#FFFFFF']
+              : (isSunset 
+                  ? ['#F59E0B', '#FBBF24', '#FB7185', '#F97316', '#F43F5E']
+                  : ['#FF1493', '#FF69B4', '#FFB6C1', '#FF6B81', '#FFFFFF'])),
         scalar: 1.25,
         startVelocity: 26
       });
     } catch {}
-  }, [isCelestial, isSunset, externalTriggerConfetti]);
+  }, [isCelestial, isAmethyst, isSunset, externalTriggerConfetti]);
 
   const triggerGrandCelebration = useCallback(() => {
     if (externalTriggerConfetti) {
@@ -656,7 +661,11 @@ tu hi bata mujhe is khat me kya likhu main... 😉
     try {
       const colors = isCelestial
         ? ['#818CF8', '#A855F7', '#60A5FA', '#F472B6']
-        : ['#FF1493', '#FF69B4', '#FFB6C1', '#FFFFFF', '#FFAEC2'];
+        : (isAmethyst
+            ? ['#C084FC', '#A855F7', '#7C3AED', '#E879F9', '#DDD6FE', '#FFFFFF']
+            : (isSunset
+                ? ['#F59E0B', '#FBBF24', '#FB7185', '#F97316', '#F43F5E']
+                : ['#FF1493', '#FF69B4', '#FFB6C1', '#FFFFFF', '#FFAEC2']));
 
       confetti({
         particleCount: 110,
@@ -675,7 +684,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
         scalar: 1.2
       });
     } catch {}
-  }, [isCelestial, externalTriggerConfetti]);
+  }, [isCelestial, isAmethyst, isSunset, externalTriggerConfetti]);
 
   // Audio Play / Pause toggle
   const toggleAudio = useCallback((e) => {
@@ -809,9 +818,11 @@ tu hi bata mujhe is khat me kya likhu main... 😉
       speed: Math.random() * 0.015 + 0.005,
       color: isCelestial
         ? (Math.random() > 0.5 ? '165, 180, 252' : '192, 132, 252')
-        : (isSunset
-            ? (Math.random() > 0.5 ? '254, 215, 170' : '253, 186, 116')
-            : (Math.random() > 0.5 ? '255, 182, 193' : '255, 214, 224'))
+        : (isAmethyst
+            ? (Math.random() > 0.5 ? '192, 132, 252' : '216, 180, 254')
+            : (isSunset
+                ? (Math.random() > 0.5 ? '254, 215, 170' : '253, 186, 116')
+                : (Math.random() > 0.5 ? '255, 182, 193' : '255, 214, 224')))
     });
 
     const init = () => {
@@ -847,7 +858,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
       if (animId) cancelAnimationFrame(animId);
       window.removeEventListener('resize', resize);
     };
-  }, [isCelestial, isSunset, isSimulator]);
+  }, [isCelestial, isAmethyst, isSunset, isSimulator]);
 
   // Tab 1: Photos Navigation
   const totalPhotosCount = photos.length;

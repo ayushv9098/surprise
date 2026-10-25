@@ -441,6 +441,51 @@ const THEMES = {
     defaultSignOff: (senderName) => `To the stars & back, ${senderName} 🌌🌙`,
   },
 
+  'amethyst-romance': {
+    id: 'amethyst-romance',
+    name: 'Amethyst Dream 💜✨',
+    category: 'romance',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['💜', '✨', '🔮', '💫', '🎆', '🌸', '💌', '🪐'],
+    primaryEmoji: '💜',
+    containerBgClass: 'bg-soft-aesthetic-amethyst',
+    envelopeCelebrationBg: 'bg-envelope-celebration-amethyst',
+    cardClass: 'birthday-card-amethyst p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-amethyst p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-purple-950',
+    accentTextClass: 'text-purple-600',
+    subtitleClass: 'text-purple-900/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-amethyst animate-pulse-glow-amethyst cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold text-purple-950 bg-purple-50 hover:bg-purple-100 border border-purple-200 active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-amethyst active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-amethyst active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-950 bg-purple-50 hover:bg-purple-100 border border-purple-200/90 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-purple-900 bg-purple-100/70 hover:bg-purple-100 border border-purple-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-amethyst',
+    iconBoxClass: 'bg-purple-50 border border-purple-200/80',
+    waxColor: '#7C3AED',
+    sealEmoji: '💜',
+    envelopeGradient: 'bg-gradient-to-br from-purple-700 via-violet-800 to-indigo-950 border-purple-400/40',
+    envelopeOverlay: 'bg-purple-950/60',
+    envelopePeekingBorder: 'border-purple-200',
+    envelopePeekingText: 'text-purple-900',
+    envelopeFolds: ['#5b21b6', '#6d28d9', '#7c3aed'],
+    letterCardBorder: 'border-purple-200/90',
+    letterBorderBottom: 'border-purple-100',
+    letterHeaderClass: 'text-purple-950',
+    letterSignOffClass: 'text-purple-800',
+    confettiColors: ['#c084fc', '#a855f7', '#7c3aed', '#ffffff', '#e879f9'],
+    defaultReasons: [
+      { icon: '💜', title: 'Rare Magic', desc: 'Loving you feels like holding a rare, glittering amethyst under starlight.' },
+      { icon: '✨', title: 'Soul Connection', desc: 'Every conversation and quiet glance deepens the sacred bond we share.' },
+      { icon: '💫', title: 'Ethereal Harmony', desc: 'With you, life feels poetic, tender, and beautifully timeless.' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, you are the luminous amethyst dream that fills my heart with wonder. 💜✨\n\nThank you for bringing so much magic, tenderness, and pure grace into my life. Every day with you is a cherished gift.`,
+    defaultSignOff: (senderName) => `Yours in magic & love, ${senderName} 💜✨`,
+  },
+
   // =========================================================================
   // MEMORY SCRAPBOOK THEMES
   // =========================================================================
@@ -734,6 +779,7 @@ const resolveTheme = (templateId, gender, category) => {
   if (targetId.includes('velvet')) return THEMES['velvet-romance'];
   if (targetId.includes('sunset')) return THEMES['sunset-romance'];
   if (targetId.includes('celestial')) return THEMES['celestial-love'];
+  if (targetId.includes('amethyst') || targetId.includes('violet') || (targetId.includes('purple') && !targetId.includes('lavender'))) return THEMES['amethyst-romance'];
   if (targetId.includes('kodak')) return THEMES['vintage-kodak'];
   if (targetId.includes('neon')) return THEMES['neon-nostalgia'];
   if (targetId.includes('cozy')) return THEMES['cozy-memories'];
@@ -958,14 +1004,16 @@ export default function LivePhonePreview({
 
   const isRomance =
     occasionCategory === 'romance' ||
-    ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(theme.id) ||
-    ['velvet-romance', 'sunset-romance', 'celestial-love', 'blush-romance'].includes(formData.templateId) ||
+    ['velvet-romance', 'sunset-romance', 'celestial-love', 'amethyst-romance', 'blush-romance'].includes(theme.id) ||
+    ['velvet-romance', 'sunset-romance', 'celestial-love', 'amethyst-romance', 'blush-romance'].includes(formData.templateId) ||
     Boolean(
       formData.templateId && (
         formData.templateId.includes('romance') ||
         formData.templateId.includes('velvet') ||
         formData.templateId.includes('sunset') ||
-        formData.templateId.includes('celestial')
+        formData.templateId.includes('celestial') ||
+        formData.templateId.includes('amethyst') ||
+        formData.templateId.includes('violet')
       )
     );
 
@@ -1072,6 +1120,7 @@ export default function LivePhonePreview({
     'velvet-romance': 'My favorite smile in the world 🌹',
     'sunset-romance': 'Golden Moments With You 🌅✨',
     'celestial-love': 'Written in the Stars 🌌🌙',
+    'amethyst-romance': 'Amethyst Skies & Starlit Love 💜✨',
     'vintage-kodak': 'A moment frozen in time 📸',
     'neon-nostalgia': 'Electric Memories & Good Times ⚡🔥',
     'cozy-memories': 'Warm Days & Sweet Conversations ☕🌻',
@@ -1945,9 +1994,9 @@ export default function LivePhonePreview({
                             {/* SVG Realistic Folds */}
                             <div className="absolute inset-0 pointer-events-none">
                               <svg viewBox="0 0 245 165" className="w-full h-full" preserveAspectRatio="none">
-                                <polygon points="0,0 0,165 122.5,90" fill={theme.envelopeFolds[0]} opacity="0.95" />
-                                <polygon points="245,0 245,165 122.5,90" fill={theme.envelopeFolds[1]} opacity="0.95" />
-                                <polygon points="0,165 245,165 122.5,82" fill={theme.envelopeFolds[2]} />
+                                <polygon points="0,0 0,165 122.5,90" fill={(theme.envelopeFolds && theme.envelopeFolds[0]) || '#5b21b6'} opacity="0.95" />
+                                <polygon points="245,0 245,165 122.5,90" fill={(theme.envelopeFolds && theme.envelopeFolds[1]) || '#6d28d9'} opacity="0.95" />
+                                <polygon points="0,165 245,165 122.5,82" fill={(theme.envelopeFolds && theme.envelopeFolds[2]) || '#7c3aed'} />
                               </svg>
                             </div>
 

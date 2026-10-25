@@ -560,6 +560,73 @@ export const TEMPLATE_PRESETS = {
     songId: 'indie-acoustic-soul',
   },
 
+  'amethyst-romance': {
+    name: 'Amethyst Dream',
+    themeId: 'amethyst',
+    category: 'romance',
+    recipientName: 'Aanya',
+    senderName: 'Aryan',
+    occasion: 'Forever & Always, My Whole Heart 💜✨',
+    subtitle: 'Every second with you is my sweetest daydream.',
+    heroPhoto: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
+    photoCaption: 'You will always be my greatest love 💜',
+    photos: [
+      {
+        id: 'amethyst-p1',
+        url: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
+        caption: 'You will always be my greatest love 💜',
+        tag: 'OUR DREAM 💜',
+      },
+      {
+        id: 'amethyst-p2',
+        url: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
+        caption: 'Every glance with you feels like starlight ✨',
+        tag: 'MAGIC MOMENT 🔮',
+      },
+      {
+        id: 'amethyst-p3',
+        url: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
+        caption: 'Laughing without a care in the world 💜💫',
+        tag: 'SWEET DAYS 🌸',
+      },
+      {
+        id: 'amethyst-p4',
+        url: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
+        caption: 'In your gentle warmth, my soul is home 🕊️',
+        tag: 'DEVOTION 💍',
+      },
+    ],
+    quizQuestion: 'Do you know how deeply you mean to me?',
+    quizYesText: 'YES, WITH ALL MY HEART! 💜',
+    quizTreat: 'Lavender Boba & Sweet Chocolates 🧋🍫',
+    quizVictoryNote: 'That means a dreamy sweet date is officially pending from my side anytime you want! 💜😋',
+    specialReasons: [
+      {
+        icon: '💜',
+        title: 'Peaceful Sanctuary',
+        desc: 'In a noisy world, being with you feels like a quiet lavender garden at dusk.',
+      },
+      {
+        icon: '✨',
+        title: 'Pure Starlight',
+        desc: 'Your gentle spirit and glowing kindness bring magic into every ordinary day.',
+      },
+      {
+        icon: '💫',
+        title: 'Endless Devotion',
+        desc: 'Loving you is effortless, beautiful, and the best choice I will ever make.',
+      },
+    ],
+    letter: {
+      title: 'A Little Note For You',
+      content: `Dear Aanya 💜,\n\nIn a world that never stops moving, you are my peaceful calm and my sweetest miracle. Every smile we share, every quiet glance, and every dream we talk about fills my heart with boundless gratitude.\n\nThank you for loving me with all your gentle grace. I promise to cherish, protect, and stand by your side forever.\n\nForever & always yours, Aryan 💜✨`,
+      signOff: 'With all my soul & devotion,\nAryan 💜',
+      sealEmoji: '💜',
+      waxColor: '#7C3AED',
+    },
+    songId: 'kesariya',
+  },
+
   // ==========================================
   // --- SCRAPBOOK PRESETS (MEMORY SCRAPBOOK) ---
   // ==========================================
@@ -856,6 +923,8 @@ TEMPLATE_PRESETS['lavender'] = TEMPLATE_PRESETS['lavender-dream'];
 TEMPLATE_PRESETS['velvet'] = TEMPLATE_PRESETS['velvet-romance'];
 TEMPLATE_PRESETS['sunset'] = TEMPLATE_PRESETS['sunset-romance'];
 TEMPLATE_PRESETS['celestial'] = TEMPLATE_PRESETS['celestial-love'];
+TEMPLATE_PRESETS['amethyst'] = TEMPLATE_PRESETS['amethyst-romance'];
+TEMPLATE_PRESETS['violet'] = TEMPLATE_PRESETS['amethyst-romance'];
 
 // Scrapbook Aliases
 TEMPLATE_PRESETS['vintage'] = TEMPLATE_PRESETS['vintage-kodak'];

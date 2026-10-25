@@ -45,8 +45,20 @@ export default function App() {
     }
     return 'home';
   });
-  const [selectedTemplateId, setSelectedTemplateId] = useState('royal-sapphire');
-  const [selectedCategory, setSelectedCategory] = useState('birthday');
+  const [selectedTemplateId, setSelectedTemplateId] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      return searchParams.get('template') || searchParams.get('templateId') || 'royal-sapphire';
+    }
+    return 'royal-sapphire';
+  });
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      return searchParams.get('category') || 'birthday';
+    }
+    return 'birthday';
+  });
   const [siteData, setSiteData] = useState(null);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [isLoadingSite, setIsLoadingSite] = useState(false);

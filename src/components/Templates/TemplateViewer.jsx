@@ -27,6 +27,7 @@ const TEMPLATES = [
   { id: 'velvet-romance', label: 'Velvet Rose', icon: '❤️', component: BlushRomanceView },
   { id: 'sunset-romance', label: 'Sunset Glow', icon: '🌅', component: BlushRomanceView },
   { id: 'celestial-love', label: 'Celestial Indigo', icon: '🌌', component: BlushRomanceView },
+  { id: 'amethyst-romance', label: 'Amethyst Dream', icon: '💜', component: BlushRomanceView },
 
   // Memory Scrapbook Templates
   { id: 'vintage-kodak', label: 'Vintage Kodak', icon: '📸', component: PolaroidScrapbookView },
@@ -54,6 +55,7 @@ export default function TemplateViewer({
     const raw = (siteData.templateId || siteData.theme || siteData.type || '').toLowerCase();
 
     // Specific new occasion templates
+    if (raw.includes('amethyst') || raw.includes('violet') || (raw.includes('purple') && raw.includes('romance'))) return 'amethyst-romance';
     if (raw.includes('velvet')) return 'velvet-romance';
     if (raw.includes('sunset')) return 'sunset-romance';
     if (raw.includes('celestial')) return 'celestial-love';

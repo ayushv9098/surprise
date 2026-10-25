@@ -279,6 +279,33 @@ export const TEMPLATES = [
     recommendedSongId: 'tum-hi-ho',
     samplePhoto: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80',
   },
+  {
+    id: 'amethyst-romance',
+    category: 'romance',
+    name: 'Amethyst Dream 💜✨',
+    gender: 'both',
+    tag: 'Dreamy Violet & Starlight',
+    emoji: '💜',
+    headline: 'An enchanting fairytale of pure devotion',
+    description: 'Dreamy amethyst violet, starlit romance, lavender petals, heart wax sealed envelope.',
+    fontFamily: 'font-cursive',
+    accentColor: '#7C3AED',
+    themeClass: 'theme-amethyst',
+    themeId: 'amethyst-romance',
+    gradientBg: 'from-[#FFFFFF] via-[#FAF5FF] to-[#F3E8FF]',
+    primaryColor: 'purple',
+    previewImage: '/previews/amethyst-romance.svg',
+    badges: ['New Romance', 'Staff Pick'],
+    defaultOccasion: 'Forever & Always, My Whole Heart 💜✨',
+    defaultSubtitle: 'Every second with you is my sweetest daydream.',
+    defaultCaption: 'You will always be my greatest love 💜',
+    ambientEmojis: ['💜', '✨', '🌹', '💫', '🔮', '💖', '⭐', '🕊️'],
+    waxColor: '#7C3AED',
+    waxEmoji: '💜',
+    features: ['Curated Photo Carousel', 'Playful Love Quiz', 'Heartfelt Sealed Letter', 'Ambient Lavender Glow'],
+    recommendedSongId: 'kesariya',
+    samplePhoto: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80',
+  },
 
   // ==========================================
   // --- SCRAPBOOK (MEMORY SCRAPBOOK) TEMPLATES ---
@@ -477,6 +504,9 @@ export const TEMPLATE_ALIASES = {
   'sunset-romance': 'sunset-romance',
   'celestial': 'celestial-love',
   'celestial-love': 'celestial-love',
+  'amethyst': 'amethyst-romance',
+  'amethyst-romance': 'amethyst-romance',
+  'violet': 'amethyst-romance',
 
   // Scrapbook Aliases
   'vintage': 'vintage-kodak',

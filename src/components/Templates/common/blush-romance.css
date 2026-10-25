@@ -76,6 +76,28 @@
   --envelope-seal-grad: radial-gradient(circle at 35% 32%, #818cf8 0%, #6366f1 50%, #4338ca 100%);
 }
 
+/* Theme 4: Amethyst Dream (Romance) */
+.blush-theme-amethyst {
+  --app-bg: linear-gradient(140deg, #faf5ff 0%, #f3e8ff 25%, #e9d5ff 50%, #f5f3ff 75%, #ffffff 100%);
+  --intro-bg: linear-gradient(145deg, #faf5ff 0%, #f3e8ff 35%, #e9d5ff 70%, #faf5ff 100%);
+  --primary-gradient: linear-gradient(#a855f7 0%, #8b5cf6 55%, #7c3aed 100%);
+  --primary-shadow-color: #6d28d9;
+  --primary-glow: rgba(124, 58, 237, 0.35);
+  --card-bg: linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgba(250, 245, 255, 0.90) 100%);
+  --card-border: rgba(216, 180, 254, 0.65);
+  --card-shadow: rgba(124, 58, 237, 0.14);
+  --text-dark: #2e1065;
+  --text-muted: #581c87;
+  --text-light: #7e22ce;
+  --accent-pill: #f3e8ff;
+  --accent-text: #7c3aed;
+  --progress-fill: linear-gradient(to right, #c084fc, #7c3aed);
+  --envelope-bg: linear-gradient(135deg, #7c3aed 0%, #6d28d9 60%, #4c1d95 100%);
+  --envelope-flap: #5b21b6;
+  --wax-color: #7c3aed;
+  --envelope-accent: rgba(192, 132, 252, 0.45);
+}
+
 /* Base Canvas & Container */
 .particle-canvas {
   position: fixed;
@@ -356,6 +378,21 @@
     0 8px 18px rgba(99, 102, 241, 0.12);
 }
 
+.blush-theme-amethyst .tactile-btn-primary {
+  background: linear-gradient(#a855f7, #7c3aed);
+}
+
+.blush-theme-amethyst .tactile-btn-secondary {
+  background: #faf5ff;
+  border-color: rgba(168, 85, 247, 0.3);
+  color: #7c3aed;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -2px rgba(168, 85, 247, 0.2),
+    0 4px #ddd6fe,
+    0 8px 18px rgba(124, 58, 237, 0.12);
+}
+
 .tactile-btn-secondary:hover {
   transform: translateY(-2px);
   box-shadow: 
@@ -445,6 +482,12 @@
   background: rgba(255, 255, 255, 0.92);
   border-color: rgba(165, 180, 252, 0.5);
   box-shadow: 0 4px 18px rgba(99, 102, 241, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.blush-theme-amethyst .soft-music-pill {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(216, 180, 254, 0.5);
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 .soft-music-pill.pill-hidden {
@@ -692,6 +735,12 @@
   box-shadow: 0 4px 16px rgba(99, 102, 241, 0.1);
 }
 
+.blush-theme-amethyst .soft-nav-pills {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(216, 180, 254, 0.5);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
+}
+
 .nav-pill {
   flex: 1;
   display: flex;
@@ -729,6 +778,12 @@
   background: #ffffff;
   color: #4f46e5;
   box-shadow: 0 3px 12px rgba(99, 102, 241, 0.25);
+}
+
+.blush-theme-amethyst .nav-pill.active {
+  background: #ffffff;
+  color: #7c3aed;
+  box-shadow: 0 3px 12px rgba(124, 58, 237, 0.25);
 }
 
 /* Soft Cards */
@@ -807,6 +862,12 @@
   background: #ffffff;
   border-color: rgba(199, 210, 254, 0.6);
   box-shadow: 0 18px 44px rgba(79, 70, 229, 0.12);
+}
+
+.blush-theme-amethyst .memory-card {
+  background: #ffffff;
+  border-color: rgba(216, 180, 254, 0.6);
+  box-shadow: 0 18px 44px rgba(124, 58, 237, 0.12);
 }
 
 .memory-card.card-active {
@@ -1485,6 +1546,16 @@
   box-shadow: 0 12px 30px rgba(79, 70, 229, 0.12);
 }
 
+.blush-theme-amethyst .khat-letter {
+  background: #ffffff;
+  border-color: rgba(216, 180, 254, 0.6);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.12);
+}
+
+.blush-theme-amethyst .khat-seal-ribbon {
+  background: linear-gradient(#a855f7 0%, #6d28d9 100%);
+}
+
 @keyframes letterAppear {
   0% { opacity: 0; transform: translateY(20px) scale(0.95); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
@@ -1725,6 +1796,11 @@
 .blush-theme-celestial .victory-love-note {
   background: rgba(255, 255, 255, 0.92);
   border-color: rgba(199, 210, 254, 0.5);
+}
+
+.blush-theme-amethyst .victory-love-note {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(216, 180, 254, 0.5);
 }
 
 .victory-desc {
