@@ -1,5 +1,214 @@
 [
   {
+    "templateId": "velvet-romance",
+    "category": "romance",
+    "gender": "boy",
+    "recipientName": "Maya",
+    "senderName": "Liam",
+    "occasion": "Happy Anniversary, My Love! ❤️",
+    "subtitle": "Every single second with you is my favorite memory.",
+    "heroPhoto": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Forever & Always With You! ❤️🌹",
+    "photos": [
+      {
+        "id": "vr-p1",
+        "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Forever & Always With You! ❤️🌹",
+        "tag": "OUR BEGINNING 🌸"
+      },
+      {
+        "id": "vr-p2",
+        "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        "caption": "Nazrein hataana thoda mushkil hai yahan 😉✨",
+        "tag": "Nazar Na Lage 🧿"
+      },
+      {
+        "id": "vr-p3",
+        "url": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never a dull moment around you 🕶️💫",
+        "tag": "Memories 📸"
+      },
+      {
+        "id": "vr-p4",
+        "url": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Some moments don't need words 💫",
+        "tag": "Holding Hands 🤝"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "❤️",
+        "title": "My Whole World",
+        "desc": "The effortless way you make every single day feel warm, magical, and full of peace."
+      },
+      {
+        "icon": "🌹",
+        "title": "Unconditional Grace",
+        "desc": "Your gentle heart and the endless kindness you share with everyone around you."
+      },
+      {
+        "icon": "💍",
+        "title": "Forever Partner",
+        "desc": "Through every twist, journey, and victory, I choose you again and again every day."
+      }
+    ],
+    "letter": {
+      "title": "To My One & Only",
+      "content": "My Love,\n\nLooking back at our journey, every single second with you is my absolute favorite memory. You bring warmth, laughter, and an unspoken comfort into my life that nothing else could ever replace.\n\nThank you for choosing me, for holding my hand through everything, and for filling my heart with pure romance and peace. Here is to our forever.\n\nHappy Anniversary, my soulmate! ❤️🌹",
+      "signOff": "Forever yours,\nLiam ❤️",
+      "sealEmoji": "❤️",
+      "waxColor": "#E11D48"
+    },
+    "songId": "insta-acoustic-romance",
+    "id": "wc-maya-3et5u",
+    "slug": "maya-3et5u",
+    "updatedAt": "2026-10-24T17:19:58.829Z",
+    "createdAt": "2026-10-24T17:19:58.792Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgG4TrsAWgCcB7KBAOwGMIQAaEapCAc1OIE9MQyKa6jVhEqoIxHgCNS3RsQjUAljEUiwAOQRQ6WALIJOCBiADOIscU3aeAGUVbjpasxOLSlHgAkEMGJwAEAIKUlIq4xCYIXPT+ugE2pLgAhP6AJuSA8H-GJgCukmCKYHA6IACi4QGulKxF-mbU7qj+AO4FABb+nKTZ-oom-lABAGYI2BwFEP3QHJwAdMat4qQACq2kYKQ8rWBgMCYYAPT7ihTCJjPZlCbwCCatM-VQ+zCr64QAjACsbwAcbwCcfwATAA2YEAdj+b0IHwAzGCPghvjD-gAGSRggD8CGy6wAvIMOBQwAAyQYFXHUMgwYlNXHfFEo4kARzpKOMzzWpAAwj58u4eAAxDgQcL+YlBOBNAx9ADqbX8AE0uikMoAeDcAnPvsl6kEyYADaoEU6Cw2GIhBgb2M2WIcE2212ByOJwgZwuV0Qt3u5Ce2veX1+AJB4Mh0LhCKRqPRWJxpHxhKQpPJlNI1Np9MZLPpxmYMD5HiwQvkovFgUl0v8crA7SV2RV6Q1xjACFYPAA8gBVABK-gAQiUAOLIdTqIf9-yqwAc+yAAL70Q3GnBmmCAq02u07PaHY7Nl3nS7XT0PH2cv1vYEfb6QsHfC9Q4HUVDXmEwhAQGGSQHRvEE4hExNgCkqRpVkM1ZbNeTcfMQE0AAveRFEofxWiQBAqAQfwq1IVB0KgbJbgAa0UOAkIQRQOgQZDEMAXg3AEg9wAKckbZseFgqJ-E0fwbB3fxAD4NwB-3ZnOcQCNHhTXNGFV1tLAtg3R1t1OPd3RuO4jw5V5PkBQEUXhAAWYE-nhKEX1BP5tMGD9BmBN4v1jH8-zJADk1TEDmTAxgczzZiRXEfx0NQbI4GIqByDUHyyAuRpOm6KjADdd9IqMAap3GJbPQpmIVQ+iowAPnYE+cRKXbSJPXB0t2dV19w9ZTvVU0hT2+S8PhMoEPjBQgwWBQE3moGFqGvYFH2suNfwTezAJTYD0xcrM3Ig-ksAAZWC-pgsoMA+lQdwAHIwH8SgIAgRomg4VAMsSxgm2SkBPFIOBUAQ1h-G8UQ+m4wBcXZnABdRgrgUew4E7CAbncXUMANIT6igjJGwKIoeDiCtVhqGUOBu4wxBMageAAFQWfwIEGH9ChdPopQCSL+gQfCJi8rhajumpsKGPbiKlX8YhORRmDgGIqEaQZ-OI0hBn8GAAdoOZZ0NcGeAbM7oeKdsaAaApIIQYj+2IBBaFRl0MawGtiH8YQVpqBYom2nmMJx8wihMPpCNEXbbY6LpamQ+RmnlanOl20KulEZ3snFwSOdmkAqMAWJ2ocJwVhVFJYzd2iRGDR3WQGxsLWHaL2MJaEwwBiAArLpiF2zhuf97AOfWaJ-GQfxqFWHUJjJ5tSMQi3W4Q3Hyn8Bnxc+kAim2cRMFAfJo6wTHSFiAJWx98U57gWQmHcSAVth+JEggegAB1KD3hJSHt+7JE1-CfO24v-CL61S5ibPKmqCY6gaD2qwDno+gGHzJBMa6cQmMMUYaVICTCClwGYioXaSDSlUZoUQoBVhiIgbImdIDEHLo0Kg-g3QwCPiIeu5ACY9BWtPb+cBFCDAmFWJAO01itDurjOAZhCH+UaNTfw8hrhiz3nvbGVBz5kx-PXRuj9JgxGEQjW6cDv6UUaFWDOWdyhVjupg-wwiyQBUYbIgGxBtotHfjAa0Ew+BUFoD5f2ItNYQEgZ4cQExegYWnlfH81MZi8MoN4XwARgihHCJEGu38-7+SJBAOsMtTCKFYJQVs+MY5Fm8pFCIu9KB2C0GkTIX0AZwBKEFAuigeCQ0YFKAAHlya6HAeAAGIShvDeAAEW0t8ASph3CsDQDwBCecECEE1l0POHMSDkDMYIISC4mjUEIFAbAUBKAwWoAXEwhBJCoFWlkOAqCeAUEMIQagOxSDAitDAbCkBUCBDADwTSIJ3gokIICbSmM3hggwP8DAF4ZgQkBAALWzPIFgZyLlYCucCG5dyHlPJeX8N53wPlAh+dOIAA",
+    "template": "velvet-romance",
+    "viewCount": 4,
+    "lastViewedAt": "2026-10-25T05:12:00.060Z"
+  },
+  {
+    "templateId": "velvet-romance",
+    "category": "romance",
+    "gender": "boy",
+    "recipientName": "Maya",
+    "senderName": "Liam",
+    "occasion": "Happy Anniversary, My Love! ❤️",
+    "subtitle": "Every single second with you is my favorite memory.",
+    "heroPhoto": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Forever & Always With You! ❤️🌹",
+    "photos": [
+      {
+        "id": "vr-p1",
+        "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Forever & Always With You! ❤️🌹",
+        "tag": "OUR BEGINNING 🌸"
+      },
+      {
+        "id": "vr-p2",
+        "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        "caption": "Nazrein hataana thoda mushkil hai yahan 😉✨",
+        "tag": "Nazar Na Lage 🧿"
+      },
+      {
+        "id": "vr-p3",
+        "url": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never a dull moment around you 🕶️💫",
+        "tag": "Memories 📸"
+      },
+      {
+        "id": "vr-p4",
+        "url": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Some moments don't need words 💫",
+        "tag": "Holding Hands 🤝"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "❤️",
+        "title": "My Whole World",
+        "desc": "The effortless way you make every single day feel warm, magical, and full of peace."
+      },
+      {
+        "icon": "🌹",
+        "title": "Unconditional Grace",
+        "desc": "Your gentle heart and the endless kindness you share with everyone around you."
+      },
+      {
+        "icon": "💍",
+        "title": "Forever Partner",
+        "desc": "Through every twist, journey, and victory, I choose you again and again every day."
+      }
+    ],
+    "letter": {
+      "title": "To My One & Only",
+      "content": "My Love,\n\nLooking back at our journey, every single second with you is my absolute favorite memory. You bring warmth, laughter, and an unspoken comfort into my life that nothing else could ever replace.\n\nThank you for choosing me, for holding my hand through everything, and for filling my heart with pure romance and peace. Here is to our forever.\n\nHappy Anniversary, my soulmate! ❤️🌹",
+      "signOff": "Forever yours,\nLiam ❤️",
+      "sealEmoji": "❤️",
+      "waxColor": "#E11D48"
+    },
+    "songId": "insta-acoustic-romance",
+    "id": "wc-mvmnzcjs-bdts",
+    "slug": "maya-ctpo6",
+    "updatedAt": "2026-10-24T17:19:58.829Z",
+    "createdAt": "2026-10-24T17:19:58.792Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgG4TrsAWgCcB7KBAOwGMIQAaEapCAc1OIE9MQyKa6jVhEqoIxHgCNS3RsQjUAljEUiwAOQRQ6WALIJOCBiADOIscU3aeAGUVbjpasxOLSlHgAkEMGJwAEAIKUlIq4xCYIXPT+ugE2pLgAhP6AJuSA8H-GJgCukmCKYHA6IACi4QGulKxF-mbU7qj+AO4FABb+nKTZ-oom-lABAGYI2BwFEP3QHJwAdMat4qQACq2kYKQ8rWBgMCYYAPT7ihTCJjPZlCbwCCatM-VQ+zCr64QAjACsbwAcbwCcfwATAA2YEAdj+b0IHwAzGCPghvjD-gAGSRggD8CGy6wAvIMOBQwAAyQYFXHUMgwYlNXHfFEo4kARzpKOMzzWpAAwj58u4eAAxDgQcL+YlBOBNAx9ADqbX8AE0uikMoAeDcAnPvsl6kEyYADaoEU6Cw2GIhBgb2M2WIcE2212ByOJwgZwuV0Qt3u5Ce2veX1+AJB4Mh0LhCKRqPRWJxpHxhKQpPJlNI1Np9MZLPpxmYMD5HiwQvkovFgUl0v8crA7SV2RV6Q1xjACFYPAA8gBVABK-gAQiUAOLIdTqIf9-yqwAc+yAAL70Q3GnBmmCAq02u07PaHY7Nl3nS7XT0PH2cv1vYEfb6QsHfC9Q4HUVDXmEwhAQGGSQHRvEE4hExNgCkqRpVkM1ZbNeTcfMQE0AAveRFEofxWiQBAqAQfwq1IVB0KgbJbgAa0UOAkIQRQOgQZDEMAXg3AEg9wAKckbZseFgqJ-E0fwbB3fxAD4NwB-3ZnOcQCNHhTXNGFV1tLAtg3R1t1OPd3RuO4jw5V5PkBQEUXhAAWYE-nhKEX1BP5tMGD9BmBN4v1jH8-zJADk1TEDmTAxgczzZiRXEfx0NQbI4GIqByDUHyyAuRpOm6KjADdd9IqMAap3GJbPQpmIVQ+iowAPnYE+cRKXbSJPXB0t2dV19w9ZTvVU0hT2+S8PhMoEPjBQgwWBQE3moGFqGvYFH2suNfwTezAJTYD0xcrM3Ig-ksAAZWC-pgsoMA+lQdwAHIwH8SgIAgRomg4VAMsSxgm2SkBPFIOBUAQ1h-G8UQ+m4wBcXZnABdRgrgUew4E7CAbncXUMANIT6igjJGwKIoeDiCtVhqGUOBu4wxBMageAAFQWfwIEGH9ChdPopQCSL+gQfCJi8rhajumpsKGPbiKlX8YhORRmDgGIqEaQZ-OI0hBn8GAAdoOZZ0NcGeAbM7oeKdsaAaApIIQYj+2IBBaFRl0MawGtiH8YQVpqBYom2nmMJx8wihMPpCNEXbbY6LpamQ+RmnlanOl20KulEZ3snFwSOdmkAqMAWJ2ocJwVhVFJYzd2iRGDR3WQGxsLWHaL2MJaEwwBiAArLpiF2zhuf97AOfWaJ-GQfxqFWHUJjJ5tSMQi3W4Q3Hyn8Bnxc+kAim2cRMFAfJo6wTHSFiAJWx98U57gWQmHcSAVth+JEggegAB1KD3hJSHt+7JE1-CfO24v-CL61S5ibPKmqCY6gaD2qwDno+gGHzJBMa6cQmMMUYaVICTCClwGYioXaSDSlUZoUQoBVhiIgbImdIDEHLo0Kg-g3QwCPiIeu5ACY9BWtPb+cBFCDAmFWJAO01itDurjOAZhCH+UaNTfw8hrhiz3nvbGVBz5kx-PXRuj9JgxGEQjW6cDv6UUaFWDOWdyhVjupg-wwiyQBUYbIgGxBtotHfjAa0Ew+BUFoD5f2ItNYQEgZ4cQExegYWnlfH81MZi8MoN4XwARgihHCJEGu38-7+SJBAOsMtTCKFYJQVs+MY5Fm8pFCIu9KB2C0GkTIX0AZwBKEFAuigeCQ0YFKAAHlya6HAeAAGIShvDeAAEW0t8ASph3CsDQDwBCecECEE1l0POHMSDkDMYIISC4mjUEIFAbAUBKAwWoAXEwhBJCoFWlkOAqCeAUEMIQagOxSDAitDAbCkBUCBDADwTSIJ3gokIICbSmM3hggwP8DAF4ZgQkBAALWzPIFgZyLlYCucCG5dyHlPJeX8N53wPlAh+dOIAA",
+    "template": "velvet-romance",
+    "viewCount": 3,
+    "lastViewedAt": "2026-10-24T17:28:20.934Z"
+  },
+  {
+    "templateId": "velvet-romance",
+    "category": "romance",
+    "gender": "boy",
+    "recipientName": "Maya",
+    "senderName": "Liam",
+    "occasion": "Happy Anniversary, My Love! ❤️",
+    "subtitle": "Every single second with you is my favorite memory.",
+    "heroPhoto": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Forever & Always With You! ❤️🌹",
+    "photos": [
+      {
+        "id": "vr-p1",
+        "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Forever & Always With You! ❤️🌹",
+        "tag": "OUR BEGINNING 🌸"
+      },
+      {
+        "id": "vr-p2",
+        "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        "caption": "Nazrein hataana thoda mushkil hai yahan 😉✨",
+        "tag": "Nazar Na Lage 🧿"
+      },
+      {
+        "id": "vr-p3",
+        "url": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never a dull moment around you 🕶️💫",
+        "tag": "Memories 📸"
+      },
+      {
+        "id": "vr-p4",
+        "url": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Some moments don't need words 💫",
+        "tag": "Holding Hands 🤝"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "❤️",
+        "title": "My Whole World",
+        "desc": "The effortless way you make every single day feel warm, magical, and full of peace."
+      },
+      {
+        "icon": "🌹",
+        "title": "Unconditional Grace",
+        "desc": "Your gentle heart and the endless kindness you share with everyone around you."
+      },
+      {
+        "icon": "💍",
+        "title": "Forever Partner",
+        "desc": "Through every twist, journey, and victory, I choose you again and again every day."
+      }
+    ],
+    "letter": {
+      "title": "To My One & Only",
+      "content": "My Love,\n\nLooking back at our journey, every single second with you is my absolute favorite memory. You bring warmth, laughter, and an unspoken comfort into my life that nothing else could ever replace.\n\nThank you for choosing me, for holding my hand through everything, and for filling my heart with pure romance and peace. Here is to our forever.\n\nHappy Anniversary, my soulmate! ❤️🌹",
+      "signOff": "Forever yours,\nLiam ❤️",
+      "sealEmoji": "❤️",
+      "waxColor": "#E11D48"
+    },
+    "songId": "insta-acoustic-romance",
+    "id": "wc-mvmnza4e-k9fa",
+    "slug": "maya-bbf58",
+    "updatedAt": "2026-10-24T17:19:55.779Z",
+    "createdAt": "2026-10-24T17:19:55.646Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgG4TrsAWgCcB7KBAOwGMIQAaEapCAc1OIE9MQyKa6jVhEqoIxHgCNS3RsQjUAljEUiwAOQRQ6WALIJOCBiADOIscU3aeAGUVbjpasxOLSlHgAkEMGJwAEAIKUlIq4xCYIXPT+ugE2pLgAhP6AJuSA8H-GJgCukmCKYHA6IACi4QGulKxF-mbU7qj+AO4FABb+nKTZ-oom-lABAGYI2BwFEP3QHJwAdMat4qQACq2kYKQ8rWBgMCYYAPT7ihTCJjPZlCbwCCatM-VQ+zCr64QAjACsbwAcbwCcfwATAA2YEAdj+b0IHwAzGCPghvjD-gAGSRggD8CGy6wAvIMOBQwAAyQYFXHUMgwYlNXHfFEo4kARzpKOMzzWpAAwj58u4eAAxDgQcL+YlBOBNAx9ADqbX8AE0uikMoAeDcAnPvsl6kEyYADaoEU6Cw2GIhBgb2M2WIcE2212ByOJwgZwuV0Qt3u5Ce2veX1+AJB4Mh0LhCKRqPRWJxpHxhKQpPJlNI1Np9MZLPpxmYMD5HiwQvkovFgUl0v8crA7SV2RV6Q1xjACFYPAA8gBVABK-gAQiUAOLIdTqIf9-yqwAc+yAAL70Q3GnBmmCAq02u07PaHY7Nl3nS7XT0PH2cv1vYEfb6QsHfC9Q4HUVDXmEwhAQGGSQHRvEE4hExNgCkqRpVkM1ZbNeTcfMQE0AAveRFEofxWiQBAqAQfwq1IVB0KgbJbgAa0UOAkIQRQOgQZDEMAXg3AEg9wAKckbZseFgqJ-E0fwbB3fxAD4NwB-3ZnOcQCNHhTXNGFV1tLAtg3R1t1OPd3RuO4jw5V5PkBQEUXhAAWYE-nhKEX1BP5tMGD9BmBN4v1jH8-zJADk1TEDmTAxgczzZiRXEfx0NQbI4GIqByDUHyyAuRpOm6KjADdd9IqMAap3GJbPQpmIVQ+iowAPnYE+cRKXbSJPXB0t2dV19w9ZTvVU0hT2+S8PhMoEPjBQgwWBQE3moGFqGvYFH2suNfwTezAJTYD0xcrM3Ig-ksAAZWC-pgsoMA+lQdwAHIwH8SgIAgRomg4VAMsSxgm2SkBPFIOBUAQ1h-G8UQ+m4wBcXZnABdRgrgUew4E7CAbncXUMANIT6igjJGwKIoeDiCtVhqGUOBu4wxBMageAAFQWfwIEGH9ChdPopQCSL+gQfCJi8rhajumpsKGPbiKlX8YhORRmDgGIqEaQZ-OI0hBn8GAAdoOZZ0NcGeAbM7oeKdsaAaApIIQYj+2IBBaFRl0MawGtiH8YQVpqBYom2nmMJx8wihMPpCNEXbbY6LpamQ+RmnlanOl20KulEZ3snFwSOdmkAqMAWJ2ocJwVhVFJYzd2iRGDR3WQGxsLWHaL2MJaEwwBiAArLpiF2zhuf97AOfWaJ-GQfxqFWHUJjJ5tSMQi3W4Q3Hyn8Bnxc+kAim2cRMFAfJo6wTHSFiAJWx98U57gWQmHcSAVth+JEggegAB1KD3hJSHt+7JE1-CfO24v-CL61S5ibPKmqCY6gaD2qwDno+gGHzJBMa6cQmMMUYaVICTCClwGYioXaSDSlUZoUQoBVhiIgbImdIDEHLo0Kg-g3QwCPiIeu5ACY9BWtPb+cBFCDAmFWJAO01itDurjOAZhCH+UaNTfw8hrhiz3nvbGVBz5kx-PXRuj9JgxGEQjW6cDv6UUaFWDOWdyhVjupg-wwiyQBUYbIgGxBtotHfjAa0Ew+BUFoD5f2ItNYQEgZ4cQExegYWnlfH81MZi8MoN4XwARgihHCJEGu38-7+SJBAOsMtTCKFYJQVs+MY5Fm8pFCIu9KB2C0GkTIX0AZwBKEFAuigeCQ0YFKAAHlya6HAeAAGIShvDeAAEW0t8ASph3CsDQDwBCecECEE1l0POHMSDkDMYIISC4mjUEIFAbAUBKAwQQNpCAhB8J-GGFkOAqCeAUEMIQSQkhBgXitDAbCkBUCBDADwTSIJ3gokIICbSmM3hggwP8DAHwPgzGBLpAAWtmeQLAzkXKwFc4ENy7kPKeS8v4byPlfOBL86cQA",
+    "template": "velvet-romance",
+    "viewCount": 0
+  },
+  {
     "templateId": "blush-rose",
     "category": "birthday",
     "gender": "girl",
