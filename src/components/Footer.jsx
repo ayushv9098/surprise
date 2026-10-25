@@ -141,40 +141,43 @@ export default function Footer() {
             </div>
 
             {/* Pill Navigation Bar */}
-            <div className="my-3.5 flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="my-3.5 grid grid-cols-3 p-1 bg-slate-100/90 rounded-2xl gap-1">
               <button
                 type="button"
                 onClick={() => setActiveModal('privacy')}
-                className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                className={`w-full flex items-center justify-center gap-1 py-2 px-1 sm:px-3 rounded-xl text-xs transition-all cursor-pointer ${
                   activeModal === 'privacy'
-                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60 font-bold'
+                    : 'text-slate-500 hover:text-slate-800 font-medium'
                 }`}
               >
-                Privacy Policy
+                <span>Privacy</span>
+                <span className="hidden sm:inline"> Policy</span>
               </button>
               <button
                 type="button"
                 onClick={() => setActiveModal('terms')}
-                className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                className={`w-full flex items-center justify-center gap-1 py-2 px-1 sm:px-3 rounded-xl text-xs transition-all cursor-pointer ${
                   activeModal === 'terms'
-                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60 font-bold'
+                    : 'text-slate-500 hover:text-slate-800 font-medium'
                 }`}
               >
-                Terms of Service
+                <span>Terms</span>
+                <span className="hidden sm:inline"> of Service</span>
               </button>
               <button
                 type="button"
                 onClick={() => setActiveModal('security')}
-                className={`shrink-0 px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer inline-flex items-center gap-1.5 ${
+                className={`w-full flex items-center justify-center gap-1 py-2 px-1 sm:px-3 rounded-xl text-xs transition-all cursor-pointer ${
                   activeModal === 'security'
-                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60'
-                    : 'text-slate-500 hover:text-slate-800'
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/60 font-bold'
+                    : 'text-slate-500 hover:text-slate-800 font-medium'
                 }`}
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>Security Overview</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0 hidden sm:inline" />
+                <span>Security</span>
+                <span className="hidden sm:inline"> Overview</span>
               </button>
             </div>
 
