@@ -63,13 +63,9 @@ export default function TemplateSelector({
 
   return (
     <div className="space-y-3.5 sm:space-y-4">
-      {/* 1) HEADER & OCCASION BADGE (Category chosen from Home page) */}
+      {/* 1) HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 pb-2.5 sm:pb-3 border-b border-slate-100">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200/80 mb-1.5 shadow-2xs select-none">
-            <AppleEmoji emoji={currentCategoryObj.emoji} size={13} />
-            <span>{currentCategoryObj.name}</span>
-          </div>
           <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight leading-tight">
             Choose a Style
           </h2>
