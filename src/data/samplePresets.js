@@ -167,48 +167,48 @@ export const TEMPLATE_PRESETS = {
     songId: 'bollywood-lofi-chill',
   },
 
-  'emerald-luxe': {
-    name: 'Emerald Luxe',
-    themeId: 'emerald',
+  'midnight-onyx': {
+    name: 'Midnight Onyx',
+    themeId: 'midnight-onyx',
     category: 'birthday',
     gender: 'boy',
     recipientName: 'Kabir',
     senderName: 'Alex',
-    occasion: 'Happy Birthday to the Legend! 🌿✨',
-    subtitle: 'Wishing you boundless greatness, prosperity & joy.',
+    occasion: 'Happy Birthday to the King! 🖤👑',
+    subtitle: 'A legendary celebration for someone truly one of a kind.',
     heroPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
-    photoCaption: 'May your future be as rich & radiant as emerald! 👑✨',
+    photoCaption: 'Keep Conquering Every Summit! 🖤👑',
     photos: [
       {
-        id: 'emerald-p1',
+        id: 'midnight-p1',
         url: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
-        caption: 'Radiant confidence & timeless strength! 🌿✨',
-        tag: 'The Legend',
+        caption: 'Unshakable poise, radiant confidence & timeless strength! 🖤👑',
+        tag: 'The King',
       },
     ],
     specialReasons: [
       {
-        icon: '🌿',
-        title: 'Boundless Wisdom',
-        desc: 'You inspire everyone with your grounded poise, calm leadership, and golden guidance!',
+        icon: '🖤',
+        title: 'Unshakable Loyalty',
+        desc: 'Standing firm like obsidian through every storm, always loyal and steadfast in every chapter!',
       },
       {
         icon: '👑',
-        title: 'True Legend',
-        desc: 'Walking with strength and honour, conquering every milestone with radiant grace!',
+        title: 'Boundless Greatness',
+        desc: 'Conquering every summit with fearless grit, legendary vision, and radiant gold excellence!',
       },
       {
-        icon: '💎',
-        title: 'Rare as Emerald',
-        desc: 'Loyal, resilient, and brilliant — your character is a treasure beyond measure!',
+        icon: '⭐',
+        title: 'Kingly Wisdom',
+        desc: 'A calm, commanding presence whose advice, poise, and genuine heart elevate everyone around him!',
       },
     ],
     letter: {
-      title: 'A Royal Keepsake For You',
-      content: `Happy Birthday Kabir! 🌿✨\n\nMay your year be as rich, vibrant, and prosperous as emerald. You carry yourself with unmatched poise, dignity, and a heart of pure gold.\n\nThank you for being someone we can always rely on and celebrate with pride. Here is to health, boundless greatness, and monumental success ahead!\n\nKeep shining like the legend you are! 👑✨`,
-      signOff: 'With royal warmth & respect,\nAlex 🌿👑',
-      sealEmoji: '🌿',
-      waxColor: '#059669',
+      title: 'A Royal Keepsake For the King',
+      content: `Happy Birthday Kabir! 🖤👑\n\nYou command every room with effortless poise, silent strength, and a heart of pure royal gold.\n\nThank you for standing tall as a beacon of unshakable loyalty and true brotherhood. May this milestone year bring monumental triumphs, unbreakable health, and boundless greatness.\n\nKeep conquering every summit like the true king you are! 👑✨`,
+      signOff: 'With royal respect & brotherhood,\nAlex 🖤👑',
+      sealEmoji: '👑',
+      waxColor: '#F59E0B',
     },
     songId: 'baar-baar-din-ye-aaye',
   },
@@ -352,6 +352,52 @@ export const TEMPLATE_PRESETS = {
       waxColor: '#7C3AED',
     },
     songId: 'indie-acoustic-soul',
+  },
+
+  'cinderella-sky': {
+    name: 'Cinderella Sky',
+    themeId: 'cinderella-sky',
+    category: 'birthday',
+    gender: 'girl',
+    recipientName: 'Kiara',
+    senderName: 'Elena',
+    occasion: 'Happy Birthday, Fairy Princess! 🩵✨',
+    subtitle: 'May your special day be pure magic, smiles & starlight.',
+    heroPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+    photoCaption: 'Keep Shining Like a Fairytale Star! 🩵👑',
+    photos: [
+      {
+        id: 'cinderella-p1',
+        url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+        caption: 'Pure magic, smiles and fairy starlight! 🩵✨',
+        tag: 'Fairy Princess',
+      },
+    ],
+    specialReasons: [
+      {
+        icon: '🩵',
+        title: 'Pure Radiance 🩵',
+        desc: 'Your smile lights up every room like a bright powder blue sky filled with starlight!',
+      },
+      {
+        icon: '✨',
+        title: 'Angelic Kindness ✨',
+        desc: 'You have the gentlest heart, sprinkling fairy dust, sweet smiles, and warmth wherever you go!',
+      },
+      {
+        icon: '👑',
+        title: 'Fairytale Spirit 👑',
+        desc: 'A true princess in every sense — graceful, enchanting, and spreading endless fairy joy!',
+      },
+    ],
+    letter: {
+      title: 'A Fairytale Wish For You',
+      content: `Sweetest Kiara, 🩵✨\n\nMay your birthday feel like a dreamy fairytale come to life! You bring so much sweetness, angelic starlight, and genuine happiness into the world.\n\nNever stop believing in magic, laughing from your heart, and dancing like Cinderella under the sky. Wishing you boundless joy, sweet dreams, and endless smiles!\n\nHappy Birthday, Fairy Princess! 🩵👑✨`,
+      signOff: 'With fairy hugs & endless love,\nElena 🩵✨',
+      sealEmoji: '🩵',
+      waxColor: '#0284C7',
+    },
+    songId: 'baar-baar-din-ye-aaye',
   },
 
   // ==========================================
@@ -912,12 +958,18 @@ TEMPLATE_PRESETS['heartfelt-apology'] = TEMPLATE_PRESETS['gentle-peace'];
 TEMPLATE_PRESETS['royal'] = TEMPLATE_PRESETS['royal-sapphire'];
 TEMPLATE_PRESETS['gold'] = TEMPLATE_PRESETS['golden-birthday'];
 TEMPLATE_PRESETS['polaroid'] = TEMPLATE_PRESETS['polaroid-scrapbook'];
-TEMPLATE_PRESETS['emerald'] = TEMPLATE_PRESETS['emerald-luxe'];
-TEMPLATE_PRESETS['emerald-luxe'] = TEMPLATE_PRESETS['emerald-luxe'];
-TEMPLATE_PRESETS['jade'] = TEMPLATE_PRESETS['emerald-luxe'];
+TEMPLATE_PRESETS['midnight'] = TEMPLATE_PRESETS['midnight-onyx'];
+TEMPLATE_PRESETS['onyx'] = TEMPLATE_PRESETS['midnight-onyx'];
+TEMPLATE_PRESETS['midnight-onyx'] = TEMPLATE_PRESETS['midnight-onyx'];
+TEMPLATE_PRESETS['emerald-luxe'] = TEMPLATE_PRESETS['midnight-onyx'];
+TEMPLATE_PRESETS['emerald'] = TEMPLATE_PRESETS['midnight-onyx'];
+TEMPLATE_PRESETS['jade'] = TEMPLATE_PRESETS['midnight-onyx'];
 TEMPLATE_PRESETS['blush'] = TEMPLATE_PRESETS['blush-rose'];
 TEMPLATE_PRESETS['peach'] = TEMPLATE_PRESETS['princess-peach'];
 TEMPLATE_PRESETS['lavender'] = TEMPLATE_PRESETS['lavender-dream'];
+TEMPLATE_PRESETS['cinderella'] = TEMPLATE_PRESETS['cinderella-sky'];
+TEMPLATE_PRESETS['sky'] = TEMPLATE_PRESETS['cinderella-sky'];
+TEMPLATE_PRESETS['cinderella-sky'] = TEMPLATE_PRESETS['cinderella-sky'];
 
 // Romance Aliases
 TEMPLATE_PRESETS['velvet'] = TEMPLATE_PRESETS['velvet-romance'];

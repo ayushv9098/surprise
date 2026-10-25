@@ -6,24 +6,36 @@ import { getSongById } from '../../data/songs';
 
 // 18 Ambient floating Apple emoji configurations calibrated for each distinct theme
 const FLOATING_EMOJIS_DEF = [
-  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '💜', gold: '⭐', polaroid: '📸', emerald: '🌿', left: '4%', top: '8%', size: 24, dur: '7s', del: '0s' },
-  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '⚡', emerald: '👑', left: '10%', top: '45%', size: 26, dur: '8.5s', del: '1.2s' },
-  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '🔥', emerald: '⭐', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
-  { boy: '🌹', girl: '🌹', peach: '🧡', lavender: '🌸', gold: '🎂', polaroid: '⭐', emerald: '💚', left: '8%', top: '78%', size: 24, dur: '7.5s', del: '2s' },
-  { boy: '💫', girl: '💫', peach: '💫', lavender: '💫', gold: '💫', polaroid: '✨', emerald: '✨', left: '88%', top: '52%', size: 22, dur: '8s', del: '0.8s' },
-  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', polaroid: '❤️', emerald: '🎉', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
-  { boy: '💙', girl: '💖', peach: '🌟', lavender: '💜', gold: '💛', polaroid: '💫', emerald: '🥂', left: '80%', top: '82%', size: 22, dur: '7s', del: '1s' },
-  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '🎉', emerald: '🔥', left: '48%', top: '6%', size: 22, dur: '6.5s', del: '2.3s' },
-  { boy: '🔥', girl: '🎀', peach: '🍰', lavender: '🌙', gold: '🔥', polaroid: '📸', emerald: '🌿', left: '70%', top: '36%', size: 22, dur: '8s', del: '1.1s' },
-  { boy: '🏆', girl: '🍰', peach: '⭐', lavender: '🍰', gold: '🏆', polaroid: '⚡', emerald: '👑', left: '16%', top: '92%', size: 24, dur: '8.5s', del: '0.4s' },
-  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', polaroid: '⭐', emerald: '⭐', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
-  { boy: '🎊', girl: '🧸', peach: '🎊', lavender: '🧸', gold: '🎊', polaroid: '⭐', emerald: '💚', left: '38%', top: '89%', size: 24, dur: '9s', del: '1.7s' },
-  { boy: '⚡', girl: '🍓', peach: '🧡', lavender: '🍓', gold: '⚡', polaroid: '✨', emerald: '✨', left: '58%', top: '72%', size: 20, dur: '7.5s', del: '2.1s' },
-  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', polaroid: '🔥', emerald: '🎉', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
-  { boy: '🧿', girl: '🌈', peach: '🌈', lavender: '🌈', gold: '🧿', polaroid: '💫', emerald: '🥂', left: '32%', top: '50%', size: 24, dur: '7s', del: '1.3s' },
-  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '🎉', emerald: '🔥', left: '74%', top: '94%', size: 26, dur: '8s', del: '2.6s' },
-  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '📸', emerald: '🌿', left: '6%', top: '32%', size: 20, dur: '8.2s', del: '0.3s' },
-  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '⚡', emerald: '👑', left: '52%', top: '20%', size: 26, dur: '6.8s', del: '1.6s' },
+  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '💜', gold: '⭐', polaroid: '📸', emerald: '🌿', midnight: '🖤', cinderella: '🩵', left: '4%', top: '8%', size: 24, dur: '7s', del: '0s' },
+  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '⚡', emerald: '👑', midnight: '👑', cinderella: '✨', left: '10%', top: '45%', size: 26, dur: '8.5s', del: '1.2s' },
+  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '🔥', emerald: '⭐', midnight: '⭐', cinderella: '🦋', left: '90%', top: '14%', size: 28, dur: '9s', del: '0.5s' },
+  { boy: '🌹', girl: '🌹', peach: '🧡', lavender: '🌸', gold: '🎂', polaroid: '⭐', emerald: '💚', midnight: '✨', cinderella: '👑', left: '8%', top: '78%', size: 24, dur: '7.5s', del: '2s' },
+  { boy: '💫', girl: '💫', peach: '💫', lavender: '💫', gold: '💫', polaroid: '✨', emerald: '✨', midnight: '🔥', cinderella: '⭐', left: '88%', top: '52%', size: 22, dur: '8s', del: '0.8s' },
+  { boy: '🎉', girl: '🎉', peach: '🎉', lavender: '🎉', gold: '🎉', polaroid: '❤️', emerald: '🎉', midnight: '🏆', cinderella: '🌸', left: '22%', top: '18%', size: 24, dur: '9.5s', del: '1.5s' },
+  { boy: '💙', girl: '💖', peach: '🌟', lavender: '💜', gold: '💛', polaroid: '💫', emerald: '🥂', midnight: '💫', cinderella: '🕊️', left: '80%', top: '82%', size: 22, dur: '7s', del: '1s' },
+  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '🎉', emerald: '🔥', midnight: '🎉', cinderella: '💫', left: '48%', top: '6%', size: 22, dur: '6.5s', del: '2.3s' },
+  { boy: '🔥', girl: '🎀', peach: '🍰', lavender: '🌙', gold: '🔥', polaroid: '📸', emerald: '🌿', midnight: '🖤', cinderella: '🩵', left: '70%', top: '36%', size: 22, dur: '8s', del: '1.1s' },
+  { boy: '🏆', girl: '🍰', peach: '⭐', lavender: '🍰', gold: '🏆', polaroid: '⚡', emerald: '👑', midnight: '👑', cinderella: '✨', left: '16%', top: '92%', size: 24, dur: '8.5s', del: '0.4s' },
+  { boy: '⭐', girl: '🌸', peach: '🍑', lavender: '🌸', gold: '⭐', polaroid: '⭐', emerald: '⭐', midnight: '⭐', cinderella: '🦋', left: '84%', top: '38%', size: 22, dur: '7s', del: '2.8s' },
+  { boy: '🎊', girl: '🧸', peach: '🎊', lavender: '🧸', gold: '🎊', polaroid: '⭐', emerald: '💚', midnight: '✨', cinderella: '👑', left: '38%', top: '89%', size: 24, dur: '9s', del: '1.7s' },
+  { boy: '⚡', girl: '🍓', peach: '🧡', lavender: '🍓', gold: '⚡', polaroid: '✨', emerald: '✨', midnight: '🔥', cinderella: '⭐', left: '58%', top: '72%', size: 20, dur: '7.5s', del: '2.1s' },
+  { boy: '🚀', girl: '💌', peach: '💌', lavender: '💌', gold: '🚀', polaroid: '🔥', emerald: '🎉', midnight: '🏆', cinderella: '🌸', left: '94%', top: '26%', size: 24, dur: '9.2s', del: '0.6s' },
+  { boy: '🧿', girl: '🌈', peach: '🌈', lavender: '🌈', gold: '🧿', polaroid: '💫', emerald: '🥂', midnight: '💫', cinderella: '🕊️', left: '32%', top: '50%', size: 24, dur: '7s', del: '1.3s' },
+  { boy: '🦋', girl: '🦋', peach: '✨', lavender: '🦋', gold: '✨', polaroid: '🎉', emerald: '🔥', midnight: '🎉', cinderella: '💫', left: '74%', top: '94%', size: 26, dur: '8s', del: '2.6s' },
+  { boy: '✨', girl: '✨', peach: '✨', lavender: '✨', gold: '✨', polaroid: '📸', emerald: '🌿', midnight: '🖤', cinderella: '🩵', left: '6%', top: '32%', size: 20, dur: '8.2s', del: '0.3s' },
+  { boy: '👑', girl: '👑', peach: '👑', lavender: '🔮', gold: '👑', polaroid: '⚡', emerald: '👑', midnight: '👑', cinderella: '✨', left: '52%', top: '20%', size: 26, dur: '6.8s', del: '1.6s' },
+];
+
+const DEFAULT_MIDNIGHT_REASONS = [
+  { icon: '🖤', title: 'Unshakable Loyalty', desc: 'A steadfast brother and rock solid presence who stands tall through thick and thin!' },
+  { icon: '⭐', title: 'Boundless Ambition', desc: 'Fierce drive, sharp intellect, and the relentless courage to claim the crown!' },
+  { icon: '👑', title: 'True Royalty', desc: 'Distinguished elegance, effortless charisma, and the unmistakable spirit of a king!' },
+];
+
+const DEFAULT_CINDERELLA_REASONS = [
+  { icon: '🩵', title: 'Pure Radiance', desc: 'Your gentle light and dreamy smile bring heavenly warmth to every single day!' },
+  { icon: '✨', title: 'Gentle Magic', desc: 'The effortless charm, angelic kindness, and sparkling wonder you share so generously!' },
+  { icon: '🕊️', title: 'Angelic Soul', desc: 'A heart of pure fairy tale gold whose grace and sweetness inspire everyone around!' },
 ];
 
 const DEFAULT_EMERALD_REASONS = [
@@ -160,8 +172,10 @@ export default function MultiSceneBirthdayView({
   const isLavender = !isForgive && templateId.includes('lavender');
   const isGold = templateId.includes('gold');
   const isEmerald = templateId.includes('emerald') || templateId.includes('jade');
-  const isBlush = !isVelvet && !isPeach && !isLavender && !isGold && !isEmerald && !isPolaroid && (templateId.includes('rose') || templateId.includes('blush') || siteData.gender === 'girl');
-  const isRoyal = !isVelvet && !isSunset && !isCelestial && !isVintage && !isNeon && !isCozy && !isPeace && !isForgive && !isSunrise && !isPeach && !isLavender && !isGold && !isPolaroid && !isEmerald && !isBlush;
+  const isMidnight = templateId.includes('midnight') || templateId.includes('onyx') || templateId.includes('obsidian');
+  const isCinderella = templateId.includes('cinderella') || templateId.includes('sky');
+  const isBlush = !isVelvet && !isPeach && !isLavender && !isGold && !isEmerald && !isMidnight && !isCinderella && !isPolaroid && (templateId.includes('rose') || templateId.includes('blush') || siteData.gender === 'girl');
+  const isRoyal = !isVelvet && !isSunset && !isCelestial && !isVintage && !isNeon && !isCozy && !isPeace && !isForgive && !isSunrise && !isPeach && !isLavender && !isGold && !isPolaroid && !isEmerald && !isMidnight && !isCinderella && !isBlush;
 
   const isRomanceCategory = isVelvet || isSunset || isCelestial;
   const isScrapbookCategory = isVintage || isNeon || isCozy || isPolaroid;
@@ -565,7 +579,67 @@ export default function MultiSceneBirthdayView({
       };
     }
 
-    // 14. Emerald Luxe (Birthday)
+    // 14. Midnight Onyx (Birthday)
+    if (isMidnight) {
+      return {
+        celebrationEmoji: '🖤',
+        headingColorClass: 'text-white',
+        headingAccentClass: 'text-amber-400',
+        cardClass: 'birthday-card-midnight',
+        reasonCardClass: 'special-reason-card-midnight',
+        reasonIconBgClass: 'bg-slate-800/90 border border-amber-500/30',
+        reasonTitleClass: 'text-white',
+        primaryBtnClass: 'btn-primary-midnight',
+        secondaryBtnClass: 'btn-secondary-midnight',
+        coverBtnGradient: 'bg-gradient-to-r from-[#F59E0B] via-[#D97706] to-[#B45309] hover:from-[#D97706] hover:to-[#92400E] shadow-amber-500/35 hover:shadow-amber-500/50 animate-pulse-glow-gold',
+        envelopeBgGradient: 'bg-gradient-to-br from-slate-900 via-neutral-900 to-black border-amber-500/40',
+        envelopeShading: 'bg-black/70',
+        envelopeCardBorder: 'border-amber-400/50',
+        envelopeCardTitle: 'text-amber-400',
+        envelopeFolds: { fold1: '#0f172a', fold2: '#1e293b', fold3: '#334155' },
+        defaultWaxColor: '#F59E0B',
+        defaultSealEmoji: '👑',
+        openLetterBorder: 'border-amber-400/50',
+        openLetterHeader: 'text-white',
+        signatureColorClass: 'text-amber-400',
+        bgContainerOpen: 'bg-envelope-celebration-midnight',
+        bgContainerClosed: 'bg-soft-aesthetic-midnight',
+        confettiColors: ['#F59E0B', '#FBBF24', '#FCD34D', '#FFFFFF', '#64748B'],
+        defaultSignOffEmoji: '🖤👑',
+      };
+    }
+
+    // 15. Cinderella Sky (Birthday)
+    if (isCinderella) {
+      return {
+        celebrationEmoji: '🩵',
+        headingColorClass: 'text-sky-950',
+        headingAccentClass: 'text-sky-500',
+        cardClass: 'birthday-card-cinderella',
+        reasonCardClass: 'special-reason-card-cinderella',
+        reasonIconBgClass: 'bg-sky-50 border border-sky-200/80',
+        reasonTitleClass: 'text-sky-950',
+        primaryBtnClass: 'btn-primary-cinderella',
+        secondaryBtnClass: 'btn-secondary-cinderella',
+        coverBtnGradient: 'bg-gradient-to-r from-[#38BDF8] via-[#0284C7] to-[#0369A1] hover:from-[#0284C7] hover:to-[#075985] shadow-sky-500/35 hover:shadow-sky-500/50 animate-pulse-glow-cinderella',
+        envelopeBgGradient: 'bg-gradient-to-br from-sky-400 via-sky-600 to-sky-800 border-sky-300/40',
+        envelopeShading: 'bg-sky-950/60',
+        envelopeCardBorder: 'border-sky-200',
+        envelopeCardTitle: 'text-sky-900',
+        envelopeFolds: { fold1: '#0369a1', fold2: '#0284c7', fold3: '#38bdf8' },
+        defaultWaxColor: '#0284C7',
+        defaultSealEmoji: '🩵',
+        openLetterBorder: 'border-sky-200/90',
+        openLetterHeader: 'text-sky-950',
+        signatureColorClass: 'text-sky-700',
+        bgContainerOpen: 'bg-envelope-celebration-cinderella',
+        bgContainerClosed: 'bg-soft-aesthetic-cinderella',
+        confettiColors: ['#38BDF8', '#7DD3FC', '#BAE6FD', '#FFFFFF', '#E0F2FE'],
+        defaultSignOffEmoji: '🩵✨',
+      };
+    }
+
+    // 16. Emerald Luxe (Birthday)
     if (isEmerald) {
       return {
         celebrationEmoji: '🌿',
@@ -656,7 +730,11 @@ export default function MultiSceneBirthdayView({
   })();
 
   // Floating emoji selector based on active theme
-  const themeFloatingEmojis = isVelvet
+  const themeFloatingEmojis = isMidnight
+    ? ['🖤', '👑', '⭐', '✨', '🔥', '🏆', '💫', '🎉']
+    : isCinderella
+    ? ['🩵', '✨', '🦋', '👑', '⭐', '🌸', '🕊️', '💫']
+    : isVelvet
     ? ['❤️', '🌹', '✨', '🍷', '💫', '💖', '💌', '🥀']
     : isSunset
     ? ['🌅', '✨', '🧡', '🌇', '💫', '💛', '💌', '🥂']
@@ -680,6 +758,8 @@ export default function MultiSceneBirthdayView({
 
   const getFloatingEmoji = (e, index = 0) => {
     if (themeFloatingEmojis) return themeFloatingEmojis[index % themeFloatingEmojis.length];
+    if (isMidnight) return e.midnight || '🖤';
+    if (isCinderella) return e.cinderella || '🩵';
     if (isEmerald) return e.emerald || '🌿';
     if (isPolaroid) return e.polaroid || '📸';
     if (isPeach) return e.peach || e.girl;
@@ -690,7 +770,7 @@ export default function MultiSceneBirthdayView({
   };
 
   // Personalization data with neutral defaults
-  const isGirlGender = siteData.gender === 'girl' || isBlush || isPeach || isLavender || isVelvet || isSunset || isCelestial || isPeace || isForgive || isSunrise;
+  const isGirlGender = siteData.gender === 'girl' || isBlush || isPeach || isLavender || isCinderella || isVelvet || isSunset || isCelestial || isPeace || isForgive || isSunrise;
   const recipientName = siteData.recipientName || (isGirlGender ? 'Sarah' : 'Rohan');
   const senderName = siteData.senderName || (isGirlGender ? 'Elena' : 'Alex');
   const subtitle = siteData.subtitle || 'I have a small surprise for you...';
@@ -732,6 +812,8 @@ export default function MultiSceneBirthdayView({
                      : 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80');
 
   const photoCaption = siteData.photoCaption || (() => {
+    if (isMidnight) return "Crown Fit for a King! 🖤👑";
+    if (isCinderella) return "Fairy Tale Dreams & Pure Radiance! 🩵✨";
     if (isVelvet) return "Forever in My Heart ❤️🌹";
     if (isSunset) return "Golden Moments With You 🌅✨";
     if (isCelestial) return "Written in the Stars 🌌🌙";
@@ -750,7 +832,11 @@ export default function MultiSceneBirthdayView({
     return "Keep Rocking Always! 👑🔥";
   })();
 
-  const defaultReasons = isVelvet
+  const defaultReasons = isMidnight
+    ? DEFAULT_MIDNIGHT_REASONS
+    : isCinderella
+    ? DEFAULT_CINDERELLA_REASONS
+    : isVelvet
     ? DEFAULT_VELVET_REASONS
     : isSunset
     ? DEFAULT_SUNSET_REASONS
@@ -786,7 +872,11 @@ export default function MultiSceneBirthdayView({
 
   // Letter content
   const letterTitle = siteData.letter?.title || siteData.letterTitle || (isRomanceCategory ? 'A Love Note For You' : (isApologyCategory ? 'From My Heart' : 'A Little Note For You'));
-  const defaultLetter = isVelvet
+  const defaultLetter = isMidnight
+    ? `Happy Birthday, ${recipientName}!\n\nToday we celebrate a true king. Your presence carries an unmistakable charisma, unshakable loyalty, and razor-sharp ambition that elevates everyone in your orbit.\n\nMay this year grant you monumental victories, bold breakthroughs, and moments of timeless greatness. Keep conquering and wear your crown with pride! 🖤👑`
+    : isCinderella
+    ? `Happy Birthday, ${recipientName}!\n\nYou bring a dreamy celestial magic, angelic grace, and sparkling light into this world. Your gentle smile illuminates every room and turns simple moments into pure fairy tales.\n\nMay your year ahead be crowned with beautiful blessings, sweet laughter, and all the wondrous dreams your heart desires. Shine on like the royal princess you are! 🩵✨`
+    : isVelvet
     ? `Dear ${recipientName},\n\nEvery day with you feels like a dream I never want to wake up from. Your gentle touch, beautiful laughter, and caring heart are the greatest gifts of my life. ❤️🌹\n\nThank you for loving me and being my forever companion. May our love continue to blossom with timeless passion and sweet romance. Forever yours.`
     : isSunset
     ? `Dear ${recipientName},\n\nWatching the sunset by your side is my favorite place in the world. You bring a golden glow, peaceful warmth, and endless joy to my life. 🌅✨\n\nThank you for every shared laugh and tender moment. Here's to countless more golden sunsets together!`

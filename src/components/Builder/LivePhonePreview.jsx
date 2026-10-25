@@ -168,6 +168,51 @@ const THEMES = {
     defaultSignOff: (senderName) => `Always your brother, ${senderName} 📸⚡`,
   },
 
+  'midnight-onyx': {
+    id: 'midnight-onyx',
+    name: 'Midnight Onyx 🖤👑',
+    category: 'birthday',
+    gender: 'boy',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['🖤', '👑', '⭐', '✨', '🔥', '🏆', '💫', '🎉'],
+    primaryEmoji: '🖤',
+    containerBgClass: 'bg-soft-aesthetic-midnight',
+    envelopeCelebrationBg: 'bg-envelope-celebration-midnight',
+    cardClass: 'birthday-card-midnight p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-midnight p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-white',
+    accentTextClass: 'text-amber-400',
+    subtitleClass: 'text-slate-400',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-midnight animate-pulse-glow-gold cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold btn-secondary-midnight active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-midnight active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-midnight active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-300 bg-slate-800/90 border border-amber-500/30 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-amber-300 bg-slate-800/90 border border-amber-500/30 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-midnight',
+    iconBoxClass: 'bg-slate-800/90 border border-amber-500/30',
+    waxColor: '#F59E0B',
+    sealEmoji: '👑',
+    envelopeGradient: 'bg-gradient-to-br from-slate-900 via-neutral-900 to-black border-amber-500/40',
+    envelopeOverlay: 'bg-black/70',
+    envelopePeekingBorder: 'border-amber-400/50',
+    envelopePeekingText: 'text-amber-400',
+    envelopeFolds: ['#0f172a', '#1e293b', '#334155'],
+    letterCardBorder: 'border-amber-400/50 bg-slate-900/95',
+    letterBorderBottom: 'border-slate-800',
+    letterHeaderClass: 'text-white',
+    letterSignOffClass: 'text-amber-400',
+    confettiColors: ['#F59E0B', '#FBBF24', '#FCD34D', '#FFFFFF', '#64748B'],
+    defaultReasons: [
+      { icon: '🖤', title: 'Unshakable Loyalty', desc: 'A steadfast brother and rock solid presence who stands tall through thick and thin!' },
+      { icon: '⭐', title: 'Boundless Ambition', desc: 'Fierce drive, sharp intellect, and the relentless courage to claim the crown!' },
+      { icon: '👑', title: 'True Royalty', desc: 'Distinguished elegance, effortless charisma, and the unmistakable spirit of a king!' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, today we celebrate a true king! 🖤👑\n\nYour presence carries an unmistakable charisma, unshakable loyalty, and razor-sharp ambition that elevates everyone in your orbit. May this year grant you monumental victories, bold breakthroughs, and moments of timeless greatness. Keep conquering!`,
+    defaultSignOff: (senderName) => `With respect & brotherhood, ${senderName} 🖤👑`,
+  },
+
   'blush-rose': {
     id: 'blush-rose',
     name: 'Blush Blossom 🌸',
@@ -301,6 +346,51 @@ const THEMES = {
     defaultLetter: (recipientName) =>
       `Dear ${recipientName}, wishing you the gentlest fairy magic, sweetest dreams, and a world of endless wonder on your special day. 💜🌙\n\nYour presence is a calming melody and a beautiful spark of joy in this world. Keep shining and dreaming big! 🦋✨`,
     defaultSignOff: (senderName) => `With love & magic, ${senderName} 💜🌙`,
+  },
+
+  'cinderella-sky': {
+    id: 'cinderella-sky',
+    name: 'Cinderella Sky 🩵✨',
+    category: 'birthday',
+    gender: 'girl',
+    fontFamily: 'font-cursive',
+    ambientEmojis: ['🩵', '✨', '🦋', '👑', '⭐', '🌸', '🕊️', '💫'],
+    primaryEmoji: '🩵',
+    containerBgClass: 'bg-soft-aesthetic-cinderella',
+    envelopeCelebrationBg: 'bg-envelope-celebration-cinderella',
+    cardClass: 'birthday-card-cinderella p-5 sm:p-6 w-full text-center relative',
+    subCardClass: 'birthday-card-cinderella p-5 sm:p-6 w-full max-w-[260px] text-center',
+    headingClass: 'text-sky-950',
+    accentTextClass: 'text-sky-500',
+    subtitleClass: 'text-sky-800/70',
+    btnPrimaryClass: 'py-2.5 px-6 rounded-xl text-xs font-bold text-white btn-primary-cinderella animate-pulse-glow-cinderella cursor-pointer',
+    btnSecondaryClass: 'py-2 px-5 rounded-xl text-xs font-semibold btn-secondary-cinderella active:scale-95 cursor-pointer',
+    btnActionClass: 'py-2 px-4 rounded-xl text-xs font-bold text-white btn-primary-cinderella active:scale-95 cursor-pointer',
+    btnMood1Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-white btn-primary-cinderella active:scale-95 cursor-pointer',
+    btnMood2Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-sky-950 bg-sky-50 hover:bg-sky-100 border border-sky-200 active:scale-95 cursor-pointer',
+    btnMood3Class: 'py-2.5 px-4 rounded-xl text-xs font-bold text-sky-900 bg-sky-100/70 hover:bg-sky-100 border border-sky-200 active:scale-95 cursor-pointer',
+    reasonCardClass: 'special-reason-card-cinderella',
+    iconBoxClass: 'bg-sky-50 border border-sky-200/80',
+    waxColor: '#0284C7',
+    sealEmoji: '🩵',
+    envelopeGradient: 'bg-gradient-to-br from-sky-400 via-sky-600 to-sky-800 border-sky-300/40',
+    envelopeOverlay: 'bg-sky-950/60',
+    envelopePeekingBorder: 'border-sky-200',
+    envelopePeekingText: 'text-sky-900',
+    envelopeFolds: ['#0369a1', '#0284c7', '#38bdf8'],
+    letterCardBorder: 'border-sky-200/90',
+    letterBorderBottom: 'border-sky-100',
+    letterHeaderClass: 'text-sky-950',
+    letterSignOffClass: 'text-sky-700',
+    confettiColors: ['#38BDF8', '#7DD3FC', '#BAE6FD', '#FFFFFF', '#E0F2FE'],
+    defaultReasons: [
+      { icon: '🩵', title: 'Pure Radiance', desc: 'Your gentle light and dreamy smile bring heavenly warmth to every single day!' },
+      { icon: '✨', title: 'Gentle Magic', desc: 'The effortless charm, angelic kindness, and sparkling wonder you share so generously!' },
+      { icon: '🕊️', title: 'Angelic Soul', desc: 'A heart of pure fairy tale gold whose grace and sweetness inspire everyone around!' },
+    ],
+    defaultLetter: (recipientName) =>
+      `Dear ${recipientName}, you bring a dreamy celestial magic, angelic grace, and sparkling light into this world. 🩵✨\n\nMay your year ahead be crowned with beautiful blessings, sweet laughter, and all the wondrous dreams your heart desires. Shine on like the royal princess you are!`,
+    defaultSignOff: (senderName) => `With love & magic, ${senderName} 🩵✨`,
   },
 
   // =========================================================================
@@ -790,9 +880,11 @@ const resolveTheme = (templateId, gender, category) => {
   if (targetId.includes('sapphire') || targetId.includes('royal')) return THEMES['royal-sapphire'];
   if (targetId.includes('gold')) return THEMES['golden-birthday'];
   if (targetId.includes('polaroid')) return THEMES['polaroid-scrapbook'];
+  if (targetId.includes('midnight') || targetId.includes('onyx') || targetId.includes('obsidian')) return THEMES['midnight-onyx'];
   if (targetId.includes('rose') || targetId.includes('blush')) return THEMES['blush-rose'];
   if (targetId.includes('peach')) return THEMES['princess-peach'];
   if (targetId.includes('lavender')) return THEMES['lavender-dream'];
+  if (targetId.includes('cinderella') || targetId.includes('sky')) return THEMES['cinderella-sky'];
 
   if (targetId.includes('romance') || targetId.includes('love') || targetId.includes('anniversary')) return THEMES['velvet-romance'];
   if (targetId.includes('scrapbook') || targetId.includes('retro') || targetId.includes('vintage')) return THEMES['vintage-kodak'];
@@ -1114,9 +1206,11 @@ export default function LivePhonePreview({
     'royal-sapphire': 'Keep Rocking Always! 👑🔥',
     'golden-birthday': 'Keep Shining Brighter Than Gold! 🎂✨',
     'polaroid-scrapbook': 'Brothers & Besties For Life! 📸⚡',
+    'midnight-onyx': 'Crown Fit for a King! 🖤👑',
     'blush-rose': 'Stay Wonderful Always! 🌸✨',
     'princess-peach': 'May All Your Wishes Sparkle! ✨💖',
     'lavender-dream': 'Never Stop Dreaming Beautiful Dreams! 💜🦋',
+    'cinderella-sky': 'Fairy Tale Dreams & Pure Radiance! 🩵✨',
     'velvet-romance': 'My favorite smile in the world 🌹',
     'sunset-romance': 'Golden Moments With You 🌅✨',
     'celestial-love': 'Written in the Stars 🌌🌙',

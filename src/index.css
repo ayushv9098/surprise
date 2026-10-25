@@ -308,6 +308,32 @@
   inset: 0;
 }
 
+.bg-soft-aesthetic-midnight {
+  background: linear-gradient(150deg, #090d16 0%, #0f172a 45%, #1e293b 80%, #090d16 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-midnight:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(245, 158, 11, 0.15), transparent 45%), radial-gradient(circle at 80% 25%, rgba(217, 119, 6, 0.12), transparent 50%), radial-gradient(circle at 50% 85%, rgba(15, 23, 42, 0.6), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-soft-aesthetic-cinderella {
+  background: linear-gradient(150deg, #f0f9ff 0%, #e0f2fe 35%, #bae6fd 70%, #ffffff 100%);
+  position: relative;
+}
+.bg-soft-aesthetic-cinderella:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 20% 15%, rgba(56, 189, 248, 0.22), transparent 45%), radial-gradient(circle at 80% 25%, rgba(14, 165, 233, 0.18), transparent 50%), radial-gradient(circle at 50% 85%, rgba(224, 242, 254, 0.45), transparent 50%);
+  position: fixed;
+  inset: 0;
+}
+
 /* Romance Themes */
 .bg-soft-aesthetic-velvet {
   background: linear-gradient(150deg, #fff1f2 0%, #ffe4e6 35%, #fecdd3 70%, #fff5f5 100%);
@@ -526,6 +552,34 @@
   inset: 0;
 }
 
+.bg-envelope-celebration-midnight {
+  background: linear-gradient(150deg, #050508 0%, #0a0f1d 45%, #000000 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-midnight:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.35), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
+.bg-envelope-celebration-cinderella {
+  background: linear-gradient(150deg, #075985 0%, #0284c7 45%, #0369a1 100%);
+  transition: background 0.7s;
+  position: relative;
+}
+.bg-envelope-celebration-cinderella:before {
+  content: "";
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(56, 189, 248, 0.4), transparent 60%);
+  position: fixed;
+  inset: 0;
+}
+
 /* Romance Envelope Celebrations */
 .bg-envelope-celebration-velvet {
   background: linear-gradient(150deg, #4c0519 0%, #881337 45%, #1c050c 100%);
@@ -726,6 +780,26 @@
   box-shadow: 0 20px 45px -15px rgba(5, 150, 105, 0.14), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
+.birthday-card-midnight {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.6), 0 0 25px rgba(245, 158, 11, 0.12), inset 0 1px 0 rgba(245, 158, 11, 0.2);
+}
+
+.birthday-card-cinderella {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(2, 132, 199, 0.35);
+  border-radius: 28px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 20px 45px -15px rgba(2, 132, 199, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
 /* Romance Cards */
 .birthday-card-velvet {
   -webkit-backdrop-filter: blur(20px);
@@ -827,6 +901,8 @@
   .birthday-card-gold,
   .birthday-card-polaroid,
   .birthday-card-emerald,
+  .birthday-card-midnight,
+  .birthday-card-cinderella,
   .birthday-card-velvet,
   .birthday-card-sunset,
   .birthday-card-celestial,
@@ -1021,6 +1097,52 @@
   box-shadow: 0 14px 30px -4px rgba(5, 150, 105, 0.45);
 }
 .btn-primary-emerald:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-midnight {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(245, 158, 11, 0.4);
+}
+.btn-primary-midnight:hover {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 50%, #92400E 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(245, 158, 11, 0.55);
+}
+.btn-primary-midnight:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-primary-cinderella {
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #38BDF8 0%, #0284C7 50%, #0369A1 100%);
+  border: none;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 10px 24px -4px rgba(2, 132, 199, 0.35);
+}
+.btn-primary-cinderella:hover {
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #075985 100%);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 14px 30px -4px rgba(2, 132, 199, 0.45);
+}
+.btn-primary-cinderella:active {
   transform: translateY(0) scale(0.98);
 }
 
@@ -1395,6 +1517,55 @@
   box-shadow: 0 4px 12px -2px rgba(5, 150, 105, 0.15);
 }
 .btn-secondary-emerald:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-midnight {
+  color: #fbbf24 !important;
+  cursor: pointer;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.3);
+}
+.btn-secondary-midnight:hover {
+  background: rgba(51, 65, 85, 0.9);
+  color: #fde68a !important;
+  border-color: rgba(245, 158, 11, 0.6);
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(245, 158, 11, 0.2);
+}
+.btn-secondary-midnight:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-secondary-cinderella {
+  color: #0369a1 !important;
+  cursor: pointer;
+  background: #f0f9ff;
+  border: 1px solid rgba(186, 230, 253, 0.95);
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  min-height: 44px;
+  box-shadow: 0 2px 6px -1px rgba(2, 132, 199, 0.08);
+}
+.btn-secondary-cinderella:hover {
+  background: #e0f2fe;
+  color: #075985 !important;
+  transform: translateY(-1.5px) scale(1.01);
+  box-shadow: 0 4px 12px -2px rgba(2, 132, 199, 0.15);
+}
+.btn-secondary-cinderella:active {
   transform: translateY(0) scale(0.98);
 }
 
@@ -1783,6 +1954,38 @@
   box-shadow: 0 14px 28px -6px rgba(5, 150, 105, 0.16);
 }
 
+.special-reason-card-midnight {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(245, 158, 11, 0.05);
+}
+.special-reason-card-midnight:hover {
+  background: rgba(30, 41, 59, 0.95);
+  border-color: rgba(245, 158, 11, 0.6);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.6), 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.special-reason-card-cinderella {
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(186, 230, 253, 0.85);
+  border-radius: 20px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px -6px rgba(2, 132, 199, 0.08), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+.special-reason-card-cinderella:hover {
+  background: #ffffff;
+  border-color: rgba(2, 132, 199, 0.8);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 14px 28px -6px rgba(2, 132, 199, 0.16);
+}
+
 /* Romance Special Reason Cards */
 .special-reason-card-velvet {
   -webkit-backdrop-filter: blur(16px);
@@ -1962,6 +2165,10 @@
   0%, 100% { box-shadow: 0 10px 24px -4px rgba(5, 150, 105, 0.35); }
   50% { box-shadow: 0 12px 32px 0 rgba(5, 150, 105, 0.6), 0 0 24px rgba(16, 185, 129, 0.4); }
 }
+@keyframes pulseGlowCinderella {
+  0%, 100% { box-shadow: 0 10px 24px -4px rgba(2, 132, 199, 0.35); }
+  50% { box-shadow: 0 12px 32px 0 rgba(2, 132, 199, 0.6), 0 0 24px rgba(56, 189, 248, 0.4); }
+}
 
 @keyframes pulseGlowVelvet {
   0%, 100% { box-shadow: 0 10px 24px -4px rgba(225, 29, 72, 0.35); }
@@ -2037,6 +2244,7 @@
 .animate-pulse-glow-gold { animation: 2.4s ease-in-out infinite pulseGlowGold; }
 .animate-pulse-glow-polaroid { animation: 2.4s ease-in-out infinite pulseGlowPolaroid; }
 .animate-pulse-glow-emerald { animation: 2.4s ease-in-out infinite pulseGlowEmerald; }
+.animate-pulse-glow-cinderella { animation: 2.4s ease-in-out infinite pulseGlowCinderella; }
 .animate-pulse-glow-velvet { animation: 2.4s ease-in-out infinite pulseGlowVelvet; }
 .animate-pulse-glow-sunset { animation: 2.4s ease-in-out infinite pulseGlowSunset; }
 .animate-pulse-glow-celestial { animation: 2.4s ease-in-out infinite pulseGlowCelestial; }
