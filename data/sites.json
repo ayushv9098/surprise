@@ -1,5 +1,161 @@
 [
   {
+    "templateId": "cinderella-sky",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Kiara",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday, Fairy Princess! 🩵✨",
+    "subtitle": "May your special day be pure magic, smiles & starlight.",
+    "heroPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Shining Like a Fairytale Star! 🩵👑",
+    "photos": [
+      {
+        "id": "cinderella-p1",
+        "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        "caption": "Pure magic, smiles and fairy starlight! 🩵✨",
+        "tag": "Fairy Princess"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🩵",
+        "title": "Pure Radiance 🩵",
+        "desc": "Your smile lights up every room like a bright powder blue sky filled with starlight!"
+      },
+      {
+        "icon": "✨",
+        "title": "Angelic Kindness ✨",
+        "desc": "You have the gentlest heart, sprinkling fairy dust, sweet smiles, and warmth wherever you go!"
+      },
+      {
+        "icon": "👑",
+        "title": "Fairytale Spirit 👑",
+        "desc": "A true princess in every sense — graceful, enchanting, and spreading endless fairy joy!"
+      }
+    ],
+    "letter": {
+      "title": "A Fairytale Wish For You",
+      "content": "Sweetest Kiara, 🩵✨\n\nMay your birthday feel like a dreamy fairytale come to life! You bring so much sweetness, angelic starlight, and genuine happiness into the world.\n\nNever stop believing in magic, laughing from your heart, and dancing like Cinderella under the sky. Wishing you boundless joy, sweet dreams, and endless smiles!\n\nHappy Birthday, Fairy Princess! 🩵👑✨",
+      "signOff": "With fairy hugs & endless love,\nElena 🩵✨",
+      "sealEmoji": "🩵",
+      "waxColor": "#0284C7"
+    },
+    "songId": "baar-baar-din-ye-aaye",
+    "id": "wc-mvnuqgxr-b3mb",
+    "slug": "kiara-37463",
+    "updatedAt": "2026-10-25T13:16:48.105Z",
+    "createdAt": "2026-10-25T13:16:48.063Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwgMYEsB2qEAThHIgLQDOA1gJ4gA0OSEA5gPbENYBGuxMAAtUCBszYRCJTCDYC4TEKTwxcUsADkEUCLIDSuBMQRKqUosW27ZAUThTTzDtmwIquDvlkAJBDBg6AAIAIQFhUTpGIIAxBAFggAViAmwIKioAQiDAPg3AVz3ACnIzAFdeMFwwB1kAWTEgug5i4iCqGAg8BDggyKDeCCCYJv6oBHlsaKooXAcqIIAyFrBjOFw2ITAAOiUhEg5EoQ4wDll1sBgqDAB6S9wRySoN4vxWxCohDewOKEuYA6OKACMAFYAMwAFiBACYABwAdjBANhsKBFFBAE40WCEAA2NGiCC8AD8CGKRwAvAAzLgjMBzCkVMnYYgcGBzADuZOhAAYuXMAI6crlKX6HDgAYX85S8BggEBgQQAykICAQ2EEADK4Gj9BCxeLcJYORVLYjZfKAXg3AIo7wr+HComAA2qBcOgsHhpKRyAgKDAAUomoosKdzlcbnd0o9nvB3O9Pt8Rf9geCoXCEUiUejMTi8QgCcTSRxKdSkHSGUyWezBbyBdylG4YFLvFhEkMgndcOMWlMZkEEIQghT9cEqCaVmswGbCkolmxZHEEkFkql0vaAL4AXWYrXaRjgACUIO4vPaME6QB3pVh8tOKlVm629whUEZ8GlcnklEQqNhZABNRrNJM0z9GO6yzMU8oQAAbiQwTMl8QQrNqva9Ck44DBwbKWL0cDFP0tDBPS5AQKgQRshUQiLMsqzrJkICrowzqfE2IBFMw5SVHoWAAIL4JIKzYEEhiEPgK5BGxIBfj+WD-sUQRCAgMFBMI-SSPgnEjvJh6CBMMApPgNArHxA5Dt0xQjhMbKymAXbAVQ0R9qRbLGFAwhkTspAwc0DRyZwdEMUxl4gFaN6cXOQ6Gv0CpqCkNkhcwUmyNxynEHhAz6WkGRBAQQTQbBLRSOYQSACgEQRsCYaQUsUcDRFI2AKepqoOf2rSkE+qq5YQMyzIOC4AFYcHQ-mbiADhgJAxCYKAHF3iAyXzganT9AA6rgbyxFwQSyXWXiQOpsgKlZECQJphjGAg0T5AUAA6+C3bUwQ+c0-CCCIdQUrKXRITq3RtVAhERUtQRxv0RyIbgH3ZLJqEdVQHBtsU9UtEdYCiRkzX8R2VHEKBYDNaRanFAQ-QKQExNZQQYMqWRXBwKgGy3bdmh5YBRzyn0KzQR1OXtp2iDFGsHUUsyUD1ABWnGHjvb9qIr4dd9QRigQlhkIgQRPNh1MERsQSrW8HU+b0jRdWJA1RMj1m-YeUD2dLpEWN1tkzJkjP4H4ATBGEr2RNEC1JBlK6TlaEkeGw+AAPIUhSsirW5vXcPJAuzAsDtiXAHAwYwt32I474h4ecC2FAHB9bgsjXswzkAB5ihw6eTVgADEXIwmCYqwvRW5eGwaCyLwCDGBQ-eD8++AUHQEAUAPE9KC6shstgFBQFB+DFHybBV8QQ8glAvBmLhs5YDQRgmBQILwtiIL+jAoiQKg3FgLIkIt9igJchQkJAgAKgCIIYAC2IMBgmhBsLkl8ABadY2p3wfk-F+b8P7f1-v-QBwDQEQPokAA",
+    "template": "cinderella-sky",
+    "viewCount": 4,
+    "lastViewedAt": "2026-10-25T13:17:28.517Z"
+  },
+  {
+    "templateId": "midnight-onyx",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Kabir",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday to the King! 🖤👑",
+    "subtitle": "A legendary celebration for someone truly one of a kind.",
+    "heroPhoto": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Conquering Every Summit! 🖤👑",
+    "photos": [
+      {
+        "id": "midnight-p1",
+        "url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Unshakable poise, radiant confidence & timeless strength! 🖤👑",
+        "tag": "The King"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🖤",
+        "title": "Unshakable Loyalty",
+        "desc": "Standing firm like obsidian through every storm, always loyal and steadfast in every chapter!"
+      },
+      {
+        "icon": "👑",
+        "title": "Boundless Greatness",
+        "desc": "Conquering every summit with fearless grit, legendary vision, and radiant gold excellence!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Kingly Wisdom",
+        "desc": "A calm, commanding presence whose advice, poise, and genuine heart elevate everyone around him!"
+      }
+    ],
+    "letter": {
+      "title": "A Royal Keepsake For the King",
+      "content": "Happy Birthday Kabir! 🖤👑\n\nYou command every room with effortless poise, silent strength, and a heart of pure royal gold.\n\nThank you for standing tall as a beacon of unshakable loyalty and true brotherhood. May this milestone year bring monumental triumphs, unbreakable health, and boundless greatness.\n\nKeep conquering every summit like the true king you are! 👑✨",
+      "signOff": "With royal respect & brotherhood,\nAlex 🖤👑",
+      "sealEmoji": "👑",
+      "waxColor": "#F59E0B"
+    },
+    "songId": "baar-baar-din-ye-aaye",
+    "id": "wc-mvnuopj7-z4mk",
+    "slug": "kabir-qg8up",
+    "updatedAt": "2026-10-25T13:15:26.215Z",
+    "createdAt": "2026-10-25T13:15:25.891Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwigS1QOxwHMALMAWgHt8BPADxABoQBjJCIygJxsxACMcXMCVQJezIhHyoIXPv0oSQXCCxwwc0sADkEUCHwDSCQfOYBnabK56DfAIJwIDZpRZsLOanwASCGBgaAAIAISERMRCwSmCRCGCjHHwiAEJgwF4NwBLdjMBFHaYQCwBXfjAcMGdHYOcpGQQeYJYIZ34uJG98YIAzbmCLSgNqBLAuIrgQoeDKLuCEYIBrZNQAOgKSOUoABRJKGL4yMBgLDAB6E5woBCkLZaL8C3gECxJllgGTmB2Y8gBGAFYAAwANgA7ABOAAsIJBAA4AEwAuHkNioGEQlhdCF-Lo-VAAfgQRRiAF4elxLmAAGRdcrElhcSgwSkAd2JMIBAMpAEc2QCCp9dpQAMIBMo+LBGCAQGDBIXULlFOTJIjBACiADc5CEAMpFKC4MDpbJ5flfSgWTAAbVAeD4uAIxDI5BgPwKRS4cH2YEOxzOFyuEBudweiGer3eAu+-2B4KhsIRSJRaIxWJx+MJJLJFOptPpjJZvM5PPZBTYMDF+D4AFV7iQEPNTM5gjBKDgrIxgm1UDgEPgwI1qDTZPgmsFKXELs1AxY+iNpEQREacvlmGArnwACrrRLKkAAXwAupYYGoe3AAEoQJ7UC0Ya0gHBvStYbIFMoVQxYGvPeuNhIAGSUBA4DAZRZAsFg+G1NcZGVbohCgaocHmBJKH4Lxu17OISAZIpSGCCBNQaCwYnJDtgOZcQZzgIC4FmGRZyvVAuieftkgIoiQhYOtyzkVJ90YG0nz4E1V3KSosFCSg7lQZwLBnABxVQkHwacCnAyCsDlfAFSVFIOK1Po9QNYJmXKEhuivD1p2CIguHKDsamseoQnVNsOnIhiux7PtbMoOBUAIugmjgZwRwgfi90Eh9hKwQAFajfcTPxAJIUnGYIAHU21QAZ1MDTSQAcRpgKgDs3n1Xtu30mBVCscLTJ2KxZlQNymg7Fs2wgTzAtqIpkgSdZ6n7Kd1XYAyeEmeppIYkgLkio8QGcb05EwUB3wkwrgnPWjEilI56wSAAxXp4h3FJS2oSA+z8AIgjCCJRHERJTCEJc8gAHXwT6AE1pIHCqGMIwyGQGUzzIIroyQ-eTm1bds+hwML+xI1QUhEbrZmCQbhCmGYYHdBIGRoYC-IC5ZPs+rde3mYIaD+slZ0quC11C2YZzmfgryfXHgmDOsG34JsaOJkCQkquJRgSVpdnWLgdkoFZggAWSekQ22CXA5JiVTaas4JWjgqBqD1bQSZGHA9U+CwOzuVorwFptBpAkgMcUGS5JnOyrzAVT5PJr78ElaUBx0xV7P0oHiOM8okJQ7DhklhY4LpopZlUI1ckACnICi8Ih8AAeUhvgspETsdtqk8WH7cdpfiOXKAVxhPqcFxMmXHOrzgVUjYAKxwESVxASi6DlGj5CwABiQ6-jBVUAVCATCmoIg0AUBB6nIfh164cgqvIGgIHIdeD4KW0sGZFhyCgdV8CKRke5BcgAC8ISgeYc7gPC+AFoRyC5IgYRFBgG6GAYhICoAcGAPgCYgS-ABOQOEfwNw-AAMwYH+BgRBywYRgh+AALVLMpcBkDoGIlgT8eBiDkFoIwVgnB+D9xAA",
+    "template": "midnight-onyx",
+    "viewCount": 2,
+    "lastViewedAt": "2026-10-25T13:15:36.273Z"
+  },
+  {
+    "templateId": "emerald-luxe",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Kabir",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday to the Legend! 🌿✨",
+    "subtitle": "Wishing you boundless greatness, prosperity & joy.",
+    "heroPhoto": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "May your future be as rich & radiant as emerald! 👑✨",
+    "photos": [
+      {
+        "id": "emerald-p1",
+        "url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Radiant confidence & timeless strength! 🌿✨",
+        "tag": "The Legend"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌿",
+        "title": "Boundless Wisdom",
+        "desc": "You inspire everyone with your grounded poise, calm leadership, and golden guidance!"
+      },
+      {
+        "icon": "👑",
+        "title": "True Legend",
+        "desc": "Walking with strength and honour, conquering every milestone with radiant grace!"
+      },
+      {
+        "icon": "💎",
+        "title": "Rare as Emerald",
+        "desc": "Loyal, resilient, and brilliant — your character is a treasure beyond measure!"
+      }
+    ],
+    "letter": {
+      "title": "A Royal Keepsake For You",
+      "content": "Happy Birthday Kabir! 🌿✨\n\nMay your year be as rich, vibrant, and prosperous as emerald. You carry yourself with unmatched poise, dignity, and a heart of pure gold.\n\nThank you for being someone we can always rely on and celebrate with pride. Here is to health, boundless greatness, and monumental success ahead!\n\nKeep shining like the legend you are! 👑✨",
+      "signOff": "With royal warmth & respect,\nAlex 🌿👑",
+      "sealEmoji": "🌿",
+      "waxColor": "#059669"
+    },
+    "songId": "baar-baar-din-ye-aaye",
+    "id": "wc-mvnficx5-q68g",
+    "slug": "kabir-egu4p",
+    "updatedAt": "2026-10-25T06:10:35.430Z",
+    "createdAt": "2026-10-25T06:10:35.369Z",
+    "compressedHash": "N4IgLgpgtgDgNgQ0gSQCYgFwmhATguVAWjgFcAPCEAGhAGMkIBzAe1wE9MQAjAS1zAALVAk60mEAHao8XbizEhcEOrxi8pYAHIIoVLAGkEfXDRABnKTNw69XAIJwI5MyzoNzvFpK4AJBDAw7AAEAEL8QiIhYCzBQhDBADLMVgCEwYA8G4D8+4AU5GbmpNxgvGBOXADqvOaCvJJMwewspMHypNJO5ubBTMpIkhCd1MEwuCzmMHglIQBkwQBWCgB0ZoJ4LAAKgiwxXIJgYDDmGAD0x7xQCBLmi23jiNWLdCxQxzBbMUQAjACsAAwAbAB2ACcABZAYCABwAJl+0KIDFQkNBdAAZqDvqjPqgAPwIUgxAC8qLYFzA01RJUJdFGMGmAHdCZDfr9pgBHJm-MxvbYsADCAWK3i4AFlRA0mrhgqiCaRlC0EggurheHRBMFZvhULwEJIwMElcEcPhCOlALwbgEUdvK0HkxcyYADaoF46CwxoIxBgnzMcrgu32hxOZwuVxukjuSsEj2er3eLC+fyBYIhMLhCIQSJR6Mx2LxBJYxNJSApVJpLDpjOZrI5zLMDBgQp8WAAShmdXrgk9JJSZJI6AlZsU9B0uuYwMo6kJ0tlreBLlwACqrJIpaQgAC+AF1aOMVDq4M2IErvPaME6QKrhVhsmZiqV9CBQk12gMupVzKhnmYZOY6FwAJpNMEtTjPwCQQAAbngjT9ME9IlOqjRyt0oxtDIqDDCwVQQEMDBwFAwROBmeDVGoQy6hhrCEFI3SkC6ur9qkG7UM6XZcJat4lGUWALrgpAJMkEhrrQP5-lg5QEAA1rU9TwUIwRjhOTDyRRwRbJIkq4d4bL8SqdRGlBHDBFAvAdDEsFyeqWrtvqPQIIxzGsVeIBmoAcTucfeXCtvKhoAKJ6Ca6AiQMYkgIkCgEEMyieHAGh6uR0gtCqcCxbq+qACgEErIWqCD4HQkBSlUBpxL0BTytwEAwRhehKnKEBMVutBOPssgYKAd7cSA9jBM2EVwMEBgQBAhwIJJCQAGJsMEgGkHW3iQHqfgBEEYQRMI4pGCY065AAOpIe1iiESFSuwR5ShVBrKqqghDBBvDcPg8UGolIxjBMqFdIa7qEIs01AQwuBGcdlhwKicEIcEbRkmqEAYTAWGWEM2pMJIUwJRhCBqWd+osGDMB1d0LA-Xte1LrqklZdKU0VTJCnPBA3gJPSCQMJIBpwPSojKhAcAhN4z0Yf2TgPYw4PySMLoQL9vh4AkRUxFjBBCEMrQvp0KFHmA-SDALxneKQeh6gQCmkO4r4GqsGapCTkiDcNCk1Kj+mxWNcTLk4QkYUhBrKOaVr5LwKMAPKoqiFQQ6M7DG5zuBQPJmoDBM+XUHtjjOJkWQcTuR5wP5LBzLwXA3rQnPkHyRNsFwADEvzfMC-z-MCzEWN4TBoHICC5UQ3Cd7gRDapIRCnUQnenWYLpcPSdBEFAEHdqq5DfEQbL-JCTD5GQ69YJJxj8EQzCkKCMA+jAIiQKg9hgFwsLQv8Xy-EQ0LfAuAIYJ8vwYAAzN8iyf43ABadZejn0vtfOEd936P2fq-d+X8f5-2BIA9cQA",
+    "template": "emerald-luxe",
+    "viewCount": 4,
+    "lastViewedAt": "2026-10-25T06:11:12.931Z"
+  },
+  {
     "templateId": "velvet-romance",
     "category": "romance",
     "gender": "boy",

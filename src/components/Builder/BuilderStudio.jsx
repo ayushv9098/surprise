@@ -24,7 +24,6 @@ export default function BuilderStudio({
   const handleBackClick = onBack;
   const [currentStep, setCurrentStep] = useState(1);
   const [formSection, setFormSection] = useState('details'); // 'details' | 'media' | 'surprises'
-  const [activeMobileView, setActiveMobileView] = useState('editor'); // 'editor' | 'preview'
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareResult, setShareResult] = useState(null);
@@ -423,123 +422,126 @@ export default function BuilderStudio({
       </div>
 
       {/* ================================================================== */}
-      {/* MOBILE LAYOUT: Tab toggle between Form and Phone Preview            */}
+      {/* MOBILE LAYOUT: Full-page scroll with simulator directly under form  */}
       {/* ================================================================== */}
-      <div className={`lg:hidden ${activeMobileView === 'editor' ? 'min-h-screen pb-28' : 'overflow-hidden'}`}>
-        {/* Mobile toggle pill */}
-        <div className="flex items-center justify-center pt-3 pb-1">
-          <div className="flex items-center p-0.5 rounded-full bg-slate-100 border border-slate-200 shadow-2xs">
-            <button
-              type="button"
-              onClick={() => setActiveMobileView('editor')}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                activeMobileView === 'editor'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-500 hover:text-slate-800'
-              }`}
-            >
-              Form
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveMobileView('preview')}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                activeMobileView === 'preview'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-500 hover:text-slate-800'
-              }`}
-            >
-              Phone Preview
-            </button>
+      <div className="lg:hidden min-h-screen pb-36 px-4 pt-4 space-y-6">
+        {currentStep === 1 && (
+          <div className="space-y-6 animate-fadeIn">
+            <TemplateSelector
+              selectedId={formData.templateId}
+              selectedCategory={selectedCategory}
+              selectedGender={selectedGender}
+              onSelectCategory={(catId) => {
+                setSelectedCategory(catId);
+                handleFieldChange({ category: catId });
+                const catTmpls = getTemplatesByCategory(catId);
+                if (catTmpls.length > 0 && !catTmpls.some((t) => t.id === formData.templateId)) {
+                  const topTmpl =
+                    catId === 'birthday'
+                      ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
+                      : catTmpls[0].id;
+                  handleTemplateChange(topTmpl);
+                }
+              }}
+              onSelectGender={handleGenderChange}
+              onSelectTemplate={handleTemplateChange}
+            />
+
+            {/* Mobile Simulator directly under templates */}
+            <div className="space-y-3">
+              <div className="pt-4 pb-2 flex items-center justify-between border-t border-slate-100">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                  <AppleEmoji emoji="📱" size={14} />
+                  <span>Live Phone Preview</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                </div>
+                <span className="text-[10px] text-slate-400 font-medium">Interactive Simulator</span>
+              </div>
+              <div
+                className="w-full flex items-center justify-center p-1 sm:p-3 overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50/60 to-slate-100/40 border border-slate-200/60 shadow-2xs"
+                style={{ height: '640px', minHeight: '540px' }}
+              >
+                <LivePhonePreview
+                  formData={formData}
+                  onBack={handleBackClick || onBack}
+                  activeSection={formSection}
+                  previewScreen={previewTarget.screen}
+                  openEnvelope={previewTarget.openEnvelope}
+                  syncNonce={previewTarget.nonce}
+                />
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Mobile form content */}
-        <div className={`px-4 pt-4 space-y-6 ${activeMobileView === 'preview' ? 'hidden' : 'block'}`}>
-          {currentStep === 1 && (
-            <div className="space-y-6 animate-fadeIn">
-              <TemplateSelector
-                selectedId={formData.templateId}
-                selectedCategory={selectedCategory}
-                selectedGender={selectedGender}
-                onSelectCategory={(catId) => {
-                  setSelectedCategory(catId);
-                  handleFieldChange({ category: catId });
-                  const catTmpls = getTemplatesByCategory(catId);
-                  if (catTmpls.length > 0 && !catTmpls.some((t) => t.id === formData.templateId)) {
-                    const topTmpl =
-                      catId === 'birthday'
-                        ? (catTmpls.find((t) => t.gender === selectedGender)?.id || catTmpls[0].id)
-                        : catTmpls[0].id;
-                    handleTemplateChange(topTmpl);
-                  }
-                }}
-                onSelectGender={handleGenderChange}
-                onSelectTemplate={handleTemplateChange}
-              />
+        {currentStep === 2 && (
+          <div className="space-y-4 animate-fadeIn">
+            <div className="w-full flex items-center p-1 rounded-2xl bg-slate-100/90 border border-slate-200/70 shadow-2xs">
+              {FORM_TABS.map((tab) => {
+                const isActive = formSection === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => handleSectionTabClick(tab.id)}
+                    className={`flex-1 inline-flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-xs transition-all cursor-pointer select-none ${
+                      isActive
+                        ? 'bg-white text-slate-900 shadow-xs font-bold'
+                        : 'text-slate-500 hover:text-slate-800 font-semibold'
+                    }`}
+                  >
+                    <AppleEmoji emoji={tab.emoji} size={13} />
+                    <span>{tab.shortLabel}</span>
+                  </button>
+                );
+              })}
             </div>
-          )}
-          {currentStep === 2 && (
-            <div className="space-y-4 animate-fadeIn">
-              <div className="w-full flex items-center p-1 rounded-2xl bg-slate-100/90 border border-slate-200/70 shadow-2xs">
-                {FORM_TABS.map((tab) => {
-                  const isActive = formSection === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      onClick={() => handleSectionTabClick(tab.id)}
-                      className={`flex-1 inline-flex items-center justify-center gap-1 py-2 px-1.5 rounded-xl text-xs transition-all cursor-pointer select-none ${
-                        isActive
-                          ? 'bg-white text-slate-900 shadow-xs font-bold'
-                          : 'text-slate-500 hover:text-slate-800 font-semibold'
-                      }`}
-                    >
-                      <AppleEmoji emoji={tab.emoji} size={13} />
-                      <span>{tab.shortLabel}</span>
+            <div className="rounded-2xl bg-white border border-slate-200/80 shadow-xs p-3.5 space-y-5">
+              {formSection === 'details' && <StepDetails formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
+              {formSection === 'media' && <StepMedia formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
+              {formSection === 'surprises' && <StepSurprises formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
+              {formSection !== 'surprises' && (
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
+                  {formSection === 'details' && (
+                    <button type="button" onClick={() => handleSectionTabClick('media')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                      <span>Next: Photo & Song</span><ArrowRight className="w-3.5 h-3.5" />
                     </button>
-                  );
-                })}
+                  )}
+                  {formSection === 'media' && (
+                    <button type="button" onClick={() => handleSectionTabClick('surprises')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                      <span>Next: Reasons & Letter</span><ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Simulator directly under form section */}
+            <div className="space-y-3 pt-2">
+              <div className="pt-4 pb-2 flex items-center justify-between border-t border-slate-100">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                  <AppleEmoji emoji="📱" size={14} />
+                  <span>Live Phone Preview</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                </div>
+                <span className="text-[10px] text-slate-400 font-medium">Interactive Simulator</span>
               </div>
-              <div className="rounded-2xl bg-white border border-slate-200/80 shadow-xs p-3.5 space-y-5">
-                {formSection === 'details' && <StepDetails formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
-                {formSection === 'media' && <StepMedia formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
-                {formSection === 'surprises' && <StepSurprises formData={formData} onChange={handleUpdateFormData} onFocusField={handleFocusField} />}
-                {formSection !== 'surprises' && (
-                  <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
-                    {formSection === 'details' && (
-                      <button type="button" onClick={() => handleSectionTabClick('media')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
-                        <span>Next: Photo & Song</span><ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                    {formSection === 'media' && (
-                      <button type="button" onClick={() => handleSectionTabClick('surprises')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
-                        <span>Next: Reasons & Letter</span><ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    )}
-                  </div>
-                )}
+              <div
+                className="w-full flex items-center justify-center p-1 sm:p-3 overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50/60 to-slate-100/40 border border-slate-200/60 shadow-2xs"
+                style={{ height: '640px', minHeight: '540px' }}
+              >
+                <LivePhonePreview
+                  formData={formData}
+                  onBack={handleBackClick || onBack}
+                  activeSection={formSection}
+                  previewScreen={previewTarget.screen}
+                  openEnvelope={previewTarget.openEnvelope}
+                  syncNonce={previewTarget.nonce}
+                />
               </div>
             </div>
-          )}
-        </div>
-
-        {/* Mobile phone preview */}
-        <div
-          className={`w-full flex items-center justify-center p-2 sm:p-4 overflow-hidden ${
-            activeMobileView === 'editor' ? 'hidden' : 'flex'
-          }`}
-          style={{ height: 'calc(100vh - 180px)', minHeight: '360px' }}
-        >
-          <LivePhonePreview
-            formData={formData}
-            onBack={handleBackClick || onBack}
-            activeSection={formSection}
-            previewScreen={previewTarget.screen}
-            openEnvelope={previewTarget.openEnvelope}
-            syncNonce={previewTarget.nonce}
-          />
-        </div>
+          </div>
+        )}
       </div>
 
       {/* FIXED BOTTOM NAVIGATION BAR */}
