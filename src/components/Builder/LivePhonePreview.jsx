@@ -897,6 +897,50 @@ const resolveTheme = (templateId, gender, category) => {
 const BASE_WIDTH = 360;
 const BASE_HEIGHT = 740;
 
+// Preset recipient and sender names used across all preset templates
+const PRESET_RECIPIENT_NAMES = [
+  'Sarah', 'Rohan', 'Kabir', 'Kiara', 'Maya', 'Chloe', 'Aria', 'Aanya',
+  'Arjun', 'Tara', 'Nisha', 'Ananya', 'Aryan'
+];
+const PRESET_SENDER_NAMES = [
+  'Elena', 'Alex', 'Liam', 'Julian', 'Noah', 'Aryan', 'Samir', 'Dev',
+  'Meera', 'Rohan', 'Kabir', 'Sameer'
+];
+
+const recipientNamePattern = PRESET_RECIPIENT_NAMES.join('|');
+const greetingPrefixPattern = 'Sweet|Dear|Dearest|My\\s+dearest|My\\s+beloved|Sweetest|Yo|To|Happy\\s+Birthday,?\\s*(?:to)?';
+const letterGreetingRegex = new RegExp(`^\\s*(${greetingPrefixPattern})\\s+(${recipientNamePattern})([!?,\\s\\S]*)`, 'i');
+
+const senderNamePattern = PRESET_SENDER_NAMES.join('|');
+const letterSignOffSenderRegex = new RegExp(`\\b(${senderNamePattern})\\b`, 'gi');
+const letterBodyEndSenderRegex = new RegExp(
+  `(\\n(?:With all my love|With all my heart|With love|Forever & always|Love always|Forever & always yours|Always your brother|With royal respect & brotherhood|With fairy hugs & endless love|Across the stars forever|Unstoppable always|Brothers for life|Warmest hugs|Truly sorry|With endless sorry hugs|With warmth & respect)[^\\n]*\\n\\s*)(${senderNamePattern})([!?,\\s\\S]*$)`,
+  'i'
+);
+
+function formatLetterBody(body, currentRecipientName, currentSenderName) {
+  if (!body || typeof body !== 'string') return body;
+  let formatted = body;
+  const targetRecipient = (currentRecipientName || '').trim();
+  if (targetRecipient && letterGreetingRegex.test(formatted)) {
+    formatted = formatted.replace(letterGreetingRegex, (match, prefix, oldName, rest) => {
+      return `${prefix} ${targetRecipient}${rest}`;
+    });
+  }
+  const targetSender = (currentSenderName || '').trim();
+  if (targetSender && letterBodyEndSenderRegex.test(formatted)) {
+    formatted = formatted.replace(letterBodyEndSenderRegex, `$1${targetSender}$3`);
+  }
+  return formatted;
+}
+
+function formatLetterSignOff(signOff, currentSenderName) {
+  if (!signOff || typeof signOff !== 'string') return signOff;
+  const targetSender = (currentSenderName || '').trim();
+  if (!targetSender) return signOff;
+  return signOff.replace(letterSignOffSenderRegex, targetSender);
+}
+
 export default function LivePhonePreview({
   formData = {},
   activeSection,
@@ -1146,9 +1190,20 @@ export default function LivePhonePreview({
   } else if (rawOccasion && (!isDefaultBirthdayOccasion || isBirthday)) {
     if (rawOccasion.includes(',')) {
       const commaIdx = rawOccasion.indexOf(',');
-      line1Text = rawOccasion.slice(0, commaIdx + 1).trim();
-      const remainder = rawOccasion.slice(commaIdx + 1).trim();
-      line2Text = remainder || `${nameToDisplay}! ${celebrationEmoji}`;
+      const sliced = rawOccasion.slice(0, commaIdx + 1).trim();
+      line1Text = sliced.endsWith(',') ? sliced : `${sliced},`;
+      if (isRomance) {
+        line2Text = `${nameToDisplay} ❤️`;
+      } else if (isScrapbook) {
+        line2Text = `${nameToDisplay}! 📸`;
+      } else if (isApology) {
+        line2Text = `Dear ${nameToDisplay} 🤍`;
+      } else {
+        line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
+      }
+    } else if (rawOccasion.toLowerCase().startsWith('happy birthday')) {
+      line1Text = 'Happy Birthday,';
+      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     } else {
       if (isRomance) {
         line1Text = rawOccasion;
@@ -1160,7 +1215,7 @@ export default function LivePhonePreview({
         line1Text = rawOccasion;
         line2Text = `Dear ${nameToDisplay} 🤍`;
       } else {
-        line1Text = `${rawOccasion},`;
+        line1Text = rawOccasion.endsWith(',') ? rawOccasion : `${rawOccasion},`;
         line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
       }
     }
@@ -1280,18 +1335,22 @@ export default function LivePhonePreview({
       ? formData.letter.content
       : (typeof formData.letter === 'string' ? formData.letter : formData.letterBody);
 
-  const letterBody = rawLetterBody !== undefined
+  const baseLetterBody = rawLetterBody !== undefined
     ? rawLetterBody
     : theme.defaultLetter(recipientName);
+
+  const letterBody = formatLetterBody(baseLetterBody, nameToDisplay, senderName);
 
   const rawLetterSignOff =
     typeof formData.letter === 'object' && formData.letter !== null && formData.letter.signOff !== undefined
       ? formData.letter.signOff
       : formData.letterSignOff;
 
-  const letterSignOff = rawLetterSignOff !== undefined
+  const baseLetterSignOff = rawLetterSignOff !== undefined
     ? rawLetterSignOff
     : theme.defaultSignOff(senderName);
+
+  const letterSignOff = formatLetterSignOff(baseLetterSignOff, senderName);
 
   const rawSealEmoji =
     (typeof formData.letter === 'object' && formData.letter?.sealEmoji) ||
@@ -1632,7 +1691,7 @@ export default function LivePhonePreview({
                 {/* -------------------------------------------------------- */}
                 {screen === 0 && (
                   <div className="w-full flex items-center justify-center animate-fade-in-up px-1">
-                    <div className={theme.cardClass}>
+                    <div className={`${theme.cardClass} max-w-full overflow-hidden break-words`}>
                       {/* Occasion / Keepsake Badge */}
                       {isRomance && (
                         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50/90 border border-rose-200/80 text-[11px] font-semibold text-rose-700 mb-2.5 shadow-2xs">
@@ -1660,15 +1719,15 @@ export default function LivePhonePreview({
                         <AppleEmoji emoji={theme.primaryEmoji} size={38} />
                       </div>
 
-                      <h1 className={`${theme.fontFamily} text-2xl sm:text-3xl font-bold leading-tight ${theme.headingClass}`}>
-                        {line1Text ? <span>{renderAppleText(line1Text, 24)}</span> : null}
-                        <span className={`block mt-1 ${theme.accentTextClass}`}>
+                      <h1 className={`${theme.fontFamily} text-2xl sm:text-3xl font-bold leading-tight ${theme.headingClass} break-words max-w-full overflow-hidden`}>
+                        {line1Text ? <span className="break-words">{renderAppleText(line1Text, 24)}</span> : null}
+                        <span className={`block mt-1 ${theme.accentTextClass} break-words`}>
                           {renderAppleText(line2Text, 24)}
                         </span>
                       </h1>
 
                       {displaySubtitle ? (
-                        <p className={`mt-3 text-xs sm:text-sm ${theme.subtitleClass} leading-relaxed font-normal`}>
+                        <p className={`mt-3 text-xs sm:text-sm ${theme.subtitleClass} leading-relaxed font-normal break-words max-w-xs mx-auto`}>
                           {renderAppleText(displaySubtitle, 12)}
                         </p>
                       ) : null}
@@ -2163,14 +2222,14 @@ export default function LivePhonePreview({
                     {envelopeOpen && (
                       <div className="w-full flex flex-col items-center animate-fade-in-up">
                         <div
-                          className={`relative w-full max-w-[275px] bg-white rounded-3xl p-4 sm:p-5 shadow-2xl border text-left ${theme.letterCardBorder}`}
+                          className={`relative w-full max-w-[275px] bg-white rounded-3xl p-4 sm:p-5 shadow-2xl border text-left ${theme.letterCardBorder} overflow-hidden break-words`}
                         >
                           {/* Header */}
                           <div className={`flex items-center justify-between border-b ${theme.letterBorderBottom} pb-2 mb-2.5`}>
                             <div
-                              className={`flex items-center gap-1.5 font-bold text-xs sm:text-sm ${theme.letterHeaderClass}`}
+                              className={`flex items-center gap-1.5 font-bold text-xs sm:text-sm ${theme.letterHeaderClass} break-words max-w-[80%]`}
                             >
-                              <span className={theme.fontFamily}>{renderAppleText(letterTitle, 14)}</span>
+                              <span className={`${theme.fontFamily} break-words`}>{renderAppleText(letterTitle, 14)}</span>
                               <AppleEmoji
                                 emoji={isRomance ? '❤️' : isScrapbook ? '📸' : isApology ? '🕊️' : '✨'}
                                 size={13}
@@ -2181,7 +2240,7 @@ export default function LivePhonePreview({
 
                           {/* Letter Body */}
                           {letterBody ? (
-                            <div className="space-y-2 text-slate-700 text-xs leading-relaxed max-h-40 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans">
+                            <div className="space-y-2 text-slate-700 text-xs leading-relaxed max-h-40 overflow-y-auto custom-scrollbar pr-1 whitespace-pre-line font-sans break-words">
                               {renderAppleText(letterBody, 11)}
                             </div>
                           ) : null}
@@ -2190,9 +2249,9 @@ export default function LivePhonePreview({
                           {letterSignOff ? (
                             <div className={`pt-2 mt-2 border-t ${theme.letterBorderBottom} text-right`}>
                               <p
-                                className={`${theme.fontFamily} text-base sm:text-lg font-bold flex items-center justify-end gap-1 whitespace-pre-line ${theme.letterSignOffClass}`}
+                                className={`${theme.fontFamily} text-base sm:text-lg font-bold flex items-center justify-end gap-1 whitespace-pre-line break-words ${theme.letterSignOffClass}`}
                               >
-                                <span>{renderAppleText(letterSignOff, 15)}</span>
+                                <span className="break-words">{renderAppleText(letterSignOff, 15)}</span>
                               </p>
                             </div>
                           ) : null}

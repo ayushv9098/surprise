@@ -162,6 +162,56 @@ export default function BuilderStudio({
         }
       }
 
+      // When recipientName is updated in Tab 1, keep letter greeting & content in sync
+      if (patch.recipientName !== undefined && patch.recipientName !== prev.recipientName && patch.letter === undefined && updatedLetter.content) {
+        const oldRecipient = prev.recipientName;
+        const newRecipient = patch.recipientName || '';
+
+        let content = updatedLetter.content;
+        let replaced = false;
+
+        // 1. If prev.recipientName was present in updatedLetter.content, replace it with patch.recipientName
+        if (oldRecipient && oldRecipient.trim() && content.includes(oldRecipient)) {
+          if (oldRecipient.trim().length >= 2) {
+            content = content.split(oldRecipient).join(newRecipient);
+            replaced = true;
+          } else {
+            // For 1-character typing in progress, update the greeting line safely
+            const lines = content.split('\n');
+            if (lines.length > 0 && lines[0].includes(oldRecipient)) {
+              lines[0] = lines[0].split(oldRecipient).join(newRecipient);
+              content = lines.join('\n');
+              replaced = true;
+            }
+          }
+        }
+
+        // 2. Also if updatedLetter.content contains common default preset names ("Sarah", "Rohan", "Elena", "Alex", "Kabir", "Maya", "Kiara")
+        // at the beginning (e.g. Sweet Sarah, Dear Sarah, Happy Birthday Kabir, etc.), replace that greeting name with patch.recipientName
+        const defaultNames = ['Sarah', 'Rohan', 'Elena', 'Alex', 'Kabir', 'Maya', 'Kiara'];
+        for (const defaultName of defaultNames) {
+          if (!replaced && content.includes(defaultName)) {
+            content = content.split(defaultName).join(newRecipient);
+            replaced = true;
+            break;
+          }
+        }
+
+        // 3. Fallback for the opening greeting line if old name wasn't cleanly matched (e.g. after deletion or greeting format)
+        if (!replaced && newRecipient.trim()) {
+          const lines = content.split('\n');
+          if (lines.length > 0) {
+            const greetingMatch = lines[0].match(/^(Happy Birthday|Dear|My dearest|Dearest|Sweet|Sweetest)(\s+)([^,!\n]+)(.*)$/i);
+            if (greetingMatch) {
+              lines[0] = `${greetingMatch[1]} ${newRecipient}${greetingMatch[4]}`;
+              content = lines.join('\n');
+            }
+          }
+        }
+
+        updatedLetter.content = content;
+      }
+
       return {
         ...prev,
         ...patch,
@@ -206,26 +256,72 @@ export default function BuilderStudio({
     if (tmpl.category && tmpl.category !== selectedCategory) {
       setSelectedCategory(tmpl.category);
     }
-    setFormData((prev) => ({
-      ...prev,
-      templateId,
-      category: tmpl.category || prev.category || selectedCategory,
-      gender: tmpl.gender || prev.gender,
-      recipientName: currentStep === 1 ? (preset.recipientName || (tmpl.gender === 'girl' ? 'Sarah' : 'Rohan')) : prev.recipientName,
-      senderName: currentStep === 1 ? (preset.senderName || (tmpl.gender === 'girl' ? 'Elena' : 'Alex')) : prev.senderName,
-      occasion: currentStep === 1 ? (preset.occasion || tmpl.defaultOccasion || 'Happy Birthday') : (prev.occasion || preset.occasion || tmpl.defaultOccasion || 'Happy Birthday'),
-      subtitle: preset.subtitle || tmpl.defaultSubtitle || prev.subtitle,
-      heroPhoto: preset.heroPhoto || tmpl.samplePhoto || prev.heroPhoto,
-      photoCaption: preset.photoCaption || tmpl.defaultCaption || prev.photoCaption,
-      photos: preset.photos?.length ? preset.photos : prev.photos,
-      specialReasons: preset.specialReasons?.length ? preset.specialReasons : prev.specialReasons,
-      letter: preset.letter || prev.letter,
-      quizQuestion: preset.quizQuestion !== undefined ? preset.quizQuestion : prev.quizQuestion,
-      quizYesText: preset.quizYesText !== undefined ? preset.quizYesText : prev.quizYesText,
-      quizTreat: preset.quizTreat !== undefined ? preset.quizTreat : prev.quizTreat,
-      quizVictoryNote: preset.quizVictoryNote !== undefined ? preset.quizVictoryNote : prev.quizVictoryNote,
-      songId: preset.songId || tmpl.recommendedSongId || prev.songId,
-    }));
+
+    const isBirthdayTemplate = !tmpl.category || tmpl.category === 'birthday';
+    const defaultBirthdayNicknames = [
+      'Happy Birthday, Lavender Dreamer! 💜',
+      'Happy Birthday, Sunshine! 🌸',
+      'Happy Birthday Princess! ✨👑',
+      'Happy Birthday Princess! 👑💖',
+      'Happy Birthday, Fairy Princess! 🩵✨',
+      'Happy Birthday to the King! 👑',
+      'Happy Birthday, Shining Star! 🎂✨',
+      'Chapters of Brotherhood 📸⚡',
+      'Happy Birthday to the King! 🖤👑',
+    ];
+
+    setFormData((prev) => {
+      const isCustomOccasion = prev.occasion && !defaultBirthdayNicknames.includes(prev.occasion) && prev.occasion !== 'Happy Birthday';
+      const resolvedOccasion = isBirthdayTemplate
+        ? (currentStep === 1 ? 'Happy Birthday' : (isCustomOccasion ? prev.occasion : 'Happy Birthday'))
+        : (currentStep === 1 ? (preset.occasion || tmpl.defaultOccasion || '') : (prev.occasion || preset.occasion || tmpl.defaultOccasion || ''));
+
+      let templateLetter = preset.letter ? { ...preset.letter } : (prev.letter ? { ...prev.letter } : {});
+      const activeRecipient = currentStep === 1 ? (preset.recipientName || (tmpl.gender === 'girl' ? 'Sarah' : 'Rohan')) : prev.recipientName;
+      const activeSender = currentStep === 1 ? (preset.senderName || (tmpl.gender === 'girl' ? 'Elena' : 'Alex')) : prev.senderName;
+
+      // If user has already entered a custom recipientName, keep it in sync with the new preset letter
+      if (currentStep !== 1 && activeRecipient && templateLetter.content) {
+        const defaultNames = ['Sarah', 'Rohan', 'Elena', 'Alex', 'Kabir', 'Maya', 'Kiara'];
+        for (const dName of defaultNames) {
+          if (templateLetter.content.includes(dName)) {
+            templateLetter.content = templateLetter.content.split(dName).join(activeRecipient);
+            break;
+          }
+        }
+      }
+
+      if (currentStep !== 1 && activeSender && templateLetter.signOff) {
+        const defaultSenders = ['Alex', 'Elena', 'Liam', 'Julian', 'Noah', 'Aryan', 'Samir', 'Dev', 'Meera', 'Rohan', 'Kabir', 'Sameer'];
+        for (const dSender of defaultSenders) {
+          if (templateLetter.signOff.includes(dSender)) {
+            templateLetter.signOff = templateLetter.signOff.split(dSender).join(activeSender);
+            break;
+          }
+        }
+      }
+
+      return {
+        ...prev,
+        templateId,
+        category: tmpl.category || prev.category || selectedCategory,
+        gender: tmpl.gender || prev.gender,
+        recipientName: activeRecipient,
+        senderName: activeSender,
+        occasion: resolvedOccasion,
+        subtitle: preset.subtitle || tmpl.defaultSubtitle || prev.subtitle,
+        heroPhoto: preset.heroPhoto || tmpl.samplePhoto || prev.heroPhoto,
+        photoCaption: preset.photoCaption || tmpl.defaultCaption || prev.photoCaption,
+        photos: preset.photos?.length ? preset.photos : prev.photos,
+        specialReasons: preset.specialReasons?.length ? preset.specialReasons : prev.specialReasons,
+        letter: templateLetter,
+        quizQuestion: preset.quizQuestion !== undefined ? preset.quizQuestion : prev.quizQuestion,
+        quizYesText: preset.quizYesText !== undefined ? preset.quizYesText : prev.quizYesText,
+        quizTreat: preset.quizTreat !== undefined ? preset.quizTreat : prev.quizTreat,
+        quizVictoryNote: preset.quizVictoryNote !== undefined ? preset.quizVictoryNote : prev.quizVictoryNote,
+        songId: preset.songId || tmpl.recommendedSongId || prev.songId,
+      };
+    });
   };
 
   const handleNextStep = (e) => {

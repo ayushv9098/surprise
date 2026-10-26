@@ -137,6 +137,50 @@ const DEFAULT_SUNRISE_REASONS = [
   { icon: '💛', title: 'Golden Hope', desc: 'Looking forward with pure gratitude, hoping for smiles, warmth, and laughter.' }
 ];
 
+// Preset recipient and sender names used across all preset templates
+const PRESET_RECIPIENT_NAMES = [
+  'Sarah', 'Rohan', 'Kabir', 'Kiara', 'Maya', 'Chloe', 'Aria', 'Aanya',
+  'Arjun', 'Tara', 'Nisha', 'Ananya', 'Aryan'
+];
+const PRESET_SENDER_NAMES = [
+  'Elena', 'Alex', 'Liam', 'Julian', 'Noah', 'Aryan', 'Samir', 'Dev',
+  'Meera', 'Rohan', 'Kabir', 'Sameer'
+];
+
+const recipientNamePattern = PRESET_RECIPIENT_NAMES.join('|');
+const greetingPrefixPattern = 'Sweet|Dear|Dearest|My\\s+dearest|My\\s+beloved|Sweetest|Yo|To|Happy\\s+Birthday,?\\s*(?:to)?';
+const letterGreetingRegex = new RegExp(`^\\s*(${greetingPrefixPattern})\\s+(${recipientNamePattern})([!?,\\s\\S]*)`, 'i');
+
+const senderNamePattern = PRESET_SENDER_NAMES.join('|');
+const letterSignOffSenderRegex = new RegExp(`\\b(${senderNamePattern})\\b`, 'gi');
+const letterBodyEndSenderRegex = new RegExp(
+  `(\\n(?:With all my love|With all my heart|With love|Forever & always|Love always|Forever & always yours|Always your brother|With royal respect & brotherhood|With fairy hugs & endless love|Across the stars forever|Unstoppable always|Brothers for life|Warmest hugs|Truly sorry|With endless sorry hugs|With warmth & respect)[^\\n]*\\n\\s*)(${senderNamePattern})([!?,\\s\\S]*$)`,
+  'i'
+);
+
+function formatLetterBody(body, currentRecipientName, currentSenderName) {
+  if (!body || typeof body !== 'string') return body;
+  let formatted = body;
+  const targetRecipient = (currentRecipientName || '').trim();
+  if (targetRecipient && letterGreetingRegex.test(formatted)) {
+    formatted = formatted.replace(letterGreetingRegex, (match, prefix, oldName, rest) => {
+      return `${prefix} ${targetRecipient}${rest}`;
+    });
+  }
+  const targetSender = (currentSenderName || '').trim();
+  if (targetSender && letterBodyEndSenderRegex.test(formatted)) {
+    formatted = formatted.replace(letterBodyEndSenderRegex, `$1${targetSender}$3`);
+  }
+  return formatted;
+}
+
+function formatLetterSignOff(signOff, currentSenderName) {
+  if (!signOff || typeof signOff !== 'string') return signOff;
+  const targetSender = (currentSenderName || '').trim();
+  if (!targetSender) return signOff;
+  return signOff.replace(letterSignOffSenderRegex, targetSender);
+}
+
 export default function MultiSceneBirthdayView({ 
   siteData = {}, 
   onNavigateCreate: _onNavigateCreate,
@@ -785,11 +829,14 @@ export default function MultiSceneBirthdayView({
   if (rawOccasion) {
     if (rawOccasion.includes(',')) {
       const commaIdx = rawOccasion.indexOf(',');
-      line1Text = rawOccasion.slice(0, commaIdx + 1).trim();
-      const remainder = rawOccasion.slice(commaIdx + 1).trim();
-      line2Text = remainder || `${nameToDisplay}! ${celebrationEmoji}`;
+      const sliced = rawOccasion.slice(0, commaIdx + 1).trim();
+      line1Text = sliced.endsWith(',') ? sliced : `${sliced},`;
+      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
+    } else if (rawOccasion.toLowerCase().startsWith('happy birthday')) {
+      line1Text = 'Happy Birthday,';
+      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     } else {
-      line1Text = `${rawOccasion},`;
+      line1Text = rawOccasion.endsWith(',') ? rawOccasion : `${rawOccasion},`;
       line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     }
   } else {
@@ -908,10 +955,12 @@ export default function MultiSceneBirthdayView({
                 ? `Happy Birthday, ${recipientName}!\n\nYou bring so much elegance, warmth, and sparkling wonder wherever you go. Your kind soul touches everyone you meet, and you make ordinary days feel truly unforgettable.\n\nMay this year bring you all the sweetest dreams, vibrant laughter, and boundless happiness you deserve so deeply.`
                 : `Happy Birthday, ${recipientName}!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨`))))));
 
-  const letterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || 
-                     siteData.letterBody || 
-                     defaultLetter;
-  const letterSignOff = (typeof siteData.letter === 'object' && siteData.letter?.signOff) || siteData.letterSignOff || `With love, ${senderName} ${themeTokens.defaultSignOffEmoji}`;
+  const rawLetterBody = (typeof siteData.letter === 'object' ? siteData.letter?.content : siteData.letter) || 
+                        siteData.letterBody || 
+                        defaultLetter;
+  const rawLetterSignOff = (typeof siteData.letter === 'object' && siteData.letter?.signOff) || siteData.letterSignOff || `With love, ${senderName} ${themeTokens.defaultSignOffEmoji}`;
+  const letterBody = formatLetterBody(rawLetterBody, nameToDisplay, senderName);
+  const letterSignOff = formatLetterSignOff(rawLetterSignOff, senderName);
   const letterSealEmoji = (typeof siteData.letter === 'object' && siteData.letter?.sealEmoji) || siteData.sealEmoji || themeTokens.defaultSealEmoji;
   const letterWaxColor = (typeof siteData.letter === 'object' && siteData.letter?.waxColor) || siteData.waxColor || themeTokens.defaultWaxColor;
 
@@ -1002,7 +1051,7 @@ export default function MultiSceneBirthdayView({
       if (audioStartTime > 0) {
         try {
           audio.currentTime = audioStartTime;
-        } catch (_) {}
+        } catch {}
       }
       try {
         audio.volume = 0;
@@ -1027,7 +1076,7 @@ export default function MultiSceneBirthdayView({
               setIsPlaying(false);
             });
         }
-      } catch (_) {
+      } catch {
         audio.play().then(() => setIsPlaying(true)).catch(() => {});
       }
     }
@@ -1094,7 +1143,7 @@ export default function MultiSceneBirthdayView({
             if (audioRef.current && audioStartTime > 0) {
               try {
                 audioRef.current.currentTime = audioStartTime;
-              } catch (_) {}
+              } catch {}
             }
           }}
           onTimeUpdate={() => {
@@ -1138,22 +1187,22 @@ export default function MultiSceneBirthdayView({
         {/* ========================================================== */}
         {scene === 0 && (
           <div className="flex flex-col items-center text-center animate-fade-in-up w-full max-w-[94vw] sm:max-w-md">
-            <div className={`${themeTokens.cardClass} px-5 py-8 sm:px-12 sm:py-12 w-full relative`}>
+            <div className={`${themeTokens.cardClass} px-5 py-8 sm:px-12 sm:py-12 w-full relative max-w-full overflow-hidden break-words`}>
               {/* Bouncing Theme Celebration Emoji */}
               <div className="mb-2 sm:mb-3 animate-bounce">
                 <AppleEmoji emoji={celebrationEmoji} size={38} />
               </div>
 
               {/* Main Heading with dynamic Theme typography */}
-              <h1 className={`${fontFamilyClass} text-3xl sm:text-5xl md:text-6xl font-bold ${themeTokens.headingColorClass} leading-tight tracking-tight`}>
-                <span>{renderAppleText(line1Text, 38)}</span>
-                <span className={`block mt-1 ${themeTokens.headingAccentClass}`}>
+              <h1 className={`${fontFamilyClass} text-3xl sm:text-5xl md:text-6xl font-bold ${themeTokens.headingColorClass} leading-tight tracking-tight break-words max-w-full overflow-hidden`}>
+                <span className="break-words">{renderAppleText(line1Text, 38)}</span>
+                <span className={`block mt-1 ${themeTokens.headingAccentClass} break-words`}>
                   {renderAppleText(line2Text, 38)}
                 </span>
               </h1>
 
               {/* Subtitle */}
-              <p className="mt-3 sm:mt-4 text-slate-500 text-sm sm:text-base md:text-lg max-w-sm mx-auto leading-relaxed">
+              <p className="mt-3 sm:mt-4 text-slate-500 text-sm sm:text-base md:text-lg max-w-sm mx-auto leading-relaxed break-words">
                 {renderAppleText(subtitle)}
               </p>
 
@@ -1517,11 +1566,19 @@ export default function MultiSceneBirthdayView({
             {/* OPEN STATE: Expanded Letter Card */}
             {isEnvelopeOpen && (
               <div className="w-full flex flex-col items-center animate-fade-in-up">
-                <div className={`relative w-full max-w-[94vw] sm:max-w-lg bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-8 shadow-2xl border ${themeTokens.openLetterBorder} text-left max-h-[85vh] overflow-y-auto`}>
+                <div className={`relative w-full max-w-[94vw] sm:max-w-lg bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-8 shadow-2xl border ${themeTokens.openLetterBorder} text-left max-h-[85vh] overflow-y-auto break-words`}>
                   {/* Header with Badges */}
                   <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
-                    <div className={`flex items-center gap-1.5 ${themeTokens.openLetterHeader} font-bold text-base sm:text-xl`}>
-                      <span>Happy Birthday!</span>
+                    <div className={`flex items-center gap-1.5 ${themeTokens.openLetterHeader} font-bold text-base sm:text-xl break-words max-w-[80%]`}>
+                      <span>
+                        {isRomanceCategory
+                          ? 'Forever & Always'
+                          : isScrapbookCategory
+                          ? 'Cherished Memories'
+                          : isApologyCategory
+                          ? 'From My Heart'
+                          : 'Happy Birthday!'}
+                      </span>
                       <AppleEmoji emoji="🎉" size={20} />
                       <AppleEmoji emoji={celebrationEmoji} size={20} />
                       <AppleEmoji emoji="✨" size={20} />
@@ -1533,16 +1590,16 @@ export default function MultiSceneBirthdayView({
                   <div className="space-y-3 sm:space-y-3.5 text-slate-700 text-sm sm:text-base leading-relaxed break-words">
                     {typeof letterBody === 'string'
                       ? letterBody.split(/\n\s*\n/).map((para, i) => (
-                          <p key={i}>
+                          <p key={i} className="break-words">
                             {renderAppleText(para, 18)}
                           </p>
                         ))
-                      : <p>{renderAppleText(String(letterBody), 18)}</p>
+                      : <p className="break-words">{renderAppleText(String(letterBody), 18)}</p>
                     }
                     {/* Handwritten Signature */}
                     <div className="pt-3 border-t border-slate-100 text-right">
-                      <p className={`${handwritingClass} text-xl sm:text-2xl ${themeTokens.signatureColorClass} font-bold flex items-center justify-end gap-1.5 whitespace-pre-line`}>
-                        <span>{renderAppleText(letterSignOff, 20)}</span>
+                      <p className={`${handwritingClass} text-xl sm:text-2xl ${themeTokens.signatureColorClass} font-bold flex items-center justify-end gap-1.5 whitespace-pre-line break-words`}>
+                        <span className="break-words">{renderAppleText(letterSignOff, 20)}</span>
                       </p>
                     </div>
                   </div>

@@ -36,7 +36,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'boy',
     recipientName: 'Rohan',
     senderName: 'Alex',
-    occasion: 'Happy Birthday to the King! 👑',
+    occasion: 'Happy Birthday',
     subtitle: 'I have a small surprise for you...',
     heroPhoto: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'Keep Rocking Always! 👑🔥',
@@ -82,7 +82,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'boy',
     recipientName: 'Rohan',
     senderName: 'Alex',
-    occasion: 'Happy Birthday, Shining Star! 🎂✨',
+    occasion: 'Happy Birthday',
     subtitle: 'May your year shine brighter than pure gold.',
     heroPhoto: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'Keep Shining Brighter Than Gold! 🎂✨',
@@ -128,7 +128,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'boy',
     recipientName: 'Rohan',
     senderName: 'Alex',
-    occasion: 'Chapters of Brotherhood 📸⚡',
+    occasion: 'Happy Birthday',
     subtitle: 'Taped forever into the scrapbook of our greatest memories.',
     heroPhoto: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'Brothers & Besties For Life! 📸⚡',
@@ -174,7 +174,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'boy',
     recipientName: 'Kabir',
     senderName: 'Alex',
-    occasion: 'Happy Birthday to the King! 🖤👑',
+    occasion: 'Happy Birthday',
     subtitle: 'A legendary celebration for someone truly one of a kind.',
     heroPhoto: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'Keep Conquering Every Summit! 🖤👑',
@@ -223,7 +223,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'girl',
     recipientName: 'Sarah',
     senderName: 'Elena',
-    occasion: 'Happy Birthday, Sunshine! 🌸',
+    occasion: 'Happy Birthday',
     subtitle: 'I have a small surprise for you...',
     heroPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'Stay Wonderful Always! 🌸✨',
@@ -269,7 +269,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'girl',
     recipientName: 'Sarah',
     senderName: 'Elena',
-    occasion: 'Happy Birthday Princess! ✨👑',
+    occasion: 'Happy Birthday',
     subtitle: 'May your day sparkle brighter than fairy dust and starlight!',
     heroPhoto: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'May All Your Wishes Sparkle! ✨💖',
@@ -315,7 +315,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'girl',
     recipientName: 'Sarah',
     senderName: 'Elena',
-    occasion: 'Happy Birthday, Lavender Dreamer! 💜',
+    occasion: 'Happy Birthday',
     subtitle: 'Wishing you the gentlest magic, sweetest wishes, and endless happiness.',
     heroPhoto: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'Never Stop Dreaming Beautiful Dreams! 💜🦋',
@@ -361,7 +361,7 @@ export const TEMPLATE_PRESETS = {
     gender: 'girl',
     recipientName: 'Kiara',
     senderName: 'Elena',
-    occasion: 'Happy Birthday, Fairy Princess! 🩵✨',
+    occasion: 'Happy Birthday',
     subtitle: 'May your special day be pure magic, smiles & starlight.',
     heroPhoto: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
     photoCaption: 'Keep Shining Like a Fairytale Star! 🩵👑',
@@ -960,7 +960,6 @@ TEMPLATE_PRESETS['gold'] = TEMPLATE_PRESETS['golden-birthday'];
 TEMPLATE_PRESETS['polaroid'] = TEMPLATE_PRESETS['polaroid-scrapbook'];
 TEMPLATE_PRESETS['midnight'] = TEMPLATE_PRESETS['midnight-onyx'];
 TEMPLATE_PRESETS['onyx'] = TEMPLATE_PRESETS['midnight-onyx'];
-TEMPLATE_PRESETS['midnight-onyx'] = TEMPLATE_PRESETS['midnight-onyx'];
 TEMPLATE_PRESETS['emerald-luxe'] = TEMPLATE_PRESETS['midnight-onyx'];
 TEMPLATE_PRESETS['emerald'] = TEMPLATE_PRESETS['midnight-onyx'];
 TEMPLATE_PRESETS['jade'] = TEMPLATE_PRESETS['midnight-onyx'];
@@ -969,7 +968,6 @@ TEMPLATE_PRESETS['peach'] = TEMPLATE_PRESETS['princess-peach'];
 TEMPLATE_PRESETS['lavender'] = TEMPLATE_PRESETS['lavender-dream'];
 TEMPLATE_PRESETS['cinderella'] = TEMPLATE_PRESETS['cinderella-sky'];
 TEMPLATE_PRESETS['sky'] = TEMPLATE_PRESETS['cinderella-sky'];
-TEMPLATE_PRESETS['cinderella-sky'] = TEMPLATE_PRESETS['cinderella-sky'];
 
 // Romance Aliases
 TEMPLATE_PRESETS['velvet'] = TEMPLATE_PRESETS['velvet-romance'];

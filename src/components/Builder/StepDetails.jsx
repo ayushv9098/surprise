@@ -120,6 +120,7 @@ export default function StepDetails({ formData, onChange, onFocusField }) {
               onFocus={() => onFocusField?.('recipientName')}
               onChange={(e) => onChange({ recipientName: e.target.value })}
               placeholder={recipientPlaceholder}
+              maxLength={25}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
             />
           </div>
@@ -136,6 +137,7 @@ export default function StepDetails({ formData, onChange, onFocusField }) {
               onFocus={() => onFocusField?.('senderName')}
               onChange={(e) => onChange({ senderName: e.target.value })}
               placeholder={senderPlaceholder}
+              maxLength={25}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
             />
           </div>
@@ -155,6 +157,7 @@ export default function StepDetails({ formData, onChange, onFocusField }) {
               onFocus={() => onFocusField?.('occasion')}
               onChange={(e) => onChange({ occasion: e.target.value })}
               placeholder={occasionPlaceholder}
+              maxLength={36}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
             />
             <p className="text-[11px] text-slate-400 mt-1">{occasionHelper}</p>
