@@ -19,41 +19,107 @@ const PUBLIC_DIR = path.join(ROOT, 'public');
  * Optimized for high contrast & razor-sharp legibility on both
  * Dark Mode (#202124 / #000000) and Light Mode (#FFFFFF / #DEE1E6) browser tabs.
  */
-const SVG_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+const SVG_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
   <defs>
-    <linearGradient id="dearly-envelope-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FB7185" />
-      <stop offset="40%" stop-color="#F43F5E" />
-      <stop offset="75%" stop-color="#E11D48" />
-      <stop offset="100%" stop-color="#BE123C" />
+    <!-- Luxury Jewel Gradient: Top-Left Radiant Rose -> Royal Crimson -> Velvet Wine -->
+    <linearGradient id="dearly-envelope" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF4372" />
+      <stop offset="35%" stop-color="#F43F5E" />
+      <stop offset="70%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#880E4F" />
     </linearGradient>
+
+    <!-- Inner Ruby Gemstone Gradient -->
+    <linearGradient id="dearly-ruby" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF386B" />
+      <stop offset="45%" stop-color="#E11D48" />
+      <stop offset="100%" stop-color="#9F1239" />
+    </linearGradient>
+
+    <!-- Specular Glass Sheen Gradient -->
+    <linearGradient id="dearly-specular" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.1" />
+    </linearGradient>
+
+    <!-- Ambient Ruby Luminescence Filter -->
+    <filter id="dearly-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.8" flood-color="#E11D48" flood-opacity="0.36" />
+    </filter>
   </defs>
 
-  <!-- Keepsake envelope card silhouette -->
-  <rect
-    x="4"
-    y="6"
-    width="24"
-    height="20"
-    rx="4.5"
-    stroke="url(#dearly-envelope-grad)"
-    stroke-width="2.6"
-  />
+  <g filter="url(#dearly-glow)">
+    <!-- Outer Keepsake Envelope Silhouette -->
+    <rect
+      x="7"
+      y="11"
+      width="50"
+      height="42"
+      rx="9"
+      stroke="url(#dearly-envelope)"
+      stroke-width="4.2"
+      stroke-linejoin="round"
+      fill="none"
+    />
 
-  <!-- Diagonal envelope fold line -->
-  <path
-    d="M5.5 8.2L14.6 16.3C15.4 17 16.6 17 17.4 16.3L26.5 8.2"
-    stroke="url(#dearly-envelope-grad)"
-    stroke-width="2.6"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  />
+    <!-- Top Rim Light (Glass Specular Reflection on Upper Border) -->
+    <path
+      d="M 18 11 H 46"
+      stroke="#FFFFFF"
+      stroke-width="1.6"
+      stroke-linecap="round"
+      stroke-opacity="0.65"
+    />
 
-  <!-- Micro Keepsake Heart Seal in center -->
-  <path
-    d="M16 14.2C15.1 13.1 13.4 13.4 13.4 14.8C13.4 16.6 16 18.7 16 18.7C16 18.7 18.6 16.6 18.6 14.8C18.6 13.4 16.9 13.1 16 14.2Z"
-    fill="url(#dearly-envelope-grad)"
-  />
+    <!-- Keepsake Envelope Flap V-Fold Line -->
+    <path
+      d="M 8.5 16.5 L 26.5 32 C 29.8 34.6 34.2 34.6 37.5 32 L 55.5 16.5"
+      stroke="url(#dearly-envelope)"
+      stroke-width="4.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Radiant Center Ruby Wax Seal Heart -->
+    <path
+      d="M 32 25.5 C 30.2 22.2 26.8 20.5 23.5 20.5 C 19.8 20.5 17 23.5 17 27.5 C 17 32.8 22.8 38 32 44.5 C 41.2 38 47 32.8 47 27.5 C 47 23.5 44.2 20.5 40.5 20.5 C 37.2 20.5 33.8 22.2 32 25.5 Z"
+      fill="url(#dearly-ruby)"
+    />
+
+    <!-- Heart Top Bevel / Lobe Rim Glow -->
+    <path
+      d="M 23.5 22 C 26 22 28.5 23 32 25.5 C 35.5 23 38 22 40.5 22 C 43.5 22 45.2 23.8 45.5 26.5 C 44.5 24.8 42.8 23.5 40.5 23.5 C 37.8 23.5 35 24.8 32 27.2 C 29 24.8 26.2 23.5 23.5 23.5 C 21.2 23.5 19.5 24.8 18.5 26.5 C 18.8 23.8 20.5 22 23.5 22 Z"
+      fill="url(#dearly-specular)"
+      opacity="0.75"
+    />
+
+    <!-- Specular Gloss Droplet (Left Lobe Reflection) -->
+    <ellipse
+      cx="24.8"
+      cy="25"
+      rx="3.6"
+      ry="2"
+      transform="rotate(-32 24.8 25)"
+      fill="#FFFFFF"
+      fill-opacity="0.92"
+    />
+
+    <!-- Specular Gloss Accent Dot (Right Lobe Reflection) -->
+    <circle
+      cx="39.8"
+      cy="24.5"
+      r="1.4"
+      fill="#FFFFFF"
+      fill-opacity="0.8"
+    />
+
+    <!-- Signature 4-Point Specular Star Flare (Diamond Sparkle) -->
+    <path
+      d="M 52.5 5 Q 52.5 9 48.5 9 Q 52.5 9 52.5 13 Q 52.5 9 56.5 9 Q 52.5 9 52.5 5 Z"
+      fill="#FFF1F3"
+    />
+    <circle cx="52.5" cy="9" r="1.2" fill="#FFFFFF" />
+  </g>
 </svg>`;
 
 // Standard ICO format builder wrapping PNG data

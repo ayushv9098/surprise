@@ -1,12 +1,9 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import confetti from 'canvas-confetti';
 import {
-  Lock,
   RotateCw,
   ChevronLeft,
   ChevronRight,
-  BookOpen,
-  Copy,
 } from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
 import { getTemplateById } from '../../data/templates';
@@ -898,7 +895,7 @@ const resolveTheme = (templateId, gender, category) => {
 };
 
 const BASE_WIDTH = 360;
-const BASE_HEIGHT = 720;
+const BASE_HEIGHT = 740;
 
 export default function LivePhonePreview({
   formData = {},
@@ -1017,7 +1014,6 @@ export default function LivePhonePreview({
   const [resetNonce, setResetNonce] = useState(0);
   const [scrapbookTab, setScrapbookTab] = useState('timeline'); // 'timeline' | 'jokes' | 'scratch' | 'letter'
   const [apologyTab, setApologyTab] = useState('forgive'); // 'forgive' | 'treaty' | 'promises' | 'letter'
-  const [bookmarkSaved, setBookmarkSaved] = useState(false);
 
   // Synchronize simulator scene with active form section or focused field
   useEffect(() => {
@@ -1424,17 +1420,13 @@ export default function LivePhonePreview({
     }
   };
 
-  const displayHost =
-    typeof window !== 'undefined' &&
-    window.location.hostname &&
-    !window.location.hostname.includes('localhost') &&
-    !window.location.hostname.includes('127.0.0.1')
-      ? window.location.hostname
-      : 'ayushh.me';
-
   // Dynamic background styling matching the chosen template
   const isCelebrationBg = screen === 4 && envelopeOpen;
-  const isDarkScene = isCelebrationBg;
+  const isDarkTheme =
+    theme.id === 'midnight-onyx' ||
+    theme.id === 'neon-nostalgia' ||
+    theme.id === 'celestial-love';
+  const isDarkScene = isCelebrationBg || isDarkTheme;
   const containerBgClass = isCelebrationBg
     ? theme.envelopeCelebrationBg
     : theme.containerBgClass;
@@ -1471,23 +1463,36 @@ export default function LivePhonePreview({
             style={{ width: `${BASE_WIDTH}px`, height: `${BASE_HEIGHT}px` }}
           >
             {/* Physical Hardware Buttons */}
-            <div className="absolute -left-[3.5px] top-[120px] w-[3.5px] h-[26px] bg-[#3a3447] rounded-l-[2px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[3.5px] top-[162px] w-[3.5px] h-[52px] bg-[#3a3447] rounded-l-[2px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[3.5px] top-[226px] w-[3.5px] h-[52px] bg-[#3a3447] rounded-l-[2px] shadow-xs pointer-events-none" />
-            <div className="absolute -left-[1.5px] top-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
-            <div className="absolute -left-[1.5px] bottom-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
+            {/* Left: Action Button */}
+            <div className="absolute -left-[3.5px] top-[115px] w-[3.5px] h-[24px] bg-[#423a4e] rounded-l-[2px] shadow-xs pointer-events-none" />
+            {/* Left: Volume Up */}
+            <div className="absolute -left-[3.5px] top-[155px] w-[3.5px] h-[52px] bg-[#423a4e] rounded-l-[2px] shadow-xs pointer-events-none" />
+            {/* Left: Volume Down */}
+            <div className="absolute -left-[3.5px] top-[220px] w-[3.5px] h-[52px] bg-[#423a4e] rounded-l-[2px] shadow-xs pointer-events-none" />
 
-            <div className="absolute -right-[3.5px] top-[185px] w-[3.5px] h-[78px] bg-[#3a3447] rounded-r-[2px] shadow-xs pointer-events-none" />
-            <div className="absolute -right-[1.5px] top-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
-            <div className="absolute -right-[1.5px] bottom-[80px] w-[1.5px] h-[4px] bg-[#241f2e] pointer-events-none" />
+            {/* Right: Power / Side Button */}
+            <div className="absolute -right-[3.5px] top-[175px] w-[3.5px] h-[78px] bg-[#423a4e] rounded-r-[2px] shadow-xs pointer-events-none" />
+
+            {/* Subtle Antenna Line Break Points */}
+            <div className="absolute top-[-1px] left-[70px] w-[3.5px] h-[2px] bg-[#292233] pointer-events-none" />
+            <div className="absolute top-[-1px] right-[70px] w-[3.5px] h-[2px] bg-[#292233] pointer-events-none" />
+            <div className="absolute -left-[1.5px] top-[75px] w-[1.5px] h-[4px] bg-[#292233] pointer-events-none" />
+            <div className="absolute -left-[1.5px] bottom-[75px] w-[1.5px] h-[4px] bg-[#292233] pointer-events-none" />
+            <div className="absolute -right-[1.5px] top-[75px] w-[1.5px] h-[4px] bg-[#292233] pointer-events-none" />
+            <div className="absolute -right-[1.5px] bottom-[75px] w-[1.5px] h-[4px] bg-[#292233] pointer-events-none" />
+            <div className="absolute bottom-[-1px] left-[70px] w-[3.5px] h-[2px] bg-[#292233] pointer-events-none" />
+            <div className="absolute bottom-[-1px] right-[70px] w-[3.5px] h-[2px] bg-[#292233] pointer-events-none" />
 
             {/* Metallic Titanium Outer Rim */}
-            <div className="w-full h-full p-[3px] rounded-[50px] bg-gradient-to-b from-[#6b627a] via-[#332c3f] to-[#50465e] shadow-[0_22px_55px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.18)] flex flex-col">
+            <div className="w-full h-full p-[3px] rounded-[52px] bg-gradient-to-b from-[#766d85] via-[#383144] to-[#584e68] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.2)] flex flex-col relative">
+              {/* Earpiece / Speaker Micro-Slit */}
+              <div className="absolute top-[4.5px] left-1/2 -translate-x-1/2 w-[52px] h-[3px] bg-[#1a1720] rounded-full z-20 pointer-events-none" />
+
               {/* Deep Black Uniform Screen Bezel */}
-              <div className="w-full h-full p-[9px] bg-black rounded-[47px] flex flex-col">
+              <div className="w-full h-full p-[10px] bg-black rounded-[49px] flex flex-col">
                 {/* Phone Screen Canvas (Full interior bounding within bezel) */}
                 <div
-                  className={`relative w-full h-full ${containerBgClass} before:!absolute before:!inset-0 rounded-[38px] overflow-hidden flex flex-col transition-colors duration-500`}
+                  className={`relative w-full h-full ${containerBgClass} before:!absolute before:!inset-0 rounded-[40px] overflow-hidden flex flex-col transition-colors duration-500`}
                 >
               {/* Scoped Confetti Canvas strictly bounded inside the phone frame */}
               <canvas
@@ -1513,60 +1518,72 @@ export default function LivePhonePreview({
 
               {/* ========================================================== */}
               {/* TOP iOS STATUS BAR & DYNAMIC ISLAND */}
+              {/* Completely transparent background so theme flows smoothly */}
               {/* ========================================================== */}
-              <div className="relative w-full pt-3 px-5 pb-1 flex items-center justify-between text-xs select-none z-30 shrink-0">
-                {/* Left: Current Time */}
-                <div className="w-16 flex items-center justify-start">
+              <div className="relative w-full h-[44px] px-6 flex items-center justify-between select-none z-30 shrink-0 bg-transparent">
+                {/* Left: Current Time (Apple San Francisco bold style) */}
+                <div className="w-20 flex items-center justify-start">
                   <span
-                    className={`font-semibold text-[13px] tracking-tight font-sans ${
+                    className={`font-bold text-[13px] tracking-tight font-sans select-none ${
                       isDarkScene ? 'text-white' : 'text-slate-900'
                     }`}
                   >
-                    8:41
+                    9:08 PM
                   </span>
                 </div>
 
-                {/* Center: True Dynamic Island Pill */}
-                <div className="w-[108px] h-[26px] bg-black rounded-full flex items-center justify-end pr-2.5 shadow-sm pointer-events-none">
-                  <div className="relative w-2.5 h-2.5 rounded-full bg-[#0a0f1d] border border-[#1b2234] flex items-center justify-center">
-                    <div className="w-1 h-1 rounded-full bg-blue-950/90 border border-blue-400/30" />
-                    <div className="absolute top-0.5 right-0.5 w-0.5 h-0.5 rounded-full bg-blue-200/70" />
+                {/* Center: Dynamic Island Hardware Cutouts (Pill + Gap + Front Camera Cutout) */}
+                <div className="flex items-center gap-[6px] shrink-0 pointer-events-none select-none">
+                  {/* Left Pill Cutout (FaceID Sensor Cluster) */}
+                  <div className="w-[74px] h-[25px] bg-black rounded-full shadow-xs" />
+
+                  {/* Right Circular Camera Cutout */}
+                  <div className="w-[25px] h-[25px] bg-black rounded-full flex items-center justify-center shadow-xs">
+                    {/* Dark Glass Camera Lens */}
+                    <div className="relative w-[11px] h-[11px] rounded-full bg-[#0d1627] border border-[#1b2a47] flex items-center justify-center shadow-inner">
+                      {/* Cyan/Navy Iris Reflection */}
+                      <div className="w-[3.5px] h-[3.5px] rounded-full bg-[#38bdf8]/70 shadow-[0_0_3px_rgba(56,189,248,0.8)]" />
+                      <div className="absolute top-[1.5px] right-[1.5px] w-[2px] h-[2px] rounded-full bg-white/50" />
+                    </div>
                   </div>
                 </div>
 
                 {/* Right: Cellular Signal, Wi-Fi & Battery Icons */}
                 <div
-                  className={`w-16 flex items-center justify-end gap-1.5 ${
+                  className={`w-20 flex items-center justify-end gap-1.5 select-none ${
                     isDarkScene ? 'text-white' : 'text-slate-900'
                   }`}
                 >
-                  <svg className="w-4 h-3 fill-current" viewBox="0 0 17 12">
-                    <rect x="0" y="8.5" width="2.5" height="3.5" rx="0.6" />
-                    <rect x="4.5" y="6" width="2.5" height="6" rx="0.6" />
-                    <rect x="9" y="3" width="2.5" height="9" rx="0.6" />
-                    <rect x="13.5" y="0" width="2.5" height="12" rx="0.6" />
+                  {/* 4 Cellular Signal Bars (Solid Apple Fill) */}
+                  <svg className="w-[17px] h-[11px] fill-current" viewBox="0 0 17 11">
+                    <rect x="0.5" y="8" width="2.8" height="3" rx="0.8" />
+                    <rect x="4.8" y="5.5" width="2.8" height="5.5" rx="0.8" />
+                    <rect x="9.1" y="3" width="2.8" height="8" rx="0.8" />
+                    <rect x="13.4" y="0.5" width="2.8" height="10.5" rx="0.8" />
                   </svg>
 
-                  <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 16 12">
+                  {/* Wi-Fi Icon (Apple Arc Waves) */}
+                  <svg className="w-[15px] h-[11px] fill-current" viewBox="0 0 16 12">
                     <path d="M8 9.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z" />
-                    <path d="M4.5 7.5a5 5 0 0 1 7 0" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                    <path d="M2 4.5a8.5 8.5 0 0 1 12 0" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    <path d="M4.2 7.2a5.4 5.4 0 0 1 7.6 0" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    <path d="M1.5 4.2a9.2 9.2 0 0 1 13 0" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                   </svg>
 
+                  {/* iOS Battery Icon with Terminal Nipple & Filled Body */}
                   <div className="flex items-center">
                     <div
-                      className={`w-5 h-2.5 rounded-[3px] border-[1.2px] p-[1.5px] flex items-center ${
+                      className={`w-[22px] h-[11px] rounded-[3.5px] border-[1.5px] p-[1.5px] flex items-center ${
                         isDarkScene ? 'border-white' : 'border-slate-900'
                       }`}
                     >
                       <div
-                        className={`w-full h-full rounded-[1px] ${
+                        className={`w-full h-full rounded-[1.5px] ${
                           isDarkScene ? 'bg-white' : 'bg-slate-900'
                         }`}
                       />
                     </div>
                     <div
-                      className={`w-[1.5px] h-1 rounded-r-xs -ml-[0.5px] ${
+                      className={`w-[1.5px] h-[4px] rounded-r-xs -ml-[0.5px] ${
                         isDarkScene ? 'bg-white' : 'bg-slate-900'
                       }`}
                     />
@@ -2207,39 +2224,19 @@ export default function LivePhonePreview({
               )}
 
               {/* ========================================================== */}
-              {/* BOTTOM iOS SAFARI ADDRESS BAR & TOOLBAR (Matching Mockup Reference) */}
+              {/* AUTHENTIC iOS HOME INDICATOR BAR */}
               {/* ========================================================== */}
-              <div className="w-full pt-1.5 pb-1 z-30 shrink-0 select-none bg-[#f9f9f9] border-t border-slate-200/80">
-                {/* Floating Safari Address Bar */}
-                <div className="mx-5 mb-1 px-3.5 py-1.5 rounded-xl bg-[#e8e8e9] border border-slate-300/40 flex items-center justify-between text-xs text-slate-800 shadow-2xs relative overflow-hidden">
-                  {/* Left: AA Text Indicator */}
-                  <span className="text-xs font-semibold text-slate-700 select-none tracking-tight">
-                    AA
-                  </span>
+              <div className="w-full pb-2 pt-1 flex flex-col items-center justify-center shrink-0 z-30 select-none pointer-events-none">
+                <div
+                  className={`w-36 h-[4.5px] rounded-full transition-colors duration-300 ${
+                    isDarkScene ? 'bg-white/80' : 'bg-black/80'
+                  }`}
+                />
+              </div>
 
-                  {/* Center: Lock Icon + Host Domain */}
-                  <div className="flex items-center gap-1.5 text-xs font-normal text-slate-800 truncate max-w-[175px]">
-                    <Lock className="w-3 h-3 text-slate-700 shrink-0 stroke-[2.2]" />
-                    <span className="truncate">{displayHost}</span>
-                  </div>
-
-                  {/* Right: Safari Reload Button */}
-                  <button
-                    type="button"
-                    onClick={handleResetScreen}
-                    title="Reload"
-                    className="text-slate-700 hover:text-slate-900 transition-colors p-1 rounded-full hover:bg-slate-300/40 cursor-pointer active:rotate-180 duration-300"
-                  >
-                    <RotateCw className="w-3.5 h-3.5 stroke-[2.2]" />
-                  </button>
-
-                  {/* iOS Safari Subtle Page Load Progress Line */}
-                  <div className="absolute bottom-0 left-0 h-[2.5px] w-28 bg-[#007aff] rounded-full pointer-events-none" />
-                </div>
-
-                {/* Safari Bottom 5-Button Toolbar */}
-                <div className="px-6 pt-1 pb-1 flex items-center justify-between text-[#007aff]">
-                  {/* 1. Back Chevron */}
+              {/* Subtle Hover-Only Preview Scene Switcher (Zero clutter, perfect for testing) */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 opacity-0 hover:opacity-100 focus-within:opacity-100 transition-opacity duration-200 pointer-events-auto">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/85 backdrop-blur-md text-white text-[11px] shadow-lg border border-white/20 select-none">
                   <button
                     type="button"
                     onClick={handleToolbarBack}
@@ -2252,7 +2249,7 @@ export default function LivePhonePreview({
                         ? apologyTab === 'forgive'
                         : !isBirthday || screen === 0
                     }
-                    className={`cursor-pointer transition-opacity p-1 rounded-full ${
+                    className={`p-0.5 rounded-full transition-all cursor-pointer ${
                       (isRomance
                         ? romanticTab === 'photos'
                         : isScrapbook
@@ -2260,15 +2257,22 @@ export default function LivePhonePreview({
                         : isApology
                         ? apologyTab === 'forgive'
                         : !isBirthday || screen === 0)
-                        ? 'opacity-50'
-                        : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
+                        ? 'opacity-40 cursor-not-allowed'
+                        : 'hover:text-amber-300 active:scale-90'
                     }`}
-                    title={isRomance || isScrapbook || isApology ? 'Previous Chapter' : 'Previous Scene'}
+                    title="Previous Scene"
                   >
-                    <ChevronLeft className="w-5 h-5 stroke-[2]" />
+                    <ChevronLeft className="w-3.5 h-3.5" />
                   </button>
-
-                  {/* 2. Forward Chevron */}
+                  <span className="font-semibold tracking-wide px-1">
+                    {isRomance
+                      ? `Chapter ${romanticTab === 'photos' ? '1' : romanticTab === 'letter' ? '2' : '3'}/3`
+                      : isScrapbook
+                      ? `Chapter ${scrapbookTab === 'timeline' ? '1' : scrapbookTab === 'jokes' ? '2' : scrapbookTab === 'scratch' ? '3' : '4'}/4`
+                      : isApology
+                      ? `Chapter ${apologyTab === 'forgive' ? '1' : apologyTab === 'treaty' ? '2' : apologyTab === 'promises' ? '3' : '4'}/4`
+                      : `Scene ${screen + 1}/5`}
+                  </span>
                   <button
                     type="button"
                     onClick={handleToolbarForward}
@@ -2281,7 +2285,7 @@ export default function LivePhonePreview({
                         ? apologyTab === 'letter'
                         : !isBirthday || screen === 4
                     }
-                    className={`cursor-pointer transition-opacity p-1 rounded-full ${
+                    className={`p-0.5 rounded-full transition-all cursor-pointer ${
                       (isRomance
                         ? romanticTab === 'quiz'
                         : isScrapbook
@@ -2289,63 +2293,22 @@ export default function LivePhonePreview({
                         : isApology
                         ? apologyTab === 'letter'
                         : !isBirthday || screen === 4)
-                        ? 'opacity-50'
-                        : 'hover:opacity-80 active:scale-90 hover:bg-slate-200/50'
+                        ? 'opacity-40 cursor-not-allowed'
+                        : 'hover:text-amber-300 active:scale-90'
                     }`}
-                    title={isRomance || isScrapbook || isApology ? 'Next Chapter' : 'Next Scene'}
+                    title="Next Scene"
                   >
-                    <ChevronRight className="w-5 h-5 stroke-[2]" />
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </button>
-
-                  {/* 3. Center Share button (iOS share box with arrow, clicking triggers triggerConfetti()) */}
                   <button
                     type="button"
-                    onClick={triggerConfetti}
-                    className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
-                    title="Share"
+                    onClick={handleResetScreen}
+                    className="ml-1 p-0.5 rounded-full hover:text-amber-300 active:rotate-180 transition-all cursor-pointer"
+                    title="Replay / Reset"
                   >
-                    <svg
-                      className="w-5 h-5 stroke-[2]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                      <polyline points="16 6 12 2 8 6" />
-                      <line x1="12" y1="2" x2="12" y2="15" />
-                    </svg>
-                  </button>
-
-                  {/* 4. Bookmark button (BookOpen className="w-5 h-5 stroke-[2]", toggles bookmarkSaved with sound) */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      soundEffects.playPop();
-                      setBookmarkSaved((prev) => !prev);
-                    }}
-                    className={`cursor-pointer transition-all duration-200 active:scale-90 p-1 rounded-full ${
-                      bookmarkSaved ? 'text-amber-500 scale-110' : 'hover:opacity-80 hover:bg-slate-200/50'
-                    }`}
-                    title={bookmarkSaved ? 'Saved to Bookmarks ⭐' : 'Bookmarks'}
-                  >
-                    <BookOpen className={`w-5 h-5 stroke-[2] ${bookmarkSaved ? 'fill-amber-400' : ''}`} />
-                  </button>
-
-                  {/* 5. Safari Tabs button (Copy className="w-5 h-5 stroke-[2]", triggers confetti) */}
-                  <button
-                    type="button"
-                    onClick={triggerConfetti}
-                    className="cursor-pointer hover:opacity-80 active:scale-95 p-1 rounded-full hover:bg-slate-200/50"
-                    title="Tabs"
-                  >
-                    <Copy className="w-5 h-5 stroke-[2]" />
+                    <RotateCw className="w-3 h-3" />
                   </button>
                 </div>
-
-                {/* Minimal iOS Home Indicator Bar */}
-                <div className="w-28 h-[4px] bg-black rounded-full mx-auto my-1" />
               </div>
             </div>
           </div>
