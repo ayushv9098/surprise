@@ -827,16 +827,17 @@ export default function MultiSceneBirthdayView({
   let line2Text = '';
 
   if (rawOccasion) {
-    if (rawOccasion.includes(',')) {
-      const commaIdx = rawOccasion.indexOf(',');
-      const sliced = rawOccasion.slice(0, commaIdx + 1).trim();
-      line1Text = sliced.endsWith(',') ? sliced : `${sliced},`;
-      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
-    } else if (rawOccasion.toLowerCase().startsWith('happy birthday')) {
-      line1Text = 'Happy Birthday,';
+    // If rawOccasion already contains the recipient's name (e.g. "Happy Birthday Rohan")
+    if (rawOccasion.toLowerCase().includes(nameToDisplay.toLowerCase())) {
+      const escapedName = nameToDisplay.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const cleaned = rawOccasion.replace(new RegExp(escapedName, 'gi'), '').trim().replace(/,+$/, '').trim();
+      line1Text = cleaned ? (/[!?,.]$/.test(cleaned) ? cleaned : `${cleaned},`) : (rawOccasion.endsWith(',') ? rawOccasion : `${rawOccasion},`);
       line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     } else {
-      line1Text = rawOccasion.endsWith(',') ? rawOccasion : `${rawOccasion},`;
+      // Normal greeting (e.g. "Happy Birthday", "Happy Birthday mere bhai", "Happy 21st Birthday")
+      // Preserve the user's full greeting on Line 1, and recipient name on Line 2
+      const endsWithPunct = /[!?,.]$/.test(rawOccasion);
+      line1Text = endsWithPunct ? rawOccasion : `${rawOccasion},`;
       line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     }
   } else {

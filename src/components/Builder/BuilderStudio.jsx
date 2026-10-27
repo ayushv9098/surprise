@@ -14,6 +14,18 @@ import { getTemplateById, getTemplatesByCategory } from '../../data/templates';
 import { saveSurprise } from '../../utils/storage';
 import AppleEmoji from '../common/AppleEmoji';
 
+const DEFAULT_BIRTHDAY_NICKNAMES = [
+  'Happy Birthday, Lavender Dreamer! 💜',
+  'Happy Birthday, Sunshine! 🌸',
+  'Happy Birthday Princess! ✨👑',
+  'Happy Birthday Princess! 👑💖',
+  'Happy Birthday, Fairy Princess! 🩵✨',
+  'Happy Birthday to the King! 👑',
+  'Happy Birthday, Shining Star! 🎂✨',
+  'Chapters of Brotherhood 📸⚡',
+  'Happy Birthday to the King! 🖤👑',
+];
+
 export default function BuilderStudio({
   initialTemplateId,
   initialGender = 'boy',
@@ -92,13 +104,14 @@ export default function BuilderStudio({
   const [formData, setFormData] = useState(() => {
     const tmpl = getTemplateById(resolvedInitialTemplateId);
     const preset = getPresetForTemplate(tmpl.id);
+    const isBirthdayTemplate = !tmpl.category || tmpl.category === 'birthday';
     return {
       templateId: tmpl.id,
       category: selectedCategory,
       gender: resolvedInitialGender,
       recipientName: preset.recipientName || (resolvedInitialGender === 'girl' ? 'Sarah' : 'Rohan'),
       senderName: preset.senderName || (resolvedInitialGender === 'girl' ? 'Elena' : 'Alex'),
-      occasion: preset.occasion || 'Happy Birthday',
+      occasion: isBirthdayTemplate ? 'Happy Birthday' : (preset.occasion || tmpl.defaultOccasion || ''),
       subtitle: preset.subtitle || 'I have a small surprise for you...',
       heroPhoto: preset.heroPhoto || tmpl.samplePhoto,
       photoCaption: preset.photoCaption || (resolvedInitialGender === 'girl' ? 'Stay Wonderful Always! 🌸✨' : 'Keep Rocking Always! 👑🔥'),
@@ -229,21 +242,29 @@ export default function BuilderStudio({
     const preset = getPresetForTemplate(targetTemplateId);
     const tmpl = getTemplateById(targetTemplateId);
 
-    setFormData((prev) => ({
-      ...prev,
-      gender,
-      templateId: targetTemplateId,
-      recipientName: gender === 'girl' ? 'Sarah' : 'Rohan',
-      senderName: gender === 'girl' ? 'Elena' : 'Alex',
-      occasion: preset.occasion || 'Happy Birthday',
-      subtitle: preset.subtitle,
-      heroPhoto: preset.heroPhoto || tmpl.samplePhoto,
-      photoCaption: preset.photoCaption,
-      photos: preset.photos,
-      specialReasons: preset.specialReasons,
-      letter: preset.letter,
-      songId: preset.songId || tmpl.recommendedSongId,
-    }));
+    setFormData((prev) => {
+      const isCustomOccasion =
+        prev.occasion &&
+        !DEFAULT_BIRTHDAY_NICKNAMES.includes(prev.occasion) &&
+        prev.occasion !== 'Happy Birthday';
+      const resolvedOccasion = isCustomOccasion ? prev.occasion : 'Happy Birthday';
+
+      return {
+        ...prev,
+        gender,
+        templateId: targetTemplateId,
+        recipientName: gender === 'girl' ? 'Sarah' : 'Rohan',
+        senderName: gender === 'girl' ? 'Elena' : 'Alex',
+        occasion: resolvedOccasion,
+        subtitle: preset.subtitle,
+        heroPhoto: preset.heroPhoto || tmpl.samplePhoto,
+        photoCaption: preset.photoCaption,
+        photos: preset.photos,
+        specialReasons: preset.specialReasons,
+        letter: preset.letter,
+        songId: preset.songId || tmpl.recommendedSongId,
+      };
+    });
   };
 
   const handleTemplateChange = (templateId) => {
@@ -258,20 +279,14 @@ export default function BuilderStudio({
     }
 
     const isBirthdayTemplate = !tmpl.category || tmpl.category === 'birthday';
-    const defaultBirthdayNicknames = [
-      'Happy Birthday, Lavender Dreamer! 💜',
-      'Happy Birthday, Sunshine! 🌸',
-      'Happy Birthday Princess! ✨👑',
-      'Happy Birthday Princess! 👑💖',
-      'Happy Birthday, Fairy Princess! 🩵✨',
-      'Happy Birthday to the King! 👑',
-      'Happy Birthday, Shining Star! 🎂✨',
-      'Chapters of Brotherhood 📸⚡',
-      'Happy Birthday to the King! 🖤👑',
-    ];
 
     setFormData((prev) => {
-      const isCustomOccasion = prev.occasion && !defaultBirthdayNicknames.includes(prev.occasion) && prev.occasion !== 'Happy Birthday';
+      const categoryChanged = (tmpl.category || 'birthday') !== (prev.category || 'birthday');
+      const isCustomOccasion =
+        !categoryChanged &&
+        prev.occasion &&
+        !DEFAULT_BIRTHDAY_NICKNAMES.includes(prev.occasion) &&
+        prev.occasion !== 'Happy Birthday';
       const resolvedOccasion = isBirthdayTemplate
         ? (currentStep === 1 ? 'Happy Birthday' : (isCustomOccasion ? prev.occasion : 'Happy Birthday'))
         : (currentStep === 1 ? (preset.occasion || tmpl.defaultOccasion || '') : (prev.occasion || preset.occasion || tmpl.defaultOccasion || ''));

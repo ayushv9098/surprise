@@ -1178,46 +1178,41 @@ export default function LivePhonePreview({
   let line1Text = '';
   let line2Text = '';
 
-  const isDefaultBirthdayOccasion =
-    !rawOccasion ||
-    rawOccasion.toLowerCase().includes('happy birthday') ||
-    rawOccasion.toLowerCase().includes('birthday');
+  const isLingeringBirthdayOccasion =
+    !isBirthday &&
+    (rawOccasion.toLowerCase() === 'happy birthday' || rawOccasion.toLowerCase() === 'happy birthday!');
 
   if (hasExplicitOccasion && rawOccasion === '') {
     // User explicitly cleared occasion: do NOT force fallback
     line1Text = '';
-    line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
-  } else if (rawOccasion && (!isDefaultBirthdayOccasion || isBirthday)) {
-    if (rawOccasion.includes(',')) {
-      const commaIdx = rawOccasion.indexOf(',');
-      const sliced = rawOccasion.slice(0, commaIdx + 1).trim();
-      line1Text = sliced.endsWith(',') ? sliced : `${sliced},`;
-      if (isRomance) {
-        line2Text = `${nameToDisplay} ❤️`;
-      } else if (isScrapbook) {
-        line2Text = `${nameToDisplay}! 📸`;
-      } else if (isApology) {
-        line2Text = `Dear ${nameToDisplay} 🤍`;
-      } else {
-        line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
-      }
-    } else if (rawOccasion.toLowerCase().startsWith('happy birthday')) {
-      line1Text = 'Happy Birthday,';
-      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
+    line2Text = isRomance
+      ? `${nameToDisplay} ❤️`
+      : isScrapbook
+      ? `${nameToDisplay}! 📸`
+      : isApology
+      ? `Dear ${nameToDisplay} 🤍`
+      : `${nameToDisplay}! ${celebrationEmoji}`;
+  } else if (rawOccasion && !isLingeringBirthdayOccasion) {
+    // If rawOccasion already contains the recipient's name (e.g. "Happy Birthday Rohan")
+    if (rawOccasion.toLowerCase().includes(nameToDisplay.toLowerCase())) {
+      const escapedName = nameToDisplay.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const cleaned = rawOccasion.replace(new RegExp(escapedName, 'gi'), '').trim().replace(/,+$/, '').trim();
+      line1Text = cleaned ? (/[!?,.]$/.test(cleaned) ? cleaned : `${cleaned},`) : (rawOccasion.endsWith(',') ? rawOccasion : `${rawOccasion},`);
     } else {
-      if (isRomance) {
-        line1Text = rawOccasion;
-        line2Text = `${nameToDisplay} ❤️`;
-      } else if (isScrapbook) {
-        line1Text = rawOccasion;
-        line2Text = `${nameToDisplay}! 📸`;
-      } else if (isApology) {
-        line1Text = rawOccasion;
-        line2Text = `Dear ${nameToDisplay} 🤍`;
-      } else {
-        line1Text = rawOccasion.endsWith(',') ? rawOccasion : `${rawOccasion},`;
-        line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
-      }
+      // Normal greeting (e.g. "Happy Birthday", "Happy Birthday mere bhai", "Happy 21st Birthday")
+      // Preserve the user's full greeting on Line 1, and recipient name on Line 2
+      const endsWithPunct = /[!?,.]$/.test(rawOccasion);
+      line1Text = endsWithPunct ? rawOccasion : `${rawOccasion},`;
+    }
+
+    if (isRomance) {
+      line2Text = `${nameToDisplay} ❤️`;
+    } else if (isScrapbook) {
+      line2Text = `${nameToDisplay}! 📸`;
+    } else if (isApology) {
+      line2Text = `Dear ${nameToDisplay} 🤍`;
+    } else {
+      line2Text = `${nameToDisplay}! ${celebrationEmoji}`;
     }
   } else {
     if (isRomance) {

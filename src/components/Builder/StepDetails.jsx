@@ -67,7 +67,7 @@ export default function StepDetails({ formData, onChange, onFocusField }) {
     ? 'e.g. The Scrapbook of Us • Vol. 1'
     : isApology
     ? 'e.g. I Am Really Sorry...'
-    : 'e.g. Happy Birthday or Happy 21st Birthday';
+    : 'e.g. Happy Birthday or Happy Birthday mere bhai';
 
   const occasionHelper = isRomance
     ? 'Heading text only (name will be styled beautifully on line 2)'
@@ -75,7 +75,7 @@ export default function StepDetails({ formData, onChange, onFocusField }) {
     ? 'Heading text only (name will be styled beautifully on line 2)'
     : isApology
     ? 'Heading text only (name will be styled beautifully on line 2)'
-    : 'Wish text only (the name will be styled beautifully on line 2)';
+    : 'Custom greeting (e.g. "Happy Birthday mere bhai" - recipient name will be styled on line 2)';
 
   const subtitleLabel = isRomance
     ? 'Romantic Subtitle / Opening Note (Optional)'
@@ -147,17 +147,22 @@ export default function StepDetails({ formData, onChange, onFocusField }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Celebration Greeting / Wish */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
-              <span>{occasionLabel}</span>
-              <AppleEmoji emoji={occasionEmoji} size={13} />
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-slate-700 flex items-center gap-1">
+                <span>{occasionLabel}</span>
+                <AppleEmoji emoji={occasionEmoji} size={13} />
+              </label>
+              <span className="text-[11px] font-mono text-slate-400">
+                {(formData.occasion || '').length}/35
+              </span>
+            </div>
             <input
               type="text"
               value={formData.occasion || ''}
               onFocus={() => onFocusField?.('occasion')}
               onChange={(e) => onChange({ occasion: e.target.value })}
               placeholder={occasionPlaceholder}
-              maxLength={36}
+              maxLength={35}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200/90 bg-white text-slate-900 placeholder-slate-400 text-sm focus:outline-hidden focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all font-medium"
             />
             <p className="text-[11px] text-slate-400 mt-1">{occasionHelper}</p>
