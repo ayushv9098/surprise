@@ -920,7 +920,9 @@ const letterBodyEndSenderRegex = new RegExp(
 
 function formatLetterBody(body, currentRecipientName, currentSenderName) {
   if (!body || typeof body !== 'string') return body;
-  let formatted = body;
+  let formatted = body
+    .replace(/ayushlwayushys|lwayushys/gi, 'always')
+    .replace(/ayushyush/gi, (currentSenderName || '').trim() || 'Ayush');
   const targetRecipient = (currentRecipientName || '').trim();
   if (targetRecipient && letterGreetingRegex.test(formatted)) {
     formatted = formatted.replace(letterGreetingRegex, (match, prefix, oldName, rest) => {
@@ -937,8 +939,11 @@ function formatLetterBody(body, currentRecipientName, currentSenderName) {
 function formatLetterSignOff(signOff, currentSenderName) {
   if (!signOff || typeof signOff !== 'string') return signOff;
   const targetSender = (currentSenderName || '').trim();
-  if (!targetSender) return signOff;
-  return signOff.replace(letterSignOffSenderRegex, targetSender);
+  let cleaned = signOff
+    .replace(/ayushlwayushys|lwayushys/gi, 'always')
+    .replace(/ayushyush/gi, targetSender || 'Ayush');
+  if (!targetSender) return cleaned;
+  return cleaned.replace(letterSignOffSenderRegex, targetSender);
 }
 
 export default function LivePhonePreview({

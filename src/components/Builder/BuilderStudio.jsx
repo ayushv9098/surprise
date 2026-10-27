@@ -165,70 +165,73 @@ export default function BuilderStudio({
     }
 
     setFormData((prev) => {
-      let updatedLetter = prev.letter ? { ...prev.letter } : {};
+      let updatedLetter = patch.letter !== undefined ? { ...patch.letter } : (prev.letter ? { ...prev.letter } : {});
 
-      // When senderName is updated in Tab 1, keep letter signOff in sync if it had the old sender
-      if (patch.senderName !== undefined && patch.senderName !== prev.senderName) {
-        const oldSender = prev.senderName;
-        if (oldSender && updatedLetter.signOff && updatedLetter.signOff.includes(oldSender) && patch.letter === undefined) {
-          updatedLetter.signOff = updatedLetter.signOff.split(oldSender).join(patch.senderName);
+      // Auto-repair any accidental corrupted substrings in signOff
+      if (updatedLetter.signOff && typeof updatedLetter.signOff === 'string') {
+        if (/ayushlwayushys|lwayushys/i.test(updatedLetter.signOff)) {
+          updatedLetter.signOff = updatedLetter.signOff.replace(/ayushlwayushys|lwayushys/gi, 'always');
+        }
+        if (/ayushyush/i.test(updatedLetter.signOff)) {
+          updatedLetter.signOff = updatedLetter.signOff.replace(/ayushyush/gi, 'Ayush');
         }
       }
 
-      // When recipientName is updated in Tab 1, keep letter greeting & content in sync
-      if (patch.recipientName !== undefined && patch.recipientName !== prev.recipientName && patch.letter === undefined && updatedLetter.content) {
-        const oldRecipient = prev.recipientName;
-        const newRecipient = patch.recipientName || '';
+      // When senderName is updated in Tab 1, keep letter signOff in sync safely without touching phrases like "always"
+      if (patch.senderName !== undefined && patch.senderName !== prev.senderName && patch.letter === undefined) {
+        const newSender = (patch.senderName || '').trim();
+        if (updatedLetter.signOff && typeof updatedLetter.signOff === 'string') {
+          const tmpl = getTemplateById(prev.templateId || 'royal-sapphire');
+          const preset = getPresetForTemplate(tmpl.id);
+          const defaultEmoji = preset.letter?.signOff?.match(/([\p{Extended_Pictographic}\uFE0F\u200D]+)/u)?.[1] || '🌸';
+          const existingEmojiMatch = updatedLetter.signOff.match(/([\p{Extended_Pictographic}\uFE0F\u200D]+)/u);
+          const emoji = existingEmojiMatch ? existingEmojiMatch[1] : defaultEmoji;
 
-        let content = updatedLetter.content;
-        let replaced = false;
+          const commaIdx = updatedLetter.signOff.indexOf(',');
+          const newlineIdx = updatedLetter.signOff.indexOf('\n');
+          let splitIdx = -1;
+          if (commaIdx !== -1 && newlineIdx !== -1) {
+            splitIdx = Math.min(commaIdx, newlineIdx);
+          } else if (commaIdx !== -1) {
+            splitIdx = commaIdx;
+          } else if (newlineIdx !== -1) {
+            splitIdx = newlineIdx;
+          }
 
-        // 1. If prev.recipientName was present in updatedLetter.content, replace it with patch.recipientName
-        if (oldRecipient && oldRecipient.trim() && content.includes(oldRecipient)) {
-          if (oldRecipient.trim().length >= 2) {
-            content = content.split(oldRecipient).join(newRecipient);
-            replaced = true;
+          if (splitIdx !== -1) {
+            const sentiment = updatedLetter.signOff.slice(0, splitIdx).trim();
+            const rest = updatedLetter.signOff.slice(splitIdx + 1).trim();
+            const prefixMatch = rest.match(/^(your\s+|from\s+|love,?\s*)/i);
+            const prefix = prefixMatch ? prefixMatch[0] : '';
+            const sep = updatedLetter.signOff.includes('\n') ? ',\n' : ', ';
+            if (!newSender) {
+              updatedLetter.signOff = `${sentiment},`;
+            } else {
+              updatedLetter.signOff = `${sentiment}${sep}${prefix}${newSender} ${emoji}`.trim();
+            }
           } else {
-            // For 1-character typing in progress, update the greeting line safely
-            const lines = content.split('\n');
-            if (lines.length > 0 && lines[0].includes(oldRecipient)) {
-              lines[0] = lines[0].split(oldRecipient).join(newRecipient);
-              content = lines.join('\n');
-              replaced = true;
-            }
+            updatedLetter.signOff = newSender ? `${newSender} ${emoji}` : '';
           }
         }
+      }
 
-        // 2. Also if updatedLetter.content contains common default preset names ("Sarah", "Rohan", "Elena", "Alex", "Kabir", "Maya", "Kiara")
-        // at the beginning (e.g. Sweet Sarah, Dear Sarah, Happy Birthday Kabir, etc.), replace that greeting name with patch.recipientName
-        const defaultNames = ['Sarah', 'Rohan', 'Elena', 'Alex', 'Kabir', 'Maya', 'Kiara'];
-        for (const defaultName of defaultNames) {
-          if (!replaced && content.includes(defaultName)) {
-            content = content.split(defaultName).join(newRecipient);
-            replaced = true;
-            break;
+      // When recipientName is updated in Tab 1, update ONLY Line 1 of content (the greeting line)
+      if (patch.recipientName !== undefined && patch.recipientName !== prev.recipientName && patch.letter === undefined && updatedLetter.content) {
+        const newRecipient = (patch.recipientName || '').trim();
+        const lines = updatedLetter.content.split('\n');
+        if (lines.length > 0 && newRecipient) {
+          const greetingMatch = lines[0].match(/^(Happy Birthday,?\s*(?:to)?|Dear|My dearest|Dearest|Sweet|Sweetest|To|Hey|Yo)(\s+)([^\n,!?:.]+)(.*)$/i);
+          if (greetingMatch) {
+            lines[0] = `${greetingMatch[1]} ${newRecipient}${greetingMatch[4]}`;
+            updatedLetter.content = lines.join('\n');
           }
         }
-
-        // 3. Fallback for the opening greeting line if old name wasn't cleanly matched (e.g. after deletion or greeting format)
-        if (!replaced && newRecipient.trim()) {
-          const lines = content.split('\n');
-          if (lines.length > 0) {
-            const greetingMatch = lines[0].match(/^(Happy Birthday|Dear|My dearest|Dearest|Sweet|Sweetest)(\s+)([^,!\n]+)(.*)$/i);
-            if (greetingMatch) {
-              lines[0] = `${greetingMatch[1]} ${newRecipient}${greetingMatch[4]}`;
-              content = lines.join('\n');
-            }
-          }
-        }
-
-        updatedLetter.content = content;
       }
 
       return {
         ...prev,
         ...patch,
-        letter: patch.letter !== undefined ? patch.letter : updatedLetter,
+        letter: updatedLetter,
       };
     });
   };
@@ -295,22 +298,34 @@ export default function BuilderStudio({
       const activeRecipient = currentStep === 1 ? (preset.recipientName || (tmpl.gender === 'girl' ? 'Sarah' : 'Rohan')) : prev.recipientName;
       const activeSender = currentStep === 1 ? (preset.senderName || (tmpl.gender === 'girl' ? 'Elena' : 'Alex')) : prev.senderName;
 
-      // If user has already entered a custom recipientName, keep it in sync with the new preset letter
+      // If user has already entered a custom recipientName, keep it in sync with the new preset letter (greeting line only)
       if (currentStep !== 1 && activeRecipient && templateLetter.content) {
-        const defaultNames = ['Sarah', 'Rohan', 'Elena', 'Alex', 'Kabir', 'Maya', 'Kiara'];
-        for (const dName of defaultNames) {
-          if (templateLetter.content.includes(dName)) {
-            templateLetter.content = templateLetter.content.split(dName).join(activeRecipient);
-            break;
+        const lines = templateLetter.content.split('\n');
+        if (lines.length > 0) {
+          const defaultNames = ['Sarah', 'Rohan', 'Elena', 'Alex', 'Kabir', 'Maya', 'Kiara'];
+          for (const dName of defaultNames) {
+            const reg = new RegExp(`\\b${dName}\\b`, 'g');
+            if (reg.test(lines[0])) {
+              lines[0] = lines[0].replace(reg, activeRecipient);
+              templateLetter.content = lines.join('\n');
+              break;
+            }
           }
         }
       }
 
       if (currentStep !== 1 && activeSender && templateLetter.signOff) {
+        if (/ayushlwayushys|lwayushys/i.test(templateLetter.signOff)) {
+          templateLetter.signOff = templateLetter.signOff.replace(/ayushlwayushys|lwayushys/gi, 'always');
+        }
+        if (/ayushyush/i.test(templateLetter.signOff)) {
+          templateLetter.signOff = templateLetter.signOff.replace(/ayushyush/gi, 'Ayush');
+        }
         const defaultSenders = ['Alex', 'Elena', 'Liam', 'Julian', 'Noah', 'Aryan', 'Samir', 'Dev', 'Meera', 'Rohan', 'Kabir', 'Sameer'];
         for (const dSender of defaultSenders) {
-          if (templateLetter.signOff.includes(dSender)) {
-            templateLetter.signOff = templateLetter.signOff.split(dSender).join(activeSender);
+          const reg = new RegExp(`\\b${dSender}\\b`, 'g');
+          if (reg.test(templateLetter.signOff)) {
+            templateLetter.signOff = templateLetter.signOff.replace(reg, activeSender);
             break;
           }
         }

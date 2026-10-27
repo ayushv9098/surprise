@@ -91,16 +91,28 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
   const defaultSealEmoji = isRomance ? '❤️' : isScrapbook ? '📸' : isApology ? '🕊️' : (isBoy ? '👑' : '🌸');
   const defaultWaxColor = isRomance ? '#E11D48' : isScrapbook ? '#78350F' : isApology ? '#15803D' : (isBoy ? '#1D4ED8' : '#E11D48');
 
+  const rawSignOff = formData.letter?.signOff !== undefined
+    ? formData.letter.signOff
+    : (formData.letterSignOff || defaultSignOff);
+
+  const cleanSignOff = typeof rawSignOff === 'string'
+    ? rawSignOff.replace(/ayushlwayushys|lwayushys/gi, 'always').replace(/ayushyush/gi, 'Ayush').replace(/,\s*\n\s*/g, ', ').replace(/\n+/g, ' ')
+    : rawSignOff;
+
+  const rawContent = formData.letter?.content !== undefined
+    ? formData.letter.content
+    : (formData.letter && typeof formData.letter === 'string' ? formData.letter : (formData.letterBody || defaultLetterContent));
+
+  const cleanContent = typeof rawContent === 'string'
+    ? rawContent.replace(/ayushlwayushys|lwayushys/gi, 'always').replace(/ayushyush/gi, 'Ayush')
+    : rawContent;
+
   const letter = {
     title: formData.letter?.title !== undefined
       ? formData.letter.title
       : (formData.letterTitle || (isRomance ? 'To My Favorite Person 🌸' : isScrapbook ? 'A Keepsake Note' : isApology ? 'A Sincere Note' : 'A Little Note For You')),
-    content: formData.letter?.content !== undefined
-      ? formData.letter.content
-      : (formData.letter && typeof formData.letter === 'string' ? formData.letter : (formData.letterBody || defaultLetterContent)),
-    signOff: formData.letter?.signOff !== undefined
-      ? formData.letter.signOff
-      : (formData.letterSignOff || defaultSignOff),
+    content: cleanContent,
+    signOff: cleanSignOff,
     sealEmoji: formData.letter?.sealEmoji || defaultSealEmoji,
     waxColor: formData.letter?.waxColor || defaultWaxColor,
   };
