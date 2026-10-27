@@ -27,6 +27,22 @@ const BADGE_STYLES = {
     label: 'Blush Romance 🌸',
     classes: 'bg-rose-50 text-rose-700 border-rose-200'
   },
+  'velvet-romance': {
+    label: 'Velvet Romance ❤️',
+    classes: 'bg-rose-50 text-rose-700 border-rose-200'
+  },
+  'midnight-onyx': {
+    label: 'Midnight Onyx 🖤',
+    classes: 'bg-stone-900 text-stone-100 border-stone-800'
+  },
+  'emerald-luxe': {
+    label: 'Emerald Luxe 🌿',
+    classes: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+  },
+  'cinderella-sky': {
+    label: 'Cinderella Sky 🩵',
+    classes: 'bg-sky-50 text-sky-700 border-sky-200'
+  },
   'golden-birthday': {
     label: 'Golden Birthday 🎂',
     classes: 'bg-amber-50 text-amber-800 border-amber-200'
@@ -52,6 +68,9 @@ const BADGE_STYLES = {
 export default function SitesTable({
   sites = [],
   loading = false,
+  totalSites = 0,
+  searchQuery = '',
+  selectedTemplate = 'all',
   onInspect,
   onDelete,
   onToast,
@@ -114,29 +133,44 @@ export default function SitesTable({
 
   if (loading) {
     return (
-      <div className="w-full bg-white rounded-3xl border border-slate-200/80 p-12 text-center shadow-xs">
+      <div className="w-full bg-white rounded-3xl border border-stone-200/80 p-12 text-center shadow-xs">
         <div className="inline-block w-8 h-8 border-3 border-rose-500 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-sm font-medium text-slate-600">Loading surprise sites...</p>
+        <p className="text-sm font-medium text-slate-600">Loading keepsake data...</p>
       </div>
     );
   }
 
   if (sites.length === 0) {
+    const isFiltered = Boolean(searchQuery.trim() || (selectedTemplate && selectedTemplate !== 'all'));
+
     return (
-      <div className="w-full bg-white rounded-3xl border border-slate-200/80 p-12 text-center shadow-xs">
+      <div className="w-full bg-white rounded-3xl border border-stone-200/80 p-12 text-center shadow-xs">
         <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-rose-50 flex items-center justify-center text-rose-500">
           <Inbox className="w-7 h-7" />
         </div>
-        <h3 className="text-base font-bold text-slate-800 mb-1">No Surprise Websites Found</h3>
-        <p className="text-xs text-slate-500 max-w-sm mx-auto mb-5">
-          No websites match your current search query or filter. Try clearing filters or create a new surprise!
-        </p>
+        
+        {isFiltered ? (
+          <>
+            <h3 className="text-base font-bold text-slate-800 mb-1">No Matching Keepsakes</h3>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto mb-5 leading-relaxed">
+              No keepsake matched your search or template filter. Try adjusting your search query.
+            </p>
+          </>
+        ) : (
+          <>
+            <h3 className="text-base font-bold text-slate-800 mb-1">0 Active Keepsakes</h3>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto mb-5 leading-relaxed">
+              Clean database ready. Waiting for real user creations — all dummy data has been wiped. Newly created keepsakes will appear here automatically.
+            </p>
+          </>
+        )}
+
         {onCreateNew && (
           <button
             onClick={onCreateNew}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-rose-500 text-white shadow-md shadow-rose-200 hover:bg-rose-600 transition-all cursor-pointer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold bg-rose-500 text-white shadow-md shadow-rose-200 hover:bg-rose-600 transition-all cursor-pointer"
           >
-            <span>Create New Surprise</span>
+            <span>Create First Keepsake</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         )}

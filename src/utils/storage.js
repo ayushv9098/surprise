@@ -1,4 +1,7 @@
 import LZString from 'lz-string';
+import { compressImageFile as compressPhoto, getDataUrlSizeKB } from './imageCompressor';
+
+export { compressPhoto as compressImageFile, getDataUrlSizeKB };
 
 const STORAGE_KEY = 'my_created_surprises';
 
@@ -191,10 +194,7 @@ export const saveSurprise = async (payload = {}) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            ...completePayload,
-            compressedHash,
-          }),
+          body: JSON.stringify(completePayload),
           signal: controller.signal,
         });
 
@@ -207,34 +207,21 @@ export const saveSurprise = async (payload = {}) => {
       }
     } catch {
       // Graceful offline fallback: backend might not be running or timed out; client-side standalone link is active
-      console.info('Backend API offline/timed out; client-side standalone link active.');
+      console.info('Backend API offline/timed out; local storage fallback active.');
     }
 
     // Extract canonical slug from API
     const savedSlug = apiResponse?.site?.slug || apiResponse?.slug || slug;
 
-    // Origin and pathname
+    // Origin and clean origin
     const origin = (typeof window !== 'undefined' && window.location?.origin)
       ? window.location.origin
       : (typeof process !== 'undefined' && process.env?.TEST_ORIGIN ? process.env.TEST_ORIGIN : 'http://localhost:5174');
-    let pathname = '/';
-    if (typeof window !== 'undefined' && window.location?.pathname) {
-      const p = window.location.pathname;
-      if (p !== '/admin' && !p.endsWith('/admin') && !p.endsWith('index.html')) {
-        pathname = p.endsWith('/') ? p : `${p}/`;
-      }
-    }
     const cleanOrigin = origin.replace(/\/+$/, '');
-    const cleanPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
-    const baseUrl = `${cleanOrigin}${cleanPath}`.replace(/\/+$/, '/');
 
-    // Construct shareUrl: clean short /s/slug URL when saved to API, or fallback to standalone /s/slug?d=
-    let shareUrl = '';
-    if (savedToApi) {
-      shareUrl = `${cleanOrigin}/s/${encodeURIComponent(savedSlug)}`;
-    } else {
-      shareUrl = `${cleanOrigin}/s/${encodeURIComponent(slug)}?d=${compressedHash}`;
-    }
+    // Construct ultra-compact clean shareUrl (< 45 chars, e.g. https://dearlys.vercel.app/s/rohan-7x2d)
+    // NEVER append ?d=${compressedHash} to user-facing share links or WhatsApp links!
+    const shareUrl = `${cleanOrigin}/s/${encodeURIComponent(savedSlug)}`;
 
     // 3. Persist in localStorage with guarded try-catch
     try {
@@ -245,7 +232,7 @@ export const saveSurprise = async (payload = {}) => {
         compressedHash,
       });
     } catch {
-      // LocalStorage quota or access error ignored; URL hash is fully self-sufficient
+      // LocalStorage quota or access error ignored
     }
 
     return {
@@ -262,13 +249,15 @@ export const saveSurprise = async (payload = {}) => {
     console.error('saveSurprise fallback engaged:', criticalErr);
     const fallbackId = payload?.id || `wc-${Date.now().toString(36)}`;
     const fallbackSlug = payload?.slug || 'surprise';
-    const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
+    const origin = (typeof window !== 'undefined' && window.location?.origin)
+      ? window.location.origin
+      : (typeof process !== 'undefined' && process.env?.TEST_ORIGIN ? process.env.TEST_ORIGIN : 'http://localhost:5174');
+    const cleanOrigin = origin.replace(/\/+$/, '');
     return {
       success: true,
       id: fallbackId,
       slug: fallbackSlug,
-      shareUrl: `${origin}/s/${encodeURIComponent(fallbackSlug)}`,
+      shareUrl: `${cleanOrigin}/s/${encodeURIComponent(fallbackSlug)}`,
       compressedHash: '',
       savedToApi: false,
       data: payload || {},
@@ -377,60 +366,11 @@ export const loadSurprise = async (slugOrHash) => {
         (item.id && item.id.toLowerCase() === targetSlug.toLowerCase())
     );
     if (localMatch) {
-      return localMatch.data || localMatch;
+      return (localMatch.data && (localMatch.data.recipientName || localMatch.data.templateId))
+        ? localMatch.data
+        : localMatch;
     }
   }
 
   return null;
-};
-
-/**
- * Client-side high-resolution image compressor (resizes to max 1400px & 0.88 JPEG)
- * Produces crisp, retina-ready, ultra-sharp photos with 4x more pixels and zero JPEG block artifacts!
- */
-export const compressImageFile = (file, maxWidth = 1400, maxHeight = 1400, quality = 0.88) => {
-  return new Promise((resolve, reject) => {
-    if (!file || !file.type.startsWith('image/')) {
-      return reject(new Error('Selected file is not an image'));
-    }
-
-    const reader = new FileReader();
-    reader.onerror = reject;
-    reader.onload = (readerEvent) => {
-      const img = new Image();
-      img.onerror = reject;
-      img.onload = () => {
-        let width = img.width;
-        let height = img.height;
-
-        if (width > maxWidth || height > maxHeight) {
-          if (width > height) {
-            height = Math.round((height * maxWidth) / width);
-            width = maxWidth;
-          } else {
-            width = Math.round((width * maxHeight) / height);
-            height = maxHeight;
-          }
-        }
-
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.imageSmoothingEnabled = true;
-          ctx.imageSmoothingQuality = 'high';
-          ctx.fillStyle = '#FFFFFF';
-          ctx.fillRect(0, 0, width, height);
-          ctx.drawImage(img, 0, 0, width, height);
-        }
-
-        const dataUrl = canvas.toDataURL('image/jpeg', quality);
-        resolve(dataUrl);
-      };
-      img.src = readerEvent.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
 };

@@ -44,43 +44,117 @@ export function findChrome() {
 }
 
 /**
- * Dearly Imperial Jewel Squircle & Keepsake Heart Vector Mark
+ * Dearly Modern Luxury Keepsake Envelope & Brilliance Star Vector Mark
  * Matches src/components/common/DearlyLogo.jsx 1:1
+ * 100% Heart-Free.
  */
-export const DEFAULT_SVG_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+export const DEFAULT_SVG_FAVICON = `<svg shape-rendering="geometricPrecision" text-rendering="geometricPrecision" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
   <defs>
-    <linearGradient id="dearly-fav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Rich cardinal-to-velvet ruby body gradient -->
+    <linearGradient id="dearly-fav-body" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FF3366"/>
-      <stop offset="38%" stop-color="#E11D48"/>
-      <stop offset="80%" stop-color="#BE123C"/>
+      <stop offset="35%" stop-color="#E11D48"/>
+      <stop offset="75%" stop-color="#9F1239"/>
+      <stop offset="100%" stop-color="#580820"/>
+    </linearGradient>
+
+    <!-- Deep interior velvet pocket -->
+    <linearGradient id="dearly-fav-interior" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3A0313"/>
+      <stop offset="100%" stop-color="#140106"/>
+    </linearGradient>
+
+    <!-- Keepsake Parchment Card (Crisp white/ivory contrast) -->
+    <linearGradient id="dearly-fav-card" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="70%" stop-color="#FFF5F7"/>
+      <stop offset="100%" stop-color="#FCE7EB"/>
+    </linearGradient>
+
+    <!-- Champagne Gold Accent Header Bar -->
+    <linearGradient id="dearly-fav-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="50%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+
+    <!-- Front Pocket V-Cut Gradient -->
+    <linearGradient id="dearly-fav-front" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#FF386C"/>
+      <stop offset="45%" stop-color="#D91642"/>
+      <stop offset="100%" stop-color="#7C0827"/>
+    </linearGradient>
+
+    <!-- Left Wing Origami Facet -->
+    <linearGradient id="dearly-fav-wing-l" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#BE123C"/>
       <stop offset="100%" stop-color="#881337"/>
     </linearGradient>
-    <linearGradient id="dearly-fav-rim" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85"/>
-      <stop offset="45%" stop-color="#FFA8BA" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#881337" stop-opacity="0.1"/>
+
+    <!-- Right Wing Origami Facet -->
+    <linearGradient id="dearly-fav-wing-r" x1="100%" y1="50%" x2="0%" y2="50%">
+      <stop offset="0%" stop-color="#9F1239"/>
+      <stop offset="100%" stop-color="#670622"/>
     </linearGradient>
+
+    <!-- Specular Hairline Rim Light -->
+    <linearGradient id="dearly-fav-rim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#FFA8BA" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#4C0519" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Card Ambient Shadow -->
+    <filter id="dearly-fav-card-shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="1.4" stdDeviation="1.0" flood-color="#2D020F" flood-opacity="0.55"/>
+    </filter>
   </defs>
 
-  <!-- Full Floating Keepsake Heart Silhouette (100% Transparent Canvas) -->
+  <!-- Envelope Back Sleeve -->
+  <rect x="2.5" y="9.5" width="27" height="18" rx="3.5" fill="url(#dearly-fav-interior)"/>
+
+  <!-- The Keepsake Parchment Card (Peeking out elegantly from top) -->
+  <g filter="url(#dearly-fav-card-shadow)">
+    <rect x="5.5" y="3.2" width="21" height="16.5" rx="2.2" fill="url(#dearly-fav-card)"/>
+    <!-- Champagne Gold Header Accent Bar -->
+    <rect x="8.5" y="5.8" width="7" height="1.6" rx="0.8" fill="url(#dearly-fav-gold)"/>
+    <!-- Micro Sentiment Line 1 -->
+    <rect x="8.5" y="9" width="15" height="1.1" rx="0.55" fill="#E2E8F0"/>
+    <!-- Micro Sentiment Line 2 -->
+    <rect x="8.5" y="11.5" width="10" height="1.1" rx="0.55" fill="#CBD5E1"/>
+    <!-- Micro Crimson Brilliance Sparkle in top right corner of card -->
+    <path d="M 22.5 5 Q 22.5 6.6 21 6.6 Q 22.5 6.6 22.5 8.2 Q 22.5 6.6 24 6.6 Q 22.5 6.6 22.5 5 Z" fill="#E11D48"/>
+  </g>
+
+  <!-- Left Side Facet Wing Fold -->
+  <path d="M 2.5 10.5 L 14 18 L 2.5 25.5 Z" fill="url(#dearly-fav-wing-l)"/>
+
+  <!-- Right Side Facet Wing Fold -->
+  <path d="M 29.5 10.5 L 18 18 L 29.5 25.5 Z" fill="url(#dearly-fav-wing-r)"/>
+
+  <!-- Front Pocket with Sculpted V-Cut Neck (Architectural Fold) -->
   <path
-    d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
-    fill="url(#dearly-fav-grad)"
+    d="M 2.5 12.8 L 16 20.8 L 29.5 12.8 L 29.5 24 C 29.5 25.9 28 27.5 26 27.5 L 6 27.5 C 4.1 27.5 2.5 25.9 2.5 24 Z"
+    fill="url(#dearly-fav-front)"
   />
 
-  <!-- Specular Rim Light Stroke -->
+  <!-- Specular V-Cut Edge Highlight -->
+  <path d="M 2.5 12.8 L 16 20.8 L 29.5 12.8" stroke="url(#dearly-fav-rim)" stroke-width="0.85" fill="none"/>
+
+  <!-- Outer Boundary Specular Hairline -->
   <path
-    d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
+    d="M 2.5 13 L 2.5 24 C 2.5 25.9 4.1 27.5 6 27.5 L 26 27.5 C 28 27.5 29.5 25.9 29.5 24 L 29.5 13"
     stroke="url(#dearly-fav-rim)"
-    stroke-width="1.2"
+    stroke-width="0.75"
+    fill="none"
   />
 
-  <!-- Gloss Reflection Droplet on Left Lobe -->
-  <ellipse cx="9" cy="9.5" rx="4.2" ry="2.4" transform="rotate(-35 9 9.5)" fill="#FFFFFF" fill-opacity="0.6"/>
-
-  <!-- Signature 4-Point Diamond Sparkle Star (✦) inside right lobe -->
-  <path d="M 23 7.5 Q 23 11 19.5 11 Q 23 11 23 14.5 Q 23 11 26.5 11 Q 23 11 23 7.5 Z" fill="#FFFFFF"/>
-  <circle cx="23" cy="11" r="0.9" fill="#FFF1F3"/>
+  <!-- Signature 4-Point Brilliance Diamond Seal (✦) at the V-Apex - ABSOLUTELY NO HEART -->
+  <path
+    d="M 16 18.2 Q 16 20.8 13.4 20.8 Q 16 20.8 16 23.4 Q 16 20.8 18.6 20.8 Q 16 20.8 16 18.2 Z"
+    fill="#FFFFFF"
+  />
+  <circle cx="16" cy="20.8" r="0.8" fill="#FDE68A"/>
 </svg>`;
 
 /**
@@ -96,40 +170,18 @@ export const DEFAULT_SVG_APP_ICON = `<svg xmlns="http://www.w3.org/2000/svg" vie
       <stop offset="100%" stop-color="#140106"/>
     </linearGradient>
     <radialGradient id="app-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#E11D48" stop-opacity="0.35"/>
+      <stop offset="0%" stop-color="#E11D48" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#E11D48" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="app-heart-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF3366"/>
-      <stop offset="38%" stop-color="#E11D48"/>
-      <stop offset="80%" stop-color="#BE123C"/>
-      <stop offset="100%" stop-color="#881337"/>
-    </linearGradient>
-    <linearGradient id="app-heart-rim" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85"/>
-      <stop offset="45%" stop-color="#FFA8BA" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#881337" stop-opacity="0.1"/>
-    </linearGradient>
   </defs>
 
   <!-- Rich Velvet Background -->
   <rect width="32" height="32" fill="url(#app-bg)"/>
   <circle cx="16" cy="16" r="14" fill="url(#app-glow)"/>
 
-  <!-- Centered Keepsake Heart Mark -->
+  <!-- Centered Modern Envelope Mark (Scales with padding for PWA maskable safe zone) -->
   <g transform="translate(1.6, 1.6) scale(0.9)">
-    <path
-      d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
-      fill="url(#app-heart-grad)"
-    />
-    <path
-      d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
-      stroke="url(#app-heart-rim)"
-      stroke-width="1.2"
-    />
-    <ellipse cx="9" cy="9.5" rx="4.2" ry="2.4" transform="rotate(-35 9 9.5)" fill="#FFFFFF" fill-opacity="0.6"/>
-    <path d="M 23 7.5 Q 23 11 19.5 11 Q 23 11 23 14.5 Q 23 11 26.5 11 Q 23 11 23 7.5 Z" fill="#FFFFFF"/>
-    <circle cx="23" cy="11" r="0.9" fill="#FFF1F3"/>
+    ${DEFAULT_SVG_FAVICON}
   </g>
 </svg>`;
 
@@ -498,7 +550,7 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(__filename
   const args = process.argv.slice(2);
   let svgFaviconArg = null;
   let svgAppIconArg = null;
-  let versionArg = '2';
+  let versionArg = '4';
   let updateHtmlArg = true;
 
   for (let i = 0; i < args.length; i++) {

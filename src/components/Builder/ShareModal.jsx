@@ -29,11 +29,14 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
     };
   }, [isOpen]);
 
-  const shareUrl = shareResult?.shareUrl || (
+  const origin = typeof window !== 'undefined' ? window.location.origin.replace(/\/+$/, '') : '';
+  const rawShareUrl = shareResult?.shareUrl || (
     shareResult?.slug
-      ? `${typeof window !== 'undefined' ? window.location.origin : ''}/s/${encodeURIComponent(shareResult.slug)}`
+      ? `${origin}/s/${encodeURIComponent(shareResult.slug)}`
       : (typeof window !== 'undefined' ? window.location.href : '')
   );
+  // Guarantee ultra-compact clean URL: strip any legacy ?d= parameter
+  const shareUrl = rawShareUrl.includes('?d=') ? rawShareUrl.split('?d=')[0] : rawShareUrl;
   const recipientName = formData?.recipientName || 'Someone special';
   const senderName = formData?.senderName || 'Your friend';
 

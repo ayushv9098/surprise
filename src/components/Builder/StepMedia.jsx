@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { SONGS, getSongById } from '../../data/songs';
 import { getTemplateById } from '../../data/templates';
-import { compressImageFile } from '../../utils/storage';
+import { compressImageFile } from '../../utils/imageCompressor';
 import AppleEmoji from '../common/AppleEmoji';
 import AudioTrimmer from './AudioTrimmer';
 
@@ -565,7 +565,7 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
     try {
       const file = files[0];
       if (!file.type.startsWith('image/')) return;
-      const compressedDataUrl = await compressImageFile(file, 1400, 1400, 0.88);
+      const compressedDataUrl = await compressImageFile(file, 1200, 1200, 0.82);
 
       onChange({
         heroPhoto: compressedDataUrl,
@@ -645,7 +645,7 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
     if (!file.type.startsWith('image/')) return;
     setIsPhotoProcessing(true);
     try {
-      const compressedDataUrl = await compressImageFile(file, 1400, 1400, 0.88);
+      const compressedDataUrl = await compressImageFile(file, 1200, 1200, 0.82);
       const newPhotos = romancePhotos.map((p, idx) =>
         idx === activeUploadIndex ? { ...p, url: compressedDataUrl } : p
       );
@@ -665,7 +665,7 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
     if (!file || !file.type.startsWith('image/')) return;
     setIsPhotoProcessing(true);
     try {
-      const compressedDataUrl = await compressImageFile(file, 1400, 1400, 0.88);
+      const compressedDataUrl = await compressImageFile(file, 1200, 1200, 0.82);
       const newPhotos = romancePhotos.map((p, idx) =>
         idx === index ? { ...p, url: compressedDataUrl } : p
       );

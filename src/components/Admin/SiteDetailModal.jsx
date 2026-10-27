@@ -63,6 +63,30 @@ const TEMPLATE_CONFIG = {
     color: 'bg-orange-50 text-orange-700 border-orange-200',
     accent: 'text-orange-600',
     tag: 'Sparkling & Joy'
+  },
+  'midnight-onyx': {
+    name: 'Midnight Onyx 🖤',
+    color: 'bg-stone-900 text-stone-100 border-stone-800',
+    accent: 'text-amber-500',
+    tag: 'Bold & Regal'
+  },
+  'emerald-luxe': {
+    name: 'Emerald Luxe 🌿',
+    color: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    accent: 'text-emerald-600',
+    tag: 'Opulent & Rich'
+  },
+  'cinderella-sky': {
+    name: 'Cinderella Sky 🩵',
+    color: 'bg-sky-50 text-sky-700 border-sky-200',
+    accent: 'text-sky-600',
+    tag: 'Fairytale & Dreamy'
+  },
+  'velvet-romance': {
+    name: 'Velvet Romance ❤️',
+    color: 'bg-rose-50 text-rose-700 border-rose-200',
+    accent: 'text-rose-600',
+    tag: 'Deep Romance & Velvet'
   }
 };
 
@@ -81,6 +105,11 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
   };
 
   const shareUrl = `${window.location.origin}/s/${encodeURIComponent(site.slug)}`;
+
+  const letterObj = typeof site.letter === 'object' && site.letter !== null ? site.letter : null;
+  const letterText = letterObj ? (letterObj.content || letterObj.message || '') : (typeof site.letter === 'string' ? site.letter : '');
+  const letterTitle = letterObj?.title;
+  const letterSignOff = letterObj?.signOff;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
@@ -209,17 +238,22 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
           {/* Heartfelt Letter Content */}
           <div className="p-5 sm:p-6 rounded-2xl bg-gradient-to-br from-amber-50/40 via-white to-rose-50/30 border border-amber-100/80 shadow-xs">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5 font-semibold">
+              <h3 className="text-sm font-semibold text-slate-700 flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-amber-500" />
-                <span>Secret Letter & Message</span>
+                <span>{letterTitle || 'Secret Letter & Message'}</span>
               </h3>
               <span className="text-[11px] text-slate-400">
-                {site.letter ? `${site.letter.length} characters` : 'Empty'}
+                {letterText ? `${letterText.length} characters` : 'Empty'}
               </span>
             </div>
-            <div className="p-4 rounded-xl bg-white/90 border border-amber-100/50 text-slate-700 text-sm leading-relaxed whitespace-pre-wrap font-semibold italic selection:bg-rose-100">
-              {site.letter || 'No letter text recorded.'}
+            <div className="p-4 rounded-xl bg-white/90 border border-amber-100/50 text-slate-700 text-sm leading-relaxed whitespace-pre-wrap font-medium italic selection:bg-rose-100">
+              {letterText || 'No letter text recorded.'}
             </div>
+            {letterSignOff && (
+              <div className="mt-3 text-right text-xs font-semibold text-slate-500 italic whitespace-pre-wrap">
+                {letterSignOff}
+              </div>
+            )}
           </div>
 
           {/* Photo Gallery Thumbnails */}
@@ -346,7 +380,7 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
           <button
             onClick={() => {
               if (window.confirm(`Are you sure you want to permanently delete this surprise site for "${site.recipientName}"?`)) {
-                onDelete(site.id);
+                onDelete(site.id || site.slug);
                 onClose();
               }
             }}

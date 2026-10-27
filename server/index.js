@@ -4,6 +4,7 @@ import { db } from './db.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+export const ADMIN_SECRET = process.env.ADMIN_SECRET || 'dearly-admin-2026';
 
 // Middleware
 app.use(cors());
@@ -21,6 +22,31 @@ app.use((req, res, next) => {
   });
   next();
 });
+
+// Admin authentication middleware
+function requireAdminAuth(req, res, next) {
+  const adminKey = req.headers['x-admin-key'];
+  const authHeader = req.headers.authorization;
+
+  let bearerToken = null;
+  if (authHeader) {
+    if (authHeader.startsWith('Bearer ')) {
+      bearerToken = authHeader.slice(7).trim();
+    } else {
+      bearerToken = authHeader.trim();
+    }
+  }
+
+  const token = adminKey || bearerToken;
+
+  if (!token || token !== ADMIN_SECRET) {
+    return res.status(401).json({
+      error: 'Unauthorized: Invalid admin credentials'
+    });
+  }
+
+  next();
+}
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -85,6 +111,32 @@ app.post('/api/sites', (req, res) => {
     res.status(500).json({ error: 'Failed to create site', details: error.message });
   }
 });
+
+/**
+ * Admin: Login endpoint to verify admin secret and return token
+ */
+app.post('/api/admin/login', (req, res) => {
+  try {
+    const { password } = req.body || {};
+    if (!password || password !== ADMIN_SECRET) {
+      return res.status(401).json({
+        success: false,
+        error: 'Unauthorized: Invalid admin credentials'
+      });
+    }
+
+    res.json({
+      success: true,
+      token: ADMIN_SECRET,
+      message: 'Admin authenticated successfully'
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Login failed', details: error.message });
+  }
+});
+
+// Protect all following admin endpoints with admin authentication middleware
+app.use('/api/admin', requireAdminAuth);
 
 /**
  * Admin: Get dashboard metrics & summary
@@ -169,12 +221,12 @@ app.get('/api/admin/export', (req, res) => {
     const sites = db.getAllSites();
     const exportData = {
       exportedAt: new Date().toISOString(),
-      generator: 'WishCraft Admin Control Panel',
+      generator: 'Dearly Admin Control Panel',
       totalRecords: sites.length,
       sites
     };
 
-    const fileName = `wishcraft-sites-export-${new Date().toISOString().slice(0, 10)}.json`;
+    const fileName = `dearly-sites-export-${new Date().toISOString().slice(0, 10)}.json`;
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
     res.send(JSON.stringify(exportData, null, 2));
@@ -186,10 +238,10 @@ app.get('/api/admin/export', (req, res) => {
 
 // Start Express server
 const server = app.listen(PORT, () => {
-  console.log(`✨ WishCraft API Server running at http://localhost:${PORT}`);
+  console.log(`✨ Dearly API Server running at http://localhost:${PORT}`);
   console.log(`   Health check: http://localhost:${PORT}/api/health`);
-  console.log(`   Admin Metrics: http://localhost:${PORT}/api/admin/metrics`);
-  console.log(`   Admin Sites:   http://localhost:${PORT}/api/admin/sites`);
+  console.log(`   Admin Metrics: http://localhost:${PORT}/api/admin/metrics (Secured)`);
+  console.log(`   Admin Sites:   http://localhost:${PORT}/api/admin/sites (Secured)`);
 });
 
 export { app, server };

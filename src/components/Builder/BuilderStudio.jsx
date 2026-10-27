@@ -387,13 +387,13 @@ export default function BuilderStudio({
       console.error('Failed to publish surprise, engaging fallback:', err);
       // Guarantee fallback object so modal always displays
       const origin = typeof window !== 'undefined' ? window.location.origin : '';
-      const pathname = typeof window !== 'undefined' ? window.location.pathname : '/';
+      const cleanOrigin = origin.replace(/\/+$/, '');
       const fallbackSlug = formData?.slug || 'surprise';
       const fallbackRes = {
         success: true,
         id: formData?.id || `wc-${Date.now().toString(36)}`,
         slug: fallbackSlug,
-        shareUrl: `${origin}${pathname}?v=${encodeURIComponent(fallbackSlug)}`,
+        shareUrl: `${cleanOrigin}/s/${encodeURIComponent(fallbackSlug)}`,
         data: formData,
         savedToApi: false,
       };

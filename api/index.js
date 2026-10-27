@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { db, SEED_SITES } from '../server/db.js';
 
+export const ADMIN_SECRET = process.env.ADMIN_SECRET || 'dearly-admin-2026';
 export { SEED_SITES };
 
 const app = express();
@@ -9,18 +10,43 @@ app.use(cors());
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
+// Admin authentication middleware
+function requireAdminAuth(req, res, next) {
+  const adminKey = req.headers['x-admin-key'];
+  const authHeader = req.headers.authorization;
+
+  let bearerToken = null;
+  if (authHeader) {
+    if (authHeader.startsWith('Bearer ')) {
+      bearerToken = authHeader.slice(7).trim();
+    } else {
+      bearerToken = authHeader.trim();
+    }
+  }
+
+  const token = adminKey || bearerToken;
+
+  if (!token || token !== ADMIN_SECRET) {
+    return res.status(401).json({
+      error: 'Unauthorized: Invalid admin credentials'
+    });
+  }
+
+  next();
+}
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
-    service: 'wishcraft-backend',
+    service: 'dearly-backend',
     env: process.env.VERCEL ? 'vercel-serverless' : 'local'
   });
 });
 
-// Sites API
+// Sites API (Public)
 app.get('/api/sites/:slug', (req, res) => {
   try {
     const { slug } = req.params;
@@ -52,7 +78,31 @@ app.post('/api/sites', (req, res) => {
   }
 });
 
-// Admin API
+// Admin Auth: Login endpoint (Public)
+app.post('/api/admin/login', (req, res) => {
+  try {
+    const { password } = req.body || {};
+    if (!password || password !== ADMIN_SECRET) {
+      return res.status(401).json({
+        success: false,
+        error: 'Unauthorized: Invalid admin credentials'
+      });
+    }
+
+    res.json({
+      success: true,
+      token: ADMIN_SECRET,
+      message: 'Admin authenticated successfully'
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Login failed', details: error.message });
+  }
+});
+
+// Protect all following admin endpoints
+app.use('/api/admin', requireAdminAuth);
+
+// Admin API (Secured)
 app.get('/api/admin/metrics', (req, res) => {
   try {
     const metrics = db.getMetrics();
@@ -109,12 +159,12 @@ app.get('/api/admin/export', (req, res) => {
     const sites = db.getAllSites();
     const exportData = {
       exportedAt: new Date().toISOString(),
-      generator: 'WishCraft Admin Control Panel',
+      generator: 'Dearly Admin Control Panel',
       totalRecords: sites.length,
       sites
     };
 
-    const fileName = `wishcraft-sites-export-${new Date().toISOString().slice(0, 10)}.json`;
+    const fileName = `dearly-sites-export-${new Date().toISOString().slice(0, 10)}.json`;
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
     res.send(JSON.stringify(exportData, null, 2));

@@ -31,7 +31,7 @@ export default function App() {
         return 'builder';
       }
       const pathSegments = window.location.pathname.split('/').filter(Boolean);
-      const isPathSlug = (pathSegments.length === 2 && pathSegments[0] === 's') || (pathSegments.length === 1 && pathSegments[0] !== 'admin');
+      const isPathSlug = (pathSegments.length >= 2 && pathSegments[0] === 's') || (pathSegments.length === 1 && pathSegments[0] !== 'admin');
       if (
         isPathSlug ||
         searchParams.get('v') ||
@@ -101,7 +101,7 @@ export default function App() {
     const searchParams = new URLSearchParams(window.location.search);
     const pathSegments = typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean) : [];
     let pathSlug = null;
-    if (pathSegments.length === 2 && pathSegments[0] === 's') {
+    if (pathSegments.length >= 2 && pathSegments[0] === 's') {
       pathSlug = pathSegments[1];
     } else if (pathSegments.length === 1 && pathSegments[0] !== 'admin') {
       pathSlug = pathSegments[0];

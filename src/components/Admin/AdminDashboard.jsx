@@ -4,28 +4,41 @@ import {
   X,
   LogOut,
   AlertCircle,
+  Lock,
+  ShieldCheck,
+  Eye,
+  EyeOff,
+  RefreshCw,
+  Download,
+  Plus,
+  Sparkles,
+  Inbox
 } from 'lucide-react';
 import SitesTable from './SitesTable';
 import SiteDetailModal from './SiteDetailModal';
 import Toast from '../Toast';
 
-const ADMIN_PIN = '1234';
-const AUTH_STORAGE_KEY = 'wishcraft_admin_unlocked';
+const AUTH_TOKEN_KEY = 'dearly_admin_token';
 
 export default function AdminDashboard({ onNavigate }) {
   // Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem(AUTH_STORAGE_KEY) === 'true';
+  const [authToken, setAuthToken] = useState(() => {
+    return sessionStorage.getItem(AUTH_TOKEN_KEY) || '';
   });
-  const [pinInput, setPinInput] = useState('');
-  const [pinError, setPinError] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return Boolean(sessionStorage.getItem(AUTH_TOKEN_KEY));
+  });
+  const [passwordInput, setPasswordInput] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
 
   // Dashboard Data State
   const [metrics, setMetrics] = useState({
     totalSites: 0,
     totalViews: 0,
     templateBreakdown: {},
-    mostPopularTemplate: 'blush-romance',
+    mostPopularTemplate: 'none',
     activeToday: 0
   });
   const [sites, setSites] = useState([]);
@@ -52,8 +65,28 @@ export default function AdminDashboard({ onNavigate }) {
     setToast(null);
   }, []);
 
-  // Fetch metrics & sites from server
+  // Logout handler
+  const handleLogout = useCallback(() => {
+    sessionStorage.removeItem(AUTH_TOKEN_KEY);
+    sessionStorage.removeItem('wishcraft_admin_unlocked');
+    setAuthToken('');
+    setIsAuthenticated(false);
+    setSites([]);
+    setMetrics({
+      totalSites: 0,
+      totalViews: 0,
+      templateBreakdown: {},
+      mostPopularTemplate: 'none',
+      activeToday: 0
+    });
+    showToast({ type: 'info', message: 'Logged out of admin dashboard' });
+  }, [showToast]);
+
+  // Fetch metrics & sites from server with secured header
   const fetchData = useCallback(async (isSilent = false) => {
+    const token = authToken || sessionStorage.getItem(AUTH_TOKEN_KEY);
+    if (!token) return;
+
     if (!isSilent) setLoading(true);
     setApiError(null);
 
@@ -65,11 +98,22 @@ export default function AdminDashboard({ onNavigate }) {
       }
       if (sortBy) queryParams.set('sortBy', sortBy);
 
-      // Fetch in parallel
+      const headers = {
+        'x-admin-key': token,
+        'Authorization': `Bearer ${token}`
+      };
+
+      // Fetch metrics and sites in parallel with authentication header
       const [metricsRes, sitesRes] = await Promise.all([
-        fetch('/api/admin/metrics'),
-        fetch(`/api/admin/sites?${queryParams.toString()}`)
+        fetch('/api/admin/metrics', { headers }),
+        fetch(`/api/admin/sites?${queryParams.toString()}`, { headers })
       ]);
+
+      if (metricsRes.status === 401 || sitesRes.status === 401) {
+        handleLogout();
+        showToast({ type: 'error', message: 'Session expired or invalid credentials. Please log in again.' });
+        return;
+      }
 
       if (!metricsRes.ok || !sitesRes.ok) {
         throw new Error('Server returned an error status');
@@ -85,13 +129,13 @@ export default function AdminDashboard({ onNavigate }) {
         setSites(sitesData.sites);
       }
     } catch (err) {
-      console.warn('Could not fetch from backend API, falling back to local:', err);
-      setApiError('Backend server is not reachable at /api. Please ensure "npm run server" is active on port 3001.');
+      console.warn('Could not fetch from backend API:', err);
+      setApiError('Backend server is not reachable at /api. Please ensure the server is running on port 3001.');
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [searchQuery, selectedTemplate, sortBy]);
+  }, [authToken, searchQuery, selectedTemplate, sortBy, handleLogout, showToast]);
 
   // Initial fetch when authenticated
   useEffect(() => {
@@ -100,30 +144,51 @@ export default function AdminDashboard({ onNavigate }) {
     }
   }, [isAuthenticated, fetchData]);
 
-  // Handle PIN unlock
-  const handleUnlock = (e) => {
+  // Handle Login verification
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (pinInput.trim() === ADMIN_PIN) {
-      sessionStorage.setItem(AUTH_STORAGE_KEY, 'true');
-      setIsAuthenticated(true);
-      setPinError('');
-      setPinInput('');
-      showToast({ type: 'success', message: 'Admin panel unlocked successfully!' });
-    } else {
-      setPinError('Incorrect PIN. Try 1234');
-      setPinInput('');
+    if (!passwordInput.trim()) {
+      setLoginError('Please enter the admin password');
+      return;
     }
-  };
 
-  const handleLock = () => {
-    sessionStorage.removeItem(AUTH_STORAGE_KEY);
-    setIsAuthenticated(false);
-    showToast({ type: 'info', message: 'Admin session locked' });
+    setIsVerifying(true);
+    setLoginError('');
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput.trim() })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setLoginError(data.error || 'Invalid admin credentials');
+        return;
+      }
+
+      sessionStorage.setItem(AUTH_TOKEN_KEY, data.token);
+      setAuthToken(data.token);
+      setIsAuthenticated(true);
+      setPasswordInput('');
+      setLoginError('');
+      showToast({ type: 'success', message: 'Admin verified & dashboard unlocked!' });
+    } catch (err) {
+      console.error('Login error:', err);
+      setLoginError('Connection failed. Make sure the API server is running.');
+    } finally {
+      setIsVerifying(false);
+    }
   };
 
   // Handle Delete site
   const handleDeleteSite = async (id) => {
-    // Optimistic instant state update for immediate UI feedback
+    const token = authToken || sessionStorage.getItem(AUTH_TOKEN_KEY);
+    if (!token) return;
+
+    // Optimistic instant state update for snappy UI feedback
     setSites((prev) => prev.filter((s) => s.id !== id && s.slug !== id));
     setMetrics((prev) => ({
       ...prev,
@@ -132,14 +197,24 @@ export default function AdminDashboard({ onNavigate }) {
 
     try {
       const res = await fetch(`/api/admin/sites/${encodeURIComponent(id)}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+          'x-admin-key': token,
+          'Authorization': `Bearer ${token}`
+        }
       });
+
+      if (res.status === 401) {
+        handleLogout();
+        showToast({ type: 'error', message: 'Unauthorized. Please log in again.' });
+        return;
+      }
 
       if (!res.ok) {
         throw new Error('Failed to delete on server');
       }
 
-      showToast({ type: 'success', message: 'Surprise website deleted permanently' });
+      showToast({ type: 'success', message: 'Keepsake deleted permanently' });
       // Refresh data silently to keep counts in perfect sync
       fetchData(true);
     } catch (err) {
@@ -151,29 +226,44 @@ export default function AdminDashboard({ onNavigate }) {
 
   // Handle JSON export download
   const handleExport = async () => {
+    const token = authToken || sessionStorage.getItem(AUTH_TOKEN_KEY);
+    if (!token) return;
+
     try {
       showToast({ type: 'info', message: 'Preparing export...' });
-      const res = await fetch('/api/admin/export');
+      const res = await fetch('/api/admin/export', {
+        headers: {
+          'x-admin-key': token,
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (res.status === 401) {
+        handleLogout();
+        showToast({ type: 'error', message: 'Unauthorized. Please log in again.' });
+        return;
+      }
+
       if (!res.ok) throw new Error('Export request failed');
 
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `wishcraft-sites-export-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `dearly-sites-export-${new Date().toISOString().slice(0, 10)}.json`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
 
-      showToast({ type: 'success', message: 'Export downloaded!' });
+      showToast({ type: 'success', message: 'Export downloaded successfully!' });
     } catch (err) {
       console.error('Export error:', err);
       // Fallback: client-side JSON export
       const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(sites, null, 2));
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute('href', dataStr);
-      downloadAnchor.setAttribute('download', 'wishcraft-sites-backup.json');
+      downloadAnchor.setAttribute('download', 'dearly-sites-backup.json');
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
@@ -185,12 +275,13 @@ export default function AdminDashboard({ onNavigate }) {
   const handleManualRefresh = () => {
     setRefreshing(true);
     fetchData(true).then(() => {
-      showToast({ type: 'success', message: 'Data refreshed' });
+      showToast({ type: 'success', message: 'Dashboard updated' });
     });
   };
 
   // Helper for template display label
   const getTemplateDisplayName = (key) => {
+    if (!key || key === 'none') return 'None yet';
     const map = {
       'royal-sapphire': 'Royal Sapphire 👑',
       'blush-rose': 'Blush Rose 🌸',
@@ -199,62 +290,96 @@ export default function AdminDashboard({ onNavigate }) {
       'polaroid-scrapbook': 'Polaroid Scrapbook 📸',
       'heartfelt-apology': 'Heartfelt Hug 🥺',
       'lavender-dream': 'Lavender Dream 💜',
-      'princess-peach': 'Princess Peach ✨'
+      'princess-peach': 'Princess Peach ✨',
+      'midnight-onyx': 'Midnight Onyx 🖤',
+      'emerald-luxe': 'Emerald Luxe 🌿',
+      'cinderella-sky': 'Cinderella Sky 🩵',
+      'velvet-romance': 'Velvet Romance ❤️'
     };
     return map[key] || key;
   };
 
   // ----------------------------------------------------
-  // PIN PROTECTION SCREEN
+  // SECURE ADMIN LOGIN SCREEN
   // ----------------------------------------------------
   if (!isAuthenticated) {
     return (
       <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-[#FAFAF8]">
-        <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="w-full max-w-sm bg-white rounded-3xl border border-stone-200/80 shadow-xl p-8 transition-all">
           <div className="text-center mb-6">
-            <h1 className="text-xl font-semibold text-slate-800">
-              Admin Dashboard
+            <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shadow-xs">
+              <ShieldCheck className="w-7 h-7" />
+            </div>
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">
+              Dearly Admin
             </h1>
-            <p className="text-sm text-slate-400 mt-1">
-              Enter your PIN to continue
+            <p className="text-xs text-slate-500 mt-1">
+              Enter admin secret password to access data & controls
             </p>
           </div>
 
-          <form onSubmit={handleUnlock} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <input
-                type="password"
-                maxLength={8}
-                autoFocus
-                placeholder="Enter PIN"
-                value={pinInput}
-                onChange={(e) => {
-                  setPinInput(e.target.value);
-                  if (pinError) setPinError('');
-                }}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-mono tracking-widest text-slate-800 text-center focus:outline-hidden focus:ring-2 focus:ring-rose-500/40 focus:border-rose-400 bg-gray-50/50"
-              />
-              {pinError && (
-                <p className="text-xs text-rose-500 mt-2 text-center">{pinError}</p>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  autoFocus
+                  placeholder="Enter admin password"
+                  value={passwordInput}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    if (loginError) setLoginError('');
+                  }}
+                  className="w-full pl-4 pr-11 py-3 rounded-xl border border-stone-200 text-sm font-mono text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/40 focus:border-rose-400 bg-stone-50/60 transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+                  title={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {loginError && (
+                <div className="flex items-center gap-1.5 mt-2.5 text-xs text-rose-600 font-medium">
+                  <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+                  <span>{loginError}</span>
+                </div>
               )}
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl font-semibold text-sm bg-slate-900 text-white hover:bg-slate-800 transition-colors cursor-pointer"
+              disabled={isVerifying}
+              className="w-full py-3 rounded-xl font-semibold text-sm bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-60 transition-all cursor-pointer shadow-md shadow-slate-900/10 flex items-center justify-center gap-2"
             >
-              Unlock
+              {isVerifying ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Verifying...</span>
+                </>
+              ) : (
+                <>
+                  <Lock className="w-4 h-4" />
+                  <span>Authenticate</span>
+                </>
+              )}
             </button>
           </form>
 
-          <div className="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-slate-400">
-            <span>Demo PIN: <strong className="text-slate-600 font-mono">1234</strong></span>
+          <div className="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-slate-400">
+            <span className="flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span>Secured API</span>
+            </span>
             {onNavigate && (
               <button
                 onClick={() => onNavigate('home')}
-                className="text-rose-500 hover:underline cursor-pointer"
+                className="text-rose-500 hover:text-rose-600 hover:underline cursor-pointer font-medium"
               >
-                Back to Studio
+                Back to Dearly
               </button>
             )}
           </div>
@@ -278,7 +403,7 @@ export default function AdminDashboard({ onNavigate }) {
             <div className="flex-1">
               <span className="font-semibold block">{apiError}</span>
               <span className="text-amber-700">
-                Run <code className="bg-amber-100 px-1.5 py-0.5 rounded font-mono">npm run server</code> to start the API.
+                Run <code className="bg-amber-100 px-1.5 py-0.5 rounded font-mono">npm run server</code> to start the backend.
               </span>
             </div>
             <button
@@ -291,78 +416,159 @@ export default function AdminDashboard({ onNavigate }) {
         )}
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10">
-          <h1 className="text-2xl font-semibold text-slate-900">
-            Admin Dashboard
-          </h1>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+          <div>
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                Admin Dashboard
+              </h1>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Live Secured
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 mt-1">
+              Monitor active keepsakes, view metrics, and manage user creations.
+            </p>
+          </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <button
               onClick={handleManualRefresh}
               disabled={refreshing}
-              className="text-sm text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 bg-white border border-stone-200 hover:bg-stone-50 transition-colors cursor-pointer shadow-xs"
+              title="Refresh Data"
             >
-              {refreshing ? 'Refreshing...' : 'Refresh'}
+              <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
+              <span>{refreshing ? 'Refreshing...' : 'Refresh'}</span>
             </button>
 
             <button
               onClick={handleExport}
-              className="text-sm text-slate-500 hover:text-slate-800 transition-colors cursor-pointer font-medium"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 bg-white border border-stone-200 hover:bg-stone-50 transition-colors cursor-pointer shadow-xs"
+              title="Export Sites JSON"
             >
-              Export
+              <Download className="w-3.5 h-3.5" />
+              <span>Export</span>
             </button>
 
             {onNavigate && (
               <button
                 onClick={() => onNavigate('builder')}
-                className="px-4 py-2 rounded-full text-sm font-semibold bg-rose-500 text-white hover:bg-rose-600 transition-colors cursor-pointer shadow-sm"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500 text-white hover:bg-rose-600 transition-colors cursor-pointer shadow-sm shadow-rose-200"
               >
-                Create Surprise
+                <Plus className="w-3.5 h-3.5" />
+                <span>Create Keepsake</span>
               </button>
             )}
 
             <button
-              onClick={handleLock}
-              title="Lock Admin Session"
-              className="p-2 rounded-full text-slate-400 hover:text-slate-600 hover:bg-gray-100 transition-colors cursor-pointer"
+              onClick={handleLogout}
+              title="Logout from Admin"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 bg-rose-50/70 border border-rose-200/80 hover:bg-rose-100/70 transition-colors cursor-pointer"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Logout</span>
             </button>
           </div>
         </div>
 
-        {/* STATS CARDS — 4 simple number cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+        {/* STATS CARDS — 4 Clean Metric Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
-          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
-            <div className="text-3xl font-semibold text-slate-900 mb-1">
+          {/* 1. Active Keepsakes */}
+          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Active Keepsakes
+              </span>
+              <span className="w-2 h-2 rounded-full bg-rose-500" />
+            </div>
+            <div className="text-3xl font-bold text-slate-900 mb-1">
               {metrics.totalSites || 0}
             </div>
-            <p className="text-sm text-gray-500">Total Surprises</p>
+            <p className="text-xs text-slate-500">
+              {metrics.totalSites === 0 ? '0 Active Keepsakes' : `${metrics.totalSites} Live in Database`}
+            </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
-            <div className="text-3xl font-semibold text-slate-900 mb-1">
+          {/* 2. Total Views */}
+          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Total Views
+              </span>
+              <Eye className="w-3.5 h-3.5 text-slate-400" />
+            </div>
+            <div className="text-3xl font-bold text-slate-900 mb-1">
               {metrics.totalViews || 0}
             </div>
-            <p className="text-sm text-gray-500">Total Views</p>
+            <p className="text-xs text-slate-500">
+              {metrics.totalViews === 0 ? '0 Total Views' : `${metrics.totalViews} Lifetime Opens`}
+            </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
-            <div className="text-lg font-semibold text-slate-900 mb-1 truncate">
+          {/* 3. Top Template */}
+          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Top Template
+              </span>
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            </div>
+            <div className="text-base font-bold text-slate-900 mb-1 truncate">
               {getTemplateDisplayName(metrics.mostPopularTemplate)}
             </div>
-            <p className="text-sm text-gray-500">Top Template</p>
+            <p className="text-xs text-slate-500">
+              {metrics.totalSites === 0 ? 'Waiting for creations' : 'Most picked style'}
+            </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
-            <div className="text-3xl font-semibold text-slate-900 mb-1">
+          {/* 4. Active Today */}
+          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                Active Today
+              </span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            </div>
+            <div className="text-3xl font-bold text-slate-900 mb-1">
               {metrics.activeToday ?? (metrics.recentSites?.length || 0)}
             </div>
-            <p className="text-sm text-gray-500">Active Today</p>
+            <p className="text-xs text-slate-500">
+              Created or viewed past 24h
+            </p>
           </div>
 
         </div>
+
+        {/* Clean Database Banner when totalSites === 0 */}
+        {!loading && metrics.totalSites === 0 && (
+          <div className="mb-8 p-6 rounded-3xl bg-gradient-to-r from-rose-50/60 via-stone-50/50 to-amber-50/40 border border-rose-200/60 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5">
+              <div className="p-2.5 rounded-2xl bg-white border border-rose-100 text-rose-500 shadow-xs shrink-0">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-slate-900">
+                  Clean Database Ready — Waiting for real user creations
+                </h3>
+                <p className="text-xs text-slate-600 mt-0.5 max-w-xl leading-relaxed">
+                  All mock and dummy data has been wiped. When real users build and publish surprise websites on Dearly, they will appear here live with analytics and controls.
+                </p>
+              </div>
+            </div>
+
+            {onNavigate && (
+              <button
+                onClick={() => onNavigate('builder')}
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500 hover:bg-rose-600 text-white shadow-sm shadow-rose-200 transition-colors cursor-pointer shrink-0"
+              >
+                Create First Keepsake
+              </button>
+            )}
+          </div>
+        )}
 
         {/* TOOLBAR: Search + Template filter + Sort options */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
@@ -372,10 +578,10 @@ export default function AdminDashboard({ onNavigate }) {
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Search by name, slug, recipient..."
+              placeholder="Search by recipient, sender, slug or occasion..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-8 py-2.5 rounded-xl text-sm bg-white border border-gray-200 text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 focus:border-rose-400"
+              className="w-full pl-10 pr-8 py-2.5 rounded-xl text-sm bg-white border border-stone-200 text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 focus:border-rose-400"
             />
             {searchQuery && (
               <button
@@ -391,12 +597,16 @@ export default function AdminDashboard({ onNavigate }) {
           <select
             value={selectedTemplate}
             onChange={(e) => setSelectedTemplate(e.target.value)}
-            className="px-4 py-2.5 rounded-xl text-sm bg-white border border-gray-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl text-sm bg-white border border-stone-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
           >
             <option value="all">All Templates</option>
             <option value="royal-sapphire">Royal Sapphire 👑</option>
             <option value="blush-rose">Blush Rose 🌸</option>
             <option value="blush-romance">Blush Romance 🌸</option>
+            <option value="velvet-romance">Velvet Romance ❤️</option>
+            <option value="cinderella-sky">Cinderella Sky 🩵</option>
+            <option value="midnight-onyx">Midnight Onyx 🖤</option>
+            <option value="emerald-luxe">Emerald Luxe 🌿</option>
             <option value="golden-birthday">Golden Birthday 🎂</option>
             <option value="polaroid-scrapbook">Polaroid Scrapbook 📸</option>
             <option value="lavender-dream">Lavender Dream 💜</option>
@@ -408,7 +618,7 @@ export default function AdminDashboard({ onNavigate }) {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-4 py-2.5 rounded-xl text-sm bg-white border border-gray-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl text-sm bg-white border border-stone-200 text-slate-700 font-medium focus:outline-hidden focus:ring-2 focus:ring-rose-500/30 cursor-pointer"
           >
             <option value="newest">Newest First ⏱️</option>
             <option value="oldest">Oldest First ⏳</option>
@@ -422,6 +632,9 @@ export default function AdminDashboard({ onNavigate }) {
         <SitesTable
           sites={sites}
           loading={loading}
+          totalSites={metrics.totalSites}
+          searchQuery={searchQuery}
+          selectedTemplate={selectedTemplate}
           onInspect={(site) => setInspectSite(site)}
           onDelete={handleDeleteSite}
           onToast={showToast}
