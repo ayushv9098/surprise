@@ -1579,7 +1579,10 @@ export default function LivePhonePreview({
               {/* TOP iOS STATUS BAR & DYNAMIC ISLAND */}
               {/* Completely transparent background so theme flows smoothly */}
               {/* ========================================================== */}
-              <div className="relative w-full h-[44px] px-6 flex items-center justify-between select-none z-30 shrink-0 bg-transparent">
+              <div
+                className="relative w-full h-[44px] px-6 flex items-center justify-between select-none z-30 shrink-0 bg-transparent"
+                style={{ backgroundColor: 'transparent' }}
+              >
                 {/* Left: Current Time (Apple San Francisco bold style) */}
                 <div className="w-20 flex items-center justify-start">
                   <span
