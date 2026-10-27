@@ -1,47 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+<svg shape-rendering="geometricPrecision" text-rendering="geometricPrecision" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
   <defs>
-    <linearGradient id="dearly-fav-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="dearly-fav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FF3366"/>
       <stop offset="38%" stop-color="#E11D48"/>
-      <stop offset="80%" stop-color="#9F1239"/>
-      <stop offset="100%" stop-color="#6B0A26"/>
+      <stop offset="80%" stop-color="#BE123C"/>
+      <stop offset="100%" stop-color="#881337"/>
     </linearGradient>
     <linearGradient id="dearly-fav-rim" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.65"/>
-      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.12"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85"/>
+      <stop offset="45%" stop-color="#FFA8BA" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#881337" stop-opacity="0.1"/>
     </linearGradient>
-    <linearGradient id="dearly-fav-heart" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF"/>
-      <stop offset="100%" stop-color="#FFE4E8"/>
-    </linearGradient>
-    <filter id="dearly-fav-shadow" x="-15%" y="-15%" width="130%" height="135%">
-      <feDropShadow dx="0" dy="1.2" stdDeviation="0.9" flood-color="#4C0519" flood-opacity="0.45"/>
-    </filter>
   </defs>
 
-  <!-- Squircle Base -->
-  <rect x="1.25" y="1.25" width="29.5" height="29.5" rx="8.5" fill="url(#dearly-fav-bg)"/>
-  <rect x="1.25" y="1.25" width="29.5" height="29.5" rx="8.5" stroke="url(#dearly-fav-rim)" stroke-width="1.2"/>
-
-  <!-- Upper Glass Sheen Arc -->
+  <!-- Full Floating Keepsake Heart Silhouette (100% Transparent Canvas) -->
   <path
-    d="M 2.5 9.5 C 2.5 5.5 5.5 2.5 9.5 2.5 L 22.5 2.5 C 26.5 2.5 29.5 5.5 29.5 9.5 C 22 13.5 10 13.5 2.5 9.5 Z"
-    fill="#FFFFFF"
-    fill-opacity="0.18"
+    d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
+    fill="url(#dearly-fav-grad)"
   />
 
-  <!-- Center Keepsake Heart -->
+  <!-- Specular Rim Light Stroke -->
   <path
-    filter="url(#dearly-fav-shadow)"
-    d="M 16 11.2 C 14.6 9.4 12.2 8.5 10 9 C 7.6 9.6 6 11.8 6 14.5 C 6 18.2 10.4 22 16 25 C 21.6 22 26 18.2 26 14.5 C 26 11.8 24.4 9.6 22 9 C 19.8 8.5 17.4 9.4 16 11.2 Z"
-    fill="url(#dearly-fav-heart)"
+    d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
+    stroke="url(#dearly-fav-rim)"
+    stroke-width="1.2"
   />
 
-  <!-- Specular Gloss Reflection on Left Lobe -->
-  <ellipse cx="11" cy="12.5" rx="2" ry="1.2" transform="rotate(-30 11 12.5)" fill="#FFFFFF" fill-opacity="0.75"/>
+  <!-- Gloss Reflection Droplet on Left Lobe -->
+  <ellipse cx="9" cy="9.5" rx="4.2" ry="2.4" transform="rotate(-35 9 9.5)" fill="#FFFFFF" fill-opacity="0.6"/>
 
-  <!-- Signature 4-Point Diamond Sparkle Star (✦) -->
-  <path d="M 24.5 4 Q 24.5 7 21.5 7 Q 24.5 7 24.5 10 Q 24.5 7 27.5 7 Q 24.5 7 24.5 4 Z" fill="#FFF1F3"/>
-  <circle cx="24.5" cy="7" r="0.8" fill="#FFFFFF"/>
+  <!-- Signature 4-Point Diamond Sparkle Star (✦) inside right lobe -->
+  <path d="M 23 7.5 Q 23 11 19.5 11 Q 23 11 23 14.5 Q 23 11 26.5 11 Q 23 11 23 7.5 Z" fill="#FFFFFF"/>
+  <circle cx="23" cy="11" r="0.9" fill="#FFF1F3"/>
 </svg>

@@ -1,16 +1,18 @@
 import React, { useId } from 'react';
 
 /**
- * DearlyLogo - Imperial Jewel Squircle & Keepsake Heart Mark.
- * Apple-style luxury squircle with ruby jewel gradient, upper glass sheen,
- * embossed white keepsake heart with specular reflection, and signature diamond sparkle flare (✦).
+ * DearlyLogo - Radiant Keepsake Heart & Brilliance Star Vector Mark.
  *
- * 100% vector, crystal-sharp across all resolutions (16px, 24px, 28px, 32px, 64px, 512px).
- * High-contrast & beautiful on both light & dark backgrounds.
+ * Standalone jewelry-grade keepsake heart with multi-stop ruby gradient,
+ * specular inner light rim, gloss highlight reflection, and signature
+ * 4-point diamond sparkle star flare (✦).
+ *
+ * 100% vector, zero box clutter, razor-sharp across all resolutions (16px - 512px).
+ * Perfectly matches public/favicon.svg and brand identity.
  */
 export default function DearlyLogo({ size = 28, className = '', idPrefix }) {
   const reactId = useId().replace(/:/g, '');
-  const id = idPrefix || `dearly-logo-${reactId}`;
+  const id = idPrefix || `dearly-heart-${reactId}`;
 
   return (
     <svg
@@ -23,50 +25,58 @@ export default function DearlyLogo({ size = 28, className = '', idPrefix }) {
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id={`${id}-bg`} x1="0%" y1="0%" x2="100%" y2="100%">
+        {/* Core Jewel Gradient */}
+        <linearGradient id={`${id}-grad`} x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#FF3366" />
           <stop offset="38%" stopColor="#E11D48" />
-          <stop offset="80%" stopColor="#9F1239" />
-          <stop offset="100%" stopColor="#6B0A26" />
+          <stop offset="80%" stopColor="#BE123C" />
+          <stop offset="100%" stopColor="#881337" />
         </linearGradient>
+
+        {/* Specular Inner Rim Light */}
         <linearGradient id={`${id}-rim`} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.65" />
-          <stop offset="45%" stopColor="#FFFFFF" stopOpacity="0.12" />
-          <stop offset="100%" stopColor="#000000" stopOpacity="0.35" />
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.85" />
+          <stop offset="45%" stopColor="#FFA8BA" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#881337" stopOpacity="0.1" />
         </linearGradient>
-        <linearGradient id={`${id}-heart`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="100%" stopColor="#FFE4E8" />
-        </linearGradient>
-        <filter id={`${id}-shadow`} x="-15%" y="-15%" width="130%" height="135%">
-          <feDropShadow dx="0" dy="1.2" stdDeviation="0.9" floodColor="#4C0519" floodOpacity="0.45" />
+
+        {/* Soft Ambient Depth Shadow */}
+        <filter id={`${id}-glow`} x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1.2" floodColor="#881337" floodOpacity="0.35" />
         </filter>
       </defs>
 
-      {/* Squircle Base */}
-      <rect x="1.25" y="1.25" width="29.5" height="29.5" rx="8.5" fill={`url(#${id}-bg)`} />
-      <rect x="1.25" y="1.25" width="29.5" height="29.5" rx="8.5" stroke={`url(#${id}-rim)`} strokeWidth="1.2" />
-
-      {/* Upper Glass Sheen Arc */}
+      {/* Full Keepsake Heart Silhouette */}
       <path
-        d="M 2.5 9.5 C 2.5 5.5 5.5 2.5 9.5 2.5 L 22.5 2.5 C 26.5 2.5 29.5 5.5 29.5 9.5 C 22 13.5 10 13.5 2.5 9.5 Z"
+        filter={`url(#${id}-glow)`}
+        d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
+        fill={`url(#${id}-grad)`}
+      />
+
+      {/* Inner Rim Light Stroke */}
+      <path
+        d="M 16 5.8 C 13.8 2.2 8.6 1.2 4.6 4.8 C 0.8 8.2 0.8 14.2 4.4 18.4 L 16 29.5 L 27.6 18.4 C 31.2 14.2 31.2 8.2 27.4 4.8 C 23.4 1.2 18.2 2.2 16 5.8 Z"
+        stroke={`url(#${id}-rim)`}
+        strokeWidth="1.2"
+      />
+
+      {/* Specular Gloss Reflection Droplet on Left Lobe */}
+      <ellipse
+        cx="9"
+        cy="9.5"
+        rx="4.2"
+        ry="2.4"
+        transform="rotate(-35 9 9.5)"
         fill="#FFFFFF"
-        fillOpacity="0.18"
+        fillOpacity="0.6"
       />
 
-      {/* Center Keepsake Heart */}
+      {/* Signature 4-Point Diamond Sparkle Star (✦) inside the right lobe */}
       <path
-        filter={`url(#${id}-shadow)`}
-        d="M 16 11.2 C 14.6 9.4 12.2 8.5 10 9 C 7.6 9.6 6 11.8 6 14.5 C 6 18.2 10.4 22 16 25 C 21.6 22 26 18.2 26 14.5 C 26 11.8 24.4 9.6 22 9 C 19.8 8.5 17.4 9.4 16 11.2 Z"
-        fill={`url(#${id}-heart)`}
+        d="M 23 7.5 Q 23 11 19.5 11 Q 23 11 23 14.5 Q 23 11 26.5 11 Q 23 11 23 7.5 Z"
+        fill="#FFFFFF"
       />
-
-      {/* Specular Gloss Reflection on Left Lobe */}
-      <ellipse cx="11" cy="12.5" rx="2" ry="1.2" transform="rotate(-30 11 12.5)" fill="#FFFFFF" fillOpacity="0.75" />
-
-      {/* Signature 4-Point Diamond Sparkle Star (✦) */}
-      <path d="M 24.5 4 Q 24.5 7 21.5 7 Q 24.5 7 24.5 10 Q 24.5 7 27.5 7 Q 24.5 7 24.5 4 Z" fill="#FFF1F3" />
-      <circle cx="24.5" cy="7" r="0.8" fill="#FFFFFF" />
+      <circle cx="23" cy="11" r="0.9" fill="#FFF1F3" />
     </svg>
   );
 }
