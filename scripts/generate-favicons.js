@@ -7,17 +7,17 @@ const ROOT = 'D:\\avprojects\\surprise-builder';
 const PUBLIC_DIR = path.join(ROOT, 'public');
 
 /**
- * Dearly Keepsake Envelope with Heart Fold SVG Geometry
- * Extracted directly from src/components/common/DearlyLogo.jsx
+ * Dearly Imperial Jewel Squircle & Keepsake Heart Vector Mark
+ * Matches src/components/common/DearlyLogo.jsx 1:1
  *
  * Color palette:
- * - #FB7185 (Rose 400 - bright coral highlights)
- * - #F43F5E (Rose 500 - vibrant core contrast)
- * - #E11D48 (Rose 600 - brand signature crimson-rose)
- * - #BE123C (Rose 700 - rich deep anchor)
+ * - #FF3366 (Radiant coral-rose highlight)
+ * - #E11D48 (Signature brand crimson-rose)
+ * - #9F1239 (Deep ruby anchor)
+ * - #6B0A26 (Royal velvet shadow)
  *
- * Optimized for high contrast & razor-sharp legibility on both
- * Dark Mode (#202124 / #000000) and Light Mode (#FFFFFF / #DEE1E6) browser tabs.
+ * Designed for 100% crispness across 16px, 32px, 48px, 180px, 192px, 512px
+ * and extreme contrast on dark & light browser tabs and home screens.
  */
 const SVG_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
   <defs>
@@ -67,7 +67,54 @@ const SVG_FAVICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"
   <circle cx="24.5" cy="7" r="0.8" fill="#FFFFFF"/>
 </svg>`;
 
-// Standard ICO format builder wrapping PNG data
+/**
+ * Full-bleed app mark for iOS Apple Touch Icon and Android Chrome PWA Maskable Icon.
+ * Complies with Apple HIG (square icon with no transparency, iOS applies squircle mask)
+ * and W3C WebApp Manifest maskable icon spec (background extends to 100% of canvas).
+ */
+const SVG_APP_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <defs>
+    <linearGradient id="dearly-app-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF3366"/>
+      <stop offset="38%" stop-color="#E11D48"/>
+      <stop offset="80%" stop-color="#9F1239"/>
+      <stop offset="100%" stop-color="#6B0A26"/>
+    </linearGradient>
+    <linearGradient id="dearly-app-heart" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#FFE4E8"/>
+    </linearGradient>
+    <filter id="dearly-app-shadow" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="1.2" stdDeviation="0.9" flood-color="#4C0519" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <!-- Full Bleed Square Background (Masked by iOS / Android Adaptive Launcher) -->
+  <rect x="0" y="0" width="32" height="32" fill="url(#dearly-app-bg)"/>
+
+  <!-- Upper Glass Sheen Arc -->
+  <path
+    d="M 0 10 C 0 5 5 0 10 0 L 22 0 C 27 0 32 5 32 10 C 24 14 8 14 0 10 Z"
+    fill="#FFFFFF"
+    fill-opacity="0.18"
+  />
+
+  <!-- Center Keepsake Heart -->
+  <path
+    filter="url(#dearly-app-shadow)"
+    d="M 16 11.2 C 14.6 9.4 12.2 8.5 10 9 C 7.6 9.6 6 11.8 6 14.5 C 6 18.2 10.4 22 16 25 C 21.6 22 26 18.2 26 14.5 C 26 11.8 24.4 9.6 22 9 C 19.8 8.5 17.4 9.4 16 11.2 Z"
+    fill="url(#dearly-app-heart)"
+  />
+
+  <!-- Specular Gloss Reflection on Left Lobe -->
+  <ellipse cx="11" cy="12.5" rx="2" ry="1.2" transform="rotate(-30 11 12.5)" fill="#FFFFFF" fill-opacity="0.75"/>
+
+  <!-- Signature 4-Point Diamond Sparkle Star (✦) -->
+  <path d="M 24.5 4 Q 24.5 7 21.5 7 Q 24.5 7 24.5 10 Q 24.5 7 27.5 7 Q 24.5 7 24.5 4 Z" fill="#FFF1F3"/>
+  <circle cx="24.5" cy="7" r="0.8" fill="#FFFFFF"/>
+</svg>`;
+
+// Standard ICO format builder wrapping 16px, 32px, 48px PNG buffers
 function createIcoFromPngs(pngBuffers) {
   const count = pngBuffers.length;
   const headerSize = 6;
@@ -98,7 +145,7 @@ function createIcoFromPngs(pngBuffers) {
 }
 
 async function generate() {
-  console.log('1. Writing public/favicon.svg (Dearly Keepsake Envelope with Heart Fold)...');
+  console.log('1. Writing public/favicon.svg (Imperial Jewel Squircle & Keepsake Heart)...');
   fs.writeFileSync(path.join(PUBLIC_DIR, 'favicon.svg'), SVG_FAVICON.trim(), 'utf8');
 
   console.log('2. Writing public/site.webmanifest (theme_color: #E11D48)...');
@@ -121,6 +168,11 @@ async function generate() {
       {
         src: '/favicon-32x32.png',
         sizes: '32x32',
+        type: 'image/png'
+      },
+      {
+        src: '/favicon-48x48.png',
+        sizes: '48x48',
         type: 'image/png'
       },
       {
@@ -153,7 +205,7 @@ async function generate() {
 
   const page = await browser.newPage();
 
-  // Tab Favicons (Transparent background: 16x16, 32x32, 48x48)
+  // Tab Favicons (Transparent background outside squircle: 16x16, 32x32, 48x48)
   const tabFaviconHtml = `<!DOCTYPE html>
 <html>
 <head>
@@ -161,7 +213,7 @@ async function generate() {
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; overflow: hidden; background: transparent; }
     #container { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
-    svg { display: block; width: 100%; height: 100%; }
+    svg { display: block; width: 100% !important; height: 100% !important; }
   </style>
 </head>
 <body>
@@ -188,11 +240,11 @@ async function generate() {
       clip: { x: 0, y: 0, width: size, height: size }
     });
     fs.writeFileSync(path.join(PUBLIC_DIR, file), buffer);
-    console.log(`  ✓ Generated public/${file} (${size}x${size}, transparent)`);
+    console.log(`  ✓ Generated public/${file} (${size}x${size}, transparent outer corners)`);
     pngBuffers.push({ width: size, height: size, buffer });
   }
 
-  // App Icons (Opaque background for iOS / Android Home Screen & PWA Maskable Compliance)
+  // App Icons (Full-bleed jewel gradient compliant with Apple HIG & Android Adaptive Icons)
   const appIconHtml = `<!DOCTYPE html>
 <html>
 <head>
@@ -202,7 +254,7 @@ async function generate() {
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: #FFFFFF;
+      background: #6B0A26;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -211,15 +263,15 @@ async function generate() {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 78%;
-      height: 78%;
+      width: 100%;
+      height: 100%;
     }
-    svg { display: block; width: 100%; height: 100%; }
+    svg { display: block; width: 100% !important; height: 100% !important; }
   </style>
 </head>
 <body>
   <div id="container">
-    ${SVG_FAVICON}
+    ${SVG_APP_ICON}
   </div>
 </body>
 </html>`;
@@ -239,7 +291,7 @@ async function generate() {
       clip: { x: 0, y: 0, width: size, height: size }
     });
     fs.writeFileSync(path.join(PUBLIC_DIR, file), buffer);
-    console.log(`  ✓ Generated public/${file} (${size}x${size}, app standard)`);
+    console.log(`  ✓ Generated public/${file} (${size}x${size}, full-bleed jewel app mark)`);
   }
 
   // Create favicon.ico (multi-resolution ICO combining 16, 32, 48px)
@@ -249,7 +301,7 @@ async function generate() {
   console.log('  ✓ Generated public/favicon.ico');
 
   await browser.close();
-  console.log('\nAll Dearly Keepsake Envelope favicon & manifest assets generated with 0 errors!');
+  console.log('\nAll Dearly Imperial Jewel Favicon & App Icon assets generated with 0 errors!');
 }
 
 generate().catch(err => {
