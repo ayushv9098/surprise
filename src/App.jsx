@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Loader2,
   ArrowRight,
@@ -7,6 +7,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
 import { RecipientModal, CategoryModal } from './components/Builder';
+const BuilderStudio = React.lazy(() => import('./components/Builder/BuilderStudio'));
+const TemplateViewer = React.lazy(() => import('./components/Templates/TemplateViewer'));
+const AdminDashboard = React.lazy(() => import('./components/Admin/AdminDashboard'));
 import ErrorBoundary from './components/common/ErrorBoundary';
 import DearlyLogo from './components/common/DearlyLogo';
 import AppleEmoji from './components/common/AppleEmoji';
@@ -15,14 +18,9 @@ import { getPresetForTemplate } from './data/samplePresets';
 import { loadSurprise } from './utils/storage';
 import { Agentation } from 'agentation';
 
-// Lazy-loaded heavy views to keep initial homepage bundle ultra-fast & lightweight
-const BuilderStudio = lazy(() => import('./components/Builder/BuilderStudio'));
-const TemplateViewer = lazy(() => import('./components/Templates/TemplateViewer'));
-const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
-
-function ViewLoaderFallback({ message = 'Loading experience...' }) {
+function LoadingFallback({ message = 'Loading...' }) {
   return (
-    <div className="min-h-[60vh] bg-[#FFFDFB] flex flex-col items-center justify-center p-6 text-center">
+    <div className="min-h-[60vh] bg-[#FFFDFB] flex flex-col items-center justify-center p-6 text-center select-none">
       <div className="mb-4 flex items-center justify-center">
         <DearlyLogo size={42} className="animate-pulse" />
       </div>
@@ -369,7 +367,7 @@ export default function App() {
     return (
       <>
         <ErrorBoundary onReset={() => handleNavigate('home')}>
-          <Suspense fallback={<ViewLoaderFallback message="Opening keepsake envelope..." />}>
+          <React.Suspense fallback={<LoadingFallback />}>
             <TemplateViewer
               siteData={siteData}
               isLiveView={isLiveView}
@@ -377,7 +375,7 @@ export default function App() {
               onBack={() => handleNavigate('home')}
               onNavigate={handleNavigate}
             />
-          </Suspense>
+          </React.Suspense>
         </ErrorBoundary>
         {import.meta.env.DEV && <Agentation />}
       </>
@@ -393,9 +391,9 @@ export default function App() {
         {currentView === 'admin' && (
           <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <ErrorBoundary onReset={() => handleNavigate('home')}>
-              <Suspense fallback={<ViewLoaderFallback message="Securing admin portal..." />}>
+              <React.Suspense fallback={<LoadingFallback />}>
                 <AdminDashboard onNavigate={handleNavigate} />
-              </Suspense>
+              </React.Suspense>
             </ErrorBoundary>
           </div>
         )}
@@ -403,7 +401,7 @@ export default function App() {
         {/* VIEW: BUILDER STUDIO — full-width, no padding (BuilderStudio manages its own layout) */}
         {currentView === 'builder' && (
           <ErrorBoundary onReset={() => handleNavigate('home')}>
-            <Suspense fallback={<ViewLoaderFallback message="Preparing creation studio..." />}>
+            <React.Suspense fallback={<LoadingFallback />}>
               <BuilderStudio
                 key={`${selectedCategory}-${selectedTemplateId}`}
                 initialCategory={selectedCategory}
@@ -416,7 +414,7 @@ export default function App() {
                   });
                 }}
               />
-            </Suspense>
+            </React.Suspense>
           </ErrorBoundary>
         )}
 

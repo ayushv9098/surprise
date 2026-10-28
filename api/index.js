@@ -74,31 +74,37 @@ app.get('/s/:slug', (req, res) => {
   const htmlFile = fs.existsSync(distHtmlPath) ? distHtmlPath : indexHtmlPath;
 
   try {
-    let html = fs.readFileSync(htmlFile, 'utf-8');
+    let html = fs.existsSync(htmlFile) ? fs.readFileSync(htmlFile, 'utf-8') : '';
     const site = db.getSiteBySlug(slug);
 
-    if (site) {
-      const recipient = site.recipientName || 'Someone special';
-      const sender = site.senderName ? ` from ${site.senderName}` : '';
-      const pageTitle = `${site.title || `Special Surprise for ${recipient}`} — Dearly`;
-      const ogTitle = `${site.title || `Special Surprise for ${recipient} 🎁`} — Dearly`;
-      const ogDesc = `A heartfelt digital keepsake surprise website created for ${recipient}${sender}. Tap to unwrap envelope! 💌`;
+    if (site && html) {
+      const pageTitle = `${site.title || `Special Surprise for ${site.recipientName}`} — Dearly`;
+      const ogTitle = `${site.title || `Special Surprise for ${site.recipientName} 🎁`} — Dearly`;
+      const ogDesc = `A personalized keepsake surprise website created for ${site.recipientName || 'someone special'}. Tap to open envelope! 💌`;
 
       html = html
         .replace(/<title>.*?<\/title>/, `<title>${pageTitle}</title>`)
-        .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${ogTitle}" />`)
-        .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${ogDesc}" />`)
-        .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${ogTitle}" />`)
-        .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${ogDesc}" />`);
+        .replace(/<meta property="og:title" content=".*?"/, `<meta property="og:title" content="${ogTitle}"`)
+        .replace(/<meta property="og:description" content=".*?"/, `<meta property="og:description" content="${ogDesc}"`)
+        .replace(/<meta (?:property|name)="twitter:title" content=".*?"/, `<meta name="twitter:title" content="${ogTitle}"`)
+        .replace(/<meta (?:property|name)="twitter:description" content=".*?"/, `<meta name="twitter:description" content="${ogDesc}"`);
     }
 
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return res.send(html);
-  } catch (err) {
-    if (fs.existsSync(htmlFile)) {
-      return res.sendFile(htmlFile);
+    if (html) {
+      return res.type('html').send(html);
     }
     return res.status(404).send('Not Found');
+  } catch (err) {
+    console.error('Error serving /s/:slug dynamic preview:', err);
+    if (fs.existsSync(htmlFile)) {
+      try {
+        const rawHtml = fs.readFileSync(htmlFile, 'utf-8');
+        return res.type('html').send(rawHtml);
+      } catch {
+        return res.status(500).send('Internal server error');
+      }
+    }
+    return res.status(500).send('Internal server error');
   }
 });
 
