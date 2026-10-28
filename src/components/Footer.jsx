@@ -50,51 +50,51 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="border-t border-slate-200/60 bg-gradient-to-b from-[#FFFDFB] to-[#FAF6F3] py-8 text-center px-4 transition-all">
+      <footer className="border-t border-slate-200/80 bg-gradient-to-b from-[#FFFDFB] to-[#FAF6F3] py-8 text-center px-4 transition-all">
         <div className="max-w-3xl mx-auto space-y-3.5">
           {/* Subtle Reassuring Trust Statement */}
-          <p className="text-xs text-slate-400 tracking-wide font-normal">
-            Private & ad-free keepsakes • 100% confidential and safe
+          <p className="text-xs text-slate-600 tracking-normal font-medium">
+            Private & ad-free keepsakes <span className="text-slate-400 mx-1">•</span> 100% confidential and safe
           </p>
 
           {/* Consistent Legal & Security Links */}
-          <div className="flex items-center justify-center gap-3 text-xs text-slate-500 font-medium">
+          <div className="flex items-center justify-center gap-3 text-xs text-slate-600 font-semibold">
             <button
               type="button"
               onClick={() => setActiveModal('privacy')}
-              className="hover:text-slate-800 transition-colors cursor-pointer"
+              className="hover:text-slate-950 transition-colors cursor-pointer"
             >
               Privacy Policy
             </button>
-            <span className="text-slate-300">•</span>
+            <span className="text-slate-400 font-normal select-none">•</span>
             <button
               type="button"
               onClick={() => setActiveModal('terms')}
-              className="hover:text-slate-800 transition-colors cursor-pointer"
+              className="hover:text-slate-950 transition-colors cursor-pointer"
             >
               Terms of Service
             </button>
-            <span className="text-slate-300">•</span>
+            <span className="text-slate-400 font-normal select-none">•</span>
             <button
               type="button"
               onClick={() => setActiveModal('security')}
-              className="hover:text-slate-800 transition-colors cursor-pointer"
+              className="hover:text-slate-950 transition-colors cursor-pointer"
             >
               Security Overview
             </button>
           </div>
 
           {/* Clean Unified Attribution */}
-          <div className="pt-2 text-[11px] text-slate-400 font-normal flex items-center justify-center gap-1.5">
+          <div className="pt-2 text-[11px] text-slate-600 font-medium flex items-center justify-center gap-1.5">
             <span>© 2026 Dearly</span>
-            <span>•</span>
+            <span className="text-slate-400">•</span>
             <span>
               Built by{' '}
               <a
                 href="https://avinfra.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-600 hover:text-rose-600 font-medium underline underline-offset-2 transition-colors"
+                className="text-slate-700 hover:text-rose-600 font-semibold underline underline-offset-2 transition-colors"
               >
                 AV Infra Tech
               </a>
