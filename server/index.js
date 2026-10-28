@@ -54,7 +54,7 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
-    service: 'wishcraft-backend'
+    service: 'dearly-backend'
   });
 });
 

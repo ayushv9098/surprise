@@ -68,6 +68,7 @@ export default function AdminDashboard({ onNavigate }) {
   // Logout handler
   const handleLogout = useCallback(() => {
     sessionStorage.removeItem(AUTH_TOKEN_KEY);
+    sessionStorage.removeItem('dearly_admin_unlocked');
     sessionStorage.removeItem('wishcraft_admin_unlocked');
     setAuthToken('');
     setIsAuthenticated(false);

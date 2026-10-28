@@ -17,21 +17,35 @@ import { getPresetForTemplate } from './data/samplePresets';
 import { loadSurprise } from './utils/storage';
 import { Agentation } from 'agentation';
 
+const KNOWN_ROUTES = ['admin', 'builder', 'create', 'templates', 'about', 'privacy', 'terms'];
+
 export default function App() {
   const [currentView, setCurrentView] = useState(() => {
     if (typeof window !== 'undefined') {
       const searchParams = new URLSearchParams(window.location.search);
+      const pathname = window.location.pathname.toLowerCase();
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+      const firstSegment = pathSegments[0]?.toLowerCase();
+
       if (
         searchParams.get('view') === 'admin' ||
-        window.location.pathname.toLowerCase() === '/admin'
+        pathname === '/admin' ||
+        firstSegment === 'admin'
       ) {
         return 'admin';
       }
-      if (searchParams.get('view') === 'builder') {
+      if (
+        searchParams.get('view') === 'builder' ||
+        pathname === '/builder' ||
+        pathname === '/create' ||
+        firstSegment === 'builder' ||
+        firstSegment === 'create'
+      ) {
         return 'builder';
       }
-      const pathSegments = window.location.pathname.split('/').filter(Boolean);
-      const isPathSlug = (pathSegments.length >= 2 && pathSegments[0] === 's') || (pathSegments.length === 1 && pathSegments[0] !== 'admin');
+      const isPathSlug =
+        (pathSegments.length >= 2 && firstSegment === 's') ||
+        (pathSegments.length === 1 && !KNOWN_ROUTES.includes(firstSegment));
       if (
         isPathSlug ||
         searchParams.get('v') ||
@@ -85,8 +99,12 @@ export default function App() {
       if (typeof window !== 'undefined') {
         if (view === 'admin') {
           window.history.pushState({ view: 'admin' }, '', '/admin');
+        } else if (view === 'builder') {
+          window.history.pushState({ view: 'builder' }, '', '/builder');
         } else if (
           window.location.pathname.toLowerCase() === '/admin' ||
+          window.location.pathname.toLowerCase() === '/builder' ||
+          window.location.pathname.toLowerCase() === '/create' ||
           window.location.search
         ) {
           window.history.pushState({ view }, '', '/');
@@ -99,21 +117,34 @@ export default function App() {
   // Check URL on load for direct surprise links (/s/slug, ?v=slug, ?d=compressed, ?view=admin, /admin, etc.)
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
+    const pathname = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
     const pathSegments = typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean) : [];
+    const firstSegment = (pathSegments[0] || '').toLowerCase();
+    const viewParam = searchParams.get('view');
+    const previewTemplate = searchParams.get('preview');
+
+    // Do not intercept known non-slug routes
+    if (
+      viewParam === 'admin' ||
+      pathname === '/admin' ||
+      firstSegment === 'admin' ||
+      viewParam === 'builder' ||
+      pathname === '/builder' ||
+      pathname === '/create' ||
+      firstSegment === 'builder' ||
+      firstSegment === 'create'
+    ) {
+      return;
+    }
+
     let pathSlug = null;
-    if (pathSegments.length >= 2 && pathSegments[0] === 's') {
+    if (pathSegments.length >= 2 && firstSegment === 's') {
       pathSlug = pathSegments[1];
-    } else if (pathSegments.length === 1 && pathSegments[0] !== 'admin') {
+    } else if (pathSegments.length === 1 && !KNOWN_ROUTES.includes(firstSegment)) {
       pathSlug = pathSegments[0];
     }
     const slug = pathSlug || searchParams.get('v') || searchParams.get('id') || searchParams.get('slug');
     const compressedData = searchParams.get('d');
-    const viewParam = searchParams.get('view');
-    const previewTemplate = searchParams.get('preview');
-
-    if (viewParam === 'admin' || window.location.pathname.toLowerCase() === '/admin') {
-      return;
-    }
 
     if (previewTemplate) {
       const preset = getPresetForTemplate(previewTemplate);
@@ -162,13 +193,25 @@ export default function App() {
   useEffect(() => {
     const handlePopState = () => {
       const searchParams = new URLSearchParams(window.location.search);
+      const pathname = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
       const pathSegments = typeof window !== 'undefined' ? window.location.pathname.split('/').filter(Boolean) : [];
-      const hasPathSlug = (pathSegments.length === 2 && pathSegments[0] === 's') || (pathSegments.length === 1 && pathSegments[0] !== 'admin');
+      const firstSegment = (pathSegments[0] || '').toLowerCase();
+      const hasPathSlug = (pathSegments.length >= 2 && firstSegment === 's') || (pathSegments.length === 1 && !KNOWN_ROUTES.includes(firstSegment));
+
       if (
         searchParams.get('view') === 'admin' ||
-        window.location.pathname.toLowerCase() === '/admin'
+        pathname === '/admin' ||
+        firstSegment === 'admin'
       ) {
         setCurrentView('admin');
+      } else if (
+        searchParams.get('view') === 'builder' ||
+        pathname === '/builder' ||
+        pathname === '/create' ||
+        firstSegment === 'builder' ||
+        firstSegment === 'create'
+      ) {
+        setCurrentView('builder');
       } else if (searchParams.get('preview')) {
         const previewTpl = searchParams.get('preview');
         const preset = getPresetForTemplate(previewTpl);
@@ -176,10 +219,40 @@ export default function App() {
         setIsPreviewMode(true);
         setCurrentView('viewer');
       } else if (hasPathSlug || searchParams.get('v') || searchParams.get('id') || searchParams.get('slug') || searchParams.get('d')) {
-        // Keepsake view
+        let pathSlug = null;
+        if (pathSegments.length >= 2 && firstSegment === 's') {
+          pathSlug = pathSegments[1];
+        } else if (pathSegments.length === 1 && !KNOWN_ROUTES.includes(firstSegment)) {
+          pathSlug = pathSegments[0];
+        }
+        const slug = pathSlug || searchParams.get('v') || searchParams.get('id') || searchParams.get('slug');
+        const compressedData = searchParams.get('d');
+        if (slug || compressedData) {
+          setIsLoadingSite(true);
+          loadSurprise(slug || window.location.search)
+            .then((data) => {
+              if (data) {
+                const actualSite = data.site || data.data || data;
+                setSiteData(actualSite);
+                setCurrentView('viewer');
+              } else {
+                setToast({ type: 'error', message: 'Could not load surprise website. Opening creator studio.' });
+                setCurrentView('home');
+              }
+            })
+            .catch(() => {
+              setToast({ type: 'error', message: 'Error loading surprise website.' });
+              setCurrentView('home');
+            })
+            .finally(() => {
+              setIsLoadingSite(false);
+            });
+        } else {
+          setCurrentView('viewer');
+        }
       } else {
         // Browser back button was pressed from a preview or other view:
-        // Keep the user strictly on the home page inside WishCraft!
+        // Keep the user strictly on the home page inside Dearly!
         setSiteData(null);
         setIsPreviewMode(false);
         setCurrentView('home');

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_DIR = process.env.VERCEL
-  ? path.join('/tmp', 'wishcraft-data')
+  ? path.join('/tmp', 'dearly-data')
   : path.resolve(__dirname, '../data');
 const SITES_FILE = path.join(DATA_DIR, 'sites.json');
 
@@ -17,7 +17,20 @@ function ensureDataFile() {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   if (!fs.existsSync(SITES_FILE)) {
-    // If on Vercel and original file exists, copy it
+    // If running on Vercel and new SITES_FILE does not exist, check if legacy wishcraft data exists
+    if (process.env.VERCEL) {
+      const legacyWishcraftPath = path.join('/tmp', 'wishcraft-data', 'sites.json');
+      if (fs.existsSync(legacyWishcraftPath)) {
+        try {
+          fs.copyFileSync(legacyWishcraftPath, SITES_FILE);
+          return;
+        } catch {
+          // fallback to bundled sites.json
+        }
+      }
+    }
+
+    // If original file exists, copy it
     const sourcePath = path.resolve(__dirname, '../data/sites.json');
     if (fs.existsSync(sourcePath)) {
       try {
