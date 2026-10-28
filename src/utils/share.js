@@ -3,8 +3,9 @@ import QRCode from 'qrcode';
 /**
  * Generate WhatsApp share intent link
  */
-export const getWhatsAppShareUrl = (url, recipientName = 'Someone special', senderName = 'A friend') => {
-  const text = `✨ Hey ${recipientName}! ${senderName} created a personalized surprise keepsake just for you. Open this to see your surprise: \n\n${url}`;
+export const getWhatsAppShareUrl = (url, recipientName = 'Someone special', senderName = 'A friend', occasion = '') => {
+  const occText = occasion ? ` for ${occasion}` : '';
+  const text = `✨ Hey ${recipientName}! ${senderName} created a personalized surprise keepsake just for you${occText}. Open your surprise here: \n\n${url}`;
   return `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
 };
 

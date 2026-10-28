@@ -91,7 +91,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   };
 
   const handleWhatsApp = () => {
-    const waUrl = getWhatsAppShareUrl(shareUrl, recipientName, senderName);
+    const waUrl = getWhatsAppShareUrl(shareUrl, recipientName, senderName, formData?.occasion || formData?.category);
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 

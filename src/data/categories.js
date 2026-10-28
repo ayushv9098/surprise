@@ -32,7 +32,6 @@ export const CATEGORIES = [
     defaultTemplate: 'vintage-kodak',
     accent: '#059669',
     tag: 'Memories',
-    comingSoon: true,
   },
   {
     id: 'apology',
@@ -43,7 +42,6 @@ export const CATEGORIES = [
     defaultTemplate: 'gentle-peace',
     accent: '#8B5CF6',
     tag: 'Heartfelt',
-    comingSoon: true,
   },
 ];
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import {
   Loader2,
   ArrowRight,
@@ -6,9 +6,7 @@ import {
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Toast from './components/Toast';
-import { BuilderStudio, RecipientModal, CategoryModal } from './components/Builder';
-import { TemplateViewer } from './components/Templates';
-import AdminDashboard from './components/Admin/AdminDashboard';
+import { RecipientModal, CategoryModal } from './components/Builder';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import DearlyLogo from './components/common/DearlyLogo';
 import AppleEmoji from './components/common/AppleEmoji';
@@ -16,6 +14,23 @@ import { CATEGORIES } from './data/categories';
 import { getPresetForTemplate } from './data/samplePresets';
 import { loadSurprise } from './utils/storage';
 import { Agentation } from 'agentation';
+
+// Lazy-loaded heavy views to keep initial homepage bundle ultra-fast & lightweight
+const BuilderStudio = lazy(() => import('./components/Builder/BuilderStudio'));
+const TemplateViewer = lazy(() => import('./components/Templates/TemplateViewer'));
+const AdminDashboard = lazy(() => import('./components/Admin/AdminDashboard'));
+
+function ViewLoaderFallback({ message = 'Loading experience...' }) {
+  return (
+    <div className="min-h-[60vh] bg-[#FFFDFB] flex flex-col items-center justify-center p-6 text-center">
+      <div className="mb-4 flex items-center justify-center">
+        <DearlyLogo size={42} className="animate-pulse" />
+      </div>
+      <p className="text-sm text-gray-500 font-medium mb-3">{message}</p>
+      <Loader2 className="w-5 h-5 text-rose-500 animate-spin" />
+    </div>
+  );
+}
 
 const KNOWN_ROUTES = ['admin', 'builder', 'create', 'templates', 'about', 'privacy', 'terms'];
 
@@ -354,13 +369,15 @@ export default function App() {
     return (
       <>
         <ErrorBoundary onReset={() => handleNavigate('home')}>
-          <TemplateViewer
-            siteData={siteData}
-            isLiveView={isLiveView}
-            showTemplateSwitcher={Boolean(isPreviewMode)}
-            onBack={() => handleNavigate('home')}
-            onNavigate={handleNavigate}
-          />
+          <Suspense fallback={<ViewLoaderFallback message="Opening keepsake envelope..." />}>
+            <TemplateViewer
+              siteData={siteData}
+              isLiveView={isLiveView}
+              showTemplateSwitcher={Boolean(isPreviewMode)}
+              onBack={() => handleNavigate('home')}
+              onNavigate={handleNavigate}
+            />
+          </Suspense>
         </ErrorBoundary>
         {import.meta.env.DEV && <Agentation />}
       </>
@@ -376,7 +393,9 @@ export default function App() {
         {currentView === 'admin' && (
           <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <ErrorBoundary onReset={() => handleNavigate('home')}>
-              <AdminDashboard onNavigate={handleNavigate} />
+              <Suspense fallback={<ViewLoaderFallback message="Securing admin portal..." />}>
+                <AdminDashboard onNavigate={handleNavigate} />
+              </Suspense>
             </ErrorBoundary>
           </div>
         )}
@@ -384,18 +403,20 @@ export default function App() {
         {/* VIEW: BUILDER STUDIO — full-width, no padding (BuilderStudio manages its own layout) */}
         {currentView === 'builder' && (
           <ErrorBoundary onReset={() => handleNavigate('home')}>
-            <BuilderStudio
-              key={`${selectedCategory}-${selectedTemplateId}`}
-              initialCategory={selectedCategory}
-              initialTemplateId={selectedTemplateId}
-              onBack={() => handleNavigate('home')}
-              onComplete={(result) => {
-                setToast({
-                  type: 'success',
-                  message: `Surprise for ${result.recipientName || 'your special person'} is ready!`
-                });
-              }}
-            />
+            <Suspense fallback={<ViewLoaderFallback message="Preparing creation studio..." />}>
+              <BuilderStudio
+                key={`${selectedCategory}-${selectedTemplateId}`}
+                initialCategory={selectedCategory}
+                initialTemplateId={selectedTemplateId}
+                onBack={() => handleNavigate('home')}
+                onComplete={(result) => {
+                  setToast({
+                    type: 'success',
+                    message: `Surprise for ${result.recipientName || 'your special person'} is ready!`
+                  });
+                }}
+              />
+            </Suspense>
           </ErrorBoundary>
         )}
 

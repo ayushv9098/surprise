@@ -1,6 +1,12 @@
 import express from 'express';
 import cors from 'cors';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { db, SEED_SITES } from '../server/db.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const ADMIN_SECRET = process.env.ADMIN_SECRET || 'dearly-admin-2026';
 export { SEED_SITES };
@@ -55,6 +61,44 @@ app.get('/api/sites/:slug', (req, res) => {
     res.json({ success: true, site });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch site', details: error.message });
+  }
+});
+
+/**
+ * Public: Serve surprise page with personalized dynamic OpenGraph metadata for WhatsApp/social sharing
+ */
+app.get('/s/:slug', (req, res) => {
+  const { slug } = req.params;
+  const distHtmlPath = path.resolve(__dirname, '../dist/index.html');
+  const indexHtmlPath = path.resolve(__dirname, '../index.html');
+  const htmlFile = fs.existsSync(distHtmlPath) ? distHtmlPath : indexHtmlPath;
+
+  try {
+    let html = fs.readFileSync(htmlFile, 'utf-8');
+    const site = db.getSiteBySlug(slug);
+
+    if (site) {
+      const recipient = site.recipientName || 'Someone special';
+      const sender = site.senderName ? ` from ${site.senderName}` : '';
+      const pageTitle = `${site.title || `Special Surprise for ${recipient}`} — Dearly`;
+      const ogTitle = `${site.title || `Special Surprise for ${recipient} 🎁`} — Dearly`;
+      const ogDesc = `A heartfelt digital keepsake surprise website created for ${recipient}${sender}. Tap to unwrap envelope! 💌`;
+
+      html = html
+        .replace(/<title>.*?<\/title>/, `<title>${pageTitle}</title>`)
+        .replace(/<meta property="og:title" content=".*?" \/>/, `<meta property="og:title" content="${ogTitle}" />`)
+        .replace(/<meta property="og:description" content=".*?" \/>/, `<meta property="og:description" content="${ogDesc}" />`)
+        .replace(/<meta name="twitter:title" content=".*?" \/>/, `<meta name="twitter:title" content="${ogTitle}" />`)
+        .replace(/<meta name="twitter:description" content=".*?" \/>/, `<meta name="twitter:description" content="${ogDesc}" />`);
+    }
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    return res.send(html);
+  } catch (err) {
+    if (fs.existsSync(htmlFile)) {
+      return res.sendFile(htmlFile);
+    }
+    return res.status(404).send('Not Found');
   }
 });
 
