@@ -37,6 +37,8 @@ export default function AdminDashboard({ onNavigate }) {
   const [metrics, setMetrics] = useState({
     totalSites: 0,
     totalViews: 0,
+    openedSites: 0,
+    unopenedSites: 0,
     templateBreakdown: {},
     mostPopularTemplate: 'none',
     activeToday: 0
@@ -48,6 +50,7 @@ export default function AdminDashboard({ onNavigate }) {
 
   // Filters & Search
   const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'opened' | 'unopened'
   const [selectedTemplate, setSelectedTemplate] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
 
@@ -76,6 +79,8 @@ export default function AdminDashboard({ onNavigate }) {
     setMetrics({
       totalSites: 0,
       totalViews: 0,
+      openedSites: 0,
+      unopenedSites: 0,
       templateBreakdown: {},
       mostPopularTemplate: 'none',
       activeToday: 0
@@ -93,7 +98,6 @@ export default function AdminDashboard({ onNavigate }) {
 
     try {
       const queryParams = new URLSearchParams();
-      if (searchQuery.trim()) queryParams.set('search', searchQuery.trim());
       if (selectedTemplate && selectedTemplate !== 'all') {
         queryParams.set('template', selectedTemplate);
       }
@@ -136,7 +140,7 @@ export default function AdminDashboard({ onNavigate }) {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [authToken, searchQuery, selectedTemplate, sortBy, handleLogout, showToast]);
+  }, [authToken, selectedTemplate, sortBy, handleLogout, showToast]);
 
   // Initial fetch when authenticated
   useEffect(() => {
@@ -299,6 +303,46 @@ export default function AdminDashboard({ onNavigate }) {
     };
     return map[key] || key;
   };
+
+  // Counts of opened vs unopened keepsakes
+  const openedCount = sites.filter((s) => (Number(s.viewCount) || 0) > 0).length;
+  const unopenedCount = sites.filter((s) => (Number(s.viewCount) || 0) === 0).length;
+
+  // Filter sites based on active statusFilter and searchQuery
+  const filteredSites = sites.filter((site) => {
+    const viewCount = Number(site.viewCount) || 0;
+
+    // Status filter ('all' | 'opened' | 'unopened')
+    if (statusFilter === 'opened' && viewCount === 0) {
+      return false;
+    }
+    if (statusFilter === 'unopened' && viewCount > 0) {
+      return false;
+    }
+
+    // Search filter (matches recipientName, senderName, title, slug, occasion)
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      const recipientName = (site.recipientName || '').toLowerCase();
+      const senderName = (site.senderName || '').toLowerCase();
+      const title = (site.title || '').toLowerCase();
+      const slug = (site.slug || '').toLowerCase();
+      const occasion = (site.occasion || '').toLowerCase();
+
+      const matches =
+        recipientName.includes(q) ||
+        senderName.includes(q) ||
+        title.includes(q) ||
+        slug.includes(q) ||
+        occasion.includes(q);
+
+      if (!matches) {
+        return false;
+      }
+    }
+
+    return true;
+  });
 
   // ----------------------------------------------------
   // SECURE ADMIN LOGIN SCREEN
@@ -477,27 +521,62 @@ export default function AdminDashboard({ onNavigate }) {
         {/* STATS CARDS — 4 Clean Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
-          {/* 1. Active Keepsakes */}
+          {/* 1. Total Keepsakes */}
           <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Active Keepsakes
+                Total Keepsakes
               </span>
               <span className="w-2 h-2 rounded-full bg-rose-500" />
             </div>
             <div className="text-3xl font-bold text-slate-900 mb-1">
-              {metrics.totalSites || 0}
+              {metrics.totalSites || sites.length || 0}
             </div>
             <p className="text-xs text-slate-500">
-              {metrics.totalSites === 0 ? '0 Active Keepsakes' : `${metrics.totalSites} Live in Database`}
+              {(metrics.totalSites || sites.length || 0) === 0 ? '0 Keepsakes' : `${metrics.totalSites || sites.length} Live in Database`}
             </p>
           </div>
 
-          {/* 2. Total Views */}
+          {/* 2. Opened by Recipient 🟢 */}
           <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Total Views
+              <span className="text-xs font-semibold text-emerald-700 uppercase tracking-wider flex items-center gap-1">
+                <span>Opened by Recipient</span>
+                <span>🟢</span>
+              </span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            </div>
+            <div className="text-3xl font-bold text-emerald-600 mb-1">
+              {metrics.openedSites ?? openedCount}
+            </div>
+            <p className="text-xs text-slate-500">
+              {(metrics.openedSites ?? openedCount) === 1 ? '1 site opened & viewed' : `${metrics.openedSites ?? openedCount} sites opened & viewed`}
+            </p>
+          </div>
+
+          {/* 3. Not Opened Yet ⏳ */}
+          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-amber-700 uppercase tracking-wider flex items-center gap-1">
+                <span>Not Opened Yet</span>
+                <span>⏳</span>
+              </span>
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+            </div>
+            <div className="text-3xl font-bold text-amber-600 mb-1">
+              {metrics.unopenedSites ?? unopenedCount}
+            </div>
+            <p className="text-xs text-slate-500">
+              Waiting for recipient to open
+            </p>
+          </div>
+
+          {/* 4. Total Views 👁️ */}
+          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+                <span>Total Views</span>
+                <span>👁️</span>
               </span>
               <Eye className="w-3.5 h-3.5 text-slate-400" />
             </div>
@@ -509,42 +588,10 @@ export default function AdminDashboard({ onNavigate }) {
             </p>
           </div>
 
-          {/* 3. Top Template */}
-          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Top Template
-              </span>
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            </div>
-            <div className="text-base font-bold text-slate-900 mb-1 truncate">
-              {getTemplateDisplayName(metrics.mostPopularTemplate)}
-            </div>
-            <p className="text-xs text-slate-500">
-              {metrics.totalSites === 0 ? 'Waiting for creations' : 'Most picked style'}
-            </p>
-          </div>
-
-          {/* 4. Active Today */}
-          <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-xs">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                Active Today
-              </span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-            </div>
-            <div className="text-3xl font-bold text-slate-900 mb-1">
-              {metrics.activeToday ?? (metrics.recentSites?.length || 0)}
-            </div>
-            <p className="text-xs text-slate-500">
-              Created or viewed past 24h
-            </p>
-          </div>
-
         </div>
 
         {/* Clean Database Banner when totalSites === 0 */}
-        {!loading && metrics.totalSites === 0 && (
+        {!loading && (metrics.totalSites || sites.length || 0) === 0 && (
           <div className="mb-8 p-6 rounded-3xl bg-gradient-to-r from-rose-50/60 via-stone-50/50 to-amber-50/40 border border-rose-200/60 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3.5">
               <div className="p-2.5 rounded-2xl bg-white border border-rose-100 text-rose-500 shadow-xs shrink-0">
@@ -570,6 +617,45 @@ export default function AdminDashboard({ onNavigate }) {
             )}
           </div>
         )}
+
+        {/* Status Filter Tabs right above search bar */}
+        <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-1">
+          <button
+            type="button"
+            onClick={() => setStatusFilter('all')}
+            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              statusFilter === 'all'
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'bg-white text-slate-600 hover:bg-stone-50 border border-stone-200/80 shadow-xs'
+            }`}
+          >
+            <span>All ({sites.length})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setStatusFilter('opened')}
+            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              statusFilter === 'opened'
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'bg-white text-slate-600 hover:bg-stone-50 border border-stone-200/80 shadow-xs'
+            }`}
+          >
+            <span>🟢 Opened ({openedCount})</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setStatusFilter('unopened')}
+            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              statusFilter === 'unopened'
+                ? 'bg-amber-600 text-white shadow-xs'
+                : 'bg-white text-slate-600 hover:bg-stone-50 border border-stone-200/80 shadow-xs'
+            }`}
+          >
+            <span>⏳ Not Opened ({unopenedCount})</span>
+          </button>
+        </div>
 
         {/* TOOLBAR: Search + Template filter + Sort options */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
@@ -631,11 +717,12 @@ export default function AdminDashboard({ onNavigate }) {
 
         {/* SITES TABLE */}
         <SitesTable
-          sites={sites}
+          sites={filteredSites}
           loading={loading}
           totalSites={metrics.totalSites}
           searchQuery={searchQuery}
           selectedTemplate={selectedTemplate}
+          statusFilter={statusFilter}
           onInspect={(site) => setInspectSite(site)}
           onDelete={handleDeleteSite}
           onToast={showToast}

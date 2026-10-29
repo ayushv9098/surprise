@@ -64,13 +64,28 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// List of known social crawlers, bots, and metadata scrapers
+const BOT_USER_AGENTS = [
+  'facebookexternalhit',
+  'WhatsApp',
+  'Twitterbot',
+  'TelegramBot',
+  'Slackbot',
+  'Discordbot',
+  'Googlebot',
+  'bingbot',
+  'Applebot',
+  'LinkedInBot',
+  'Pinterest'
+];
+
 /**
- * Public: Get site by slug (automatically increments view count)
+ * Public: Get site by slug (registers real view count when browser client loads)
  */
 app.get('/api/sites/:slug', (req, res) => {
   try {
     const { slug } = req.params;
-    const site = db.getSiteBySlug(slug);
+    const site = db.getSiteBySlug(slug, { increment: true });
 
     if (!site) {
       return res.status(404).json({
@@ -91,16 +106,26 @@ app.get('/api/sites/:slug', (req, res) => {
 
 /**
  * Public: Serve surprise page with personalized dynamic OpenGraph metadata for WhatsApp/social sharing
+ * NOTE: Bot crawls and initial SSR HTML requests use increment: false so link unfurls don't inflate view count!
+ * Real view is registered when browser executes and hits /api/sites/:slug.
  */
 app.get('/s/:slug', (req, res) => {
   const { slug } = req.params;
+  const userAgent = req.headers['user-agent'] || '';
+  const isBot = BOT_USER_AGENTS.some((bot) => userAgent.toLowerCase().includes(bot.toLowerCase()));
+
+  if (isBot) {
+    console.log(`[Crawler/Bot Detected] ${userAgent.slice(0, 60)} accessing /s/${slug}`);
+  }
+
   const distHtmlPath = path.resolve(__dirname, '../dist/index.html');
   const indexHtmlPath = path.resolve(__dirname, '../index.html');
   const htmlFile = fs.existsSync(distHtmlPath) ? distHtmlPath : indexHtmlPath;
 
   try {
     let html = fs.existsSync(htmlFile) ? fs.readFileSync(htmlFile, 'utf-8') : '';
-    const site = db.getSiteBySlug(slug);
+    // Increment: false ensures bot scrapers & initial HTML requests do NOT artificially mark as opened/viewed
+    const site = db.getSiteBySlug(slug, { increment: false });
 
     if (site && html) {
       const pageTitle = `${site.title || `Special Surprise for ${site.recipientName}`} — Dearly`;
@@ -209,8 +234,8 @@ app.get('/api/admin/metrics', (req, res) => {
  */
 app.get('/api/admin/sites', (req, res) => {
   try {
-    const { search, template, sortBy, page, limit } = req.query;
-    const allSites = db.getAllSites({ search, template, sortBy });
+    const { search, template, sortBy, page, limit, status } = req.query;
+    const allSites = db.getAllSites({ search, template, sortBy, status });
     const total = allSites.length;
 
     let sites = allSites;

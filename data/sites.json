@@ -1,5 +1,20 @@
 [
   {
+    "recipientName": "Rohan",
+    "senderName": "Pooja",
+    "occasion": "birthday",
+    "title": "Happy Birthday Rohan! 🎂",
+    "template": "golden-birthday",
+    "message": "Have a blast!",
+    "id": "site_1793279434302_67nr8",
+    "slug": "rohan",
+    "templateId": "golden-birthday",
+    "viewCount": 1,
+    "createdAt": "2026-10-29T13:10:34.302Z",
+    "updatedAt": "2026-10-29T13:10:34.303Z",
+    "lastViewedAt": "2026-10-29T13:12:07.278Z"
+  },
+  {
     "templateId": "lavender-dream",
     "category": "birthday",
     "gender": "girl",
@@ -47,8 +62,8 @@
     "updatedAt": "2026-10-27T13:42:18.937Z",
     "createdAt": "2026-10-27T13:42:18.928Z",
     "template": "lavender-dream",
-    "viewCount": 6,
-    "lastViewedAt": "2026-10-27T13:42:49.872Z"
+    "viewCount": 12,
+    "lastViewedAt": "2026-10-28T12:35:53.282Z"
   },
   {
     "templateId": "lavender-dream",

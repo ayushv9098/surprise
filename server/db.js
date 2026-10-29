@@ -72,10 +72,17 @@ function slugify(text) {
 
 export const db = {
   /**
-   * Fetch all sites with optional search, template filter, and sorting
+   * Fetch all sites with optional search, template filter, sorting, and status filter
    */
-  getAllSites({ search, template, sortBy = 'newest' } = {}) {
+  getAllSites({ search, template, sortBy = 'newest', status } = {}) {
     let sites = readSites();
+
+    // Status filter
+    if (status === 'opened') {
+      sites = sites.filter((site) => (Number(site.viewCount) || 0) > 0);
+    } else if (status === 'unopened') {
+      sites = sites.filter((site) => (Number(site.viewCount) || 0) === 0);
+    }
 
     if (search && search.trim()) {
       const q = search.trim().toLowerCase();
@@ -125,9 +132,12 @@ export const db = {
   },
 
   /**
-   * Get site by slug and increment its view count
+   * Get site by slug with optional view count increment
+   * @param {string} slug - The slug or id of the site
+   * @param {Object} [options] - Options object
+   * @param {boolean} [options.increment=true] - If true, increment viewCount and update lastViewedAt
    */
-  getSiteBySlug(slug) {
+  getSiteBySlug(slug, { increment = true } = {}) {
     if (!slug) return null;
     const sites = readSites();
     const normalizedSlug = slug.toLowerCase().trim();
@@ -142,11 +152,12 @@ export const db = {
     }
 
     const site = sites[index];
-    site.viewCount = (site.viewCount || 0) + 1;
-    site.lastViewedAt = new Date().toISOString();
-
-    sites[index] = site;
-    writeSites(sites);
+    if (increment) {
+      site.viewCount = (site.viewCount || 0) + 1;
+      site.lastViewedAt = new Date().toISOString();
+      sites[index] = site;
+      writeSites(sites);
+    }
 
     return site;
   },
@@ -214,6 +225,8 @@ export const db = {
 
     const totalSites = sites.length;
     const totalViews = sites.reduce((sum, s) => sum + (Number(s.viewCount) || 0), 0);
+    const openedSites = sites.filter((s) => (Number(s.viewCount) || 0) > 0).length;
+    const unopenedSites = sites.filter((s) => (Number(s.viewCount) || 0) === 0).length;
 
     const templateBreakdown = {};
 
@@ -252,6 +265,8 @@ export const db = {
     return {
       totalSites,
       totalViews,
+      openedSites,
+      unopenedSites,
       templateBreakdown,
       mostPopularTemplate,
       activeToday,

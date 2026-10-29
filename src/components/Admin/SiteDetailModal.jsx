@@ -12,18 +12,40 @@ import {
   HelpCircle,
   FileJson,
   Trash2,
-  Gift
+  Gift,
+  Clock
 } from 'lucide-react';
 
-const TEMPLATE_CONFIG = {
+export const TEMPLATE_CONFIG = {
+  // Birthday Templates (Boy)
   'royal-sapphire': {
     name: 'Royal Sapphire 👑',
-    color: 'bg-sky-50 text-sky-700 border-sky-200',
-    accent: 'text-sky-600',
+    color: 'bg-blue-50 text-blue-700 border-blue-200',
+    accent: 'text-blue-600',
     tag: 'Royal & Elegant'
   },
+  'golden-birthday': {
+    name: 'Golden Spark 🎂✨',
+    color: 'bg-amber-50 text-amber-800 border-amber-200',
+    accent: 'text-amber-600',
+    tag: 'Celebration & Joy'
+  },
+  'polaroid-scrapbook': {
+    name: 'Retro Polaroid 📸⚡',
+    color: 'bg-rose-50 text-rose-700 border-rose-200',
+    accent: 'text-rose-600',
+    tag: 'Vintage Crimson & Memories'
+  },
+  'midnight-onyx': {
+    name: 'Midnight Onyx 🖤👑',
+    color: 'bg-stone-900 text-stone-100 border-stone-800',
+    accent: 'text-amber-500',
+    tag: 'Bold & Regal'
+  },
+
+  // Birthday Templates (Girl)
   'blush-rose': {
-    name: 'Blush Rose 🌸',
+    name: 'Blush Blossom 🌸',
     color: 'bg-rose-50 text-rose-700 border-rose-200',
     accent: 'text-rose-600',
     tag: 'Dreamy & Floral'
@@ -34,17 +56,11 @@ const TEMPLATE_CONFIG = {
     accent: 'text-rose-600',
     tag: 'Romantic & Soft'
   },
-  'golden-birthday': {
-    name: 'Golden Birthday 🎂',
-    color: 'bg-amber-50 text-amber-700 border-amber-200',
-    accent: 'text-amber-600',
-    tag: 'Celebration & Joy'
-  },
-  'polaroid-scrapbook': {
-    name: 'Retro Polaroid 📸',
-    color: 'bg-rose-50 text-rose-700 border-rose-200',
-    accent: 'text-rose-600',
-    tag: 'Vintage Crimson & Memories'
+  'princess-peach': {
+    name: 'Princess Peach ✨',
+    color: 'bg-orange-50 text-orange-700 border-orange-200',
+    accent: 'text-orange-600',
+    tag: 'Sparkling & Joy'
   },
   'lavender-dream': {
     name: 'Lavender Dream 💜',
@@ -52,23 +68,11 @@ const TEMPLATE_CONFIG = {
     accent: 'text-purple-600',
     tag: 'Calming & Poetic'
   },
-  'heartfelt-apology': {
-    name: 'Heartfelt Hug 🥺',
-    color: 'bg-purple-50 text-purple-700 border-purple-200',
-    accent: 'text-purple-600',
-    tag: 'Sweet Apology & Love'
-  },
-  'princess-peach': {
-    name: 'Princess Peach ✨',
-    color: 'bg-orange-50 text-orange-700 border-orange-200',
-    accent: 'text-orange-600',
-    tag: 'Sparkling & Joy'
-  },
-  'midnight-onyx': {
-    name: 'Midnight Onyx 🖤',
-    color: 'bg-stone-900 text-stone-100 border-stone-800',
-    accent: 'text-amber-500',
-    tag: 'Bold & Regal'
+  'cinderella-sky': {
+    name: 'Cinderella Sky 🩵✨',
+    color: 'bg-sky-50 text-sky-700 border-sky-200',
+    accent: 'text-sky-600',
+    tag: 'Fairytale & Dreamy'
   },
   'emerald-luxe': {
     name: 'Emerald Luxe 🌿',
@@ -76,19 +80,100 @@ const TEMPLATE_CONFIG = {
     accent: 'text-emerald-600',
     tag: 'Opulent & Rich'
   },
-  'cinderella-sky': {
-    name: 'Cinderella Sky 🩵',
-    color: 'bg-sky-50 text-sky-700 border-sky-200',
-    accent: 'text-sky-600',
-    tag: 'Fairytale & Dreamy'
-  },
+
+  // Romance & Anniversary Templates
   'velvet-romance': {
-    name: 'Velvet Romance ❤️',
+    name: 'Velvet Rose ❤️',
     color: 'bg-rose-50 text-rose-700 border-rose-200',
     accent: 'text-rose-600',
     tag: 'Deep Romance & Velvet'
+  },
+  'sunset-romance': {
+    name: 'Sunset Glow 🌅',
+    color: 'bg-amber-50 text-amber-800 border-amber-200',
+    accent: 'text-amber-600',
+    tag: 'Warm Golden Hour'
+  },
+  'celestial-love': {
+    name: 'Celestial Indigo 🌌',
+    color: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+    accent: 'text-indigo-600',
+    tag: 'Starlit & Cosmic'
+  },
+  'amethyst-romance': {
+    name: 'Amethyst Dream 💜✨',
+    color: 'bg-purple-50 text-purple-700 border-purple-200',
+    accent: 'text-purple-600',
+    tag: 'Lavender Whispers'
+  },
+
+  // Memory Scrapbook Templates
+  'vintage-kodak': {
+    name: 'Vintage Kodak 📸',
+    color: 'bg-amber-50 text-amber-800 border-amber-200',
+    accent: 'text-amber-600',
+    tag: 'Warm Nostalgia'
+  },
+  'neon-nostalgia': {
+    name: 'Electric Vibes ⚡',
+    color: 'bg-teal-50 text-teal-700 border-teal-200',
+    accent: 'text-teal-600',
+    tag: 'Neon Glow & Fun'
+  },
+  'cozy-memories': {
+    name: 'Cozy Sunset ☕',
+    color: 'bg-orange-50 text-orange-800 border-orange-200',
+    accent: 'text-orange-600',
+    tag: 'Sweet Moments'
+  },
+
+  // Heartfelt Apology Templates
+  'gentle-peace': {
+    name: 'Olive Peace 🕊️',
+    color: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    accent: 'text-emerald-600',
+    tag: 'Gentle & Healing'
+  },
+  'heartfelt-apology': {
+    name: 'Heartfelt Hug 🥺',
+    color: 'bg-purple-50 text-purple-700 border-purple-200',
+    accent: 'text-purple-600',
+    tag: 'Sweet Apology & Love'
+  },
+  'sweet-forgive': {
+    name: 'Sweet Hugs 🥺',
+    color: 'bg-purple-50 text-purple-700 border-purple-200',
+    accent: 'text-purple-600',
+    tag: 'Warm Forgiveness'
+  },
+  'fresh-start': {
+    name: 'Sunrise Renewal 🌤️',
+    color: 'bg-amber-50 text-amber-800 border-amber-200',
+    accent: 'text-amber-600',
+    tag: 'Fresh Beginnings'
   }
 };
+
+/**
+ * Format timestamp into detailed readable date-time (e.g. "Oct 29, 2026, 6:30 PM")
+ */
+export function formatDateTime(dateString) {
+  if (!dateString) return 'Recently';
+  try {
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return 'Recently';
+    return d.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  } catch {
+    return dateString;
+  }
+}
 
 export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
   const [copied, setCopied] = useState(false);
@@ -104,7 +189,10 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
     tag: 'Custom'
   };
 
+  // Support canonical /s/:slug URL
   const shareUrl = `${window.location.origin}/s/${encodeURIComponent(site.slug)}`;
+  const viewCount = Number(site.viewCount) || 0;
+  const hasBeenOpened = viewCount > 0;
 
   const letterObj = typeof site.letter === 'object' && site.letter !== null ? site.letter : null;
   const letterText = letterObj ? (letterObj.content || letterObj.message || '') : (typeof site.letter === 'string' ? site.letter : '');
@@ -120,42 +208,43 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const formattedDate = site.createdAt
-    ? new Date(site.createdAt).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      })
+  const formattedCreatedDate = site.createdAt
+    ? formatDateTime(site.createdAt)
     : 'Unknown Date';
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-3xl max-h-[92vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="relative w-full max-w-3xl max-h-[90vh] flex flex-col bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden">
         
         {/* Header */}
-        <div className="px-6 py-5 border-b border-slate-100 flex items-start justify-between bg-gradient-to-r from-slate-50/80 via-white to-rose-50/30">
+        <div className="px-5 sm:px-6 py-4 sm:py-5 border-b border-slate-100 flex items-start justify-between bg-gradient-to-r from-slate-50/80 via-white to-rose-50/30">
           <div className="flex-1 min-w-0 pr-4">
-            <div className="flex items-center gap-2 flex-wrap mb-1.5">
-              <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full border ${tpl.color}`}>
+            <div className="flex items-center gap-2 flex-wrap mb-1">
+              <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${tpl.color}`}>
                 {tpl.name}
               </span>
               {site.occasion && (
-                <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
                   {site.occasion}
                 </span>
               )}
-              <span className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
-                <Eye className="w-3 h-3" />
-                {site.viewCount || 0} views
-              </span>
+              {hasBeenOpened ? (
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Opened ({viewCount} {viewCount === 1 ? 'view' : 'views'})</span>
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                  <Clock className="w-3 h-3 text-amber-600" />
+                  <span>Not Opened Yet</span>
+                </span>
+              )}
             </div>
-            <h2 className="text-xl sm:text-2xl font-semibold font-bold text-slate-800 truncate">
-              {site.title || `Surprise for ${site.recipientName}`}
+            <h2 className="text-lg sm:text-xl font-bold text-slate-800 truncate">
+              {site.title || `Surprise for ${site.recipientName || 'Friend'}`}
             </h2>
             <p className="text-xs text-slate-400 mt-0.5">
-              Slug: <code className="text-rose-600 font-mono font-medium">/{site.slug}</code> • Created {formattedDate}
+              Slug: <code className="text-rose-600 font-mono font-medium">/{site.slug}</code> • Created {formattedCreatedDate}
             </p>
           </div>
 
@@ -169,8 +258,96 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
         </div>
 
         {/* Content Body - Scrollable */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-5">
           
+          {/* Requirement 1: Prominent Seen Status Banner at Top */}
+          {hasBeenOpened ? (
+            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center gap-3.5 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-200/80 flex items-center justify-center shrink-0 text-emerald-700 text-lg">
+                🟢
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h4 className="text-sm font-bold text-emerald-950">
+                    Recipient Opened This Surprise!
+                  </h4>
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-200/80 text-emerald-800">
+                    Viewed {viewCount} {viewCount === 1 ? 'time' : 'times'}
+                  </span>
+                </div>
+                <p className="text-xs text-emerald-700 font-medium mt-0.5">
+                  Last viewed: {formatDateTime(site.lastViewedAt)}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-center gap-3.5 shadow-2xs">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 border border-amber-200/80 flex items-center justify-center shrink-0 text-amber-700 text-lg">
+                ⏳
+              </div>
+              <div className="flex-1 min-w-0">
+                <h4 className="text-sm font-bold text-amber-950">
+                  Not Opened Yet — Recipient has not opened this surprise link yet.
+                </h4>
+                <p className="text-xs text-amber-700 font-medium mt-0.5">
+                  (0 views recorded)
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Requirement 2: Two Distinct, Side-by-Side Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Card 1: Birthday Person / Recipient */}
+            <div className="p-4.5 rounded-2xl bg-gradient-to-br from-rose-50/80 to-pink-50/40 border border-rose-200/80 shadow-2xs">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-rose-600 uppercase tracking-wider">
+                  <span className="text-sm">🎂</span>
+                  <span>Birthday Person / Recipient</span>
+                </div>
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-rose-700 border border-rose-200 shadow-2xs">
+                  {site.occasion || 'Birthday'}
+                </span>
+              </div>
+              <p className="text-lg font-extrabold text-slate-800 truncate" title={site.recipientName || 'Not specified'}>
+                {site.recipientName || 'Not specified'}
+              </p>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="text-xs text-rose-600/90 font-semibold">
+                  Role: Celebration Star / Recipient
+                </span>
+              </div>
+            </div>
+
+            {/* Card 2: Created By (Sender) */}
+            <div className="p-4.5 rounded-2xl bg-gradient-to-br from-indigo-50/70 to-blue-50/30 border border-indigo-200/80 shadow-2xs">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-600 uppercase tracking-wider">
+                  <span className="text-sm">✍️</span>
+                  <span>Created By (Sender)</span>
+                </div>
+                {site.relationship && (
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-white text-indigo-700 border border-indigo-200 shadow-2xs">
+                    {site.relationship}
+                  </span>
+                )}
+              </div>
+              <p className="text-lg font-extrabold text-slate-800 truncate" title={site.senderName || 'Anonymous'}>
+                {site.senderName || 'Anonymous'}
+              </p>
+              <div className="mt-1 flex items-center gap-2 flex-wrap">
+                <span className="text-xs text-indigo-600/90 font-semibold">
+                  Role: Surprise Creator / Sender
+                </span>
+                {site.senderNickname && (
+                  <span className="text-xs text-slate-500 font-medium">
+                    • Nickname: "{site.senderNickname}"
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Share Link Banner */}
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="w-full sm:w-auto flex-1 min-w-0">
@@ -209,29 +386,6 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
                 <span>Open View</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
-            </div>
-          </div>
-
-          {/* Recipient & Sender Metadata */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-2xl bg-rose-50/50 border border-rose-100/70">
-              <div className="flex items-center gap-2 text-xs font-semibold text-rose-500 uppercase tracking-wider mb-1">
-                <Heart className="w-3.5 h-3.5" />
-                <span>Recipient (Who It's For)</span>
-              </div>
-              <p className="text-base font-bold text-slate-800">
-                {site.recipientName || 'Not specified'}
-              </p>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                <User className="w-3.5 h-3.5" />
-                <span>Sender (Created By)</span>
-              </div>
-              <p className="text-base font-bold text-slate-800">
-                {site.senderName || 'Anonymous Creator'}
-              </p>
             </div>
           </div>
 
@@ -376,10 +530,10 @@ export default function SiteDetailModal({ site, onClose, onDelete, onToast }) {
         </div>
 
         {/* Footer Actions */}
-        <div className="px-6 py-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
+        <div className="px-5 sm:px-6 py-3.5 sm:py-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-between">
           <button
             onClick={() => {
-              if (window.confirm(`Are you sure you want to permanently delete this surprise site for "${site.recipientName}"?`)) {
+              if (window.confirm(`Are you sure you want to permanently delete this surprise site for "${site.recipientName || site.slug}"?`)) {
                 onDelete(site.id || site.slug);
                 onClose();
               }
