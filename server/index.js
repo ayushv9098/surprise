@@ -1,12 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import fs from 'node:fs';
-import path from 'node:path';
+import path from 'node:url';
 import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
 import { db } from './db.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -60,7 +61,8 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
-    service: 'dearly-backend'
+    service: 'dearly-backend',
+    redis: 'upstash-active'
   });
 });
 
@@ -82,10 +84,10 @@ const BOT_USER_AGENTS = [
 /**
  * Public: Get site by slug (registers real view count when browser client loads)
  */
-app.get('/api/sites/:slug', (req, res) => {
+app.get('/api/sites/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
-    const site = db.getSiteBySlug(slug, { increment: true });
+    const site = await db.getSiteBySlug(slug, { increment: true });
 
     if (!site) {
       return res.status(404).json({
@@ -109,7 +111,7 @@ app.get('/api/sites/:slug', (req, res) => {
  * NOTE: Bot crawls and initial SSR HTML requests use increment: false so link unfurls don't inflate view count!
  * Real view is registered when browser executes and hits /api/sites/:slug.
  */
-app.get('/s/:slug', (req, res) => {
+app.get('/s/:slug', async (req, res) => {
   const { slug } = req.params;
   const userAgent = req.headers['user-agent'] || '';
   const isBot = BOT_USER_AGENTS.some((bot) => userAgent.toLowerCase().includes(bot.toLowerCase()));
@@ -125,7 +127,7 @@ app.get('/s/:slug', (req, res) => {
   try {
     let html = fs.existsSync(htmlFile) ? fs.readFileSync(htmlFile, 'utf-8') : '';
     // Increment: false ensures bot scrapers & initial HTML requests do NOT artificially mark as opened/viewed
-    const site = db.getSiteBySlug(slug, { increment: false });
+    const site = await db.getSiteBySlug(slug, { increment: false });
 
     if (site && html) {
       const pageTitle = `${site.title || `Special Surprise for ${site.recipientName}`} — Dearly`;
@@ -161,7 +163,7 @@ app.get('/s/:slug', (req, res) => {
 /**
  * Public/Builder: Create and persist a new surprise website
  */
-app.post('/api/sites', (req, res) => {
+app.post('/api/sites', async (req, res) => {
   try {
     const payload = req.body;
     if (!payload || typeof payload !== 'object') {
@@ -174,7 +176,7 @@ app.post('/api/sites', (req, res) => {
       });
     }
 
-    const newSite = db.createSite(payload);
+    const newSite = await db.createSite(payload);
     res.status(201).json({
       success: true,
       message: 'Surprise website created successfully',
@@ -216,9 +218,9 @@ app.use('/api/admin', requireAdminAuth);
 /**
  * Admin: Get dashboard metrics & summary
  */
-app.get('/api/admin/metrics', (req, res) => {
+app.get('/api/admin/metrics', async (req, res) => {
   try {
-    const metrics = db.getMetrics();
+    const metrics = await db.getMetrics();
     res.json({
       success: true,
       metrics
@@ -232,10 +234,10 @@ app.get('/api/admin/metrics', (req, res) => {
 /**
  * Admin: List sites with optional search, template filter, sorting, and pagination
  */
-app.get('/api/admin/sites', (req, res) => {
+app.get('/api/admin/sites', async (req, res) => {
   try {
     const { search, template, sortBy, page, limit, status } = req.query;
-    const allSites = db.getAllSites({ search, template, sortBy, status });
+    const allSites = await db.getAllSites({ search, template, sortBy, status });
     const total = allSites.length;
 
     let sites = allSites;
@@ -266,10 +268,10 @@ app.get('/api/admin/sites', (req, res) => {
 /**
  * Admin: Delete a site by id or slug
  */
-app.delete('/api/admin/sites/:id', (req, res) => {
+app.delete('/api/admin/sites/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = db.deleteSite(id);
+    const deleted = await db.deleteSite(id);
 
     if (!deleted) {
       return res.status(404).json({
@@ -291,9 +293,9 @@ app.delete('/api/admin/sites/:id', (req, res) => {
 /**
  * Admin: Export all sites as JSON file download
  */
-app.get('/api/admin/export', (req, res) => {
+app.get('/api/admin/export', async (req, res) => {
   try {
-    const sites = db.getAllSites();
+    const sites = await db.getAllSites();
     const exportData = {
       exportedAt: new Date().toISOString(),
       generator: 'Dearly Admin Control Panel',

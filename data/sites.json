@@ -1,5 +1,164 @@
 [
   {
+    "id": "wc-ashuu-bhai-gihdt",
+    "slug": "ashuu-bhai-gihdt",
+    "title": "Special Birthday Surprise for Ashuu Bhai 🎂👑",
+    "recipientName": "Ashuu Bhai",
+    "senderName": "Your Loved Ones",
+    "occasion": "Happy Birthday",
+    "subtitle": "Wishing the coolest brother & friend a legendary birthday celebration!",
+    "category": "birthday",
+    "gender": "boy",
+    "template": "golden-birthday",
+    "templateId": "golden-birthday",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Cheers to Another Year of Greatness! 🌟🥂",
+    "photos": [
+      {
+        "id": "ashuu-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Cheers to Another Year of Greatness! 🌟🥂",
+        "tag": "Birthday King"
+      },
+      {
+        "id": "ashuu-p2",
+        "url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
+        "caption": "Golden moments, laughter, and brotherhood forever! ⚡🎉",
+        "tag": "Golden Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "👑",
+        "title": "Golden Heart 👑",
+        "desc": "Always standing strong for everyone with unconditional support, warmth, and brotherhood."
+      },
+      {
+        "icon": "⚡",
+        "title": "Unmatched Energy ⚡",
+        "desc": "Bringing unmatched vibes, smiles, and uplifting joy wherever you go!"
+      },
+      {
+        "icon": "🌟",
+        "title": "True Inspiration 🌟",
+        "desc": "A brother who inspires everyone around him to dream bigger, laugh louder, and shine brighter."
+      }
+    ],
+    "letter": {
+      "title": "A Special Birthday Letter For You",
+      "content": "Dearest Ashuu Bhai, 👑🎂\n\nWishing you the happiest and most blessed Birthday! You are not just a brother but a true pillar of strength, laughter, and support.\n\nMay this year bring you unstoppable success, good health, boundless happiness, and every dream fulfilled. Keep smiling, keep inspiring, and shine brighter than gold!\n\nHave a grand and unforgettable celebration, Bhai! 🥂🌟",
+      "signOff": "With respect & love always, Your Loved Ones 👑✨",
+      "sealEmoji": "👑",
+      "waxColor": "#D97706"
+    },
+    "songId": "baar-baar-din-ye-aaye",
+    "viewCount": 2,
+    "createdAt": "2026-10-29T12:00:00.000Z",
+    "updatedAt": "2026-10-29T12:00:00.000Z",
+    "lastViewedAt": "2026-10-29T15:01:54.557Z"
+  },
+  {
+    "templateId": "cinderella-sky",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "pall",
+    "senderName": "avinfra",
+    "occasion": "Happy Birthday",
+    "subtitle": "May your special day be pure magic, smiles & starlight.",
+    "heroPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Shining Like a Fairytale Star! 🩵👑",
+    "photos": [
+      {
+        "id": "cinderella-p1",
+        "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        "caption": "Pure magic, smiles and fairy starlight! 🩵✨",
+        "tag": "Fairy Princess"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🩵",
+        "title": "Pure Radiance 🩵",
+        "desc": "Your smile lights up every room like a bright powder blue sky filled with starlight!"
+      },
+      {
+        "icon": "✨",
+        "title": "Angelic Kindness ✨",
+        "desc": "You have the gentlest heart, sprinkling fairy dust, sweet smiles, and warmth wherever you go!"
+      },
+      {
+        "icon": "👑",
+        "title": "Fairytale Spirit 👑",
+        "desc": "A true princess in every sense — graceful, enchanting, and spreading endless fairy joy!"
+      }
+    ],
+    "letter": {
+      "title": "A Fairytale Wish For You",
+      "content": "Sweetest pall, 🩵✨\n\nMay your birthday feel like a dreamy fairytale come to life! You bring so much sweetness, angelic starlight, and genuine happiness into the world.\n\nNever stop believing in magic, laughing from your heart, and dancing like Cinderella under the sky. Wishing you boundless joy, sweet dreams, and endless smiles!\n\nHappy Birthday, Fairy Princess! 🩵👑✨",
+      "signOff": "With fairy hugs & endless love, avinfra 🩵✨",
+      "sealEmoji": "🩵",
+      "waxColor": "#0284C7"
+    },
+    "songId": "baar-baar-din-ye-aaye",
+    "id": "wc-mvtlfe7h-epa8",
+    "slug": "pall-0k2ib",
+    "updatedAt": "2026-10-29T13:42:51.848Z",
+    "createdAt": "2026-10-29T13:42:51.821Z",
+    "template": "cinderella-sky",
+    "viewCount": 0
+  },
+  {
+    "templateId": "blush-rose",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "ayush",
+    "senderName": "abhi ",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Stay Wonderful Always! 🌸✨",
+    "photos": [
+      {
+        "id": "blush-p1",
+        "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        "caption": "Stay Wonderful Always! 🌸✨",
+        "tag": "Birthday Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌸",
+        "title": "Pure Sunshine",
+        "desc": "The effortless way you turn every ordinary moment into joy!"
+      },
+      {
+        "icon": "✨",
+        "title": "Gentle Soul",
+        "desc": "The quiet kindness and sparkling positivity you share with everyone!"
+      },
+      {
+        "icon": "💖",
+        "title": "Irreplaceable",
+        "desc": "A truly irreplaceable friend whose presence makes everything brighter!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "My dearest ayush,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together.\n\nForever & always,\nElena 💖",
+      "signOff": "Forever & always, abhi 🌸",
+      "sealEmoji": "🌸",
+      "waxColor": "#E11D48"
+    },
+    "songId": "insta-acoustic-romance",
+    "id": "wc-mvtldal8-yd4l",
+    "slug": "ayush-o85fa",
+    "updatedAt": "2026-10-29T13:41:13.827Z",
+    "createdAt": "2026-10-29T13:41:13.820Z",
+    "template": "blush-rose",
+    "viewCount": 2,
+    "lastViewedAt": "2026-10-29T13:41:18.875Z"
+  },
+  {
     "recipientName": "Rohan",
     "senderName": "Pooja",
     "occasion": "birthday",

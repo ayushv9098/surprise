@@ -3,7 +3,8 @@ import { compressImageFile as compressPhoto, getDataUrlSizeKB } from './imageCom
 
 export { compressPhoto as compressImageFile, getDataUrlSizeKB };
 
-const STORAGE_KEY = 'my_created_surprises';
+const STORAGE_KEYS = ['dearly_saved_surprises', 'my_created_surprises'];
+const PRIMARY_STORAGE_KEY = 'dearly_saved_surprises';
 
 const getApiBase = () => {
   if (typeof window !== 'undefined' && typeof window.document !== 'undefined') {
@@ -90,13 +91,38 @@ export const decompressSurprise = (encodedStr) => {
 };
 
 /**
- * Get all surprises saved locally in the browser
+ * Get all surprises saved locally in the browser.
+ * Supports both modern 'dearly_saved_surprises' and legacy 'my_created_surprises'.
  */
 export const getSavedSurprises = () => {
   try {
     if (typeof localStorage === 'undefined') return [];
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const list = [];
+    const seen = new Set();
+
+    for (const key of STORAGE_KEYS) {
+      try {
+        const raw = localStorage.getItem(key);
+        if (!raw) continue;
+        const parsed = JSON.parse(raw);
+        const array = Array.isArray(parsed) ? parsed : [parsed];
+        for (const item of array) {
+          if (!item || typeof item !== 'object') continue;
+          const identifier = (item.slug || item.id || item.data?.slug || item.data?.id || '').toLowerCase();
+          if (identifier) {
+            if (!seen.has(identifier)) {
+              seen.add(identifier);
+              list.push(item);
+            }
+          } else {
+            list.push(item);
+          }
+        }
+      } catch (parseErr) {
+        // ignore parse errors for a specific key
+      }
+    }
+    return list;
   } catch (e) {
     console.warn('localStorage read failed:', e);
     return [];
@@ -104,7 +130,7 @@ export const getSavedSurprises = () => {
 };
 
 /**
- * Save surprise locally
+ * Save surprise locally across storage keys
  */
 export const saveSurpriseLocally = (surprise) => {
   try {
@@ -120,23 +146,24 @@ export const saveSurpriseLocally = (surprise) => {
       list.unshift({ ...cleanSurprise, createdAt: cleanSurprise.createdAt || new Date().toISOString() });
     }
 
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 50)));
-      return true;
-    } catch (quotaError) {
-      console.warn('localStorage quota exceeded, trimming saved surprises list:', quotaError);
+    const payloadString = JSON.stringify(list.slice(0, 50));
+    for (const key of STORAGE_KEYS) {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(0, 10)));
-        return true;
-      } catch {
+        localStorage.setItem(key, payloadString);
+      } catch (quotaError) {
+        console.warn(`localStorage quota exceeded for ${key}, trimming saved surprises list:`, quotaError);
         try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify([cleanSurprise]));
-          return true;
+          localStorage.setItem(key, JSON.stringify(list.slice(0, 10)));
         } catch {
-          return false;
+          try {
+            localStorage.setItem(key, JSON.stringify([cleanSurprise]));
+          } catch {
+            // ignore
+          }
         }
       }
     }
+    return true;
   } catch (e) {
     console.warn('localStorage write failed:', e);
     return false;
@@ -150,7 +177,12 @@ export const deleteSavedSurprise = (id) => {
   try {
     if (typeof localStorage === 'undefined') return false;
     const list = getSavedSurprises().filter((s) => s.id !== id && s.slug !== id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    const payloadString = JSON.stringify(list);
+    for (const key of STORAGE_KEYS) {
+      try {
+        localStorage.setItem(key, payloadString);
+      } catch {}
+    }
     return true;
   } catch {
     return false;
@@ -267,10 +299,51 @@ export const saveSurprise = async (payload = {}) => {
 };
 
 /**
- * Load Surprise:
- * Checks URL ?d= parameter, then checks API /api/sites/:slug, falls back to localStorage.
+ * Fire-and-forget background sync / re-publish of a local keepsake to the cloud backend API.
+ * Never throws, never blocks the caller.
  */
-export const loadSurprise = async (slugOrHash) => {
+export const backgroundSyncToBackend = (payload) => {
+  if (!payload || typeof payload !== 'object') return;
+  try {
+    const cleanPayload = sanitizeAudioPayload(payload);
+    if (!cleanPayload.recipientName && !cleanPayload.title && !cleanPayload.slug && !cleanPayload.templateId) {
+      return;
+    }
+
+    fetch(`${getApiBase()}/api/sites`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cleanPayload),
+    })
+      .then(async (res) => {
+        if (res.ok) {
+          const resJson = await res.json().catch(() => ({}));
+          console.info(`[Dearly Auto-Sync] Successfully re-synced keepsake "${cleanPayload.slug || cleanPayload.id}" to cloud backend.`, resJson);
+        } else {
+          console.warn(`[Dearly Auto-Sync] Cloud backend returned status ${res.status} while re-syncing.`);
+        }
+      })
+      .catch((err) => {
+        console.warn('[Dearly Auto-Sync] Background re-sync network notice (backend offline or cold-start):', err);
+      });
+  } catch (err) {
+    console.warn('[Dearly Auto-Sync] Error in backgroundSyncToBackend:', err);
+  }
+};
+
+/**
+ * Load Surprise:
+ * Checks URL ?d= parameter, then checks API /api/sites/:slug.
+ * If backend returns 404, cold-starts, or is unavailable:
+ *   - Checks localStorage for a keepsake with matching slug or id.
+ *   - If found in localStorage:
+ *       - Automatically fires background POST /api/sites to re-sync / re-publish to backend cloud DB!
+ *       - Returns the keepsake data immediately so the page renders without 404 error!
+ * If not found anywhere, returns null.
+ */
+export const loadSurprise = async (slugOrParams) => {
   // Check if current browser query string contains 'd'
   if (typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
@@ -278,48 +351,79 @@ export const loadSurprise = async (slugOrHash) => {
     if (dParam) {
       const decompressed = decompressSurprise(dParam);
       if (decompressed) {
+        if (decompressed.slug || decompressed.id) {
+          backgroundSyncToBackend(decompressed);
+        }
         return decompressed;
       }
     }
   }
 
-  // If slugOrHash itself is or contains a query string or full URL
-  let targetSlug = slugOrHash;
-  if (typeof slugOrHash === 'string' && (slugOrHash.includes('?') || slugOrHash.includes('='))) {
-    try {
-      const queryPart = slugOrHash.includes('?') ? slugOrHash.split('?')[1] : slugOrHash;
-      const params = new URLSearchParams(queryPart);
-      const dParam = params.get('d');
-      if (dParam) {
-        const decompressed = decompressSurprise(dParam);
-        if (decompressed) return decompressed;
-      }
-      const extracted = params.get('v') || params.get('id') || params.get('slug');
-      if (extracted) {
-        targetSlug = extracted;
-      }
-    } catch {
-      // fallback
+  // Parse targetSlug from string or object
+  let targetSlug = null;
+  let dParam = null;
+
+  if (typeof slugOrParams === 'string') {
+    let str = slugOrParams.trim();
+    if (str.includes('/s/')) {
+      const parts = str.split('/s/');
+      str = parts[parts.length - 1];
     }
+    if (str.includes('?')) {
+      const [pathPart, queryPart] = str.split('?');
+      if (!targetSlug && pathPart && !pathPart.startsWith('http')) {
+        targetSlug = pathPart;
+      }
+      try {
+        const sp = new URLSearchParams(queryPart);
+        dParam = sp.get('d') || dParam;
+        const extracted = sp.get('v') || sp.get('id') || sp.get('slug');
+        if (extracted) targetSlug = extracted;
+      } catch {}
+    } else if (str.includes('=')) {
+      try {
+        const sp = new URLSearchParams(str);
+        dParam = sp.get('d') || dParam;
+        const extracted = sp.get('v') || sp.get('id') || sp.get('slug');
+        if (extracted) targetSlug = extracted;
+      } catch {}
+    } else {
+      targetSlug = str;
+    }
+  } else if (slugOrParams && typeof slugOrParams === 'object') {
+    targetSlug = slugOrParams.slug || slugOrParams.id || slugOrParams.v || slugOrParams.targetSlug || null;
+    dParam = slugOrParams.d || null;
   }
 
-  // If targetSlug is missing, try reading from window.location.pathname or search in browser
-  if (!targetSlug && typeof window !== 'undefined') {
-    if (window.location?.pathname) {
+  // Check window location if targetSlug is still not resolved
+  if (typeof window !== 'undefined') {
+    if (!dParam && window.location.search) {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        dParam = params.get('d');
+        if (!targetSlug) {
+          targetSlug = params.get('v') || params.get('id') || params.get('slug');
+        }
+      } catch {}
+    }
+    if (!targetSlug && window.location.pathname) {
       const parts = window.location.pathname.split('/').filter(Boolean);
-      if (parts.length === 2 && parts[0] === 's') {
+      if (parts.length >= 2 && parts[0].toLowerCase() === 's') {
         targetSlug = parts[1];
-      } else if (parts.length === 1 && parts[0] !== 'admin') {
+      } else if (parts.length === 1 && !['admin', 'builder', 'create', 'templates', 'about', 'privacy', 'terms'].includes(parts[0].toLowerCase())) {
         targetSlug = parts[0];
       }
     }
-    if (!targetSlug && window.location?.search) {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        targetSlug = params.get('v') || params.get('id') || params.get('slug');
-      } catch {
-        // fallback
+  }
+
+  // If dParam was found in query/object
+  if (dParam) {
+    const decompressed = decompressSurprise(dParam);
+    if (decompressed) {
+      if (decompressed.slug || decompressed.id) {
+        backgroundSyncToBackend(decompressed);
       }
+      return decompressed;
     }
   }
 
@@ -329,13 +433,85 @@ export const loadSurprise = async (slugOrHash) => {
     } catch {
       targetSlug = targetSlug.trim();
     }
+    targetSlug = targetSlug.split('#')[0].replace(/\/+$/, '');
   }
 
   // If targetSlug itself looks like a compressed string (longer than standard slug)
   if (targetSlug && targetSlug.length > 40 && !targetSlug.includes('-')) {
     const decompressed = decompressSurprise(targetSlug);
-    if (decompressed) return decompressed;
+    if (decompressed) {
+      if (decompressed.slug || decompressed.id) {
+        backgroundSyncToBackend(decompressed);
+      }
+      return decompressed;
+    }
   }
+
+  // Helper function to find keepsake in localStorage and trigger auto-resync
+  const findInLocalStorageAndSync = () => {
+    if (!targetSlug) return null;
+    const cleanTargetSlug = targetSlug.toLowerCase().trim();
+
+    // 1. Search in saved surprises list (both dearly_saved_surprises & my_created_surprises)
+    const saved = getSavedSurprises();
+    const localMatch = saved.find((item) => {
+      if (!item) return false;
+      const iSlug = (item.slug || item.data?.slug || item.site?.slug || '').toLowerCase().trim();
+      const iId = (item.id || item.data?.id || item.site?.id || '').toLowerCase().trim();
+      return (iSlug && iSlug === cleanTargetSlug) || (iId && iId === cleanTargetSlug);
+    });
+
+    if (localMatch) {
+      const keepsakeData = (localMatch.data && (localMatch.data.recipientName || localMatch.data.templateId || localMatch.data.scenes))
+        ? localMatch.data
+        : (localMatch.site && (localMatch.site.recipientName || localMatch.site.templateId || localMatch.site.scenes))
+        ? localMatch.site
+        : localMatch;
+
+      const payloadToSync = {
+        ...localMatch,
+        ...keepsakeData,
+        slug: keepsakeData.slug || localMatch.slug || targetSlug,
+        id: keepsakeData.id || localMatch.id,
+      };
+
+      // Automatically fire background POST /api/sites to re-sync / re-publish to backend cloud DB!
+      backgroundSyncToBackend(payloadToSync);
+
+      // Return keepsake data so the page renders instantly without 404 error!
+      return payloadToSync;
+    }
+
+    // 2. Check direct individual key in localStorage
+    if (typeof localStorage !== 'undefined') {
+      const directKeys = [
+        targetSlug,
+        `surprise_${targetSlug}`,
+        `dearly_${targetSlug}`,
+        `site_${targetSlug}`
+      ];
+      for (const dk of directKeys) {
+        try {
+          const directRaw = localStorage.getItem(dk);
+          if (directRaw) {
+            const parsed = JSON.parse(directRaw);
+            if (parsed && typeof parsed === 'object') {
+              const resObj = parsed.site || parsed.data || parsed;
+              const payloadToSync = {
+                ...parsed,
+                ...resObj,
+                slug: resObj.slug || parsed.slug || targetSlug,
+              };
+              backgroundSyncToBackend(payloadToSync);
+              return payloadToSync;
+            }
+          }
+        } catch {}
+      }
+    }
+
+    return null;
+  };
 
   // Try fetching from backend API
   if (targetSlug) {
@@ -349,26 +525,21 @@ export const loadSurprise = async (slugOrHash) => {
       clearTimeout(timeoutId);
 
       if (res.ok) {
-        const json = await res.json();
-        if (json && json.site) return json.site;
-        if (json && json.data) return json.data;
-        return json;
+        const json = await res.json().catch(() => null);
+        const site = json?.site || json?.data || json;
+        if (site && (site.recipientName || site.templateId || site.scenes || site.slug || site.title)) {
+          return site;
+        }
       }
+      // If res is not ok (404, 500, etc.), fall through to check localStorage!
     } catch {
-      // API failed or offline
+      // API failed, offline, or timed out - fall through to check localStorage!
     }
 
-    // Try checking localStorage
-    const saved = getSavedSurprises();
-    const localMatch = saved.find(
-      (item) =>
-        (item.slug && item.slug.toLowerCase() === targetSlug.toLowerCase()) ||
-        (item.id && item.id.toLowerCase() === targetSlug.toLowerCase())
-    );
-    if (localMatch) {
-      return (localMatch.data && (localMatch.data.recipientName || localMatch.data.templateId))
-        ? localMatch.data
-        : localMatch;
+    // If backend returned 404 or failed: check localStorage & background re-sync
+    const localKeepsake = findInLocalStorageAndSync();
+    if (localKeepsake) {
+      return localKeepsake;
     }
   }
 

@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {
   Loader2,
   ArrowRight,
+  HeartCrack,
+  RefreshCw,
+  Sparkles,
+  Home,
 } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -87,13 +91,24 @@ export default function App() {
     return 'birthday';
   });
   const [siteData, setSiteData] = useState(null);
+  const [notFoundSlug, setNotFoundSlug] = useState(null);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
-  const [isLoadingSite, setIsLoadingSite] = useState(false);
+  const [isLoadingSite, setIsLoadingSite] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      const pathSegments = window.location.pathname.split('/').filter(Boolean);
+      const firstSegment = pathSegments[0]?.toLowerCase();
+      const isPathSlug = (pathSegments.length >= 2 && firstSegment === 's') || (pathSegments.length === 1 && !KNOWN_ROUTES.includes(firstSegment));
+      return Boolean(isPathSlug || searchParams.get('v') || searchParams.get('id') || searchParams.get('slug') || searchParams.get('d'));
+    }
+    return false;
+  });
   const [toast, setToast] = useState(null);
   const [recipientModalCategory, setRecipientModalCategory] = useState(null);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
   const handleNavigate = (view, templateId = null, categoryId = null) => {
+    setNotFoundSlug(null);
     if (templateId) {
       setSelectedTemplateId(templateId);
     }
@@ -125,6 +140,30 @@ export default function App() {
       }
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleRetryLoad = (slugToRetry) => {
+    const slug = slugToRetry || notFoundSlug;
+    if (!slug) return;
+    setIsLoadingSite(true);
+    loadSurprise(slug)
+      .then((data) => {
+        if (data) {
+          const actualSite = data.site || data.data || data;
+          setSiteData(actualSite);
+          setNotFoundSlug(null);
+          setCurrentView('viewer');
+          setToast({ type: 'success', message: 'Surprise found and loaded!' });
+        } else {
+          setToast({ type: 'info', message: 'Could not find keepsake online or in storage.' });
+        }
+      })
+      .catch(() => {
+        setToast({ type: 'error', message: 'Network error while attempting to retry.' });
+      })
+      .finally(() => {
+        setIsLoadingSite(false);
+      });
   };
 
   // Check URL on load for direct surprise links (/s/slug, ?v=slug, ?d=compressed, ?view=admin, /admin, etc.)
@@ -169,20 +208,24 @@ export default function App() {
 
     if (slug || compressedData) {
       setIsLoadingSite(true);
+      setNotFoundSlug(null);
       loadSurprise(slug || window.location.search)
         .then((data) => {
           if (data) {
             const actualSite = data.site || data.data || data;
             setSiteData(actualSite);
+            setNotFoundSlug(null);
             setCurrentView('viewer');
           } else {
-            setToast({ type: 'error', message: 'Could not load surprise website. Opening creator studio.' });
-            setCurrentView('home');
+            setSiteData(null);
+            setNotFoundSlug(slug || 'unknown');
+            setCurrentView('viewer');
           }
         })
         .catch(() => {
-          setToast({ type: 'error', message: 'Error loading surprise website.' });
-          setCurrentView('home');
+          setSiteData(null);
+          setNotFoundSlug(slug || 'unknown');
+          setCurrentView('viewer');
         })
         .finally(() => {
           setIsLoadingSite(false);
@@ -242,20 +285,24 @@ export default function App() {
         const compressedData = searchParams.get('d');
         if (slug || compressedData) {
           setIsLoadingSite(true);
+          setNotFoundSlug(null);
           loadSurprise(slug || window.location.search)
             .then((data) => {
               if (data) {
                 const actualSite = data.site || data.data || data;
                 setSiteData(actualSite);
+                setNotFoundSlug(null);
                 setCurrentView('viewer');
               } else {
-                setToast({ type: 'error', message: 'Could not load surprise website. Opening creator studio.' });
-                setCurrentView('home');
+                setSiteData(null);
+                setNotFoundSlug(slug || 'unknown');
+                setCurrentView('viewer');
               }
             })
             .catch(() => {
-              setToast({ type: 'error', message: 'Error loading surprise website.' });
-              setCurrentView('home');
+              setSiteData(null);
+              setNotFoundSlug(slug || 'unknown');
+              setCurrentView('viewer');
             })
             .finally(() => {
               setIsLoadingSite(false);
@@ -379,6 +426,101 @@ export default function App() {
         </ErrorBoundary>
         {import.meta.env.DEV && <Agentation />}
       </>
+    );
+  }
+
+  // Not Found / 404 Screen for Surprise Slug
+  if (!isLoadingSite && (currentView === 'viewer' || currentView === 'not-found') && !siteData && notFoundSlug) {
+    return (
+      <div className="min-h-screen bg-[#FFFDFB] flex flex-col items-center justify-center p-6 text-center select-none selection:bg-rose-100 selection:text-rose-600">
+        <div className="w-full max-w-md bg-white border border-rose-100/80 rounded-3xl p-8 shadow-sm">
+          {/* Top Icon */}
+          <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-500 shadow-sm">
+            <HeartCrack className="w-8 h-8" />
+          </div>
+
+          <h2 className="font-bold text-2xl text-gray-900 mb-2">
+            Surprise Not Found
+          </h2>
+
+          <p className="text-sm text-gray-500 leading-relaxed mb-4">
+            We couldn't locate a surprise website for{' '}
+            <code className="px-2 py-0.5 rounded-md bg-gray-100 text-rose-600 font-mono text-xs font-semibold">
+              /s/{notFoundSlug}
+            </code>.
+          </p>
+
+          <p className="text-xs text-gray-400 leading-relaxed mb-6">
+            The link might have a typo, may have expired, or hasn't finished syncing from the creator's device.
+          </p>
+
+          {/* Creator Tip Callout */}
+          <div className="bg-amber-50/70 border border-amber-200/70 rounded-2xl p-4 mb-6 text-left">
+            <div className="flex items-start gap-2.5">
+              <span className="text-base select-none">💡</span>
+              <div className="text-xs text-amber-900 leading-relaxed">
+                <p className="font-semibold mb-0.5">Are you the creator?</p>
+                <p className="text-amber-800/90">
+                  If you made this keepsake on your phone or computer, open this link on that same device once — Dearly will automatically sync and publish it to the cloud so anyone can open it!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-2.5">
+            <button
+              onClick={handleStartCreating}
+              className="w-full py-3 px-4 rounded-xl text-sm font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Create Your Own Surprise</span>
+            </button>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleRetryLoad(notFoundSlug)}
+                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <RefreshCw className="w-3.5 h-3.5 text-gray-500" />
+                <span>Try Again</span>
+              </button>
+
+              <button
+                onClick={() => handleNavigate('home')}
+                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <Home className="w-3.5 h-3.5 text-gray-500" />
+                <span>Return to Home</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <RecipientModal
+          isOpen={Boolean(recipientModalCategory)}
+          category={recipientModalCategory}
+          onSelect={handleRecipientSelect}
+          onClose={() => setRecipientModalCategory(null)}
+          onBack={() => {
+            setRecipientModalCategory(null);
+            setIsCategoryModalOpen(true);
+          }}
+        />
+        <CategoryModal
+          isOpen={isCategoryModalOpen}
+          onSelectCategory={handleCategoryModalSelect}
+          onComingSoon={(cat) => {
+            setToast({
+              type: 'info',
+              message: `${cat.name} template is coming soon! Focus on Birthday or Special Someone.`,
+            });
+          }}
+          onClose={() => setIsCategoryModalOpen(false)}
+        />
+        <Toast toast={toast} onClose={() => setToast(null)} />
+        {import.meta.env.DEV && <Agentation />}
+      </div>
     );
   }
 

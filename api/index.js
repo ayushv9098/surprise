@@ -42,13 +42,14 @@ function requireAdminAuth(req, res, next) {
 }
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', async (req, res) => {
   res.json({
     status: 'ok',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
     service: 'dearly-backend',
-    env: process.env.VERCEL ? 'vercel-serverless' : 'local'
+    env: process.env.VERCEL ? 'vercel-serverless' : 'local',
+    redis: 'upstash-active'
   });
 });
 
@@ -68,10 +69,10 @@ const BOT_USER_AGENTS = [
 ];
 
 // Sites API (Public) - registers real view count when browser client loads
-app.get('/api/sites/:slug', (req, res) => {
+app.get('/api/sites/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
-    const site = db.getSiteBySlug(slug, { increment: true });
+    const site = await db.getSiteBySlug(slug, { increment: true });
     if (!site) return res.status(404).json({ error: 'Surprise site not found', slug });
     res.json({ success: true, site });
   } catch (error) {
@@ -84,7 +85,7 @@ app.get('/api/sites/:slug', (req, res) => {
  * NOTE: Bot crawls and initial SSR HTML requests use increment: false so link unfurls don't inflate view count!
  * Real view is registered when browser executes and hits /api/sites/:slug.
  */
-app.get('/s/:slug', (req, res) => {
+app.get('/s/:slug', async (req, res) => {
   const { slug } = req.params;
   const userAgent = req.headers['user-agent'] || '';
   const isBot = BOT_USER_AGENTS.some((bot) => userAgent.toLowerCase().includes(bot.toLowerCase()));
@@ -100,7 +101,7 @@ app.get('/s/:slug', (req, res) => {
   try {
     let html = fs.existsSync(htmlFile) ? fs.readFileSync(htmlFile, 'utf-8') : '';
     // Increment: false ensures bot scrapers & initial HTML requests do NOT artificially mark as opened/viewed
-    const site = db.getSiteBySlug(slug, { increment: false });
+    const site = await db.getSiteBySlug(slug, { increment: false });
 
     if (site && html) {
       const pageTitle = `${site.title || `Special Surprise for ${site.recipientName}`} — Dearly`;
@@ -133,14 +134,14 @@ app.get('/s/:slug', (req, res) => {
   }
 });
 
-app.post('/api/sites', (req, res) => {
+app.post('/api/sites', async (req, res) => {
   try {
     const payload = req.body;
     if (!payload || typeof payload !== 'object') return res.status(400).json({ error: 'Invalid payload' });
     if (!payload.recipientName && !payload.title) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
-    const newSite = db.createSite(payload);
+    const newSite = await db.createSite(payload);
     res.status(201).json({
       success: true,
       message: 'Surprise website created successfully',
@@ -178,19 +179,19 @@ app.post('/api/admin/login', (req, res) => {
 app.use('/api/admin', requireAdminAuth);
 
 // Admin API (Secured)
-app.get('/api/admin/metrics', (req, res) => {
+app.get('/api/admin/metrics', async (req, res) => {
   try {
-    const metrics = db.getMetrics();
+    const metrics = await db.getMetrics();
     res.json({ success: true, metrics, ...metrics });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch metrics', details: error.message });
   }
 });
 
-app.get('/api/admin/sites', (req, res) => {
+app.get('/api/admin/sites', async (req, res) => {
   try {
     const { search, template, sortBy, page, limit, status } = req.query;
-    const allSites = db.getAllSites({ search, template, sortBy, status });
+    const allSites = await db.getAllSites({ search, template, sortBy, status });
     const total = allSites.length;
 
     let sites = allSites;
@@ -218,10 +219,10 @@ app.get('/api/admin/sites', (req, res) => {
   }
 });
 
-app.delete('/api/admin/sites/:id', (req, res) => {
+app.delete('/api/admin/sites/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const deleted = db.deleteSite(id);
+    const deleted = await db.deleteSite(id);
     if (!deleted) return res.status(404).json({ error: 'Site not found' });
     res.json({ success: true, message: 'Site deleted successfully' });
   } catch (error) {
@@ -229,9 +230,9 @@ app.delete('/api/admin/sites/:id', (req, res) => {
   }
 });
 
-app.get('/api/admin/export', (req, res) => {
+app.get('/api/admin/export', async (req, res) => {
   try {
-    const sites = db.getAllSites();
+    const sites = await db.getAllSites();
     const exportData = {
       exportedAt: new Date().toISOString(),
       generator: 'Dearly Admin Control Panel',
