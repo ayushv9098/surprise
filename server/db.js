@@ -86,7 +86,8 @@ async function upstashCommand(command, ...args) {
         Authorization: `Bearer ${UPSTASH_TOKEN}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify([command, ...args])
+      body: JSON.stringify([command, ...args]),
+      signal: typeof AbortSignal !== 'undefined' && AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined
     });
 
     if (!res.ok) {
