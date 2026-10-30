@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import confetti from 'canvas-confetti';
 import {
   Copy,
@@ -20,10 +20,17 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   const [copied, setCopied] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [showQrModal, setShowQrModal] = useState(false);
+  const [isGeneratingQr, setIsGeneratingQr] = useState(false);
   const [canDismiss, setCanDismiss] = useState(false);
   const [canNativeShare, setCanNativeShare] = useState(false);
   const [igBannerVisible, setIgBannerVisible] = useState(false);
   const igTimerRef = useRef(null);
+
+  // Performance-critical refs for confetti animation and cleanup
+  const confettiCanvasRef = useRef(null);
+  const confettiInstanceRef = useRef(null);
+  const hasFiredRef = useRef(false);
+  const confettiTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
@@ -34,6 +41,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   useEffect(() => {
     if (!isOpen) {
       setIgBannerVisible(false);
+      setShowQrModal(false);
       if (igTimerRef.current) clearTimeout(igTimerRef.current);
       return;
     }
@@ -55,45 +63,112 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   const recipientName = formData?.recipientName || 'Someone special';
   const senderName = formData?.senderName || 'Your friend';
 
-  // Fire celebratory confetti when modal opens
+  // Fire high-performance celebratory confetti strictly ONCE per modal open
   useEffect(() => {
-    if (isOpen) {
-      // Confetti burst
+    if (!isOpen) {
+      hasFiredRef.current = false;
+      if (confettiTimeoutRef.current) {
+        clearTimeout(confettiTimeoutRef.current);
+        confettiTimeoutRef.current = null;
+      }
+      if (confettiInstanceRef.current) {
+        try {
+          confettiInstanceRef.current.reset();
+        } catch {}
+        confettiInstanceRef.current = null;
+      }
       try {
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
+        confetti.reset();
+      } catch {}
+      return;
+    }
+
+    // Strict guard: fire only once per open session, never duplicate on re-renders or shareUrl updates
+    if (hasFiredRef.current) return;
+    hasFiredRef.current = true;
+
+    // Smooth single RAF delay to let the modal entrance settle cleanly before firing confetti
+    const animFrame = requestAnimationFrame(() => {
+      if (confettiCanvasRef.current && !confettiInstanceRef.current) {
+        try {
+          confettiInstanceRef.current = confetti.create(confettiCanvasRef.current, {
+            resize: true,
+            useWorker: false, // Prevents stomping on LivePhonePreview's worker instance
+          });
+        } catch {
+          confettiInstanceRef.current = null;
+        }
+      }
+
+      const fire = confettiInstanceRef.current || confetti;
+
+      try {
+        // High-performance celebratory burst: 45 particles, snappy 100 ticks, 0.92 decay, spread 60
+        fire({
+          particleCount: 45,
+          spread: 60,
+          origin: { y: 0.62 },
           colors: ['#F43F5E', '#FB7185', '#F59E0B', '#EC4899', '#A855F7'],
+          ticks: 100,
+          decay: 0.92,
+          scalar: 0.95,
+          disableForReducedMotion: true,
         });
-        setTimeout(() => {
-          confetti({
-            particleCount: 50,
-            angle: 60,
-            spread: 55,
-            origin: { x: 0 },
-            colors: ['#F43F5E', '#FBBF24', '#FB7185'],
-          });
-          confetti({
-            particleCount: 50,
-            angle: 120,
-            spread: 55,
-            origin: { x: 1 },
-            colors: ['#EC4899', '#8B5CF6', '#F43F5E'],
-          });
-        }, 250);
       } catch {
         // Confetti optional
       }
+    });
 
-      // Generate QR Code
-      if (shareUrl) {
-        generateQRCodeDataUrl(shareUrl).then((url) => {
-          if (url) setQrCodeUrl(url);
-        });
+    return () => {
+      cancelAnimationFrame(animFrame);
+      if (confettiInstanceRef.current) {
+        try {
+          confettiInstanceRef.current.reset();
+        } catch {}
+        confettiInstanceRef.current = null;
       }
+      try {
+        confetti.reset();
+      } catch {}
+    };
+  }, [isOpen]);
+
+  const ensureQrCode = useCallback((url) => {
+    if (!url || qrCodeUrl || isGeneratingQr) return;
+    setIsGeneratingQr(true);
+    generateQRCodeDataUrl(url)
+      .then((dataUrl) => {
+        if (dataUrl) setQrCodeUrl(dataUrl);
+      })
+      .catch((err) => {
+        console.warn('QR code generation notice:', err);
+      })
+      .finally(() => {
+        setIsGeneratingQr(false);
+      });
+  }, [qrCodeUrl, isGeneratingQr]);
+
+  // Defer QR code generation until well after celebratory confetti has finished (4s)
+  // or until the user explicitly clicks the QR button, preventing main-thread CPU spikes
+  useEffect(() => {
+    if (!isOpen || !shareUrl || qrCodeUrl) return;
+
+    const cancelTimer = setTimeout(() => {
+      ensureQrCode(shareUrl);
+    }, 4000);
+
+    return () => {
+      clearTimeout(cancelTimer);
+    };
+  }, [isOpen, shareUrl, qrCodeUrl, ensureQrCode]);
+
+  const handleToggleQr = () => {
+    const next = !showQrModal;
+    setShowQrModal(next);
+    if (next && !qrCodeUrl && shareUrl) {
+      ensureQrCode(shareUrl);
     }
-  }, [isOpen, shareUrl]);
+  };
 
   if (!isOpen) return null;
 
@@ -164,12 +239,19 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/50 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-950/65 animate-modal-backdrop"
       onClick={handleBackdropClick}
     >
+      {/* Dedicated high-performance confetti canvas */}
+      <canvas
+        ref={confettiCanvasRef}
+        aria-hidden="true"
+        className="fixed inset-0 pointer-events-none z-[60] w-full h-full transform-gpu"
+      />
+
       {/* Modal Dialog Card - Clean Luxury Sheet */}
       <div
-        className="relative w-full max-w-[420px] max-h-[92vh] overflow-y-auto rounded-3xl bg-white border border-slate-200/90 shadow-2xl p-5 sm:p-6 space-y-4 overscroll-contain"
+        className="relative w-full max-w-[420px] max-h-[92vh] overflow-y-auto rounded-3xl bg-white border border-slate-200/90 shadow-2xl p-5 sm:p-6 space-y-4 overscroll-contain transform-gpu will-change-[transform,opacity] animate-modal-sheet"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top-Right Sleek Close Button */}
@@ -321,7 +403,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
 
           <button
             type="button"
-            onClick={() => setShowQrModal(!showQrModal)}
+            onClick={handleToggleQr}
             className="py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <QrCode className="w-3.5 h-3.5 text-slate-500 shrink-0" />
@@ -344,18 +426,27 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
         )}
 
         {/* Compact Inline QR Code Box */}
-        {showQrModal && qrCodeUrl && (
+        {showQrModal && (
           <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2 animate-fadeIn">
-            <div className="inline-block p-2 rounded-xl bg-white shadow-xs border border-slate-200">
-              <img
-                src={qrCodeUrl}
-                alt="Surprise QR Code"
-                className="w-28 h-28 mx-auto rounded-lg shadow-sm border border-slate-200"
-              />
-            </div>
-            <p className="text-[11px] font-medium text-slate-500">
-              Scan with camera to open keepsake
-            </p>
+            {qrCodeUrl ? (
+              <>
+                <div className="inline-block p-2 rounded-xl bg-white shadow-xs border border-slate-200">
+                  <img
+                    src={qrCodeUrl}
+                    alt="Surprise QR Code"
+                    className="w-28 h-28 mx-auto rounded-lg shadow-sm border border-slate-200"
+                  />
+                </div>
+                <p className="text-[11px] font-medium text-slate-500">
+                  Scan with camera to open keepsake
+                </p>
+              </>
+            ) : (
+              <div className="py-6 flex flex-col items-center justify-center gap-2 text-slate-400">
+                <div className="w-5 h-5 border-2 border-slate-300 border-t-rose-500 rounded-full animate-spin" />
+                <span className="text-xs font-medium">Generating QR code...</span>
+              </div>
+            )}
           </div>
         )}
       </div>
