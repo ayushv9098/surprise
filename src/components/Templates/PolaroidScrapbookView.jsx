@@ -317,7 +317,7 @@ export default function PolaroidScrapbookView({ siteData = {}, onNavigateCreate,
   const currentTheme = isNeon ? themeConfig.neon : (isCozy ? themeConfig.cozy : themeConfig.vintage);
 
   return (
-    <div className={`relative min-h-screen w-full max-w-full overflow-x-hidden font-sans ${currentTheme.wrapperClass}`}>
+    <div className={`relative min-h-[100dvh] w-full max-w-full overflow-x-hidden font-sans ${currentTheme.wrapperClass} pb-[max(2rem,env(safe-area-inset-bottom,0px))]`}>
       
       {/* Ambient Floating Particles */}
       <AmbientParticles type={currentTheme.particlesType} count={24} />

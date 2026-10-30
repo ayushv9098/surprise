@@ -112,6 +112,7 @@
   position: relative;
   width: 100%;
   min-height: 100dvh;
+  padding-bottom: max(2rem, env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-direction: column;
   overflow-x: hidden;

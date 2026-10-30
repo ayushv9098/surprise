@@ -12,6 +12,7 @@ import HeartfeltApologyView from './HeartfeltApologyView';
 import PolaroidScrapbookView from './PolaroidScrapbookView';
 import BlushRomanceView from './BlushRomanceView';
 import { soundEffects } from './common/SoundEffects';
+import { haptics } from '../../utils/haptics';
 
 const TEMPLATES = [
   // Birthday Templates
@@ -104,6 +105,7 @@ export default function TemplateViewer({
 
   // Handle Fullscreen
   const toggleFullscreen = () => {
+    haptics.pop();
     soundEffects.playPop();
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen()
@@ -128,6 +130,7 @@ export default function TemplateViewer({
 
   // Handle Share / Copy Link
   const handleShare = () => {
+    haptics.pop();
     soundEffects.playPop();
     const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
     if (navigator.clipboard) {
@@ -141,6 +144,7 @@ export default function TemplateViewer({
   };
 
   const handleNavigateCreate = () => {
+    haptics.tap();
     if (onNavigate) {
       onNavigate('builder');
     } else if (onBack) {
@@ -155,7 +159,7 @@ export default function TemplateViewer({
   const ComponentToRender = selectedTemplate.component;
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
+    <div className="relative min-h-[100dvh] overflow-x-hidden pb-[max(1rem,env(safe-area-inset-bottom,0px))]">
       
       {/* Top Floating Controls Bar (Hidden in Live Keepsake View for pure recipient experience) */}
       {!isLiveView && (
@@ -167,7 +171,10 @@ export default function TemplateViewer({
           <div className="flex items-center gap-2 pointer-events-auto">
             {!isLiveView && onBack && (
               <button
-                onClick={onBack}
+                onClick={() => {
+                  haptics.tap();
+                  onBack();
+                }}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/95 hover:bg-white text-slate-800 hover:text-slate-950 backdrop-blur-md shadow-md border border-slate-200/90 text-xs sm:text-sm font-bold transition-all hover:scale-105 active:scale-95 cursor-pointer pointer-events-auto"
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -182,6 +189,7 @@ export default function TemplateViewer({
                   <button
                     key={t.id}
                     onClick={() => {
+                      haptics.tap();
                       soundEffects.playPop();
                       setSelectedOverride(t.id);
                     }}
@@ -256,6 +264,25 @@ export default function TemplateViewer({
           isLiveView={isLiveView}
         />
       </main>
+
+      {/* Subtle Luxury Floating Viral Pill in Live Keepsake View */}
+      {isLiveView && (
+        <aside
+          aria-label="Made with Dearly"
+          className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-40 pointer-events-auto"
+        >
+          <button
+            onClick={() => {
+              haptics.tap();
+              handleNavigateCreate();
+            }}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full backdrop-blur-md bg-white/85 text-slate-700 text-[11px] font-medium border border-slate-200/60 shadow-xs hover:bg-white hover:text-slate-900 transition-all hover:scale-105 active:scale-95 cursor-pointer select-none"
+            title="Create your own digital keepsake on Dearly"
+          >
+            <span>✨ Made with Dearly • Create a keepsake</span>
+          </button>
+        </aside>
+      )}
     </div>
   );
 }

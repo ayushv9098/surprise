@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Dearly — Create Aesthetic Keepsake & Surprise Websites in Seconds</title>
 
     <!-- Canonical URL -->
@@ -113,6 +113,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Kalam:wght@300;400;700&family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Mobile Viewport, In-App Browser & Safe Area Styling -->
+    <style>
+      :root {
+        --sat: env(safe-area-inset-top, 0px);
+        --sar: env(safe-area-inset-right, 0px);
+        --sab: env(safe-area-inset-bottom, 0px);
+        --sal: env(safe-area-inset-left, 0px);
+      }
+      html {
+        min-height: 100%;
+        min-height: -webkit-fill-available;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        min-height: 100%;
+        min-height: 100dvh;
+        overscroll-behavior-y: none;
+      }
+      .safe-area-pt {
+        padding-top: max(1rem, env(safe-area-inset-top, 0px));
+      }
+      .safe-area-pb {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+      }
+    </style>
   </head>
   <body class="bg-[#FFFDFB] text-slate-800 antialiased selection:bg-pink-100 selection:text-pink-600 min-h-screen">
     <!-- Non-JavaScript Crawlability & Safety Assurance -->

@@ -954,7 +954,7 @@ tu hi bata mujhe is khat me kya likhu main... 😉
   const currentNoMsg = NO_MESSAGES[noAttempts % NO_MESSAGES.length];
 
   return (
-    <div className={`soft-app ${themeClass} ${isSimulator ? 'in-phone-simulator romance-phone-simulator' : ''}`}>
+    <div className={`soft-app ${themeClass} ${isSimulator ? 'in-phone-simulator romance-phone-simulator' : 'min-h-[100dvh] pb-[max(2rem,env(safe-area-inset-bottom,0px))]'}`}>
       {/* Background Animated Particle Canvas */}
       <canvas ref={canvasRef} className="particle-canvas" aria-hidden="true" />
 

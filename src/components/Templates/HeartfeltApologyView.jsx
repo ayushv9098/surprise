@@ -398,7 +398,7 @@ export default function HeartfeltApologyView({ siteData = {}, onNavigateCreate, 
     : themeConfig.promisesList;
 
   return (
-    <div className={`relative min-h-screen ${themeConfig.containerBg} ${themeConfig.selectionClass} text-slate-800 overflow-x-hidden font-sans pb-16`}>
+    <div className={`relative min-h-[100dvh] ${themeConfig.containerBg} ${themeConfig.selectionClass} text-slate-800 overflow-x-hidden font-sans pb-[max(4rem,env(safe-area-inset-bottom,0px))]`}>
       
       {/* Ambient Floating Particles */}
       <AmbientParticles type={themeConfig.particlesType} count={24} />

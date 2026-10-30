@@ -1,5 +1,183 @@
 [
   {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvuqzfs5-79bv",
+    "slug": "rohan-35g6f",
+    "updatedAt": "2026-10-30T09:06:11.267Z",
+    "createdAt": "2026-10-30T09:06:11.237Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "recipientName": "Kavya",
+    "senderName": "Rohan",
+    "title": "Happy Anniversary Kavya!",
+    "occasion": "Anniversary",
+    "id": "site_1793351046939_emtvs",
+    "slug": "kavya-w2me",
+    "template": "blush-romance",
+    "templateId": "blush-romance",
+    "viewCount": 2,
+    "createdAt": "2026-10-30T09:04:06.939Z",
+    "updatedAt": "2026-10-30T09:04:06.939Z",
+    "lastViewedAt": "2026-10-30T09:04:07.000Z"
+  },
+  {
+    "recipientName": "Kavya",
+    "senderName": "Rohan",
+    "title": "Happy Anniversary Kavya!",
+    "occasion": "Anniversary",
+    "id": "site_1793351025374_w4ohf",
+    "slug": "kavya",
+    "template": "blush-romance",
+    "templateId": "blush-romance",
+    "viewCount": 3,
+    "createdAt": "2026-10-30T09:03:45.374Z",
+    "updatedAt": "2026-10-30T09:03:45.374Z",
+    "lastViewedAt": "2026-10-30T09:03:52.022Z"
+  },
+  {
+    "templateId": "lavender-dream",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday",
+    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
+    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+    "photos": [
+      {
+        "id": "lavender-p1",
+        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+        "tag": "Lavender Bliss"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💜",
+        "title": "Deep Empathy",
+        "desc": "You listen with your whole heart and make everyone feel valued."
+      },
+      {
+        "icon": "🦋",
+        "title": "Free Spirit",
+        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
+      },
+      {
+        "icon": "🕊️",
+        "title": "Calming Presence",
+        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
+      "signOff": "With all my heart,\nElena 💜",
+      "sealEmoji": "💜",
+      "waxColor": "#7C3AED"
+    },
+    "songId": "indie-acoustic-soul",
+    "id": "wc-mvuqvflu-ji6z",
+    "slug": "sarah-mx3lx",
+    "updatedAt": "2026-10-30T09:03:04.421Z",
+    "createdAt": "2026-10-30T09:03:04.386Z",
+    "template": "lavender-dream",
+    "viewCount": 0
+  },
+  {
+    "templateId": "lavender-dream",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday",
+    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
+    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+    "photos": [
+      {
+        "id": "lavender-p1",
+        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+        "tag": "Lavender Bliss"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💜",
+        "title": "Deep Empathy",
+        "desc": "You listen with your whole heart and make everyone feel valued."
+      },
+      {
+        "icon": "🦋",
+        "title": "Free Spirit",
+        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
+      },
+      {
+        "icon": "🕊️",
+        "title": "Calming Presence",
+        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
+      "signOff": "With all my heart,\nElena 💜",
+      "sealEmoji": "💜",
+      "waxColor": "#7C3AED"
+    },
+    "songId": "indie-acoustic-soul",
+    "id": "wc-mvuqui7w-l6yw",
+    "slug": "sarah-j0955",
+    "updatedAt": "2026-10-30T09:02:21.188Z",
+    "createdAt": "2026-10-30T09:02:21.117Z",
+    "template": "lavender-dream",
+    "viewCount": 0
+  },
+  {
     "id": "wc-ashuu-bhai-gihdt",
     "slug": "ashuu-bhai-gihdt",
     "title": "Special Birthday Surprise for Ashuu Bhai 🎂👑",
@@ -52,10 +230,10 @@
       "waxColor": "#D97706"
     },
     "songId": "baar-baar-din-ye-aaye",
-    "viewCount": 2,
+    "viewCount": 8,
     "createdAt": "2026-10-29T12:00:00.000Z",
     "updatedAt": "2026-10-29T12:00:00.000Z",
-    "lastViewedAt": "2026-10-29T15:01:54.557Z"
+    "lastViewedAt": "2026-10-30T09:05:56.655Z"
   },
   {
     "templateId": "cinderella-sky",
@@ -105,7 +283,8 @@
     "updatedAt": "2026-10-29T13:42:51.848Z",
     "createdAt": "2026-10-29T13:42:51.821Z",
     "template": "cinderella-sky",
-    "viewCount": 0
+    "viewCount": 2,
+    "lastViewedAt": "2026-10-30T05:24:39.726Z"
   },
   {
     "templateId": "blush-rose",
@@ -155,8 +334,8 @@
     "updatedAt": "2026-10-29T13:41:13.827Z",
     "createdAt": "2026-10-29T13:41:13.820Z",
     "template": "blush-rose",
-    "viewCount": 2,
-    "lastViewedAt": "2026-10-29T13:41:18.875Z"
+    "viewCount": 4,
+    "lastViewedAt": "2026-10-30T05:24:29.744Z"
   },
   {
     "recipientName": "Rohan",
@@ -172,107 +351,5 @@
     "createdAt": "2026-10-29T13:10:34.302Z",
     "updatedAt": "2026-10-29T13:10:34.303Z",
     "lastViewedAt": "2026-10-29T13:12:07.278Z"
-  },
-  {
-    "templateId": "lavender-dream",
-    "category": "birthday",
-    "gender": "girl",
-    "recipientName": "Sarah",
-    "senderName": "Elena",
-    "occasion": "Happy Birthday",
-    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
-    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
-    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
-    "photos": [
-      {
-        "id": "lavender-p1",
-        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
-        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
-        "tag": "Lavender Bliss"
-      }
-    ],
-    "specialReasons": [
-      {
-        "icon": "💜",
-        "title": "Deep Empathy",
-        "desc": "You listen with your whole heart and make everyone feel valued."
-      },
-      {
-        "icon": "🦋",
-        "title": "Free Spirit",
-        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
-      },
-      {
-        "icon": "🕊️",
-        "title": "Calming Presence",
-        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
-      }
-    ],
-    "letter": {
-      "title": "A Little Note For You",
-      "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
-      "signOff": "With all my heart,\nElena 💜",
-      "sealEmoji": "💜",
-      "waxColor": "#7C3AED"
-    },
-    "songId": "indie-acoustic-soul",
-    "id": "wc-mvqqizhs-2pm0",
-    "slug": "sarah-br5nb",
-    "updatedAt": "2026-10-27T13:42:18.937Z",
-    "createdAt": "2026-10-27T13:42:18.928Z",
-    "template": "lavender-dream",
-    "viewCount": 12,
-    "lastViewedAt": "2026-10-28T12:35:53.282Z"
-  },
-  {
-    "templateId": "lavender-dream",
-    "category": "birthday",
-    "gender": "girl",
-    "recipientName": "Sarah",
-    "senderName": "Elena",
-    "occasion": "Happy Birthday",
-    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
-    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
-    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
-    "photos": [
-      {
-        "id": "lavender-p1",
-        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
-        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
-        "tag": "Lavender Bliss"
-      }
-    ],
-    "specialReasons": [
-      {
-        "icon": "💜",
-        "title": "Deep Empathy",
-        "desc": "You listen with your whole heart and make everyone feel valued."
-      },
-      {
-        "icon": "🦋",
-        "title": "Free Spirit",
-        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
-      },
-      {
-        "icon": "🕊️",
-        "title": "Calming Presence",
-        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
-      }
-    ],
-    "letter": {
-      "title": "A Little Note For You",
-      "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
-      "signOff": "With all my heart,\nElena 💜",
-      "sealEmoji": "💜",
-      "waxColor": "#7C3AED"
-    },
-    "songId": "indie-acoustic-soul",
-    "id": "wc-mvqpjkdg-fwa7",
-    "slug": "sarah-0p1ii",
-    "updatedAt": "2026-10-27T13:14:46.374Z",
-    "createdAt": "2026-10-27T13:14:46.372Z",
-    "template": "lavender-dream",
-    "viewCount": 6,
-    "lastViewedAt": "2026-10-27T13:15:58.432Z"
   }
 ]

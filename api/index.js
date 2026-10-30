@@ -65,7 +65,10 @@ const BOT_USER_AGENTS = [
   'bingbot',
   'Applebot',
   'LinkedInBot',
-  'Pinterest'
+  'Pinterest',
+  'Instagram',
+  'Snapchat',
+  'Snap URL Preview'
 ];
 
 // Sites API (Public) - registers real view count when browser client loads

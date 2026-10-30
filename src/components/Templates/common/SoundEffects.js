@@ -1,4 +1,5 @@
 // Web Audio API Synthesizer for zero-latency, reliable keepsake sound effects
+import { haptics } from '../../../utils/haptics';
 
 let audioCtx = null;
 
@@ -19,6 +20,9 @@ function getAudioContext() {
 export const soundEffects = {
   // Gentle pop (button clicks, treats)
   playPop: () => {
+    try {
+      haptics.pop();
+    } catch {}
     try {
       const ctx = getAudioContext();
       if (!ctx) return;
@@ -44,6 +48,9 @@ export const soundEffects = {
 
   // Breaking wax seal sound (crack + deep pop)
   playSealBreak: () => {
+    try {
+      haptics.pop();
+    } catch {}
     try {
       const ctx = getAudioContext();
       if (!ctx) return;
@@ -83,6 +90,9 @@ export const soundEffects = {
   // Celebratory harp / chime arpeggio (quiz win, surprise reveal)
   playCelebration: () => {
     try {
+      haptics.celebrate();
+    } catch {}
+    try {
       const ctx = getAudioContext();
       if (!ctx) return;
       const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
@@ -106,6 +116,9 @@ export const soundEffects = {
 
   // Blow out candle sound (whoosh breath + sweet wind chime)
   playBlowCandle: () => {
+    try {
+      haptics.celebrate();
+    } catch {}
     try {
       const ctx = getAudioContext();
       if (!ctx) return;
@@ -146,6 +159,9 @@ export const soundEffects = {
   // Gift box unboxing shimmer
   playUnbox: () => {
     try {
+      haptics.celebrate();
+    } catch {}
+    try {
       const ctx = getAudioContext();
       if (!ctx) return;
       const notes = [440, 554.37, 659.25, 880]; // A4, C#5, E5, A5
@@ -169,6 +185,9 @@ export const soundEffects = {
 
   // Soft scratch rustle
   playScratch: () => {
+    try {
+      haptics.tap();
+    } catch {}
     try {
       const ctx = getAudioContext();
       if (!ctx) return;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import {
   Copy,
@@ -6,11 +6,13 @@ import {
   ExternalLink,
   QrCode,
   X,
+  Share2,
 } from 'lucide-react';
 import {
   getWhatsAppShareUrl,
   generateQRCodeDataUrl,
   copyToClipboard,
+  triggerNativeShare,
 } from '../../utils/share';
 import AppleEmoji from '../common/AppleEmoji';
 
@@ -19,9 +21,22 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [showQrModal, setShowQrModal] = useState(false);
   const [canDismiss, setCanDismiss] = useState(false);
+  const [canNativeShare, setCanNativeShare] = useState(false);
+  const [igBannerVisible, setIgBannerVisible] = useState(false);
+  const igTimerRef = useRef(null);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
+      setCanNativeShare(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setIgBannerVisible(false);
+      if (igTimerRef.current) clearTimeout(igTimerRef.current);
+      return;
+    }
     const timer = setTimeout(() => setCanDismiss(true), 400);
     return () => {
       clearTimeout(timer);
@@ -95,6 +110,48 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
+  const handleSnapchat = () => {
+    const snapUrl = `https://www.snapchat.com/scan?attachmentUrl=${encodeURIComponent(shareUrl)}`;
+    window.open(snapUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleInstagram = async () => {
+    try {
+      await copyToClipboard(shareUrl);
+    } catch (err) {
+      console.warn('Clipboard copy notice:', err);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+    setIgBannerVisible(true);
+
+    if (igTimerRef.current) clearTimeout(igTimerRef.current);
+    igTimerRef.current = setTimeout(() => {
+      setIgBannerVisible(false);
+    }, 8000);
+
+    const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || '');
+    if (isMobile) {
+      setTimeout(() => {
+        try {
+          window.location.href = 'instagram://story-camera';
+        } catch {
+          window.open('https://instagram.com', '_blank', 'noopener,noreferrer');
+        }
+      }, 350);
+    }
+  };
+
+  const handleNativeShare = async () => {
+    const occ = formData?.occasion || formData?.category || '';
+    const occText = occ ? ` for ${occ}` : '';
+    await triggerNativeShare({
+      title: formData?.title || `Special Surprise for ${recipientName} 🎁`,
+      text: `✨ Hey ${recipientName}! ${senderName} created a personalized surprise keepsake just for you${occText}. Open your surprise here:`,
+      url: shareUrl,
+    });
+  };
+
   const handleOpenLive = () => {
     window.open(shareUrl, '_blank');
   };
@@ -110,9 +167,9 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
       className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/50 backdrop-blur-sm animate-fadeIn"
       onClick={handleBackdropClick}
     >
-      {/* Modal Dialog Card - 100% Non-scrollable, solid clean luxury sheet (no gradients) */}
+      {/* Modal Dialog Card - Clean luxury sheet with smooth scrolling if needed */}
       <div
-        className="relative w-full max-w-md rounded-3xl bg-white border border-slate-200/90 shadow-2xl p-5 sm:p-6 space-y-3.5 sm:space-y-4 overflow-hidden"
+        className="relative w-full max-w-md max-h-[92vh] overflow-y-auto rounded-3xl bg-white border border-slate-200/90 shadow-2xl p-5 sm:p-6 space-y-3.5 sm:space-y-4 overscroll-contain"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top-Right Sleek Close Button */}
@@ -171,6 +228,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
         <div className="space-y-2">
           {/* Primary WhatsApp Button */}
           <button
+            type="button"
             onClick={handleWhatsApp}
             className="w-full py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-md shadow-emerald-500/25 hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 select-none"
           >
@@ -180,21 +238,88 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
             <span>Share on WhatsApp</span>
           </button>
 
+          {/* Gen-Z Social Sharing (Snapchat & Instagram Story) */}
+          <div className="grid grid-cols-2 gap-2">
+            {/* Snapchat Share Button */}
+            <button
+              type="button"
+              onClick={handleSnapchat}
+              className="py-2.5 px-3 rounded-xl text-xs font-semibold bg-[#FFFC00]/90 text-slate-900 hover:bg-[#FFFC00] border border-amber-300/80 shadow-xs hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none"
+            >
+              <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+                <path d="M12.166 2.001c-3.774 0-6.19 2.768-6.19 5.864 0 1.25.437 2.457 1.096 3.425.105.155.08.358-.04.498-.314.364-.813.593-1.428.846-.358.147-.643.344-.643.722 0 .428.36.757.854.854.675.133 1.344.023 1.94-.233.25-.107.54-.002.668.237.288.536.852 1.325 1.558 1.83.214.153.297.432.202.671-.165.419-.516 1.139-1.579 1.488-.415.136-.632.484-.538.868.106.436.568.694 1.144.694 1.272 0 2.222-.61 3.018-1.47.16-.173.415-.224.629-.124.63.294 1.314.444 2.01.444.698 0 1.383-.15 2.012-.444.215-.1.47-.049.63.124.796.86 1.746 1.47 3.018 1.47.576 0 1.038-.258 1.144-.694.094-.384-.123-.732-.538-.868-1.063-.349-1.414-1.069-1.579-1.488-.095-.239-.012-.518.202-.671.706-.505 1.27-1.294 1.558-1.83.128-.239.418-.344.668-.237.596.256 1.265.366 1.94.233.494-.097.854-.426.854-.854 0-.378-.285-.575-.643-.722-.615-.253-1.114-.482-1.428-.846-.12-.14-.145-.343-.04-.498.659-.968 1.096-2.175 1.096-3.425 0-3.096-2.416-5.864-6.19-5.864z"/>
+              </svg>
+              <span>Snapchat</span>
+            </button>
+
+            {/* Instagram Story Helper Button */}
+            <button
+              type="button"
+              onClick={handleInstagram}
+              className="py-2.5 px-3 rounded-xl text-xs font-semibold bg-gradient-to-r from-rose-50 to-pink-50 text-rose-700 hover:bg-rose-100 border border-rose-200/80 shadow-xs hover:scale-[1.01] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none"
+            >
+              <svg className="w-4 h-4 fill-current shrink-0 text-rose-600" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+              <span>Instagram Story</span>
+            </button>
+          </div>
+
+          {/* Instagram Story Helper Banner / Tooltip */}
+          {igBannerVisible && (
+            <div
+              data-testid="ig-story-banner"
+              className="p-3 rounded-2xl bg-gradient-to-r from-rose-50/95 via-pink-50/90 to-amber-50/90 border border-rose-200/80 text-rose-950 text-xs shadow-xs animate-fadeIn flex items-start gap-2.5 relative"
+            >
+              <span className="text-base leading-none shrink-0 mt-0.5">🔗</span>
+              <div className="space-y-0.5 pr-5">
+                <p className="font-semibold text-rose-900 text-[11px] sm:text-xs">
+                  Link copied!
+                </p>
+                <p className="text-[11px] text-rose-800/90 leading-relaxed">
+                  In Instagram Story, tap Stickers <span className="font-semibold text-rose-950">🔗 → Link → Paste URL</span>
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIgBannerVisible(false)}
+                className="absolute top-2.5 right-2.5 text-rose-400 hover:text-rose-700 p-0.5 rounded-full cursor-pointer transition-colors"
+                aria-label="Dismiss guide"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+
+          {/* Native Mobile Share Sheet (iOS / Android / macOS Safari) */}
+          {canNativeShare && (
+            <button
+              type="button"
+              onClick={handleNativeShare}
+              className="w-full py-2 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200/90 border border-slate-200/80 transition-colors flex items-center justify-center gap-1.5 cursor-pointer active:scale-[0.99] select-none"
+            >
+              <Share2 className="w-3.5 h-3.5 text-slate-600 shrink-0" />
+              <span>More Sharing Options (AirDrop, DMs, System)</span>
+            </button>
+          )}
+
           {/* Secondary Quick Action Row (2 columns) */}
           <div className="grid grid-cols-2 gap-2">
             <button
+              type="button"
               onClick={handleOpenLive}
               className="py-2 px-3 rounded-xl text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200/80 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
+              <ExternalLink className="w-3.5 h-3.5 shrink-0" />
               <span>Open Live Page</span>
             </button>
 
             <button
+              type="button"
               onClick={() => setShowQrModal(!showQrModal)}
               className="py-2 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <QrCode className="w-3.5 h-3.5 text-slate-700" />
+              <QrCode className="w-3.5 h-3.5 text-slate-700 shrink-0" />
               <span>{showQrModal ? 'Hide QR' : 'View QR Code'}</span>
             </button>
           </div>
