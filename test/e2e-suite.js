@@ -267,7 +267,7 @@ async function runE2ESuite() {
     assert(healthRes.status === 200, `GET /api/health returned HTTP ${healthRes.status}`);
     const healthData = await healthRes.json();
     assert(healthData.status === 'ok', "Health response status is 'ok'");
-    assert(healthData.service === 'wishcraft-backend', "Service identifier matches 'wishcraft-backend'");
+    assert(healthData.service === 'dearly-backend' || healthData.service === 'wishcraft-backend', "Service identifier matches 'dearly-backend' or 'wishcraft-backend'");
   } catch (e) {
     assert(false, `Backend health check failed: ${e.message}`);
   }

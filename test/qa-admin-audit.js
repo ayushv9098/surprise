@@ -34,7 +34,7 @@ async function runAdminAudit() {
     assert(res.status === 200, 'GET /api/health returned HTTP 200 OK');
     const data = await res.json();
     assert(data.status === 'ok', "Health status is 'ok'");
-    assert(data.service === 'wishcraft-backend', "Service name is 'wishcraft-backend'");
+    assert(data.service === 'dearly-backend' || data.service === 'wishcraft-backend', "Service name matches dearly-backend or wishcraft-backend");
   } catch (e) {
     assert(false, `Health check failed: ${e.message}`);
   }
