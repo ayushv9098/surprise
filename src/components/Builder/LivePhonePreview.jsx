@@ -946,7 +946,7 @@ function formatLetterSignOff(signOff, currentSenderName) {
   return cleaned.replace(letterSignOffSenderRegex, targetSender);
 }
 
-export default function LivePhonePreview({
+const LivePhonePreview = React.memo(function LivePhonePreview({
   formData = {},
   activeSection,
   previewScreen,
@@ -2380,4 +2380,6 @@ export default function LivePhonePreview({
   </div>
 </div>
 );
-}
+});
+
+export default LivePhonePreview;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useDeferredValue, useSyncExternalStore } from 'react';
 import {
   ArrowRight,
   ArrowLeft,
@@ -13,6 +13,25 @@ import { getPresetForTemplate } from '../../data/samplePresets';
 import { getTemplateById, getTemplatesByCategory } from '../../data/templates';
 import { saveSurprise } from '../../utils/storage';
 import AppleEmoji from '../common/AppleEmoji';
+
+// Viewport subscription hook to ensure LivePhonePreview is never mounted on both mobile & desktop
+const desktopMediaQuery = '(min-width: 1024px)';
+function subscribeDesktop(callback) {
+  if (typeof window === 'undefined') return () => {};
+  const mql = window.matchMedia(desktopMediaQuery);
+  mql.addEventListener('change', callback);
+  return () => mql.removeEventListener('change', callback);
+}
+function getDesktopSnapshot() {
+  if (typeof window === 'undefined') return true;
+  return window.matchMedia(desktopMediaQuery).matches;
+}
+function getDesktopServerSnapshot() {
+  return true;
+}
+function useIsDesktop() {
+  return useSyncExternalStore(subscribeDesktop, getDesktopSnapshot, getDesktopServerSnapshot);
+}
 
 const DEFAULT_BIRTHDAY_NICKNAMES = [
   'Happy Birthday, Lavender Dreamer! 💜',
@@ -33,6 +52,7 @@ export default function BuilderStudio({
   onBack,
   onComplete,
 }) {
+  const isDesktop = useIsDesktop();
   const handleBackClick = onBack;
   const [currentStep, setCurrentStep] = useState(1);
   const [formSection, setFormSection] = useState('details'); // 'details' | 'media' | 'surprises'
@@ -43,32 +63,38 @@ export default function BuilderStudio({
   // Focus & Section Auto-Sync State for Mobile Simulator
   const [previewTarget, setPreviewTarget] = useState({ screen: 0, openEnvelope: false, nonce: 0 });
 
-  const syncToPreview = (screen, openEnvelope = false) => {
-    setPreviewTarget({ screen, openEnvelope, nonce: Date.now() });
+  // Only generate a new nonce when screen/envelope changes or when explicitly forced
+  const syncToPreview = (screen, openEnvelope = false, force = false) => {
+    setPreviewTarget((prev) => {
+      if (!force && prev.screen === screen && prev.openEnvelope === openEnvelope) {
+        return prev;
+      }
+      return { screen, openEnvelope, nonce: Date.now() };
+    });
   };
 
   const handleSectionTabClick = (sectionId) => {
     setFormSection(sectionId);
     if (sectionId === 'details') {
-      syncToPreview(0, false);
+      syncToPreview(0, false, true);
     } else if (sectionId === 'media') {
-      syncToPreview(1, false);
+      syncToPreview(1, false, true);
     } else if (sectionId === 'surprises') {
-      syncToPreview(3, false);
+      syncToPreview(3, false, true);
     }
   };
 
   const handleFocusField = (fieldName) => {
     if (['recipientName', 'senderName', 'occasion', 'subtitle'].includes(fieldName)) {
-      syncToPreview(0, false);
+      syncToPreview(0, false, true);
     } else if (['heroPhoto', 'photos', 'photoCaption', 'songId', 'customSongUrl'].includes(fieldName)) {
-      syncToPreview(1, false);
+      syncToPreview(1, false, true);
     } else if (fieldName === 'reasons' || fieldName.startsWith('reason') || fieldName.startsWith('quiz')) {
-      syncToPreview(3, false);
+      syncToPreview(3, false, true);
     } else if (['letter', 'letterTitle', 'waxSeal'].includes(fieldName)) {
-      syncToPreview(4, false);
+      syncToPreview(4, false, true);
     } else if (['letterContent', 'letterSignOff'].includes(fieldName) || fieldName.startsWith('letter')) {
-      syncToPreview(4, true);
+      syncToPreview(4, true, true);
     }
   };
 
@@ -136,6 +162,9 @@ export default function BuilderStudio({
       songId: preset.songId || tmpl.recommendedSongId || (resolvedInitialGender === 'girl' ? 'kesariya' : 'baar-baar-din-ye-aaye'),
     };
   });
+
+  // Defer simulator preview updates to keep form keystrokes silky smooth at 60 FPS
+  const deferredFormData = useDeferredValue(formData);
 
   const handleUpdateFormData = (patch) => {
     if (patch.category && patch.category !== selectedCategory) {
@@ -536,14 +565,16 @@ export default function BuilderStudio({
           className="shrink-0 flex flex-col items-center justify-center border-l border-slate-100 bg-[#FAFAFA] overflow-hidden p-2 sm:p-3 relative"
           style={{ width: '420px', height: '100%' }}
         >
-          <LivePhonePreview
-            formData={formData}
-            onBack={handleBackClick || onBack}
-            activeSection={formSection}
-            previewScreen={previewTarget.screen}
-            openEnvelope={previewTarget.openEnvelope}
-            syncNonce={previewTarget.nonce}
-          />
+          {isDesktop && (
+            <LivePhonePreview
+              formData={deferredFormData}
+              onBack={handleBackClick || onBack}
+              activeSection={formSection}
+              previewScreen={previewTarget.screen}
+              openEnvelope={previewTarget.openEnvelope}
+              syncNonce={previewTarget.nonce}
+            />
+          )}
         </div>
       </div>
 
@@ -572,31 +603,6 @@ export default function BuilderStudio({
               onSelectGender={handleGenderChange}
               onSelectTemplate={handleTemplateChange}
             />
-
-            {/* Mobile Simulator directly under templates */}
-            <div className="space-y-3">
-              <div className="pt-4 pb-2 flex items-center justify-between border-t border-slate-100">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-                  <AppleEmoji emoji="📱" size={14} />
-                  <span>Live Phone Preview</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                </div>
-                <span className="text-[10px] text-slate-400 font-medium">Interactive Simulator</span>
-              </div>
-              <div
-                className="w-full flex items-center justify-center p-1 sm:p-3 overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50/60 to-slate-100/40 border border-slate-200/60 shadow-2xs"
-                style={{ height: '640px', minHeight: '540px' }}
-              >
-                <LivePhonePreview
-                  formData={formData}
-                  onBack={handleBackClick || onBack}
-                  activeSection={formSection}
-                  previewScreen={previewTarget.screen}
-                  openEnvelope={previewTarget.openEnvelope}
-                  syncNonce={previewTarget.nonce}
-                />
-              </div>
-            </div>
           </div>
         )}
 
@@ -641,30 +647,32 @@ export default function BuilderStudio({
                 </div>
               )}
             </div>
+          </div>
+        )}
 
-            {/* Mobile Simulator directly under form section */}
-            <div className="space-y-3 pt-2">
-              <div className="pt-4 pb-2 flex items-center justify-between border-t border-slate-100">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-                  <AppleEmoji emoji="📱" size={14} />
-                  <span>Live Phone Preview</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                </div>
-                <span className="text-[10px] text-slate-400 font-medium">Interactive Simulator</span>
+        {/* Unified Single Mobile Simulator — Only mounted when viewport is mobile */}
+        {!isDesktop && (
+          <div className="space-y-3 pt-2">
+            <div className="pt-4 pb-2 flex items-center justify-between border-t border-slate-100">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                <AppleEmoji emoji="📱" size={14} />
+                <span>Live Phone Preview</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               </div>
-              <div
-                className="w-full flex items-center justify-center p-1 sm:p-3 overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50/60 to-slate-100/40 border border-slate-200/60 shadow-2xs"
-                style={{ height: '640px', minHeight: '540px' }}
-              >
-                <LivePhonePreview
-                  formData={formData}
-                  onBack={handleBackClick || onBack}
-                  activeSection={formSection}
-                  previewScreen={previewTarget.screen}
-                  openEnvelope={previewTarget.openEnvelope}
-                  syncNonce={previewTarget.nonce}
-                />
-              </div>
+              <span className="text-[10px] text-slate-400 font-medium">Interactive Simulator</span>
+            </div>
+            <div
+              className="w-full flex items-center justify-center p-1 sm:p-3 overflow-hidden rounded-2xl bg-gradient-to-b from-slate-50/60 to-slate-100/40 border border-slate-200/60 shadow-2xs"
+              style={{ height: '640px', minHeight: '540px' }}
+            >
+              <LivePhonePreview
+                formData={deferredFormData}
+                onBack={handleBackClick || onBack}
+                activeSection={formSection}
+                previewScreen={previewTarget.screen}
+                openEnvelope={previewTarget.openEnvelope}
+                syncNonce={previewTarget.nonce}
+              />
             </div>
           </div>
         )}
