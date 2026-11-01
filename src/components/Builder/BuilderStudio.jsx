@@ -408,7 +408,7 @@ export default function BuilderStudio({
     try {
       const res = await saveSurprise(formData);
       setShareResult(res);
-      setTimeout(() => setShowShareModal(true), 60);
+      setShowShareModal(true);
       if (onComplete) {
         onComplete(res);
       }
@@ -427,7 +427,7 @@ export default function BuilderStudio({
         savedToApi: false,
       };
       setShareResult(fallbackRes);
-      setTimeout(() => setShowShareModal(true), 60);
+      setShowShareModal(true);
       if (onComplete) {
         onComplete(fallbackRes);
       }

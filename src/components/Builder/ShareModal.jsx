@@ -29,8 +29,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
 
   // Performance-critical refs for confetti animation and cleanup
   const hasFiredRef = useRef(false);
-  const cannonTimerRef = useRef(null);
-  const showerTimerRef = useRef(null);
+  const cannonTimerRef = useRef([]);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
@@ -68,12 +67,8 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
     if (!isOpen) {
       hasFiredRef.current = false;
       if (cannonTimerRef.current) {
-        clearTimeout(cannonTimerRef.current);
-        cannonTimerRef.current = null;
-      }
-      if (showerTimerRef.current) {
-        clearTimeout(showerTimerRef.current);
-        showerTimerRef.current = null;
+        cannonTimerRef.current.forEach(t => clearTimeout(t));
+        cannonTimerRef.current = [];
       }
       try {
         confetti.reset();
@@ -85,84 +80,111 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
     if (hasFiredRef.current) return;
     hasFiredRef.current = true;
 
-    // Delay 220ms so modal sheet pop animation settles with butter-smooth 60 FPS before explosion
-    cannonTimerRef.current = setTimeout(() => {
+    const celebrationColors = [
+      '#F43F5E', '#FB7185', '#F59E0B', '#FBBF24',
+      '#8B5CF6', '#A855F7', '#10B981', '#38BDF8', '#FFFFFF', '#EC4899',
+    ];
+
+    const timers = [];
+
+    // Instant celebration audio & haptics at t=10ms
+    timers.push(setTimeout(() => {
       try {
+        soundEffects.playPop();
         soundEffects.playCelebration();
       } catch {}
+    }, 10));
 
-      const celebrationColors = [
-        '#F43F5E', '#FB7185', '#F59E0B', '#FBBF24',
-        '#8B5CF6', '#10B981', '#38BDF8', '#FFFFFF',
-      ];
-
+    // Wave 1 (Instant Grand Center Fountain at t=30ms):
+    // Erupts directly from the modal center, shooting skyward and showering down
+    timers.push(setTimeout(() => {
       try {
-        // Left celebratory cannon blast (angled inward)
         confetti({
-          particleCount: 55,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0.12, y: 0.82 },
-          startVelocity: 45,
-          colors: celebrationColors,
-          ticks: 220,
-          decay: 0.91,
-          gravity: 0.95,
-          scalar: 1.05,
+          particleCount: 70,
+          spread: 100,
+          origin: { x: 0.5, y: 0.62 },
+          startVelocity: 52,
+          ticks: 320,
+          decay: 0.935,
+          gravity: 0.75,
+          scalar: 1.15,
           shapes: ['square', 'circle'],
-          zIndex: 99999,
-          disableForReducedMotion: true,
-        });
-
-        // Right celebratory cannon blast (angled inward)
-        confetti({
-          particleCount: 55,
-          angle: 120,
-          spread: 55,
-          origin: { x: 0.88, y: 0.82 },
-          startVelocity: 45,
           colors: celebrationColors,
-          ticks: 220,
-          decay: 0.91,
-          gravity: 0.95,
-          scalar: 1.05,
-          shapes: ['square', 'circle'],
           zIndex: 99999,
           disableForReducedMotion: true,
         });
       } catch (err) {
-        console.warn('Confetti cannon notice:', err);
+        console.warn('Confetti notice:', err);
       }
+    }, 30));
 
-      // Elegant central shower burst at +120ms
-      showerTimerRef.current = setTimeout(() => {
-        try {
-          confetti({
-            particleCount: 40,
-            spread: 90,
-            startVelocity: 30,
-            origin: { x: 0.5, y: 0.4 },
-            colors: ['#F43F5E', '#F59E0B', '#FBBF24', '#8B5CF6', '#38BDF8', '#FFFFFF'],
-            ticks: 200,
-            decay: 0.92,
-            gravity: 0.85,
-            scalar: 0.95,
-            shapes: ['square', 'circle'],
-            zIndex: 99999,
-            disableForReducedMotion: true,
-          });
-        } catch {}
-      }, 120);
-    }, 220);
+    // Wave 2 (Cross-Fire Inward Framing Cannons at t=120ms):
+    // Hugs the modal sides (x: 0.28 and x: 0.72) and arches across the header
+    timers.push(setTimeout(() => {
+      try {
+        // Left inward cannon
+        confetti({
+          particleCount: 48,
+          angle: 60,
+          spread: 70,
+          origin: { x: 0.28, y: 0.7 },
+          startVelocity: 46,
+          ticks: 300,
+          decay: 0.935,
+          gravity: 0.75,
+          scalar: 1.1,
+          shapes: ['square', 'circle'],
+          colors: celebrationColors,
+          zIndex: 99999,
+          disableForReducedMotion: true,
+        });
+
+        // Right inward cannon
+        confetti({
+          particleCount: 48,
+          angle: 120,
+          spread: 70,
+          origin: { x: 0.72, y: 0.7 },
+          startVelocity: 46,
+          ticks: 300,
+          decay: 0.935,
+          gravity: 0.75,
+          scalar: 1.1,
+          shapes: ['square', 'circle'],
+          colors: celebrationColors,
+          zIndex: 99999,
+          disableForReducedMotion: true,
+        });
+      } catch {}
+    }, 120));
+
+    // Wave 3 (Floating Star & Glimmer Shower at t=240ms):
+    // Soft, dreamy, slow-fluttering cascade that floats down like silk
+    timers.push(setTimeout(() => {
+      try {
+        confetti({
+          particleCount: 42,
+          spread: 125,
+          startVelocity: 26,
+          origin: { x: 0.5, y: 0.32 },
+          ticks: 360,
+          decay: 0.94,
+          gravity: 0.65,
+          scalar: 1.05,
+          shapes: ['square', 'circle'],
+          colors: celebrationColors,
+          zIndex: 99999,
+          disableForReducedMotion: true,
+        });
+      } catch {}
+    }, 240));
+
+    cannonTimerRef.current = timers;
 
     return () => {
       if (cannonTimerRef.current) {
-        clearTimeout(cannonTimerRef.current);
-        cannonTimerRef.current = null;
-      }
-      if (showerTimerRef.current) {
-        clearTimeout(showerTimerRef.current);
-        showerTimerRef.current = null;
+        cannonTimerRef.current.forEach(t => clearTimeout(t));
+        cannonTimerRef.current = [];
       }
       try {
         confetti.reset();
