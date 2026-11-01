@@ -457,7 +457,7 @@ export default function App() {
           {/* Creator Tip Callout */}
           <div className="bg-amber-50/70 border border-amber-200/70 rounded-2xl p-4 mb-6 text-left">
             <div className="flex items-start gap-2.5">
-              <span className="text-base select-none">💡</span>
+              <span className="shrink-0 mt-0.5"><AppleEmoji emoji="💡" size={16} /></span>
               <div className="text-xs text-amber-900 leading-relaxed">
                 <p className="font-semibold mb-0.5">Are you the creator?</p>
                 <p className="text-amber-800/90">
@@ -630,8 +630,9 @@ export default function App() {
                           </div>
 
                           {isComingSoon ? (
-                            <span className="inline-flex items-center gap-1 bg-amber-50 text-amber-700 border border-amber-200/80 px-2.5 py-1 rounded-full text-xs font-semibold">
-                              <span>Coming Soon 🚀</span>
+                            <span className="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200/80 px-2.5 py-1 rounded-full text-xs font-semibold">
+                              <span>Coming Soon</span>
+                              <AppleEmoji emoji="🚀" size={13} />
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 text-xs font-semibold text-gray-400 group-hover:text-rose-600 transition-colors">

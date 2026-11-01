@@ -13,6 +13,7 @@ import PolaroidScrapbookView from './PolaroidScrapbookView';
 import BlushRomanceView from './BlushRomanceView';
 import { soundEffects } from './common/SoundEffects';
 import { haptics } from '../../utils/haptics';
+import AppleEmoji from '../common/AppleEmoji';
 
 const TEMPLATES = [
   // Birthday Templates
@@ -199,7 +200,7 @@ export default function TemplateViewer({
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
-                    <span>{t.icon}</span>
+                    <AppleEmoji emoji={t.icon} size={14} />
                     <span className="truncate max-w-[100px]">{t.label}</span>
                   </button>
                 ))}
@@ -279,7 +280,10 @@ export default function TemplateViewer({
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full backdrop-blur-md bg-white/85 text-slate-700 text-[11px] font-medium border border-slate-200/60 shadow-xs hover:bg-white hover:text-slate-900 transition-all hover:scale-105 active:scale-95 cursor-pointer select-none"
             title="Create your own digital keepsake on Dearly"
           >
-            <span>✨ Made with Dearly • Create a keepsake</span>
+            <span className="flex items-center gap-1">
+              <AppleEmoji emoji="✨" size={12} />
+              <span>Made with Dearly • Create a keepsake</span>
+            </span>
           </button>
         </aside>
       )}
