@@ -1048,7 +1048,7 @@ const LivePhonePreview = React.memo(function LivePhonePreview({
     if (confettiCanvasRef.current) {
       confettiInstanceRef.current = confetti.create(confettiCanvasRef.current, {
         resize: true,
-        useWorker: true,
+        useWorker: false, // Scoped phone preview canvas uses main thread; leaves singleton Web Worker free for global celebrations
       });
     }
     return () => {

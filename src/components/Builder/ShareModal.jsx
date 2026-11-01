@@ -14,6 +14,7 @@ import {
   copyToClipboard,
   triggerNativeShare,
 } from '../../utils/share';
+import { soundEffects } from '../../utils/soundEffects';
 import AppleEmoji from '../common/AppleEmoji';
 
 export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
@@ -27,10 +28,9 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   const igTimerRef = useRef(null);
 
   // Performance-critical refs for confetti animation and cleanup
-  const confettiCanvasRef = useRef(null);
-  const confettiInstanceRef = useRef(null);
   const hasFiredRef = useRef(false);
-  const confettiTimeoutRef = useRef(null);
+  const cannonTimerRef = useRef(null);
+  const showerTimerRef = useRef(null);
 
   useEffect(() => {
     if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
@@ -63,19 +63,17 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   const recipientName = formData?.recipientName || 'Someone special';
   const senderName = formData?.senderName || 'Your friend';
 
-  // Fire high-performance celebratory confetti strictly ONCE per modal open
+  // Fire high-performance celebratory confetti strictly ONCE per modal open (Web Worker offloaded)
   useEffect(() => {
     if (!isOpen) {
       hasFiredRef.current = false;
-      if (confettiTimeoutRef.current) {
-        clearTimeout(confettiTimeoutRef.current);
-        confettiTimeoutRef.current = null;
+      if (cannonTimerRef.current) {
+        clearTimeout(cannonTimerRef.current);
+        cannonTimerRef.current = null;
       }
-      if (confettiInstanceRef.current) {
-        try {
-          confettiInstanceRef.current.reset();
-        } catch {}
-        confettiInstanceRef.current = null;
+      if (showerTimerRef.current) {
+        clearTimeout(showerTimerRef.current);
+        showerTimerRef.current = null;
       }
       try {
         confetti.reset();
@@ -87,45 +85,84 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
     if (hasFiredRef.current) return;
     hasFiredRef.current = true;
 
-    // Smooth single RAF delay to let the modal entrance settle cleanly before firing confetti
-    const animFrame = requestAnimationFrame(() => {
-      if (confettiCanvasRef.current && !confettiInstanceRef.current) {
-        try {
-          confettiInstanceRef.current = confetti.create(confettiCanvasRef.current, {
-            resize: true,
-            useWorker: false, // Prevents stomping on LivePhonePreview's worker instance
-          });
-        } catch {
-          confettiInstanceRef.current = null;
-        }
-      }
+    // Delay 220ms so modal sheet pop animation settles with butter-smooth 60 FPS before explosion
+    cannonTimerRef.current = setTimeout(() => {
+      try {
+        soundEffects.playCelebration();
+      } catch {}
 
-      const fire = confettiInstanceRef.current || confetti;
+      const celebrationColors = [
+        '#F43F5E', '#FB7185', '#F59E0B', '#FBBF24',
+        '#8B5CF6', '#10B981', '#38BDF8', '#FFFFFF',
+      ];
 
       try {
-        // High-performance celebratory burst: 45 particles, snappy 100 ticks, 0.92 decay, spread 60
-        fire({
-          particleCount: 45,
-          spread: 60,
-          origin: { y: 0.62 },
-          colors: ['#F43F5E', '#FB7185', '#F59E0B', '#EC4899', '#A855F7'],
-          ticks: 100,
-          decay: 0.92,
-          scalar: 0.95,
+        // Left celebratory cannon blast (angled inward)
+        confetti({
+          particleCount: 55,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0.12, y: 0.82 },
+          startVelocity: 45,
+          colors: celebrationColors,
+          ticks: 220,
+          decay: 0.91,
+          gravity: 0.95,
+          scalar: 1.05,
+          shapes: ['square', 'circle'],
+          zIndex: 99999,
           disableForReducedMotion: true,
         });
-      } catch {
-        // Confetti optional
+
+        // Right celebratory cannon blast (angled inward)
+        confetti({
+          particleCount: 55,
+          angle: 120,
+          spread: 55,
+          origin: { x: 0.88, y: 0.82 },
+          startVelocity: 45,
+          colors: celebrationColors,
+          ticks: 220,
+          decay: 0.91,
+          gravity: 0.95,
+          scalar: 1.05,
+          shapes: ['square', 'circle'],
+          zIndex: 99999,
+          disableForReducedMotion: true,
+        });
+      } catch (err) {
+        console.warn('Confetti cannon notice:', err);
       }
-    });
+
+      // Elegant central shower burst at +120ms
+      showerTimerRef.current = setTimeout(() => {
+        try {
+          confetti({
+            particleCount: 40,
+            spread: 90,
+            startVelocity: 30,
+            origin: { x: 0.5, y: 0.4 },
+            colors: ['#F43F5E', '#F59E0B', '#FBBF24', '#8B5CF6', '#38BDF8', '#FFFFFF'],
+            ticks: 200,
+            decay: 0.92,
+            gravity: 0.85,
+            scalar: 0.95,
+            shapes: ['square', 'circle'],
+            zIndex: 99999,
+            disableForReducedMotion: true,
+          });
+        } catch {}
+      }, 120);
+    }, 220);
 
     return () => {
-      cancelAnimationFrame(animFrame);
-      if (confettiInstanceRef.current) {
-        try {
-          confettiInstanceRef.current.reset();
-        } catch {}
-        confettiInstanceRef.current = null;
+      if (cannonTimerRef.current) {
+        clearTimeout(cannonTimerRef.current);
+        cannonTimerRef.current = null;
+      }
+      if (showerTimerRef.current) {
+        clearTimeout(showerTimerRef.current);
+        showerTimerRef.current = null;
       }
       try {
         confetti.reset();
@@ -242,13 +279,6 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
       className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-950/65 animate-modal-backdrop"
       onClick={handleBackdropClick}
     >
-      {/* Dedicated high-performance confetti canvas */}
-      <canvas
-        ref={confettiCanvasRef}
-        aria-hidden="true"
-        className="fixed inset-0 pointer-events-none z-[60] w-full h-full transform-gpu"
-      />
-
       {/* Modal Dialog Card - Clean Luxury Sheet */}
       <div
         className="relative w-full max-w-[420px] max-h-[92vh] overflow-y-auto rounded-3xl bg-white border border-slate-200/90 shadow-2xl p-5 sm:p-6 space-y-4 overscroll-contain transform-gpu will-change-[transform,opacity] animate-modal-sheet"
