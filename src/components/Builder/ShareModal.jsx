@@ -95,19 +95,53 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
       } catch {}
     }, 10));
 
-    // Wave 1 (Instant Grand Center Fountain at t=30ms):
-    // Erupts directly from the modal center, shooting skyward and showering down
+    // Snappy, high-energy party popper burst at t=30ms (crisp, falls naturally, no sluggish floating)
     timers.push(setTimeout(() => {
       try {
+        // 1. Center Power Fountain (bursts upwards with punchy arc)
         confetti({
-          particleCount: 70,
-          spread: 100,
+          particleCount: 55,
+          spread: 85,
           origin: { x: 0.5, y: 0.62 },
-          startVelocity: 52,
-          ticks: 320,
-          decay: 0.935,
-          gravity: 0.75,
-          scalar: 1.15,
+          startVelocity: 46,
+          ticks: 120,
+          decay: 0.915,
+          gravity: 1.2,
+          scalar: 1.1,
+          shapes: ['square', 'circle'],
+          colors: celebrationColors,
+          zIndex: 99999,
+          disableForReducedMotion: true,
+        });
+
+        // 2. Left Inward Cannon
+        confetti({
+          particleCount: 38,
+          angle: 60,
+          spread: 60,
+          origin: { x: 0.25, y: 0.72 },
+          startVelocity: 42,
+          ticks: 110,
+          decay: 0.915,
+          gravity: 1.25,
+          scalar: 1.05,
+          shapes: ['square', 'circle'],
+          colors: celebrationColors,
+          zIndex: 99999,
+          disableForReducedMotion: true,
+        });
+
+        // 3. Right Inward Cannon
+        confetti({
+          particleCount: 38,
+          angle: 120,
+          spread: 60,
+          origin: { x: 0.72, y: 0.72 },
+          startVelocity: 42,
+          ticks: 110,
+          decay: 0.915,
+          gravity: 1.25,
+          scalar: 1.05,
           shapes: ['square', 'circle'],
           colors: celebrationColors,
           zIndex: 99999,
@@ -117,67 +151,6 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
         console.warn('Confetti notice:', err);
       }
     }, 30));
-
-    // Wave 2 (Cross-Fire Inward Framing Cannons at t=120ms):
-    // Hugs the modal sides (x: 0.28 and x: 0.72) and arches across the header
-    timers.push(setTimeout(() => {
-      try {
-        // Left inward cannon
-        confetti({
-          particleCount: 48,
-          angle: 60,
-          spread: 70,
-          origin: { x: 0.28, y: 0.7 },
-          startVelocity: 46,
-          ticks: 300,
-          decay: 0.935,
-          gravity: 0.75,
-          scalar: 1.1,
-          shapes: ['square', 'circle'],
-          colors: celebrationColors,
-          zIndex: 99999,
-          disableForReducedMotion: true,
-        });
-
-        // Right inward cannon
-        confetti({
-          particleCount: 48,
-          angle: 120,
-          spread: 70,
-          origin: { x: 0.72, y: 0.7 },
-          startVelocity: 46,
-          ticks: 300,
-          decay: 0.935,
-          gravity: 0.75,
-          scalar: 1.1,
-          shapes: ['square', 'circle'],
-          colors: celebrationColors,
-          zIndex: 99999,
-          disableForReducedMotion: true,
-        });
-      } catch {}
-    }, 120));
-
-    // Wave 3 (Floating Star & Glimmer Shower at t=240ms):
-    // Soft, dreamy, slow-fluttering cascade that floats down like silk
-    timers.push(setTimeout(() => {
-      try {
-        confetti({
-          particleCount: 42,
-          spread: 125,
-          startVelocity: 26,
-          origin: { x: 0.5, y: 0.32 },
-          ticks: 360,
-          decay: 0.94,
-          gravity: 0.65,
-          scalar: 1.05,
-          shapes: ['square', 'circle'],
-          colors: celebrationColors,
-          zIndex: 99999,
-          disableForReducedMotion: true,
-        });
-      } catch {}
-    }, 240));
 
     cannonTimerRef.current = timers;
 
