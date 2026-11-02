@@ -28,5 +28,3 @@ test/*.png
 .vercel
 .env*
 media/
-
-data/admin-config.json

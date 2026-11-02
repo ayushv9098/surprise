@@ -6,7 +6,6 @@ import {
   RefreshCw,
   Sparkles,
   Home,
-  ChevronDown,
 } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -36,34 +35,6 @@ function LoadingFallback({ message = 'Loading...' }) {
 }
 
 const KNOWN_ROUTES = ['admin', 'builder', 'create', 'templates', 'about', 'privacy', 'terms'];
-
-const FAQ_ITEMS = [
-  {
-    question: 'How do I create a surprise website for someone special?',
-    answer:
-      'Creating a surprise website takes just 2 minutes! Choose an occasion (Birthday, Love Romance, Memory Scrapbook, or Heartfelt Apology), upload your favorite photos, write a heartfelt message or secret letter, select a song, and click Create Keepsake. You\'ll get an instant live link to share.',
-  },
-  {
-    question: 'Is Dearly 100% free to use?',
-    answer:
-      'Yes, Dearly is completely free, private, and ad-free. Anyone can create and send customized interactive keepsake websites in minutes with no subscription or hidden costs.',
-  },
-  {
-    question: 'Can I add custom songs, photos, and letters?',
-    answer:
-      'Yes! You can upload personal photos, add captions, select curated celebration songs or romantic background melodies, and write a personalized letter that reveals with an interactive wax seal animation.',
-  },
-  {
-    question: 'Do recipients need to download an app or sign up?',
-    answer:
-      'No! The surprise website opens instantly in any mobile or desktop web browser (Chrome, Safari, Edge) without requiring any app download or account creation.',
-  },
-  {
-    question: 'How do I share the surprise website on WhatsApp or Instagram?',
-    answer:
-      'Once you create your keepsake, you get a clean short link. Dearly provides one-tap sharing to WhatsApp, Instagram Story, Snapchat, or direct link copy with rich interactive preview cards.',
-  },
-];
 
 export default function App() {
   const [currentView, setCurrentView] = useState(() => {
@@ -135,11 +106,6 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const [recipientModalCategory, setRecipientModalCategory] = useState(null);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
-  const [openFaqIndex, setOpenFaqIndex] = useState(0);
-
-  const toggleFaq = (index) => {
-    setOpenFaqIndex((prev) => (prev === index ? null : index));
-  };
 
   const handleNavigate = (view, templateId = null, categoryId = null) => {
     setNotFoundSlug(null);
@@ -505,9 +471,7 @@ export default function App() {
           <div className="flex flex-col gap-2.5">
             <button
               onClick={handleStartCreating}
-              aria-label="Create your own surprise website"
-              title="Create your own surprise website"
-              className="w-full py-3 px-4 rounded-xl text-sm font-semibold bg-[#E8364E] text-white hover:bg-[#eb4259] border border-[#d1243b] shadow-[0_3px_0_0_#b81d33,0_6px_16px_rgba(232,54,78,0.25)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#b81d33,0_10px_20px_rgba(232,54,78,0.3)] active:translate-y-1 active:shadow-none transition-all duration-150 cursor-pointer flex items-center justify-center gap-2 select-none"
+              className="w-full py-3 px-4 rounded-xl text-sm font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4" />
               <span>Create Your Own Surprise</span>
@@ -516,9 +480,7 @@ export default function App() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleRetryLoad(notFoundSlug)}
-                aria-label="Try loading surprise website again"
-                title="Try loading surprise website again"
-                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-slate-200 shadow-[0_3px_0_0_#cbd5e1,0_4px_10px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_6px_14px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none"
+                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <RefreshCw className="w-3.5 h-3.5 text-gray-500" />
                 <span>Try Again</span>
@@ -526,9 +488,7 @@ export default function App() {
 
               <button
                 onClick={() => handleNavigate('home')}
-                aria-label="Return to Dearly home page"
-                title="Return to Dearly home page"
-                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-slate-200 shadow-[0_3px_0_0_#cbd5e1,0_4px_10px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_6px_14px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none"
+                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <Home className="w-3.5 h-3.5 text-gray-500" />
                 <span>Return to Home</span>
@@ -571,11 +531,13 @@ export default function App() {
       <main className="flex-1">
         {/* VIEW: ADMIN DASHBOARD */}
         {currentView === 'admin' && (
-          <ErrorBoundary onReset={() => handleNavigate('home')}>
-            <React.Suspense fallback={<LoadingFallback />}>
-              <AdminDashboard onNavigate={handleNavigate} />
-            </React.Suspense>
-          </ErrorBoundary>
+          <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <ErrorBoundary onReset={() => handleNavigate('home')}>
+              <React.Suspense fallback={<LoadingFallback />}>
+                <AdminDashboard onNavigate={handleNavigate} />
+              </React.Suspense>
+            </ErrorBoundary>
+          </div>
         )}
 
         {/* VIEW: BUILDER STUDIO — full-width, no padding (BuilderStudio manages its own layout) */}
@@ -608,25 +570,21 @@ export default function App() {
                 Create a surprise website for someone special
               </h1>
 
-              <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed mb-10">
-                Turn photos, letters and songs into a heartfelt interactive website. Free interactive keepsake surprise website maker for birthdays, anniversaries, apologies, and special moments — no coding required, ready in 2 minutes.
+              <p className="text-base text-gray-500 max-w-lg mx-auto leading-relaxed mb-10">
+                Turn photos, letters and songs into a heartfelt interactive website. Free, no coding, ready in 2 minutes.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   onClick={handleStartCreating}
-                  aria-label="Start creating your surprise website"
-                  title="Start creating your surprise website"
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-2xl text-base font-semibold text-white tracking-wide bg-[#E8364E] hover:bg-[#eb4259] border border-[#d1243b] shadow-[0_4px_0_0_#b81d33,0_8px_20px_rgba(232,54,78,0.28),inset_0_1px_0_rgba(255,255,255,0.3)] hover:-translate-y-0.5 hover:shadow-[0_5px_0_0_#b81d33,0_12px_24px_rgba(232,54,78,0.35),inset_0_1px_0_rgba(255,255,255,0.35)] active:translate-y-1 active:shadow-[0_0px_0_0_#b81d33,0_2px_6px_rgba(232,54,78,0.2),inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-150 ease-out cursor-pointer select-none"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md"
                 >
                   Start Creating →
                 </button>
 
                 <button
                   onClick={() => handlePreviewPreset('royal-sapphire')}
-                  aria-label="See example surprise website preview"
-                  title="See example surprise website preview"
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-2xl text-base font-semibold text-slate-700 hover:text-slate-900 tracking-wide bg-white hover:bg-slate-50/90 border border-slate-200/90 shadow-[0_4px_0_0_#cbd5e1,0_6px_16px_rgba(0,0,0,0.05),inset_0_1px_0_rgba(255,255,255,1)] hover:-translate-y-0.5 hover:shadow-[0_5px_0_0_#cbd5e1,0_10px_20px_rgba(0,0,0,0.07),inset_0_1px_0_rgba(255,255,255,1)] active:translate-y-1 active:shadow-[0_0px_0_0_#cbd5e1,0_2px_4px_rgba(0,0,0,0.04),inset_0_1px_0_rgba(255,255,255,0.6)] transition-all duration-150 ease-out cursor-pointer select-none"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 active:scale-[0.98] transition-all duration-150 cursor-pointer"
                 >
                   See Example
                 </button>
@@ -652,8 +610,6 @@ export default function App() {
                       key={cat.id}
                       type="button"
                       onClick={() => handleCategoryClick(cat)}
-                      aria-label={isComingSoon ? `${cat.name} occasion (Coming Soon)` : `Choose ${cat.name} occasion`}
-                      title={isComingSoon ? `${cat.name} - Coming Soon` : `Choose ${cat.name} occasion`}
                       className={`group bg-white rounded-2xl border border-gray-200/80 p-6 text-left transition-all duration-200 flex flex-col justify-between ${
                         isComingSoon
                           ? 'cursor-not-allowed opacity-80 hover:shadow-none hover:border-gray-200 hover:translate-y-0'
@@ -707,7 +663,7 @@ export default function App() {
             </section>
 
             {/* HOW IT WORKS */}
-            <section className="px-4 sm:px-6 max-w-4xl mx-auto">
+            <section className="px-4 sm:px-6 max-w-4xl mx-auto pb-16 sm:pb-24">
               <h2 className="font-semibold text-2xl text-[#1a1a1a] mb-8">
                 How it works
               </h2>
@@ -748,64 +704,6 @@ export default function App() {
                     Get an instant live link. When they open it, music plays and confetti flies.
                   </p>
                 </div>
-              </div>
-            </section>
-
-            {/* FREQUENTLY ASKED QUESTIONS */}
-            <section id="faq" className="px-4 sm:px-6 max-w-4xl mx-auto pb-16 sm:pb-24">
-              <div className="mb-8">
-                <h2 className="font-semibold text-2xl text-[#1a1a1a]">
-                  Frequently Asked Questions
-                </h2>
-                <p className="text-sm text-gray-500 mt-1">
-                  Everything you need to know about creating personalized surprise websites with Dearly.
-                </p>
-              </div>
-
-              <div className="space-y-3.5">
-                {FAQ_ITEMS.map((faq, index) => {
-                  const isOpen = openFaqIndex === index;
-                  return (
-                    <div
-                      key={index}
-                      className="bg-white rounded-2xl border border-gray-200/80 transition-all duration-200 overflow-hidden shadow-2xs hover:border-gray-300"
-                    >
-                      <button
-                        type="button"
-                        onClick={() => toggleFaq(index)}
-                        aria-expanded={isOpen}
-                        aria-controls={`faq-answer-${index}`}
-                        aria-label={`Toggle answer for: ${faq.question}`}
-                        title={faq.question}
-                        className="w-full px-6 py-5 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
-                      >
-                        <span className="font-semibold text-base sm:text-lg text-gray-900 leading-snug">
-                          {faq.question}
-                        </span>
-                        <span
-                          className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-gray-50 border border-gray-100 transition-all duration-200 ${
-                            isOpen ? 'bg-rose-50 border-rose-200 text-rose-600 rotate-180' : 'text-gray-400'
-                          }`}
-                        >
-                          <ChevronDown className="w-4 h-4 transition-transform duration-200" />
-                        </span>
-                      </button>
-
-                      <div
-                        id={`faq-answer-${index}`}
-                        role="region"
-                        aria-labelledby={`faq-question-${index}`}
-                        className={`transition-all duration-300 ease-in-out px-6 ${
-                          isOpen ? 'max-h-96 pb-5 opacity-100' : 'max-h-0 pb-0 opacity-0 pointer-events-none'
-                        } overflow-hidden`}
-                      >
-                        <p className="text-sm sm:text-base text-gray-600 leading-relaxed pt-3 border-t border-gray-100/80">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
             </section>
 

@@ -12,8 +12,7 @@ import {
   Download,
   Plus,
   Sparkles,
-  Inbox,
-  KeyRound
+  Inbox
 } from 'lucide-react';
 import SitesTable from './SitesTable';
 import SiteDetailModal from './SiteDetailModal';
@@ -58,9 +57,6 @@ export default function AdminDashboard({ onNavigate }) {
   // Inspection Modal
   const [inspectSite, setInspectSite] = useState(null);
 
-  // Change Password Modal
-  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
-
   // Toast Notification State
   const [toast, setToast] = useState(null);
 
@@ -71,16 +67,6 @@ export default function AdminDashboard({ onNavigate }) {
   const clearToast = useCallback(() => {
     setToast(null);
   }, []);
-
-  const handlePasswordChanged = useCallback((newPassword) => {
-    sessionStorage.setItem(AUTH_TOKEN_KEY, newPassword);
-    setAuthToken(newPassword);
-    setIsChangePasswordOpen(false);
-    showToast({
-      type: 'success',
-      message: 'Admin password changed successfully!'
-    });
-  }, [showToast]);
 
   // Logout handler
   const handleLogout = useCallback(() => {
@@ -363,7 +349,7 @@ export default function AdminDashboard({ onNavigate }) {
   // ----------------------------------------------------
   if (!isAuthenticated) {
     return (
-      <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-[#FFFDFB]">
+      <div className="min-h-[85vh] flex items-center justify-center px-4 py-12 bg-[#FAFAF8]">
         <div className="w-full max-w-sm bg-white rounded-3xl border border-stone-200/80 shadow-xl p-8 transition-all">
           <div className="text-center mb-6">
             <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shadow-xs">
@@ -412,7 +398,7 @@ export default function AdminDashboard({ onNavigate }) {
             <button
               type="submit"
               disabled={isVerifying}
-              className="w-full py-3 rounded-xl font-semibold text-sm bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-60 shadow-[0_3px_0_0_#0f172a,0_6px_16px_rgba(15,23,42,0.18)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#0f172a,0_10px_20px_rgba(15,23,42,0.22)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl font-semibold text-sm bg-slate-900 text-white hover:bg-slate-800 disabled:opacity-60 transition-all cursor-pointer shadow-md shadow-slate-900/10 flex items-center justify-center gap-2"
             >
               {isVerifying ? (
                 <>
@@ -452,7 +438,7 @@ export default function AdminDashboard({ onNavigate }) {
   // AUTHENTICATED DASHBOARD SCREEN
   // ----------------------------------------------------
   return (
-    <div className="min-h-screen pb-20 bg-[#FFFDFB]">
+    <div className="min-h-screen pb-20 bg-[#FAFAF8]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
 
         {/* Backend Warning banner if API is unreachable */}
@@ -467,7 +453,7 @@ export default function AdminDashboard({ onNavigate }) {
             </div>
             <button
               onClick={() => fetchData()}
-              className="px-3.5 py-1.5 bg-amber-200/80 hover:bg-amber-300 text-amber-900 font-semibold text-xs rounded-xl shadow-[0_2px_0_0_#d97706] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-none transition-all cursor-pointer shrink-0"
+              className="px-3 py-1 bg-amber-200/70 hover:bg-amber-300 rounded-lg font-medium transition-colors cursor-pointer shrink-0"
             >
               Retry
             </button>
@@ -495,7 +481,7 @@ export default function AdminDashboard({ onNavigate }) {
             <button
               onClick={handleManualRefresh}
               disabled={refreshing}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-stone-200/90 shadow-[0_3px_0_0_#cbd5e1,0_4px_12px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_8px_16px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 bg-white border border-stone-200 hover:bg-stone-50 transition-colors cursor-pointer shadow-xs"
               title="Refresh Data"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
@@ -504,26 +490,17 @@ export default function AdminDashboard({ onNavigate }) {
 
             <button
               onClick={handleExport}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-stone-200/90 shadow-[0_3px_0_0_#cbd5e1,0_4px_12px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_8px_16px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 bg-white border border-stone-200 hover:bg-stone-50 transition-colors cursor-pointer shadow-xs"
               title="Export Sites JSON"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Export</span>
             </button>
 
-            <button
-              onClick={() => setIsChangePasswordOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-white border border-stone-200/90 shadow-[0_3px_0_0_#cbd5e1,0_4px_12px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_8px_16px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none"
-              title="Change Admin Password"
-            >
-              <KeyRound className="w-3.5 h-3.5 text-rose-500" />
-              <span>Change Password</span>
-            </button>
-
             {onNavigate && (
               <button
                 onClick={() => onNavigate('builder')}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-[#E8364E] text-white hover:bg-[#d42e44] shadow-[0_3px_0_0_#b81d33,0_6px_16px_rgba(232,54,78,0.25)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#b81d33,0_10px_20px_rgba(232,54,78,0.3)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500 text-white hover:bg-rose-600 transition-colors cursor-pointer shadow-sm shadow-rose-200"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Create Keepsake</span>
@@ -533,7 +510,7 @@ export default function AdminDashboard({ onNavigate }) {
             <button
               onClick={handleLogout}
               title="Logout from Admin"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-rose-600 bg-rose-50/70 border border-rose-200/80 shadow-[0_3px_0_0_#fecdd3] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#fecdd3] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none"
+              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-600 bg-rose-50/70 border border-rose-200/80 hover:bg-rose-100/70 transition-colors cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Logout</span>
@@ -633,7 +610,7 @@ export default function AdminDashboard({ onNavigate }) {
             {onNavigate && (
               <button
                 onClick={() => onNavigate('builder')}
-                className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#E8364E] text-white hover:bg-[#d42e44] shadow-[0_3px_0_0_#b81d33,0_6px_16px_rgba(232,54,78,0.25)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#b81d33,0_10px_20px_rgba(232,54,78,0.3)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none shrink-0"
+                className="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-500 hover:bg-rose-600 text-white shadow-sm shadow-rose-200 transition-colors cursor-pointer shrink-0"
               >
                 Create First Keepsake
               </button>
@@ -646,11 +623,11 @@ export default function AdminDashboard({ onNavigate }) {
           <button
             type="button"
             onClick={() => setStatusFilter('all')}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               statusFilter === 'all'
-                ? 'bg-slate-900 text-white shadow-[0_3px_0_0_#0f172a,0_4px_12px_rgba(15,23,42,0.15)] hover:-translate-y-0.5'
-                : 'bg-white text-slate-700 hover:bg-stone-50 border border-stone-200/90 shadow-[0_2px_0_0_#cbd5e1] hover:-translate-y-0.5'
-            } active:translate-y-0.5 active:shadow-none`}
+                ? 'bg-slate-900 text-white shadow-xs'
+                : 'bg-white text-slate-600 hover:bg-stone-50 border border-stone-200/80 shadow-xs'
+            }`}
           >
             <span>All ({sites.length})</span>
           </button>
@@ -658,11 +635,11 @@ export default function AdminDashboard({ onNavigate }) {
           <button
             type="button"
             onClick={() => setStatusFilter('opened')}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               statusFilter === 'opened'
-                ? 'bg-emerald-600 text-white shadow-[0_3px_0_0_#059669,0_4px_12px_rgba(5,150,105,0.2)] hover:-translate-y-0.5'
-                : 'bg-white text-slate-700 hover:bg-stone-50 border border-stone-200/90 shadow-[0_2px_0_0_#cbd5e1] hover:-translate-y-0.5'
-            } active:translate-y-0.5 active:shadow-none`}
+                ? 'bg-emerald-600 text-white shadow-xs'
+                : 'bg-white text-slate-600 hover:bg-stone-50 border border-stone-200/80 shadow-xs'
+            }`}
           >
             <span>🟢 Opened ({openedCount})</span>
           </button>
@@ -670,11 +647,11 @@ export default function AdminDashboard({ onNavigate }) {
           <button
             type="button"
             onClick={() => setStatusFilter('unopened')}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer select-none ${
+            className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
               statusFilter === 'unopened'
-                ? 'bg-amber-600 text-white shadow-[0_3px_0_0_#d97706,0_4px_12px_rgba(217,119,6,0.2)] hover:-translate-y-0.5'
-                : 'bg-white text-slate-700 hover:bg-stone-50 border border-stone-200/90 shadow-[0_2px_0_0_#cbd5e1] hover:-translate-y-0.5'
-            } active:translate-y-0.5 active:shadow-none`}
+                ? 'bg-amber-600 text-white shadow-xs'
+                : 'bg-white text-slate-600 hover:bg-stone-50 border border-stone-200/80 shadow-xs'
+            }`}
           >
             <span>⏳ Not Opened ({unopenedCount})</span>
           </button>
@@ -762,195 +739,9 @@ export default function AdminDashboard({ onNavigate }) {
           />
         )}
 
-        {/* CHANGE ADMIN PASSWORD MODAL */}
-        <ChangePasswordModal
-          isOpen={isChangePasswordOpen}
-          onClose={() => setIsChangePasswordOpen(false)}
-          authToken={authToken}
-          onPasswordChanged={handlePasswordChanged}
-        />
-
         {/* TOAST NOTIFICATIONS */}
         <Toast toast={toast} onClose={clearToast} />
 
-      </div>
-    </div>
-  );
-}
-
-function ChangePasswordModal({ isOpen, onClose, authToken, onPasswordChanged }) {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showCurrent, setShowCurrent] = useState(false);
-  const [showNew, setShowNew] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
-
-  if (!isOpen) return null;
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    if (!currentPassword) {
-      setError('Please enter your current password');
-      return;
-    }
-    if (!newPassword || newPassword.length < 6) {
-      setError('New password must be at least 6 characters long');
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setError('New passwords do not match');
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const res = await fetch('/api/admin/change-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-admin-key': authToken
-        },
-        body: JSON.stringify({ currentPassword, newPassword })
-      });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        setError(data.error || 'Failed to change admin password');
-        return;
-      }
-
-      onPasswordChanged(newPassword);
-    } catch (err) {
-      setError(err.message || 'Network error while changing password');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl border border-stone-200/90 p-6 sm:p-7 overflow-hidden">
-        <button
-          onClick={onClose}
-          disabled={isSubmitting}
-          className="absolute top-4 right-4 p-2 rounded-full text-slate-400 hover:text-slate-700 bg-stone-100 hover:bg-stone-200 transition-colors cursor-pointer"
-          title="Close dialog"
-        >
-          <X className="w-4 h-4" />
-        </button>
-
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shadow-xs">
-            <KeyRound className="w-6 h-6" />
-          </div>
-          <div>
-            <h3 className="text-lg font-bold text-slate-900">Change Admin Password</h3>
-            <p className="text-xs text-slate-500">Update the secret key used to access this dashboard</p>
-          </div>
-        </div>
-
-        {error && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-700 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
-            <span>{error}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Current Password</label>
-            <div className="relative">
-              <input
-                type={showCurrent ? 'text' : 'password'}
-                value={currentPassword}
-                onChange={(e) => { setCurrentPassword(e.target.value); setError(''); }}
-                placeholder="Enter current password"
-                className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-stone-200 text-sm font-mono text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/40 focus:border-rose-400 bg-stone-50/50"
-              />
-              <button
-                type="button"
-                onClick={() => setShowCurrent(!showCurrent)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
-              >
-                {showCurrent ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">New Password (min 6 chars)</label>
-            <div className="relative">
-              <input
-                type={showNew ? 'text' : 'password'}
-                value={newPassword}
-                onChange={(e) => { setNewPassword(e.target.value); setError(''); }}
-                placeholder="Enter new strong password"
-                className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-stone-200 text-sm font-mono text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/40 focus:border-rose-400 bg-stone-50/50"
-              />
-              <button
-                type="button"
-                onClick={() => setShowNew(!showNew)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
-              >
-                {showNew ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">Confirm New Password</label>
-            <div className="relative">
-              <input
-                type={showConfirm ? 'text' : 'password'}
-                value={confirmPassword}
-                onChange={(e) => { setConfirmPassword(e.target.value); setError(''); }}
-                placeholder="Re-enter new password"
-                className="w-full pl-3.5 pr-10 py-2.5 rounded-xl border border-stone-200 text-sm font-mono text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500/40 focus:border-rose-400 bg-stone-50/50"
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
-              >
-                {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          <div className="pt-2 flex items-center justify-end gap-2.5">
-            <button
-              type="button"
-              onClick={onClose}
-              disabled={isSubmitting}
-              className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-white border border-stone-200 shadow-[0_3px_0_0_#cbd5e1,0_4px_10px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_6px_14px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none"
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-[#E8364E] hover:bg-[#d42e44] border border-[#d1243b] shadow-[0_3px_0_0_#b81d33,0_6px_16px_rgba(232,54,78,0.25)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#b81d33,0_10px_20px_rgba(232,54,78,0.3)] active:translate-y-1 active:shadow-none transition-all cursor-pointer select-none flex items-center gap-1.5"
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Updating...</span>
-                </>
-              ) : (
-                <>
-                  <KeyRound className="w-3.5 h-3.5" />
-                  <span>Update Password</span>
-                </>
-              )}
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );

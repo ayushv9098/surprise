@@ -3,18 +3,13 @@ import cors from 'cors';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { db, SEED_SITES, getAdminSecret, setAdminSecret, initAdminSecret, refreshAdminSecret } from '../server/db.js';
+import { db, SEED_SITES } from '../server/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export let ADMIN_SECRET = getAdminSecret();
-export { SEED_SITES, getAdminSecret, setAdminSecret, initAdminSecret, refreshAdminSecret };
-
-// Pre-init admin secret from Redis if available
-initAdminSecret().then((s) => {
-  ADMIN_SECRET = s;
-}).catch(() => {});
+export const ADMIN_SECRET = process.env.ADMIN_SECRET || 'dearly-admin-2026';
+export { SEED_SITES };
 
 const app = express();
 app.use(cors());
@@ -22,7 +17,7 @@ app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // Admin authentication middleware
-async function requireAdminAuth(req, res, next) {
+function requireAdminAuth(req, res, next) {
   const adminKey = req.headers['x-admin-key'];
   const authHeader = req.headers.authorization;
 
@@ -36,17 +31,8 @@ async function requireAdminAuth(req, res, next) {
   }
 
   const token = adminKey || bearerToken;
-  let currentSecret = getAdminSecret();
 
-  // If token mismatch, check if secret was updated in Redis
-  if (token && token !== currentSecret && typeof refreshAdminSecret === 'function') {
-    try {
-      const refreshed = await refreshAdminSecret();
-      if (refreshed) currentSecret = refreshed;
-    } catch {}
-  }
-
-  if (!token || token !== currentSecret) {
+  if (!token || token !== ADMIN_SECRET) {
     return res.status(401).json({
       error: 'Unauthorized: Invalid admin credentials'
     });
@@ -121,32 +107,16 @@ app.get('/s/:slug', async (req, res) => {
     const site = await db.getSiteBySlug(slug, { increment: false });
 
     if (site && html) {
-      const recipient = site.recipientName || 'Someone Special';
-      const pageTitle = `${site.title || `Special Surprise for ${recipient}`} — Dearly Surprise Website Maker`;
-      const ogTitle = `${site.title || `Special Surprise for ${recipient} 🎁`} — Dearly`;
-      const ogDesc = `A personalized keepsake surprise website created for ${recipient}. Tap to open envelope and celebrate! 💌`;
-      const dynamicKeywords = `${site.occasion || 'surprise website'}, birthday surprise website, surprise website for ${recipient}, interactive greeting website, love letter, memory scrapbook, dearly`;
-      const siteUrl = `https://dearlys.vercel.app/s/${site.slug || slug}`;
-      const previewImage = (site.heroPhoto && typeof site.heroPhoto === 'string' && site.heroPhoto.startsWith('http'))
-        ? site.heroPhoto
-        : (Array.isArray(site.photos) && site.photos[0]?.url && typeof site.photos[0].url === 'string' && site.photos[0].url.startsWith('http'))
-          ? site.photos[0].url
-          : `https://dearlys.vercel.app/previews/${site.templateId || site.template || 'royal-sapphire'}.svg`;
+      const pageTitle = `${site.title || `Special Surprise for ${site.recipientName}`} — Dearly`;
+      const ogTitle = `${site.title || `Special Surprise for ${site.recipientName} 🎁`} — Dearly`;
+      const ogDesc = `A personalized keepsake surprise website created for ${site.recipientName || 'someone special'}. Tap to open envelope! 💌`;
 
       html = html
-        .replace(/<title>.*?<\/title>/i, `<title>${pageTitle}</title>`)
-        .replace(/<link rel="canonical" href=".*?"(?:\s*\/)?>/i, `<link rel="canonical" href="${siteUrl}" />`)
-        .replace(/<meta name="description" content=".*?"(?:\s*\/)?>/i, `<meta name="description" content="${ogDesc}" />`)
-        .replace(/<meta name="keywords" content=".*?"(?:\s*\/)?>/i, `<meta name="keywords" content="${dynamicKeywords}" />`)
-        .replace(/<meta property="og:title" content=".*?"(?:\s*\/)?>/i, `<meta property="og:title" content="${ogTitle}" />`)
-        .replace(/<meta property="og:description" content=".*?"(?:\s*\/)?>/i, `<meta property="og:description" content="${ogDesc}" />`)
-        .replace(/<meta property="og:url" content=".*?"(?:\s*\/)?>/i, `<meta property="og:url" content="${siteUrl}" />`)
-        .replace(/<meta property="og:image" content=".*?"(?:\s*\/)?>/i, `<meta property="og:image" content="${previewImage}" />`)
-        .replace(/<meta property="og:image:secure_url" content=".*?"(?:\s*\/)?>/i, `<meta property="og:image:secure_url" content="${previewImage}" />`)
-        .replace(/<meta property="og:image:alt" content=".*?"(?:\s*\/)?>/i, `<meta property="og:image:alt" content="${ogTitle}" />`)
-        .replace(/<meta (?:property|name)="twitter:title" content=".*?"(?:\s*\/)?>/i, `<meta name="twitter:title" content="${ogTitle}" />`)
-        .replace(/<meta (?:property|name)="twitter:description" content=".*?"(?:\s*\/)?>/i, `<meta name="twitter:description" content="${ogDesc}" />`)
-        .replace(/<meta (?:property|name)="twitter:image" content=".*?"(?:\s*\/)?>/i, `<meta name="twitter:image" content="${previewImage}" />`);
+        .replace(/<title>.*?<\/title>/, `<title>${pageTitle}</title>`)
+        .replace(/<meta property="og:title" content=".*?"/, `<meta property="og:title" content="${ogTitle}"`)
+        .replace(/<meta property="og:description" content=".*?"/, `<meta property="og:description" content="${ogDesc}"`)
+        .replace(/<meta (?:property|name)="twitter:title" content=".*?"/, `<meta name="twitter:title" content="${ogTitle}"`)
+        .replace(/<meta (?:property|name)="twitter:description" content=".*?"/, `<meta name="twitter:description" content="${ogDesc}"`);
     }
 
     if (html) {
@@ -188,19 +158,10 @@ app.post('/api/sites', async (req, res) => {
 });
 
 // Admin Auth: Login endpoint (Public)
-app.post('/api/admin/login', async (req, res) => {
+app.post('/api/admin/login', (req, res) => {
   try {
     const { password } = req.body || {};
-    let currentSecret = getAdminSecret();
-
-    if (password && password !== currentSecret && typeof refreshAdminSecret === 'function') {
-      try {
-        const refreshed = await refreshAdminSecret();
-        if (refreshed) currentSecret = refreshed;
-      } catch {}
-    }
-
-    if (!password || password !== currentSecret) {
+    if (!password || password !== ADMIN_SECRET) {
       return res.status(401).json({
         success: false,
         error: 'Unauthorized: Invalid admin credentials'
@@ -209,7 +170,7 @@ app.post('/api/admin/login', async (req, res) => {
 
     res.json({
       success: true,
-      token: currentSecret,
+      token: ADMIN_SECRET,
       message: 'Admin authenticated successfully'
     });
   } catch (error) {
@@ -217,95 +178,8 @@ app.post('/api/admin/login', async (req, res) => {
   }
 });
 
-// Admin Auth: Verify password endpoint (Public)
-app.post('/api/admin/verify', async (req, res) => {
-  try {
-    const { password } = req.body || {};
-    const adminKey = req.headers['x-admin-key'];
-    const authHeader = req.headers.authorization;
-
-    let bearerToken = null;
-    if (authHeader) {
-      bearerToken = authHeader.startsWith('Bearer ')
-        ? authHeader.slice(7).trim()
-        : authHeader.trim();
-    }
-
-    const candidate = password || adminKey || bearerToken;
-    let currentSecret = getAdminSecret();
-
-    if (candidate && candidate !== currentSecret && typeof refreshAdminSecret === 'function') {
-      try {
-        const refreshed = await refreshAdminSecret();
-        if (refreshed) currentSecret = refreshed;
-      } catch {}
-    }
-
-    if (!candidate || candidate !== currentSecret) {
-      return res.status(401).json({
-        success: false,
-        error: 'Invalid password'
-      });
-    }
-
-    return res.json({
-      success: true,
-      message: 'Password verified successfully'
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, error: 'Verification failed', details: error.message });
-  }
-});
-
 // Protect all following admin endpoints
 app.use('/api/admin', requireAdminAuth);
-
-/**
- * Admin: Change admin password
- * Requires admin authentication (x-admin-key or Authorization header)
- * Body: { currentPassword, newPassword }
- */
-app.post('/api/admin/change-password', async (req, res) => {
-  try {
-    const { currentPassword, newPassword } = req.body || {};
-    let activeSecret = getAdminSecret();
-
-    if (!currentPassword || currentPassword !== activeSecret) {
-      if (typeof refreshAdminSecret === 'function') {
-        const refreshed = await refreshAdminSecret();
-        if (refreshed) activeSecret = refreshed;
-      }
-      if (!currentPassword || currentPassword !== activeSecret) {
-        return res.status(400).json({
-          success: false,
-          error: 'Current password is incorrect'
-        });
-      }
-    }
-
-    if (!newPassword || typeof newPassword !== 'string' || newPassword.trim().length < 6) {
-      return res.status(400).json({
-        success: false,
-        error: 'New password must be at least 6 characters long'
-      });
-    }
-
-    const updatedSecret = await setAdminSecret(newPassword.trim());
-    ADMIN_SECRET = updatedSecret;
-
-    return res.json({
-      success: true,
-      message: 'Admin password changed successfully'
-    });
-  } catch (error) {
-    console.error('Error changing admin password:', error);
-    return res.status(500).json({
-      success: false,
-      error: 'Failed to update admin password',
-      details: error.message
-    });
-  }
-});
 
 // Admin API (Secured)
 app.get('/api/admin/metrics', async (req, res) => {

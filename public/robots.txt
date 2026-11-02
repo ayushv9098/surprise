@@ -1,36 +1,22 @@
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /api/admin/
 
 User-agent: Googlebot
 Allow: /
-Disallow: /admin
-Disallow: /api/admin/
 
-User-agent: Bingbot
+User-agent: Google-Extended
 Allow: /
-Disallow: /admin
-Disallow: /api/admin/
-
-User-agent: Applebot
-Allow: /
-Disallow: /admin
-Disallow: /api/admin/
 
 User-agent: GPTBot
 Allow: /
-Disallow: /admin
-Disallow: /api/admin/
 
 User-agent: ClaudeBot
 Allow: /
-Disallow: /admin
-Disallow: /api/admin/
 
 User-agent: PerplexityBot
 Allow: /
-Disallow: /admin
-Disallow: /api/admin/
+
+User-agent: Applebot
+Allow: /
 
 Sitemap: https://dearlys.vercel.app/sitemap.xml

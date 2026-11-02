@@ -537,7 +537,7 @@ export default function BuilderStudio({
                       <button
                         type="button"
                         onClick={() => handleSectionTabClick('media')}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 shadow-[0_3px_0_0_#fecdd3,0_4px_10px_rgba(244,63,94,0.1)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#fecdd3,0_6px_14px_rgba(244,63,94,0.15)] active:translate-y-1 active:shadow-none transition-all duration-150 cursor-pointer select-none"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
                       >
                         <span>Next: Photo & Song</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -547,7 +547,7 @@ export default function BuilderStudio({
                       <button
                         type="button"
                         onClick={() => handleSectionTabClick('surprises')}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 shadow-[0_3px_0_0_#fecdd3,0_4px_10px_rgba(244,63,94,0.1)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#fecdd3,0_6px_14px_rgba(244,63,94,0.15)] active:translate-y-1 active:shadow-none transition-all duration-150 cursor-pointer select-none"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
                       >
                         <span>Next: Reasons & Letter</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -688,7 +688,7 @@ export default function BuilderStudio({
                 <button
                   type="button"
                   onClick={onBack}
-                  className="inline-flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200/90 shadow-[0_3px_0_0_#cbd5e1,0_4px_10px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_6px_14px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all duration-150 cursor-pointer shrink-0 select-none"
+                  className="inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100/90 hover:bg-slate-200/80 active:scale-95 transition-all cursor-pointer shrink-0 border border-slate-200/60 shadow-2xs"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />
                   <span>Back to Home</span>
@@ -704,7 +704,7 @@ export default function BuilderStudio({
                 type="button"
                 onClick={handlePrevStep}
                 disabled={isSubmitting}
-                className="inline-flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-50 border border-slate-200/90 shadow-[0_3px_0_0_#cbd5e1,0_4px_10px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 hover:shadow-[0_4px_0_0_#cbd5e1,0_6px_14px_rgba(0,0,0,0.06)] active:translate-y-1 active:shadow-none transition-all duration-150 cursor-pointer shrink-0 select-none"
+                className="inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100/90 hover:bg-slate-200/80 active:scale-95 transition-all cursor-pointer shrink-0 border border-slate-200/60 shadow-2xs"
               >
                 <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />
                 <span className="sm:hidden">Style</span>
@@ -735,7 +735,7 @@ export default function BuilderStudio({
               type="button"
               onClick={handleNextStep}
               disabled={isSubmitting}
-              className="relative group overflow-hidden inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-white tracking-wide bg-[#E8364E] hover:bg-[#eb4259] border border-[#d1243b] shadow-[0_4px_0_0_#b81d33,0_8px_20px_rgba(232,54,78,0.28),inset_0_1px_0_rgba(255,255,255,0.35)] hover:-translate-y-0.5 hover:shadow-[0_5px_0_0_#b81d33,0_12px_24px_rgba(232,54,78,0.35),inset_0_1px_0_rgba(255,255,255,0.4)] active:translate-y-1 active:shadow-[0_0px_0_0_#b81d33,0_2px_6px_rgba(232,54,78,0.2),inset_0_1px_0_rgba(255,255,255,0.2)] transition-all duration-150 ease-out cursor-pointer disabled:opacity-80 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none select-none whitespace-nowrap"
+              className="relative group overflow-hidden inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-white tracking-wide bg-gradient-to-r from-[#E11D48] via-[#E8364E] to-[#C91834] hover:from-[#BE123C] hover:via-[#D42B43] hover:to-[#B91C1C] border border-white/25 shadow-md shadow-rose-950/20 hover:shadow-xl hover:shadow-rose-950/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-80 disabled:cursor-not-allowed select-none whitespace-nowrap"
             >
               {/* Subtle ambient shimmer shine glow */}
               <span
