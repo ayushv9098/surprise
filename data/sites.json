@@ -1,5 +1,728 @@
 [
   {
+    "templateId": "celestial-love",
+    "category": "romance",
+    "gender": "both",
+    "recipientName": "Aria",
+    "senderName": "Noah",
+    "occasion": "Written in the Stars 🌌💫",
+    "subtitle": "In a world of eight billion, it was always only you.",
+    "heroPhoto": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Our Love Across the Cosmos! 🌌💫",
+    "photos": [
+      {
+        "id": "cl-p1",
+        "url": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Our Love Across the Cosmos! 🌌💫",
+        "tag": "Infinite Galaxy 🌌"
+      },
+      {
+        "id": "cl-p2",
+        "url": "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+        "caption": "Forever & Always With You! ❤️🌹",
+        "tag": "OUR BEGINNING 🌸"
+      },
+      {
+        "id": "cl-p3",
+        "url": "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+        "caption": "Nazrein hataana thoda mushkil hai yahan 😉✨",
+        "tag": "Nazar Na Lage 🧿"
+      },
+      {
+        "id": "cl-p4",
+        "url": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never a dull moment around you 🕶️💫",
+        "tag": "Memories 📸"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌌",
+        "title": "Cosmic Connection",
+        "desc": "Our souls connected as if we had known each other across a thousand lifetimes."
+      },
+      {
+        "icon": "🌙",
+        "title": "Midnight Peace",
+        "desc": "Whenever the world gets loud, being in your arms feels like stillness under the stars."
+      },
+      {
+        "icon": "💫",
+        "title": "Written Destiny",
+        "desc": "Out of eight billion people on Earth, meeting you was my universe's greatest gift."
+      }
+    ],
+    "letter": {
+      "title": "Written in the Constellations",
+      "content": "My beloved Aria,\n\nThey say the odds of finding your true soulmate are one in a billion. But from the first second our eyes met, I knew our love was written in the stars long before we ever arrived.\n\nThank you for your infinite kindness, your breathtaking grace, and for loving me completely. May our love continue shining brighter than every constellation in the night sky. 🌌💫",
+      "signOff": "Across the stars forever,\nNoah 🌙",
+      "sealEmoji": "🌙",
+      "waxColor": "#4F46E5"
+    },
+    "songId": "indie-acoustic-soul",
+    "quizQuestion": "Do you like spending time with me?",
+    "quizYesText": "YES, VERY MUCH!",
+    "quizTreat": "Starbucks Coffee ☕",
+    "quizVictoryNote": "That means a cozy warm coffee date is officially pending from my side anytime you want! ☕✨",
+    "id": "wc-mvz5huhw-u6ja",
+    "slug": "aria-7vu2x",
+    "updatedAt": "2026-11-02T11:03:30.462Z",
+    "createdAt": "2026-11-02T11:03:29.444Z",
+    "template": "celestial-love",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvz5awbg-s99f",
+    "slug": "rohan-mjw6h",
+    "updatedAt": "2026-11-02T10:58:06.305Z",
+    "createdAt": "2026-11-02T10:58:05.213Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "lavender-dream",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "palak",
+    "senderName": "ayush",
+    "occasion": "Happy Birthday mere bhai ",
+    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
+    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+    "photos": [
+      {
+        "id": "lavender-p1",
+        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+        "tag": "Lavender Bliss"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💜",
+        "title": "Deep Empathy",
+        "desc": "You listen with your whole heart and make everyone feel valued."
+      },
+      {
+        "icon": "🦋",
+        "title": "Free Spirit",
+        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
+      },
+      {
+        "icon": "🕊️",
+        "title": "Calming Presence",
+        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Sweet palak,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
+      "signOff": "With all my heart, ayush 💜",
+      "sealEmoji": "💜",
+      "waxColor": "#7C3AED"
+    },
+    "songId": "indie-acoustic-soul",
+    "id": "wc-mvz1rvkz-j637",
+    "slug": "palak-vkieq",
+    "updatedAt": "2026-11-02T09:19:21.143Z",
+    "createdAt": "2026-11-02T09:19:18.948Z",
+    "template": "lavender-dream",
+    "viewCount": 2,
+    "lastViewedAt": "2026-11-02T09:19:28.897Z"
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy120et-n94k",
+    "slug": "rohan-h5cr0",
+    "updatedAt": "2026-11-01T16:11:25.978Z",
+    "createdAt": "2026-11-01T16:11:25.973Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy11wp2-vsc8",
+    "slug": "rohan-kfieu",
+    "updatedAt": "2026-11-01T16:11:21.178Z",
+    "createdAt": "2026-11-01T16:11:21.159Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy11suo-3lyr",
+    "slug": "rohan-zoo7h",
+    "updatedAt": "2026-11-01T16:11:16.187Z",
+    "createdAt": "2026-11-01T16:11:16.176Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy11pmx-vr92",
+    "slug": "rohan-q5cz2",
+    "updatedAt": "2026-11-01T16:11:12.016Z",
+    "createdAt": "2026-11-01T16:11:12.009Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy11m1m-awfz",
+    "slug": "rohan-4wm8u",
+    "updatedAt": "2026-11-01T16:11:07.361Z",
+    "createdAt": "2026-11-01T16:11:07.354Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy11ga6-idff",
+    "slug": "rohan-zo9mx",
+    "updatedAt": "2026-11-01T16:10:59.894Z",
+    "createdAt": "2026-11-01T16:10:59.886Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy119qt-97ul",
+    "slug": "rohan-gdk93",
+    "updatedAt": "2026-11-01T16:10:51.423Z",
+    "createdAt": "2026-11-01T16:10:51.413Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy115wp-jmwx",
+    "slug": "rohan-jjols",
+    "updatedAt": "2026-11-01T16:10:46.455Z",
+    "createdAt": "2026-11-01T16:10:46.442Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy10xye-tgnt",
+    "slug": "rohan-1xfhc",
+    "updatedAt": "2026-11-01T16:10:36.143Z",
+    "createdAt": "2026-11-01T16:10:36.134Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy10sjk-aceg",
+    "slug": "rohan-cd6ij",
+    "updatedAt": "2026-11-01T16:10:29.128Z",
+    "createdAt": "2026-11-01T16:10:29.120Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mvy0wunl-ftsi",
+    "slug": "rohan-ajkju",
+    "updatedAt": "2026-11-01T16:07:25.248Z",
+    "createdAt": "2026-11-01T16:07:25.234Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
     "templateId": "lavender-dream",
     "category": "birthday",
     "gender": "girl",
@@ -2122,10 +2845,10 @@
     "slug": "kavya",
     "template": "blush-romance",
     "templateId": "blush-romance",
-    "viewCount": 3,
+    "viewCount": 5,
     "createdAt": "2026-10-30T09:03:45.374Z",
     "updatedAt": "2026-10-30T09:03:45.374Z",
-    "lastViewedAt": "2026-10-30T09:03:52.022Z"
+    "lastViewedAt": "2026-11-02T09:28:10.575Z"
   },
   {
     "templateId": "lavender-dream",
