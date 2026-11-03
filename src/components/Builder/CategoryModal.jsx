@@ -57,7 +57,7 @@ export default function CategoryModal({
           type="button"
           onClick={onClose}
           aria-label="Close modal"
-          className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 p-1.5 sm:p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-all cursor-pointer"
+          className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 p-1.5 sm:p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 active:scale-90 transition-all duration-75 cursor-pointer select-none touch-manipulation"
         >
           <X className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
@@ -102,12 +102,12 @@ export default function CategoryModal({
                 key={cat.id}
                 type="button"
                 onClick={() => handleCardClick(cat)}
-                className={`group relative p-2.5 sm:p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between cursor-pointer min-h-[118px] sm:min-h-[134px] ${
+                className={`group relative p-2.5 sm:p-3.5 rounded-2xl border text-left transition-all duration-75 ease-out flex flex-col justify-between cursor-pointer min-h-[118px] sm:min-h-[134px] select-none touch-manipulation ${
                   isComingSoon
                     ? 'border-gray-200/80 bg-gray-50/60 hover:bg-gray-100/70 hover:border-gray-300'
                     : isRomance
-                    ? 'border-slate-200 hover:border-pink-400 bg-white hover:bg-gradient-to-br hover:from-pink-50/50 hover:to-rose-50/30 shadow-xs hover:shadow-sm'
-                    : 'border-slate-200 hover:border-rose-400 bg-white hover:bg-gradient-to-br hover:from-rose-50/50 hover:to-pink-50/30 shadow-xs hover:shadow-sm'
+                    ? 'border-slate-200 border-b-[3.5px] border-b-pink-200/90 hover:border-pink-400 hover:border-b-pink-400 bg-white hover:bg-gradient-to-br hover:from-pink-50/50 hover:to-rose-50/30 shadow-xs active:translate-y-[2px] active:border-b-[1.5px] active:scale-[0.98]'
+                    : 'border-slate-200 border-b-[3.5px] border-b-rose-200/90 hover:border-rose-400 hover:border-b-rose-400 bg-white hover:bg-gradient-to-br hover:from-rose-50/50 hover:to-pink-50/30 shadow-xs active:translate-y-[2px] active:border-b-[1.5px] active:scale-[0.98]'
                 }`}
               >
                 <div>

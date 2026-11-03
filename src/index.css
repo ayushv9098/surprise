@@ -13,6 +13,16 @@
     background-color: #FAFAF8;
     color: #18181B;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button, [role="button"], a {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
   }
 
   .font-serif {
@@ -38,6 +48,12 @@
 
 .font-cursive {
   font-family: 'Dancing Script', cursive, -apple-system, sans-serif;
+}
+
+/* Global Mobile Touch & Tactile Optimization */
+button, [role="button"], input[type="button"], input[type="submit"] {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 /* Minimalist Clean Cards */

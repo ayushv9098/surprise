@@ -8,7 +8,7 @@ export default function Navbar({ _currentView, onNavigate, brandName = 'Dearly' 
         {/* Brand */}
         <button
           onClick={() => onNavigate?.('home')}
-          className="flex items-center gap-2.5 text-left cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all duration-150 group"
+          className="flex items-center gap-2.5 text-left cursor-pointer hover:opacity-90 active:scale-[0.98] transition-all duration-75 ease-out select-none touch-manipulation group"
           aria-label="Dearly Home"
         >
           <DearlyLogo size={28} className="group-hover:scale-105 transition-transform duration-150" />
