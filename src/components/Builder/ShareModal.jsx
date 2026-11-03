@@ -311,10 +311,10 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
           />
           <button
             onClick={handleCopy}
-            className={`px-4 py-2 rounded-xl text-xs font-bold text-white transition-all cursor-pointer shadow-xs shrink-0 flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold text-white active:translate-y-[2px] transition-all duration-100 ease-out cursor-pointer shrink-0 flex items-center gap-1.5 ${
               copied
-                ? 'bg-emerald-500 shadow-emerald-200'
-                : 'bg-rose-500 hover:bg-rose-600 shadow-rose-200'
+                ? 'bg-emerald-500 shadow-[0_3px_0_#065f46] active:shadow-[0_1px_0_#065f46]'
+                : 'bg-rose-500 hover:bg-rose-600 shadow-[0_3px_0_#9f1239] active:shadow-[0_1px_0_#9f1239]'
             }`}
           >
             {copied ? (
@@ -420,7 +420,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
           <button
             type="button"
             onClick={handleOpenLive}
-            className="py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            className="py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 shadow-[0_3px_0_#cbd5e1] active:translate-y-[2px] active:shadow-[0_1px_0_#cbd5e1] transition-all duration-100 ease-out flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <ExternalLink className="w-3.5 h-3.5 text-slate-500 shrink-0" />
             <span>Open Preview</span>
@@ -429,7 +429,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
           <button
             type="button"
             onClick={handleToggleQr}
-            className="py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            className="py-2.5 px-3 rounded-xl text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 shadow-[0_3px_0_#cbd5e1] active:translate-y-[2px] active:shadow-[0_1px_0_#cbd5e1] transition-all duration-100 ease-out flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <QrCode className="w-3.5 h-3.5 text-slate-500 shrink-0" />
             <span>{showQrModal ? 'Hide QR' : 'QR Code'}</span>

@@ -471,7 +471,7 @@ export default function App() {
           <div className="flex flex-col gap-2.5">
             <button
               onClick={handleStartCreating}
-              className="w-full py-3 px-4 rounded-xl text-sm font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-xl text-sm font-semibold bg-[#E8364E] text-white shadow-[0_3px_0_#b92539,0_6px_12px_rgba(232,54,78,0.2)] hover:brightness-105 hover:-translate-y-0.5 hover:shadow-[0_4px_0_#b92539,0_8px_16px_rgba(232,54,78,0.25)] active:translate-y-[2px] active:shadow-[0_1px_0_#b92539] transition-all duration-100 ease-out cursor-pointer flex items-center justify-center gap-2"
             >
               <Sparkles className="w-4 h-4" />
               <span>Create Your Own Surprise</span>
@@ -480,7 +480,7 @@ export default function App() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => handleRetryLoad(notFoundSlug)}
-                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold text-gray-700 bg-white border border-gray-200/90 shadow-[0_3px_0_#cbd5e1] hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-0.5 hover:shadow-[0_4px_0_#cbd5e1] active:translate-y-[2px] active:shadow-[0_1px_0_#cbd5e1] transition-all duration-100 ease-out cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <RefreshCw className="w-3.5 h-3.5 text-gray-500" />
                 <span>Try Again</span>
@@ -488,7 +488,7 @@ export default function App() {
 
               <button
                 onClick={() => handleNavigate('home')}
-                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-medium text-gray-700 border border-gray-200 hover:bg-gray-50 active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                className="flex-1 py-2.5 px-3 rounded-xl text-xs font-semibold text-gray-700 bg-white border border-gray-200/90 shadow-[0_3px_0_#cbd5e1] hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-0.5 hover:shadow-[0_4px_0_#cbd5e1] active:translate-y-[2px] active:shadow-[0_1px_0_#cbd5e1] transition-all duration-100 ease-out cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <Home className="w-3.5 h-3.5 text-gray-500" />
                 <span>Return to Home</span>
@@ -574,17 +574,17 @@ export default function App() {
                 Turn photos, letters and songs into a heartfelt interactive website. Free, no coding, ready in 2 minutes.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4">
                 <button
                   onClick={handleStartCreating}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium bg-[#E8364E] text-white hover:bg-[#d42e44] active:scale-[0.98] transition-all duration-150 cursor-pointer shadow-sm hover:shadow-md"
+                  className="w-full sm:w-auto px-7 py-3.5 rounded-xl text-base font-semibold bg-[#E8364E] text-white shadow-[0_4px_0_#b92539,0_8px_16px_rgba(232,54,78,0.22)] hover:bg-[#f03b54] hover:-translate-y-0.5 hover:shadow-[0_5px_0_#b92539,0_10px_20px_rgba(232,54,78,0.28)] active:translate-y-[3px] active:shadow-[0_1px_0_#b92539,0_2px_4px_rgba(232,54,78,0.15)] transition-all duration-100 ease-out cursor-pointer select-none inline-flex items-center justify-center"
                 >
                   Start Creating →
                 </button>
 
                 <button
                   onClick={() => handlePreviewPreset('royal-sapphire')}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl text-base font-medium text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50 active:scale-[0.98] transition-all duration-150 cursor-pointer"
+                  className="w-full sm:w-auto px-7 py-3.5 rounded-xl text-base font-semibold text-gray-800 bg-white border border-gray-200/90 shadow-[0_4px_0_#cbd5e1,0_6px_12px_rgba(0,0,0,0.04)] hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-0.5 hover:shadow-[0_5px_0_#94a3b8,0_8px_16px_rgba(0,0,0,0.06)] active:translate-y-[3px] active:shadow-[0_1px_0_#cbd5e1,0_2px_4px_rgba(0,0,0,0.04)] transition-all duration-100 ease-out cursor-pointer select-none inline-flex items-center justify-center"
                 >
                   See Example
                 </button>
@@ -610,10 +610,10 @@ export default function App() {
                       key={cat.id}
                       type="button"
                       onClick={() => handleCategoryClick(cat)}
-                      className={`group bg-white rounded-2xl border border-gray-200/80 p-6 text-left transition-all duration-200 flex flex-col justify-between ${
+                      className={`group bg-white rounded-2xl border border-gray-200/80 p-6 text-left flex flex-col justify-between ${
                         isComingSoon
-                          ? 'cursor-not-allowed opacity-80 hover:shadow-none hover:border-gray-200 hover:translate-y-0'
-                          : 'hover:shadow-lg hover:border-gray-300 hover:-translate-y-0.5 cursor-pointer'
+                          ? 'cursor-not-allowed opacity-80 hover:shadow-none hover:border-gray-200 hover:translate-y-0 transition-all duration-200'
+                          : 'border-b-4 border-b-slate-200/90 hover:border-b-rose-400 hover:border-gray-300 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-[2px] active:border-b-[2px] transition-all duration-100 ease-out cursor-pointer'
                       }`}
                     >
                       <div>

@@ -537,7 +537,7 @@ export default function BuilderStudio({
                       <button
                         type="button"
                         onClick={() => handleSectionTabClick('media')}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-[0_2.5px_0_#fecdd3] active:translate-y-[1.5px] active:shadow-[0_1px_0_#fecdd3] transition-all duration-100 ease-out cursor-pointer"
                       >
                         <span>Next: Photo & Song</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -547,7 +547,7 @@ export default function BuilderStudio({
                       <button
                         type="button"
                         onClick={() => handleSectionTabClick('surprises')}
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-2xs hover:shadow-xs transition-all cursor-pointer active:scale-95"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-[0_2.5px_0_#fecdd3] active:translate-y-[1.5px] active:shadow-[0_1px_0_#fecdd3] transition-all duration-100 ease-out cursor-pointer"
                       >
                         <span>Next: Reasons & Letter</span>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -635,12 +635,12 @@ export default function BuilderStudio({
               {formSection !== 'surprises' && (
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
                   {formSection === 'details' && (
-                    <button type="button" onClick={() => handleSectionTabClick('media')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                    <button type="button" onClick={() => handleSectionTabClick('media')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-[0_2.5px_0_#fecdd3] active:translate-y-[1.5px] active:shadow-[0_1px_0_#fecdd3] transition-all duration-100 ease-out cursor-pointer">
                       <span>Next: Photo & Song</span><ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   )}
                   {formSection === 'media' && (
-                    <button type="button" onClick={() => handleSectionTabClick('surprises')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 active:scale-95 cursor-pointer">
+                    <button type="button" onClick={() => handleSectionTabClick('surprises')} className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50/90 hover:bg-rose-100 border border-rose-200/70 shadow-[0_2.5px_0_#fecdd3] active:translate-y-[1.5px] active:shadow-[0_1px_0_#fecdd3] transition-all duration-100 ease-out cursor-pointer">
                       <span>Next: Reasons & Letter</span><ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   )}
@@ -688,7 +688,7 @@ export default function BuilderStudio({
                 <button
                   type="button"
                   onClick={onBack}
-                  className="inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100/90 hover:bg-slate-200/80 active:scale-95 transition-all cursor-pointer shrink-0 border border-slate-200/60 shadow-2xs"
+                  className="inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100/90 hover:bg-slate-200/80 shadow-[0_2.5px_0_#cbd5e1] active:translate-y-[1.5px] active:shadow-[0_1px_0_#cbd5e1] transition-all duration-100 ease-out cursor-pointer shrink-0 border border-slate-200/60"
                 >
                   <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />
                   <span>Back to Home</span>
@@ -704,7 +704,7 @@ export default function BuilderStudio({
                 type="button"
                 onClick={handlePrevStep}
                 disabled={isSubmitting}
-                className="inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100/90 hover:bg-slate-200/80 active:scale-95 transition-all cursor-pointer shrink-0 border border-slate-200/60 shadow-2xs"
+                className="inline-flex items-center gap-1 sm:gap-2 px-2.5 sm:px-4 py-2 rounded-xl sm:rounded-full text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 bg-slate-100/90 hover:bg-slate-200/80 shadow-[0_2.5px_0_#cbd5e1] active:translate-y-[1.5px] active:shadow-[0_1px_0_#cbd5e1] transition-all duration-100 ease-out cursor-pointer shrink-0 border border-slate-200/60"
               >
                 <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-500" />
                 <span className="sm:hidden">Style</span>
@@ -735,7 +735,7 @@ export default function BuilderStudio({
               type="button"
               onClick={handleNextStep}
               disabled={isSubmitting}
-              className="relative group overflow-hidden inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-white tracking-wide bg-gradient-to-r from-[#E11D48] via-[#E8364E] to-[#C91834] hover:from-[#BE123C] hover:via-[#D42B43] hover:to-[#B91C1C] border border-white/25 shadow-md shadow-rose-950/20 hover:shadow-xl hover:shadow-rose-950/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer disabled:opacity-80 disabled:cursor-not-allowed select-none whitespace-nowrap"
+              className="relative group overflow-hidden inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-8 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-white tracking-wide bg-gradient-to-r from-[#E11D48] via-[#E8364E] to-[#C91834] hover:from-[#BE123C] hover:via-[#D42B43] hover:to-[#B91C1C] border border-white/25 shadow-[0_4px_0_#9f1239,0_8px_16px_rgba(225,29,72,0.22)] active:translate-y-[2px] active:shadow-[0_2px_0_#9f1239] transition-all duration-100 ease-out cursor-pointer disabled:opacity-80 disabled:cursor-not-allowed select-none whitespace-nowrap"
             >
               {/* Subtle ambient shimmer shine glow */}
               <span

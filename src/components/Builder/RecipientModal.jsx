@@ -106,7 +106,7 @@ export default function RecipientModal({
           <button
             type="button"
             onClick={() => handleChoose('girl')}
-            className="group relative p-3 sm:p-5 rounded-2xl border-2 border-slate-200/90 hover:border-rose-400 bg-white hover:bg-gradient-to-br hover:from-rose-50/70 hover:to-pink-50/40 text-left transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md flex flex-col justify-between"
+            className="group relative p-3 sm:p-5 rounded-2xl border-2 border-slate-200/90 hover:border-rose-400 border-b-[4px] border-b-rose-200 hover:border-b-rose-400 active:translate-y-[2px] active:border-b-[2px] bg-white hover:bg-gradient-to-br hover:from-rose-50/70 hover:to-pink-50/40 text-left transition-all duration-100 ease-out cursor-pointer shadow-xs hover:shadow-md flex flex-col justify-between"
           >
             <div>
               <div className="w-10 h-10 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl bg-rose-100/80 border border-rose-200/60 flex items-center justify-center mb-2.5 sm:mb-4 group-hover:scale-105 transition-transform duration-200 shadow-2xs">
@@ -136,7 +136,7 @@ export default function RecipientModal({
           <button
             type="button"
             onClick={() => handleChoose('boy')}
-            className="group relative p-3 sm:p-5 rounded-2xl border-2 border-slate-200/90 hover:border-blue-500 bg-white hover:bg-gradient-to-br hover:from-blue-50/70 hover:to-indigo-50/40 text-left transition-all duration-200 cursor-pointer shadow-xs hover:shadow-md flex flex-col justify-between"
+            className="group relative p-3 sm:p-5 rounded-2xl border-2 border-slate-200/90 hover:border-blue-500 border-b-[4px] border-b-blue-200 hover:border-b-blue-500 active:translate-y-[2px] active:border-b-[2px] bg-white hover:bg-gradient-to-br hover:from-blue-50/70 hover:to-indigo-50/40 text-left transition-all duration-100 ease-out cursor-pointer shadow-xs hover:shadow-md flex flex-col justify-between"
           >
             <div>
               <div className="w-10 h-10 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl bg-blue-100/80 border border-blue-200/60 flex items-center justify-center mb-2.5 sm:mb-4 group-hover:scale-105 transition-transform duration-200 shadow-2xs">
