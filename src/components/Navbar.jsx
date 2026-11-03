@@ -12,7 +12,7 @@ export default function Navbar({ _currentView, onNavigate, brandName = 'Dearly' 
           aria-label="Dearly Home"
         >
           <DearlyLogo size={28} className="group-hover:scale-105 transition-transform duration-150" />
-          <span className="font-['Plus_Jakarta_Sans'] font-extrabold text-[22px] tracking-[-0.03em] text-slate-950 select-none">{brandName}</span>
+          <span className="font-['Playfair_Display',Georgia,serif] italic font-bold text-[24px] sm:text-[25px] tracking-[-0.01em] text-[#2B1B22] select-none">{brandName}</span>
         </button>
 
         {/* Clean minimal right side (no clutter) */}
