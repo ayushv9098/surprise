@@ -265,28 +265,6 @@ export default function TemplateViewer({
           isLiveView={isLiveView}
         />
       </main>
-
-      {/* Subtle Luxury Floating Viral Pill in Live Keepsake View */}
-      {isLiveView && (
-        <aside
-          aria-label="Made with Dearly"
-          className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-40 pointer-events-auto"
-        >
-          <button
-            onClick={() => {
-              haptics.tap();
-              handleNavigateCreate();
-            }}
-            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full backdrop-blur-md bg-white/85 text-slate-700 text-[11px] font-medium border border-slate-200/60 shadow-xs hover:bg-white hover:text-slate-900 transition-all hover:scale-105 active:scale-95 cursor-pointer select-none"
-            title="Create your own digital keepsake on Dearly"
-          >
-            <span className="flex items-center gap-1">
-              <AppleEmoji emoji="✨" size={12} />
-              <span>Made with Dearly • Create a keepsake</span>
-            </span>
-          </button>
-        </aside>
-      )}
     </div>
   );
 }

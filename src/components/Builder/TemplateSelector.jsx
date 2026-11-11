@@ -3,6 +3,7 @@ import { Check } from 'lucide-react';
 import { CATEGORIES } from '../../data/categories';
 import { TEMPLATES, getTemplatesByCategory } from '../../data/templates';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
+import LottieAnimation from '../common/LottieAnimation';
 
 export default function TemplateSelector({
   selectedId,
@@ -198,8 +199,13 @@ export default function TemplateSelector({
                   )}
 
                   {isSelected && (
-                    <span className="inline-block text-[9px] uppercase font-bold tracking-wider text-rose-500 bg-rose-50 border border-rose-200/60 px-1.5 py-0.5 rounded-md">
-                      Active
+                    <span className="inline-flex items-center gap-1 text-[9px] uppercase font-bold tracking-wider text-rose-500 bg-rose-50 border border-rose-200/60 px-1.5 py-0.5 rounded-md">
+                      <LottieAnimation
+                        src="/animations/magic-stars.lottie"
+                        className="w-4 h-4 pointer-events-none"
+                        ariaLabel="Active style delight"
+                      />
+                      <span>Active</span>
                     </span>
                   )}
                 </div>

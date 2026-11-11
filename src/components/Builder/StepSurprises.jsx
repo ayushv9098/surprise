@@ -1,5 +1,6 @@
 import React from 'react';
 import AppleEmoji from '../common/AppleEmoji';
+import LottieAnimation from '../common/LottieAnimation';
 
 const WAX_SEALS = [
   { emoji: '❤️', color: '#E11D48', label: 'Velvet Rose' },
@@ -200,6 +201,11 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
         <div className="space-y-4">
           <div className="border-b border-slate-100 pb-3 flex items-center justify-between gap-2">
             <h2 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-1.5 truncate">
+              <LottieAnimation
+                src="/animations/love-letter.lottie"
+                className="w-6 h-6 inline-block shrink-0 pointer-events-none"
+                ariaLabel="Love letter delight"
+              />
               <span>1. Secret Envelope Letter</span>
               <AppleEmoji emoji="💌" size={16} />
             </h2>
@@ -477,6 +483,11 @@ export default function StepSurprises({ formData, onChange, onFocusField }) {
       <div className="space-y-4 pt-5 border-t border-slate-100">
         <div className="border-b border-slate-100 pb-3">
           <h2 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-1.5 truncate">
+            <LottieAnimation
+              src="/animations/love-letter.lottie"
+              className="w-6 h-6 inline-block shrink-0 pointer-events-none"
+              ariaLabel="Love letter delight"
+            />
             <span>2. Secret Envelope Letter</span>
             <AppleEmoji emoji="💌" size={16} />
           </h2>

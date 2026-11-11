@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
+import LottieAnimation from './common/LottieAnimation';
 
 const icons = {
   success: <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />,
@@ -103,7 +104,25 @@ function ToastCard({ toast, onClose }) {
       aria-live="polite"
     >
       <div className="relative flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200/80 shadow-lg shadow-slate-200/50 text-xs sm:text-sm font-medium text-slate-800 overflow-hidden">
-        {icons[type] || icons.info}
+        {type === 'success' ? (
+          <div className="relative w-5 h-5 flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+            <div className="absolute inset-0 pointer-events-none flex items-center justify-center scale-125">
+              <LottieAnimation
+                src="/animations/magic-stars.lottie"
+                className="w-5 h-5"
+                loop={false}
+                autoplay={true}
+                ariaLabel="Success animation"
+                fallback={null}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="w-5 h-5 flex items-center justify-center shrink-0">
+            {icons[type] || icons.info}
+          </div>
+        )}
         <span className="leading-snug">{toast.message}</span>
         <button
           type="button"

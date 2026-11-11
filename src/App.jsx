@@ -17,6 +17,7 @@ const AdminDashboard = React.lazy(() => import('./components/Admin/AdminDashboar
 import ErrorBoundary from './components/common/ErrorBoundary';
 import DearlyLogo from './components/common/DearlyLogo';
 import AppleEmoji from './components/common/AppleEmoji';
+import LottieAnimation from './components/common/LottieAnimation';
 import { CATEGORIES } from './data/categories';
 import { getPresetForTemplate } from './data/samplePresets';
 import { loadSurprise } from './utils/storage';
@@ -589,6 +590,23 @@ export default function App() {
 
             {/* HERO SECTION */}
             <section className="pt-16 sm:pt-24 pb-8 px-4 sm:px-6 max-w-3xl mx-auto text-center">
+              {/* Subtle interactive delight badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-stone-200/90 shadow-[0_1px_3px_rgba(0,0,0,0.04)] mb-6 select-none">
+                <LottieAnimation
+                  src="/animations/magic-stars.lottie"
+                  className="w-5 h-5 shrink-0"
+                  ariaLabel="Sparkling stars"
+                  autoplay={true}
+                  loop={true}
+                />
+                <span className="text-xs font-semibold text-stone-800 tracking-tight">
+                  Interactive Digital Keepsakes
+                </span>
+                <span className="w-1 h-1 rounded-full bg-rose-400" />
+                <span className="text-[11px] font-semibold text-rose-600 tracking-wide uppercase">
+                  Ready in 2 min
+                </span>
+              </div>
               <h1 className="font-bold text-4xl sm:text-5xl lg:text-[56px] leading-[1.15] text-[#1a1a1a] mb-5 tracking-tight">
                 Create a surprise website for someone special
               </h1>
@@ -687,45 +705,92 @@ export default function App() {
 
             {/* HOW IT WORKS */}
             <section className="px-4 sm:px-6 max-w-4xl mx-auto pb-16 sm:pb-24">
-              <h2 className="font-semibold text-2xl text-[#1a1a1a] mb-8">
-                How it works
-              </h2>
+              <div className="mb-8">
+                <h2 className="font-semibold text-2xl text-[#1a1a1a]">
+                  How it works
+                </h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  Three simple steps to build an unforgettable digital keepsake
+                </p>
+              </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white p-6 rounded-2xl border border-gray-200/80">
-                  <div className="w-9 h-9 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm flex items-center justify-center mb-4">
-                    1
+                {/* Step 1 */}
+                <div className="group bg-white p-6 rounded-2xl border border-gray-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-16 h-16 rounded-2xl bg-[#FAF9F5] border border-stone-200/80 flex items-center justify-center p-1 shadow-2xs group-hover:scale-105 transition-transform duration-200">
+                        <LottieAnimation
+                          src="/animations/heart-pop.lottie"
+                          className="w-14 h-14"
+                          ariaLabel="Romantic heart style selection animation"
+                          autoplay={true}
+                          loop={true}
+                        />
+                      </div>
+                      <span className="w-7 h-7 rounded-full bg-stone-100 text-stone-600 font-semibold text-xs flex items-center justify-center border border-stone-200/70 font-mono">
+                        1
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-base text-gray-900 mb-1.5 group-hover:text-rose-600 transition-colors">
+                      Choose a style
+                    </h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      Pick from romantic, birthday, scrapbook, or heartfelt apology templates.
+                    </p>
                   </div>
-                  <h3 className="font-medium text-gray-900 mb-1">
-                    Choose a style
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    Pick from romantic, birthday, scrapbook, or heartfelt apology templates.
-                  </p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-gray-200/80">
-                  <div className="w-9 h-9 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm flex items-center justify-center mb-4">
-                    2
+                {/* Step 2 */}
+                <div className="group bg-white p-6 rounded-2xl border border-gray-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-16 h-16 rounded-2xl bg-[#FAF9F5] border border-stone-200/80 flex items-center justify-center p-1 shadow-2xs group-hover:scale-105 transition-transform duration-200">
+                        <LottieAnimation
+                          src="/animations/love-letter.lottie"
+                          className="w-14 h-14"
+                          ariaLabel="Love letter content creation animation"
+                          autoplay={true}
+                          loop={true}
+                        />
+                      </div>
+                      <span className="w-7 h-7 rounded-full bg-stone-100 text-stone-600 font-semibold text-xs flex items-center justify-center border border-stone-200/70 font-mono">
+                        2
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-base text-gray-900 mb-1.5 group-hover:text-rose-600 transition-colors">
+                      Add your content
+                    </h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      Upload photos, write a secret letter, and pick a background song.
+                    </p>
                   </div>
-                  <h3 className="font-medium text-gray-900 mb-1">
-                    Add your content
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    Upload photos, write a secret letter, and pick a background song.
-                  </p>
                 </div>
 
-                <div className="bg-white p-6 rounded-2xl border border-gray-200/80">
-                  <div className="w-9 h-9 rounded-full bg-gray-100 text-gray-700 font-semibold text-sm flex items-center justify-center mb-4">
-                    3
+                {/* Step 3 */}
+                <div className="group bg-white p-6 rounded-2xl border border-gray-200/80 shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-16 h-16 rounded-2xl bg-[#FAF9F5] border border-stone-200/80 flex items-center justify-center p-1 shadow-2xs group-hover:scale-105 transition-transform duration-200">
+                        <LottieAnimation
+                          src="/animations/flying-letter.lottie"
+                          className="w-14 h-14"
+                          ariaLabel="Instant link delivery paper plane animation"
+                          autoplay={true}
+                          loop={true}
+                        />
+                      </div>
+                      <span className="w-7 h-7 rounded-full bg-stone-100 text-stone-600 font-semibold text-xs flex items-center justify-center border border-stone-200/70 font-mono">
+                        3
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-base text-gray-900 mb-1.5 group-hover:text-rose-600 transition-colors">
+                      Share the link
+                    </h3>
+                    <p className="text-sm text-gray-500 leading-relaxed">
+                      Get an instant live link. When they open it, music plays and confetti flies.
+                    </p>
                   </div>
-                  <h3 className="font-medium text-gray-900 mb-1">
-                    Share the link
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    Get an instant live link. When they open it, music plays and confetti flies.
-                  </p>
                 </div>
               </div>
             </section>

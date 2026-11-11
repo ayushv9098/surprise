@@ -19,6 +19,7 @@ import { SONGS, getSongById } from '../../data/songs';
 import { getTemplateById } from '../../data/templates';
 import { compressImageFile } from '../../utils/imageCompressor';
 import AppleEmoji from '../common/AppleEmoji';
+import LottieAnimation from '../common/LottieAnimation';
 import AudioTrimmer from './AudioTrimmer';
 
 // Curated romantic polaroids for fallback & multi-photo memory deck
@@ -1149,8 +1150,15 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
                             {song.title}
                           </span>
                           {isPlaying && (
-                            <span className="inline-flex items-center animate-pulse shrink-0">
-                              <AppleEmoji emoji="🎶" size={11} />
+                            <span className="inline-flex items-center shrink-0 w-6 h-6">
+                              <LottieAnimation
+                                src="/animations/music-visualizer.lottie"
+                                className="w-6 h-6"
+                                autoplay={true}
+                                loop={true}
+                                ariaLabel="Audio visualizer"
+                                fallback={<AppleEmoji emoji="🎶" size={11} />}
+                              />
                             </span>
                           )}
                         </div>
@@ -1257,8 +1265,15 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
                         {formData.customSongTitle || 'Custom Audio Track 🎵'}
                       </p>
                       {playingSongId === 'custom' && (
-                        <span className="inline-flex items-center animate-pulse shrink-0">
-                          <AppleEmoji emoji="🎶" size={13} />
+                        <span className="inline-flex items-center shrink-0 w-7 h-7">
+                          <LottieAnimation
+                            src="/animations/music-visualizer.lottie"
+                            className="w-7 h-7"
+                            autoplay={true}
+                            loop={true}
+                            ariaLabel="Custom audio visualizer"
+                            fallback={<AppleEmoji emoji="🎶" size={13} />}
+                          />
                         </span>
                       )}
                     </div>
@@ -1324,11 +1339,18 @@ export default function StepMedia({ formData, onChange, onFocusField }) {
                     : 'border-rose-200/90 hover:border-rose-400 bg-rose-50/30 hover:bg-rose-50/60'
                 }`}
               >
-                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white shadow-xs border border-rose-200 flex items-center justify-center text-rose-500 group-hover:scale-105 transition-transform">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white shadow-xs border border-rose-200 flex items-center justify-center text-rose-500 group-hover:scale-105 transition-transform overflow-hidden">
                   {isAudioUploading ? (
                     <div className="w-5 h-5 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
                   ) : (
-                    <FileAudio className="w-5 h-5 text-rose-500" />
+                    <LottieAnimation
+                      src="/animations/music-notes.lottie"
+                      className="w-8 h-8"
+                      autoplay={true}
+                      loop={true}
+                      ariaLabel="Upload audio notes"
+                      fallback={<FileAudio className="w-5 h-5 text-rose-500" />}
+                    />
                   )}
                 </div>
                 <div>

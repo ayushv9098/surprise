@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { X, ArrowRight, Sparkles } from 'lucide-react';
 import AppleEmoji from '../common/AppleEmoji';
+import LottieAnimation from '../common/LottieAnimation';
 import { CATEGORIES } from '../../data/categories';
 
 export default function CategoryModal({
@@ -64,7 +65,11 @@ export default function CategoryModal({
 
         {/* Category Pill / Badge */}
         <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 text-[11px] sm:text-xs font-semibold mb-2">
-          <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+          <LottieAnimation
+            src="/animations/magic-stars.lottie"
+            className="w-3.5 h-3.5 pointer-events-none"
+            fallback={<Sparkles className="w-3.5 h-3.5 text-rose-500" />}
+          />
           <span>Choose an Occasion</span>
         </div>
 

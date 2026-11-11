@@ -16,6 +16,7 @@ import {
 } from '../../utils/share';
 import { soundEffects } from '../../utils/soundEffects';
 import AppleEmoji from '../common/AppleEmoji';
+import LottieAnimation from '../common/LottieAnimation';
 
 export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   const [copied, setCopied] = useState(false);
@@ -207,6 +208,9 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
   const handleCopy = async () => {
     const ok = await copyToClipboard(shareUrl);
     if (ok) {
+      try {
+        soundEffects.playPop();
+      } catch {}
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     }
@@ -290,8 +294,15 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
 
         {/* Sleek Compact Header */}
         <div className="text-center space-y-1 relative pt-1">
-          <div className="w-12 h-12 mx-auto flex items-center justify-center mb-1">
-            <AppleEmoji emoji="🎁" size={38} />
+          <div className="w-16 h-16 mx-auto flex items-center justify-center">
+            <LottieAnimation
+              src="/animations/gift-open.lottie"
+              loop={false}
+              autoplay={true}
+              className="w-16 h-16 mx-auto -my-1"
+              ariaLabel="Surprise gift box opening animation"
+              fallback={<AppleEmoji emoji="🎁" size={38} />}
+            />
           </div>
           <h3 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center justify-center gap-1.5">
             <span>Surprise is Ready!</span> <AppleEmoji emoji="🎉" size={20} />
@@ -311,7 +322,7 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
           />
           <button
             onClick={handleCopy}
-            className={`px-4 py-2 rounded-xl text-xs font-bold text-white active:translate-y-[2px] active:scale-[0.98] transition-all duration-75 ease-out cursor-pointer select-none touch-manipulation shrink-0 flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-xl text-xs font-bold text-white active:translate-y-[2px] active:scale-[0.98] transition-all duration-75 ease-out cursor-pointer select-none touch-manipulation shrink-0 flex items-center justify-center gap-1.5 min-w-[96px] ${
               copied
                 ? 'bg-emerald-500 shadow-[0_3px_0_#065f46] active:shadow-[0_1px_0_#065f46]'
                 : 'bg-rose-500 hover:bg-rose-600 shadow-[0_3px_0_#9f1239] active:shadow-[0_1px_0_#9f1239]'
@@ -321,6 +332,14 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
               <>
                 <Check className="w-3.5 h-3.5 stroke-[3]" />
                 <span>Copied!</span>
+                <LottieAnimation
+                  src="/animations/magic-stars.lottie"
+                  loop={false}
+                  autoplay={true}
+                  className="w-4 h-4 shrink-0 -my-0.5"
+                  ariaLabel="Celebration sparkles"
+                  fallback={null}
+                />
               </>
             ) : (
               <>
@@ -397,9 +416,19 @@ export default function ShareModal({ isOpen, onClose, shareResult, formData }) {
           >
             <span className="text-sm shrink-0 mt-0.5">🔗</span>
             <div className="space-y-0.5 pr-4">
-              <p className="font-bold text-rose-900 text-xs">
-                Link copied for Instagram Story!
-              </p>
+              <div className="flex items-center gap-1.5">
+                <p className="font-bold text-rose-900 text-xs">
+                  Link copied for Instagram Story!
+                </p>
+                <LottieAnimation
+                  src="/animations/magic-stars.lottie"
+                  loop={false}
+                  autoplay={true}
+                  className="w-4 h-4 shrink-0"
+                  ariaLabel="Sparkle"
+                  fallback={null}
+                />
+              </div>
               <p className="text-[11px] text-rose-800 leading-relaxed">
                 Open Instagram Story, tap Stickers <span className="font-bold text-rose-950">🔗 → Link → Paste URL</span>
               </p>

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
+import LottieAnimation from '../common/LottieAnimation';
 import { soundEffects } from './common/SoundEffects';
 import { getSongById } from '../../data/songs';
 
@@ -1546,6 +1547,14 @@ export default function MultiSceneBirthdayView({
                       style={{ backgroundColor: letterWaxColor }}
                     >
                       <AppleEmoji emoji={letterSealEmoji} size={20} />
+                      {/* Magical sparkles floating gently above wax seal inviting tap */}
+                      <div className="absolute -top-3.5 -right-3.5 pointer-events-none w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center">
+                        <LottieAnimation
+                          src="/animations/magic-stars.lottie"
+                          className="w-7 h-7 sm:w-8 sm:h-8 pointer-events-none"
+                          ariaLabel="Magical sparkles"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1573,6 +1582,16 @@ export default function MultiSceneBirthdayView({
             {isEnvelopeOpen && (
               <div className="w-full flex flex-col items-center animate-fade-in-up">
                 <div className={`relative w-full max-w-[94vw] sm:max-w-lg bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-8 shadow-2xl border ${themeTokens.openLetterBorder} text-left max-h-[85vh] overflow-y-auto break-words`}>
+                  {/* Celebratory Confetti Burst upon Opening */}
+                  <div className="w-full flex justify-center -my-1 pointer-events-none">
+                    <LottieAnimation
+                      src="/animations/celebration-burst.lottie"
+                      loop={false}
+                      className="w-20 h-20 sm:w-24 sm:h-24 mx-auto -my-1 pointer-events-none"
+                      ariaLabel="Celebration burst"
+                    />
+                  </div>
+
                   {/* Header with Badges */}
                   <div className="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
                     <div className={`flex items-center gap-1.5 ${themeTokens.openLetterHeader} font-bold text-base sm:text-xl break-words max-w-[80%]`}>

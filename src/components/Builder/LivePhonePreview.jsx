@@ -6,6 +6,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import AppleEmoji, { renderAppleText } from '../common/AppleEmoji';
+import LottieAnimation from '../common/LottieAnimation';
 import { getTemplateById } from '../../data/templates';
 import { soundEffects } from '../Templates/common/SoundEffects';
 import ScrapbookPhoneView from './ScrapbookPhoneView';
@@ -2179,6 +2180,14 @@ const LivePhonePreview = React.memo(function LivePhonePreview({
                               style={{ backgroundColor: letterWaxColor }}
                             >
                               <AppleEmoji emoji={letterSealEmoji} size={18} />
+                              {/* Magical sparkles floating gently above wax seal inviting tap */}
+                              <div className="absolute -top-3 sm:-top-3.5 -right-3 sm:-right-3.5 pointer-events-none w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center">
+                                <LottieAnimation
+                                  src="/animations/magic-stars.lottie"
+                                  className="w-7 h-7 sm:w-8 sm:h-8 pointer-events-none"
+                                  ariaLabel="Magical sparkles"
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -2227,6 +2236,15 @@ const LivePhonePreview = React.memo(function LivePhonePreview({
                         <div
                           className={`relative w-full max-w-[275px] bg-white rounded-3xl p-4 sm:p-5 shadow-2xl border text-left ${theme.letterCardBorder} overflow-hidden break-words`}
                         >
+                          {/* Celebratory Confetti Burst upon Opening */}
+                          <div className="w-full flex justify-center -my-1 pointer-events-none">
+                            <LottieAnimation
+                              src="/animations/celebration-burst.lottie"
+                              loop={false}
+                              className="w-20 h-20 sm:w-24 sm:h-24 mx-auto -my-1 pointer-events-none"
+                              ariaLabel="Celebration burst"
+                            />
+                          </div>
                           {/* Header */}
                           <div className={`flex items-center justify-between border-b ${theme.letterBorderBottom} pb-2 mb-2.5`}>
                             <div

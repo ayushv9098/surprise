@@ -37,6 +37,329 @@
     "letter": {
       "title": "A Little Note For You",
       "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
+      "signOff": "With all my heart, Elena 💜",
+      "sealEmoji": "⚡",
+      "waxColor": "#78350F"
+    },
+    "songId": "raataan-lambiyan",
+    "songUrl": "/audio/raataan-lambiyan.mp3",
+    "customSongUrl": "",
+    "customSongTitle": "",
+    "customAudioBlob": null,
+    "audioStartTime": 30,
+    "audioDuration": 30,
+    "letterBody": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
+    "letterSignOff": "With all my heart, Elena 💜",
+    "letterTitle": "A Little Note For You",
+    "id": "wc-mwbrpu1l-dm2i",
+    "slug": "sarah-s32f8",
+    "updatedAt": "2026-11-11T06:58:48.490Z",
+    "createdAt": "2026-11-11T06:58:47.769Z",
+    "template": "lavender-dream",
+    "viewCount": 3,
+    "lastViewedAt": "2026-11-11T06:59:01.834Z"
+  },
+  {
+    "templateId": "lavender-dream",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday",
+    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
+    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+    "photos": [
+      {
+        "id": "lavender-p1",
+        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+        "tag": "Lavender Bliss"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💜",
+        "title": "Deep Empathy",
+        "desc": "You listen with your whole heart and make everyone feel valued."
+      },
+      {
+        "icon": "🦋",
+        "title": "Free Spirit",
+        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
+      },
+      {
+        "icon": "🕊️",
+        "title": "Calming Presence",
+        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
+      "signOff": "With all my heart,\nElena 💜",
+      "sealEmoji": "💜",
+      "waxColor": "#7C3AED"
+    },
+    "songId": "raataan-lambiyan",
+    "songUrl": "/audio/raataan-lambiyan.mp3",
+    "customSongUrl": "",
+    "customSongTitle": "",
+    "customAudioBlob": null,
+    "audioStartTime": 30,
+    "audioDuration": 30,
+    "id": "wc-mwbrc5tn-ky46",
+    "slug": "sarah-ik6g7",
+    "updatedAt": "2026-11-11T06:48:11.697Z",
+    "createdAt": "2026-11-11T06:48:09.851Z",
+    "template": "lavender-dream",
+    "viewCount": 5,
+    "lastViewedAt": "2026-11-11T06:51:35.370Z"
+  },
+  {
+    "templateId": "lavender-dream",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday",
+    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
+    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+    "photos": [
+      {
+        "id": "lavender-p1",
+        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+        "tag": "Lavender Bliss"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💜",
+        "title": "Deep Empathy",
+        "desc": "You listen with your whole heart and make everyone feel valued."
+      },
+      {
+        "icon": "🦋",
+        "title": "Free Spirit",
+        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
+      },
+      {
+        "icon": "🕊️",
+        "title": "Calming Presence",
+        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
+      "signOff": "With all my heart,\nElena 💜",
+      "sealEmoji": "💜",
+      "waxColor": "#7C3AED"
+    },
+    "songId": "raataan-lambiyan",
+    "songUrl": "/audio/raataan-lambiyan.mp3",
+    "customSongUrl": "",
+    "customSongTitle": "",
+    "customAudioBlob": null,
+    "audioStartTime": 30,
+    "audioDuration": 30,
+    "id": "wc-mwbrbx38-vqdp",
+    "slug": "sarah-99c29",
+    "updatedAt": "2026-11-11T06:47:59.498Z",
+    "createdAt": "2026-11-11T06:47:58.532Z",
+    "template": "lavender-dream",
+    "viewCount": 0
+  },
+  {
+    "templateId": "blush-rose",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Stay Wonderful Always! 🌸✨",
+    "photos": [
+      {
+        "id": "blush-p1",
+        "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        "caption": "Stay Wonderful Always! 🌸✨",
+        "tag": "Birthday Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌸",
+        "title": "Pure Sunshine",
+        "desc": "The effortless way you turn every ordinary moment into joy!"
+      },
+      {
+        "icon": "✨",
+        "title": "Gentle Soul",
+        "desc": "The quiet kindness and sparkling positivity you share with everyone!"
+      },
+      {
+        "icon": "💖",
+        "title": "Irreplaceable",
+        "desc": "A truly irreplaceable friend whose presence makes everything brighter!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together.\n\nForever & always,\nElena 💖",
+      "signOff": "Forever & always,\nElena 🌸",
+      "sealEmoji": "🌸",
+      "waxColor": "#E11D48"
+    },
+    "songId": "insta-acoustic-romance",
+    "id": "wc-mwawzpdv-53kh",
+    "slug": "sarah-tte8x",
+    "updatedAt": "2026-11-10T16:38:43.061Z",
+    "createdAt": "2026-11-10T16:38:40.195Z",
+    "template": "blush-rose",
+    "viewCount": 0
+  },
+  {
+    "templateId": "royal-sapphire",
+    "category": "birthday",
+    "gender": "boy",
+    "recipientName": "Rohan",
+    "senderName": "Alex",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Keep Rocking Always! 👑🔥",
+    "photos": [
+      {
+        "id": "royal-p1",
+        "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
+        "caption": "Keep Rocking Always! 👑🔥",
+        "tag": "The Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💪",
+        "title": "Lucky to Have You",
+        "desc": "So grateful to have a brother like you in my corner every day!"
+      },
+      {
+        "icon": "⭐",
+        "title": "Always There",
+        "desc": "Always standing by my side with endless laughs and genuine support!"
+      },
+      {
+        "icon": "👑",
+        "title": "Irreplaceable",
+        "desc": "No one can ever match your incredible spirit and heart. A true champion!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Happy Birthday Rohan!\n\nYou bring so much energy, strength, and genuine happiness into the lives of everyone around you. Thank you for being someone I can always look up to and trust unconditionally.\n\nMay this year bring you all the grand achievements, good health, and joyful moments you deserve. Keep shining like a king! 👑✨",
+      "signOff": "With all my love & respect,\nAlex 👑",
+      "sealEmoji": "👑",
+      "waxColor": "#1D4ED8"
+    },
+    "songId": "upbeat-birthday-reel",
+    "id": "wc-mwaqrtjv-etye",
+    "slug": "rohan-x2bdq",
+    "updatedAt": "2026-11-10T13:44:35.979Z",
+    "createdAt": "2026-11-10T13:44:34.651Z",
+    "template": "royal-sapphire",
+    "viewCount": 0
+  },
+  {
+    "templateId": "blush-rose",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday",
+    "subtitle": "I have a small surprise for you...",
+    "heroPhoto": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Stay Wonderful Always! 🌸✨",
+    "photos": [
+      {
+        "id": "blush-p1",
+        "url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+        "caption": "Stay Wonderful Always! 🌸✨",
+        "tag": "Birthday Star"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "🌸",
+        "title": "Pure Sunshine",
+        "desc": "The effortless way you turn every ordinary moment into joy!"
+      },
+      {
+        "icon": "✨",
+        "title": "Gentle Soul",
+        "desc": "The quiet kindness and sparkling positivity you share with everyone!"
+      },
+      {
+        "icon": "💖",
+        "title": "Irreplaceable",
+        "desc": "A truly irreplaceable friend whose presence makes everything brighter!"
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "My dearest Sarah,\n\nFrom the moment you entered my life, ordinary days became unforgettable adventures. Your kindness fills every room, and your laugh is honestly my favorite sound.\n\nThank you for holding my hand when things get chaotic and for always knowing how to make me smile with just one look. Happy Birthday my sweet friend — here is to a million more sunsets together.\n\nForever & always,\nElena 💖",
+      "signOff": "Forever & always,\nElena 🌸",
+      "sealEmoji": "🌸",
+      "waxColor": "#E11D48"
+    },
+    "songId": "insta-acoustic-romance",
+    "id": "wc-mwaoirq9-dsp0",
+    "slug": "sarah-isjbq",
+    "updatedAt": "2026-11-10T12:41:35.701Z",
+    "createdAt": "2026-11-10T12:41:33.154Z",
+    "template": "blush-rose",
+    "viewCount": 0
+  },
+  {
+    "templateId": "lavender-dream",
+    "category": "birthday",
+    "gender": "girl",
+    "recipientName": "Sarah",
+    "senderName": "Elena",
+    "occasion": "Happy Birthday",
+    "subtitle": "Wishing you the gentlest magic, sweetest wishes, and endless happiness.",
+    "heroPhoto": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+    "photoCaption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+    "photos": [
+      {
+        "id": "lavender-p1",
+        "url": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+        "caption": "Never Stop Dreaming Beautiful Dreams! 💜🦋",
+        "tag": "Lavender Bliss"
+      }
+    ],
+    "specialReasons": [
+      {
+        "icon": "💜",
+        "title": "Deep Empathy",
+        "desc": "You listen with your whole heart and make everyone feel valued."
+      },
+      {
+        "icon": "🦋",
+        "title": "Free Spirit",
+        "desc": "Your creative soul and gentle elegance make you truly one of a kind."
+      },
+      {
+        "icon": "🕊️",
+        "title": "Calming Presence",
+        "desc": "Being around you feels like a peaceful sanctuary of love and warmth."
+      }
+    ],
+    "letter": {
+      "title": "A Little Note For You",
+      "content": "Sweet Sarah,\n\nYou have such a poetic, gentle soul that heals people just by being present. On your birthday, I pray that life returns all the kindness, love, and sweet dreams you give so freely to others.\n\nHave the most enchanting birthday celebration ever!\n\nWith all my love,\nElena 💜🦋",
       "signOff": "With all my heart,\nElena 💜",
       "sealEmoji": "💜",
       "waxColor": "#7C3AED"
